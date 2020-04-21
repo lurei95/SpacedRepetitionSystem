@@ -1,0 +1,72 @@
+﻿<div class="row d-flex" style="align-items: center; margin-left: 10px; margin-right: 10px;">
+  @if (Property != null && !string.IsNullOrEmpty(Property.ErrorText))
+  {
+    <div class="col-auto" style="padding: 0px; margin-right: 7px;">
+      <span class="oi oi-circle-x" data-toggle="tooltip" title="@Property.ErrorText" style="color: #e74c3c; font-size:1.2rem" aria-hidden="true"></span>
+    </div>
+  }
+  <div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
+    <div class="input-group-prepend">
+      <span class="input-group-text fieldLabel">@Caption</span>
+    </div>
+    @if (Property != null)
+    {
+      <input type="text" class="form-control" @bind="Property.Value" />
+    }
+    else
+    {
+      <input type="text" class="form-control" @bind="Value" />
+    }
+    <div class="input-group-append">
+      @if (!string.IsNullOrEmpty(ButtonText))
+      {
+        <button class="btn btn-outline-secondary" type="button" id="button-addon1" @onclick="() => ButtonAction()">@ButtonText</button>
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .fieldDiv {
+    margin: 10px;
+  }
+
+  .fieldLabel {
+    width: 100px;
+  }
+</style>
+
+@code
+{
+  [Parameter]
+  public PropertyProxy Property { get; set; }
+
+  private string value;
+
+  [Parameter]
+  public string Caption { get; set; }
+
+  [Parameter]
+  public string Value
+  {
+    get => value;
+    set
+    {
+      if (Value != value)
+      {
+        this.value = value;
+        ValueChanged.InvokeAsync(value);
+      }
+    }
+  }
+
+  [Parameter]
+  public string ButtonText { get; set; }
+
+  [Parameter]
+  public Action ButtonAction { get; set; }
+
+  [Parameter]
+  public EventCallback<string> ValueChanged { get; set; }
+
+}

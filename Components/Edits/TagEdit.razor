@@ -1,0 +1,136 @@
+﻿@using Microsoft.AspNetCore.Components.Web;
+@using Microsoft.JSInterop;
+
+@inject IJSRuntime JSRuntime;
+
+<div class="input-group mb-3 fieldDiv">
+  @foreach (string tag in Tags)
+  {
+    <div class="badge badge-secondary tag1">
+      <a class="badge badge-secondary tagContent" href="@tag">@tag</a>
+      <button type="button" class="btn btn-secondary tagButton" @onclick="() => Tags.Remove(tag)">
+        <span class="oi oi-x tagIcon" aria-hidden="true"></span>
+      </button>
+    </div>
+  }
+  @if (IsEditing)
+  {
+    <div class="badge badge-secondary tag2">
+      <input maxlength="30" type="text" id="newTagInput" @bind="newTag" @onkeypress="(e) => KeyPressed(e)" @onblur="TryAddNewTag" />
+    </div>
+  }
+  <button class="btn addButton" type="button" id="button-addon1" @onclick="() => IsEditing = true">
+    <span class="oi oi-plus" aria-hidden="true"></span>
+  </button>
+</div>
+
+<style>
+  .tagIcon {
+    font-size: 0.75rem;
+  }
+
+    .tagIcon:hover {
+      color: #e74c3c;
+      font-size: 0.85rem;
+    }
+
+  .tag1 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 3px;
+    font-size: 1rem;
+    margin-right: 3px;
+    padding-top: 9px;
+    padding-bottom: 7px;
+  }
+
+  .tag2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 3px;
+    font-size: 1rem;
+    margin-right: 3px;
+    padding-top: 7px;
+    padding-bottom: 5px;
+  }
+
+  .tagContent {
+    font-size: 1rem;
+    margin: unset;
+    padding: unset;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    font-weight: 400;
+  }
+
+  .fieldDiv {
+    border: 1px solid #ced4da;
+    flex: 1 1 auto;
+    border-radius: .25rem;
+    margin: 10px;
+  }
+
+  .tagButton {
+    padding: 0px 0px 4px 0px;
+    line-height: unset;
+    margin-left: 10px;
+    margin-right: 5px;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+  }
+
+  .addButton {
+    border: none;
+    color: #6c757d !important;
+    font-size: 1.2rem;
+    padding-top: 9px;
+  }
+
+    .addButton:hover {
+      font-size: 1.3rem;
+    }
+</style>
+
+@code
+{
+  private bool wasEditing = false;
+  private string newTag;
+  private bool isEditting = false;
+
+  private bool IsEditing
+  {
+    get => isEditting;
+    set
+    {
+      isEditting = value;
+      if (!value)
+        newTag = null;
+    }
+  }
+
+  [Parameter]
+  public ICollection<string> Tags { get; set; }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (IsEditing && !wasEditing)
+    {
+      await JSRuntime.InvokeVoidAsync("utilities.focusElement", "newTagInput");
+      wasEditing = true;
+    }
+  }
+
+  private void TryAddNewTag()
+  {
+    if (!string.IsNullOrEmpty(newTag) && !Tags.Any(tag => tag == newTag))
+      Tags.Add(newTag);
+    wasEditing = false;
+    IsEditing = false;
+  }
+
+  private void KeyPressed(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter")
+      IsEditing = false;
+  }
+}

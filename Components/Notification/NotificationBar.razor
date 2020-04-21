@@ -1,0 +1,77 @@
+﻿@using SpacedRepetitionSystem.Utility.Notification;
+
+@implements INotificationProvider
+
+@if (alertVisible)
+{
+  <div class="@alertClass" role="alert">
+    @message
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="ResetNotification">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+}
+
+<style>
+  .bottomBar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 0;
+  }
+</style>
+
+@code
+{
+  private string alertClass;
+
+  private string message;
+
+  private bool alertVisible = false;
+
+  ///<inheritdoc/>
+  public void NotifyMessage(NotificationKind notificationKind, string message)
+  {
+    this.message = message;
+    switch (notificationKind)
+    {
+      case NotificationKind.SuccessNotification:
+        alertClass = "alert alert-success bottomBar";
+        alertVisible = true;
+        break;
+      case NotificationKind.InformationNotification:
+        alertClass = "alert alert-info bottomBar";
+        alertVisible = true;
+        break;
+      case NotificationKind.WarningNotification:
+        alertClass = "alert alert-warning bottomBar";
+        alertVisible = true;
+        break;
+      case NotificationKind.ErrorNotification:
+        alertClass = "alert alert-danger bottomBar";
+        alertVisible = true;
+        break;
+      default:
+        ResetNotification();
+        break;
+    }
+    InvokeAsync(() => StateHasChanged());
+  }
+
+  ///<inheritdoc>/>
+  public void ResetNotification()
+  {
+    alertVisible = false;
+    alertClass = null;
+    message = null;
+    InvokeAsync(() => StateHasChanged());
+  }
+
+  ///<inheritdoc>/>
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    NotificationMessageProvider.Initialize(this);
+  }
+}

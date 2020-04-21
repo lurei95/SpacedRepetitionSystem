@@ -1,0 +1,43 @@
+﻿@using SpacedRepetitionSystem.Utility.Dialogs
+
+@inherits ModalDialogBase
+
+@if (IsVisible)
+{
+  <div class="modal modal-dialog-centered customDialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content customDialogContent">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">@Title</h5>
+          <button type="button" class="close" data-dismiss="modal" @onclick="() => CloseModal(DialogButton.None)" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          @Text
+        </div>
+        <div class="modal-footer">
+          @if (ThirdButtonVisible)
+          {
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => CloseModal(DialogButton.Button3)">@ThridButtonText</button>
+          }
+          @if (SecondButtonVisible)
+          {
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => CloseModal(DialogButton.Button2)">@SecondButtonText</button>
+          }
+          <button type="button" class="btn btn-primary" @onclick="() => CloseModal(DialogButton.Button1)">@FirstButtonText</button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<style>
+  .customDialog {
+    background: rgba(200, 200, 200, 0.2);
+  }
+
+  .customDialogContent {
+    min-width: 500px;
+  }
+</style>

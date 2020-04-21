@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Components.Routing;
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb" style="background-color:transparent">
+    @for (int i = 0; i < navigationList.Count; i++)
+    {
+      if (i == navigationList.Count - 1)
+      {
+        <li class="breadcrumb-item active" aria-current="@navigationList[i]">@navigationList[i]</li>
+      }
+      else
+      {
+        <li class="breadcrumb-item"><a href="@navigationList[i]">@navigationList[i]</a></li>
+      }
+    }
+  </ol>
+</nav>
+
+@code
+{
+  private NavigationManager navigationManager;
+  private List<string> navigationList = new List<string>();
+
+  /// <summary>
+  /// The Navigation manager of the app
+  /// </summary>
+  [Inject]
+  public NavigationManager NavigationManager
+  {
+    get => navigationManager;
+    set
+    {
+      if (navigationManager == null)
+      {
+        navigationManager = value;
+        navigationManager.LocationChanged += OnLocationChanged;
+      }
+    }
+  }
+
+  private void OnLocationChanged(object sender, LocationChangedEventArgs e)
+  { CalculateNavigationList(e.Location); }
+
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    CalculateNavigationList(navigationManager.Uri);
+  }
+
+  private void CalculateNavigationList(string uri)
+  {
+    navigationList.Clear();
+    string[] parts = uri.Replace(NavigationManager.BaseUri, "").Split('/');
+    if (parts.Length < 1 || parts[0] != "Home")
+      navigationList.Add("Home");
+    for (int i = 0; i < parts.Length; i++)
+      if (!string.IsNullOrEmpty(parts[i]))
+        navigationList.Add(parts[i].Replace("%20", " "));
+    InvokeAsync(() => StateHasChanged());
+  }
+}

@@ -1,0 +1,99 @@
+﻿@using SpacedRepetitionSystem.Components.Commands;
+@using SpacedRepetitionSystem.Components.ViewModels;
+
+<ViewModelArea ViewModel="@Command">
+  @if (Command?.IsVisible == true)
+  {
+    <button type="button"
+            data-toggle="tooltip"
+            title="@Command.ToolTip"
+            @onclick="ButtonClicked"
+            class="btn btn-lg btn-primary @(IsIconButton ? "iconButton" : null) @(string.IsNullOrEmpty(Classes) ? null: " " + Classes)"
+            disabled="@(Command?.IsEnabled == false)"
+            style="@Style">
+      @if (!string.IsNullOrEmpty(Command.Icon))
+      {
+        <span class="@Command.Icon" style="@(!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null)" aria-hidden="true"></span>
+      }
+
+      @Command.CommandText
+    </button>
+  }
+</ViewModelArea>
+
+<style>
+  .iconButton:hover {
+    font-size: 1.1rem;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    padding: 0px;
+    line-height: unset;
+    margin-left: 10px;
+    margin-right: 5px;
+  }
+
+  .iconButton {
+    font-size: 1rem;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    padding: 0px;
+    line-height: unset;
+    margin-left: 10px;
+    margin-right: 5px;
+  }
+</style>
+
+@code
+{
+  private Command command;
+
+  /// <summary>
+  /// Command of the button
+  /// </summary>
+  [Parameter]
+  public Command Command
+  {
+    get => command;
+    set
+    {
+      if (command != value)
+      {
+        command = value;
+        RefreshUi();
+      }
+    }
+  }
+
+  /// <summary>
+  /// Determinds whether the button is a Icon Button 
+  /// </summary>
+  [Parameter]
+  public bool IsIconButton { get; set; }
+
+  /// <summary>
+  /// The Color of the text
+  /// </summary>
+  [Parameter]
+  public string TextColor { get; set; }
+
+  /// <summary>
+  /// The style of the component
+  /// </summary>
+  [Parameter]
+  public string Style { get; set; }
+
+  /// <summary>
+  /// Classes string
+  /// </summary>
+  [Parameter]
+  public string Classes { get; set; }
+
+  private void ButtonClicked()
+  {
+    if (Command != null)
+      Command.ExecuteCommand();
+  }
+
+  private void RefreshUi()
+  { InvokeAsync(() => StateHasChanged()); }
+}

@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+@using SpacedRepetitionSystem.Components.Modals;
+@using SpacedRepetitionSystem.Components.Navigation;
+
+<ModalDialog/>
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main d-flex flex-column">
+    <div class="top-row">
+        <div class="col-12" style="padding-left:50px; padding-top:15px;">
+            <BreadCrumb></BreadCrumb>
+        </div>
+        <div class="col">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+    </div>
+
+    <div class="content px-4 mb-4 flex-grow-1 d-flex flex-column" style="max-height: calc(100vh - 100px)">
+        @Body
+    </div>
+</div>

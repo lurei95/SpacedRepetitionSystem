@@ -1,0 +1,25 @@
+﻿@ChildContent
+@using System.ComponentModel
+
+@code
+{
+  /// <summary>
+  /// The child content
+  /// </summary>
+  [Parameter]
+  public RenderFragment ChildContent { get; set; }
+
+  /// <summary>
+  /// The ViewModel
+  /// </summary>
+  [Parameter]
+  public INotifyPropertyChanged ViewModel { get; set; }
+
+  ///<inheritdoc>/>
+  protected override void OnInitialized()
+  {
+    base.OnInitialized();
+    
+    ViewModel.PropertyChanged += (o, e) => StateHasChanged();
+  }
+}
