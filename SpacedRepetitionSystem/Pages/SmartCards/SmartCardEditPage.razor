@@ -36,15 +36,14 @@
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
           <h5 class="card-title">Main Properties</h5>
-          <TextEdit Caption="Deck" @bind-Value="ViewModel.PracticeSetTitle" ButtonText="..."></TextEdit>
-          <TextEdit Caption="Template" Property="ViewModel.SmartCardDefinitionTitleProperty" ButtonText="..."></TextEdit>
+          <DropDownEdit Caption="Deck" @bind-Value="ViewModel.PracticeSetTitle" SelectableValues="ViewModel.AvailableDecks"></DropDownEdit>
+          <DropDownEdit Caption="Template" @bind-Value="ViewModel.SmartCardDefinitionTitle" SelectableValues="ViewModel.AvailableSmartCardDefinitions"></DropDownEdit>
 
           <h5 class="card-title">Fields</h5>
           @foreach (SmartCardField field in ViewModel.Fields)
           {
             <TextEdit Caption="@field.FieldName" @bind-Value="field.Value"></TextEdit>
           }
-
           <h5 class="card-title">Tags</h5>
           <TagEdit Tags="ViewModel.Tags"></TagEdit>
         </div>

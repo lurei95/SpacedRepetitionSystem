@@ -1,0 +1,106 @@
+﻿<div class="row d-flex" style="align-items: center; margin-left: 10px; margin-right: 10px;">
+  @if (Property != null && !string.IsNullOrEmpty(Property.ErrorText))
+  {
+    <div class="col-auto" style="padding: 0px; margin-right: 7px;">
+      <span class="oi oi-circle-x" data-toggle="tooltip" title="@Property.ErrorText" style="color: #e74c3c; font-size:1.2rem" aria-hidden="true"></span>
+    </div>
+  }
+<div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
+  <div class="input-group-prepend">
+    <span class="input-group-text fieldLabel">@Caption</span>
+  </div>
+    @if (Property != null)
+    {
+      <select class="custom-select" id="inputGroupSelect01" @bind="Property.Value">
+        @for (int i = 0; i < SelectableValues.Count; i++)
+        {
+          if (i == 0)
+          {
+            <option selected value="@SelectableValues[i]">@SelectableValues[i]</option>
+          }
+          else
+          {
+            <option value="@SelectableValues[i]">@SelectableValues[i]</option>
+          }
+        }
+      </select>
+    }
+    else
+    {
+      <select class="custom-select" id="inputGroupSelect01" @bind="Value">
+        @for (int i = 0; i < SelectableValues.Count; i++)
+        {
+          if (i == 0)
+          {
+            <option selected value="@SelectableValues[i]">@SelectableValues[i]</option>
+          }
+          else
+          {
+            <option value="@SelectableValues[i]">@SelectableValues[i]</option>
+          }
+        }
+      </select>
+    }
+  </div>
+</div>
+
+<style>
+  .fieldDiv {
+    margin: 10px;
+  }
+
+  .fieldLabel {
+    width: 100px;
+  }
+</style>
+
+@code
+{
+  private string value;
+  private IList<string> selectableValues = new List<string>();
+
+  /// <summary>
+  /// Property proxy for binding
+  /// </summary>
+  [Parameter]
+  public PropertyProxy Property { get; set; }
+
+  /// <summary>
+  /// The Selected value of the dropdown
+  /// </summary>
+  [Parameter]
+  public string Value
+  {
+    get => value;
+    set
+    {
+      if (Value != value)
+      {
+        this.value = value;
+        ValueChanged.InvokeAsync(value);
+      }
+    }
+  }
+
+  /// <summary>
+  /// List containing the selectable values
+  /// </summary>
+  [Parameter]
+  public IList<string> SelectableValues
+  {
+    get => selectableValues;
+    set => selectableValues = value;
+  }
+
+  /// <summary>
+  /// Caption of the edit
+  /// </summary>
+  [Parameter]
+  public string Caption { get; set; }
+
+  /// <summary>
+  /// Value changed event
+  /// </summary>
+  [Parameter]
+  public EventCallback<string> ValueChanged { get; set; }
+}

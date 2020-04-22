@@ -15,6 +15,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
   /// </summary>
   public sealed class SmartCardEditViewModel : EditViewModelBase<SmartCard>
   {
+    private readonly Dictionary<string, long> availableDecks = new Dictionary<string, long>();
+    private readonly Dictionary<string, long> availableSmartCardDefinitions = new Dictionary<string, long>();
+
     private long? practiceSetId;
     private long? smartCardDefinitionId;
 
@@ -40,7 +43,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
           {
             Entity.PracticeSetId = default;
             Entity.PracticeSet = null;
-
           }
           OnPropertyChanged(nameof(PracticeSetTitle));
         }
@@ -71,8 +73,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
       }
     }
 
-    public PropertyProxy SmartCardDefinitionTitleProperty { get; private set; }
-
     /// <summary>
     /// Title of the smart card definition
     /// </summary>
@@ -82,19 +82,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
       set
       {
         if (SmartCardDefinitionTitle != value)
-        {
-          SmartCardDefinition definition = Context.Set<SmartCardDefinition>()
-            .AsNoTracking()
-            .Where(definition => definition.Title == value)
-            .SingleOrDefault();
-          if (definition != null)
-            SmartCardDefinitionId = definition.SmartCardDefinitionId;
-          else
-          {
-            SmartCardDefinitionId = null;
-            SmartCardDefinitionTitleProperty.SetError("test error");
-          }
-        }
+          SmartCardDefinitionId = availableSmartCardDefinitions[value];
       }
     }
 
@@ -107,18 +95,19 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
       set
       {
         if (PracticeSetTitle != value)
-        {
-          PracticeSet set = Context.Set<PracticeSet>()
-            .AsNoTracking()
-            .Where(set => set.Title == value)
-            .SingleOrDefault();
-          if (set != null)
-            PracticeSetId = set.PracticeSetId;
-          else
-            PracticeSetId = null;
-        }
+          PracticeSetId = availableDecks[value];
       }
     }
+
+    /// <summary>
+    /// The available decks
+    /// </summary>
+    public List<string> AvailableDecks => availableDecks.Keys.ToList();
+
+    /// <summary>
+    /// The available smart card definitions
+    /// </summary>
+    public List<string> AvailableSmartCardDefinitions => availableSmartCardDefinitions.Keys.ToList();
 
     /// <summary>
     /// The fields of the card
@@ -142,7 +131,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
       : base(context, navigationManager, controller, changeValidator)
     {
       Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags));
-      SmartCardDefinitionTitleProperty = new PropertyProxy(() => SmartCardDefinitionTitle, (value) => SmartCardDefinitionTitle = value, nameof(Entity.SmartCardDefinitionId));
+
+      foreach (PracticeSet deck in context.Set<PracticeSet>())
+        availableDecks.Add(deck.Title, deck.PracticeSetId);
+      foreach (SmartCardDefinition smartCardDefinition in context.Set<SmartCardDefinition>())
+        availableSmartCardDefinitions.Add(smartCardDefinition.Title, smartCardDefinition.SmartCardDefinitionId);
     }
 
     ///<inheritdoc/>
