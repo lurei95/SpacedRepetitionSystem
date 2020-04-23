@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Edits;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.SmartCards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -74,6 +76,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
     }
 
     /// <summary>
+    /// Property for <see cref="SmartCardDefinitionTitle"/>
+    /// </summary>
+    public PropertyProxy SmartCardDefinitionTitleProperty { get; private set; }
+
+    /// <summary>
+    /// Property for <see cref="PracticeSetTitle"/>
+    /// </summary>
+    public PropertyProxy PracticeSetTitleProperty { get; private set; }
+
+    /// <summary>
     /// Title of the smart card definition
     /// </summary>
     public string SmartCardDefinitionTitle
@@ -131,11 +143,29 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
       : base(context, navigationManager, controller, changeValidator)
     {
       Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags));
+      SmartCardDefinitionTitleProperty = new PropertyProxy(
+        () => SmartCardDefinitionTitle, 
+        (value) => SmartCardDefinitionTitle = value, 
+        nameof(SmartCardDefinitionTitle)
+      );
+      PracticeSetTitleProperty = new PropertyProxy(
+        () => PracticeSetTitle,
+        (value) => PracticeSetTitle = value,
+        nameof(PracticeSetTitle)
+      );
 
       foreach (PracticeSet deck in context.Set<PracticeSet>())
         availableDecks.Add(deck.Title, deck.PracticeSetId);
       foreach (SmartCardDefinition smartCardDefinition in context.Set<SmartCardDefinition>())
         availableSmartCardDefinitions.Add(smartCardDefinition.Title, smartCardDefinition.SmartCardDefinitionId);
+    }
+
+    ///<inheritdoc/>
+    public override void LoadOrCreateEntity(object id)
+    {
+      base.LoadOrCreateEntity(id);
+      PracticeSetTitleProperty.Validator = (value) => ValidatePractiecSetTitle(value);
+      SmartCardDefinitionTitleProperty.Validator = (value) => ValidateSmartCardDefinitionTitle(value);
     }
 
     ///<inheritdoc/>
@@ -161,5 +191,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
           FieldName = fieldDefinition.FieldName
         });
     }
+
+    private string ValidatePractiecSetTitle(string value) 
+      => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(PropertyNames.PracticeSet) : null;
+
+    private string ValidateSmartCardDefinitionTitle(string value)
+      => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(PropertyNames.PracticeSet) : null;
   }
 }

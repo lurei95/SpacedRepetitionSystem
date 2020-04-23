@@ -11,16 +11,16 @@
     </div>
     @if (Property != null)
     {
-      <input type="text" class="form-control" @bind="Property.Value" />
+      <input disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Property.Value" />
     }
     else
     {
-      <input type="text" class="form-control" @bind="Value" />
+      <input disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Value" />
     }
     <div class="input-group-append">
       @if (!string.IsNullOrEmpty(ButtonText))
       {
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1" @onclick="() => ButtonAction()">@ButtonText</button>
+        <button disabled="@(!IsEnabled)" class="btn btn-outline-secondary" type="button" id="button-addon1" @onclick="() => ButtonAction()">@ButtonText</button>
       }
     </div>
   </div>
@@ -38,14 +38,29 @@
 
 @code
 {
+  private string value;
+
+  /// <summary>
+  /// Determines whether the edit is enabled
+  /// </summary>
+  [Parameter]
+  public bool IsEnabled { get; set; } = true;
+
+  /// <summary>
+  /// Property proxy for binding
+  /// </summary>
   [Parameter]
   public PropertyProxy Property { get; set; }
 
-  private string value;
-
+  /// <summary>
+  /// Caption of the edit
+  /// </summary>
   [Parameter]
   public string Caption { get; set; }
 
+  /// <summary>
+  /// Value of the text edit
+  /// </summary>
   [Parameter]
   public string Value
   {
@@ -60,13 +75,21 @@
     }
   }
 
+  /// <summary>
+  /// Text of the button
+  /// </summary>
   [Parameter]
   public string ButtonText { get; set; }
 
+  /// <summary>
+  /// Action of the button
+  /// </summary>
   [Parameter]
   public Action ButtonAction { get; set; }
 
+  /// <summary>
+  /// Value changed event
+  /// </summary>
   [Parameter]
   public EventCallback<string> ValueChanged { get; set; }
-
 }

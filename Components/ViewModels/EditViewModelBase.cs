@@ -142,7 +142,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         .Where(property => property.PropertyType.IsAssignableFrom(typeof(PropertyProxy)))
         .Select(property => property.GetValue(this) as PropertyProxy);
       foreach (var item in proxies)
-        item.Validator = (newValue) => changeValidator.Validate<string>(item.PropertyName, Entity, newValue); 
+        item.Validator = (newValue) => changeValidator.Validate(item.PropertyName, Entity, newValue); 
     }
   }
 }

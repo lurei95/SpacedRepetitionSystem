@@ -11,7 +11,8 @@ namespace SpacedRepetitionSystem.Components.Edits
   {
     private readonly Func<string> getter;
     private readonly Action<string> setter;
-    private string errorText; 
+    private string errorText;
+    Func<string, string> validator;
 
     /// <summary>
     /// Name of the property
@@ -21,7 +22,16 @@ namespace SpacedRepetitionSystem.Components.Edits
     /// <summary>
     /// Validator
     /// </summary>
-    public Func<string, string> Validator { get; set; }
+    public Func<string, string> Validator 
+    {
+      get => validator;
+      set
+      {
+        validator = value;
+        if (value != null)
+          ErrorText = Validator.Invoke(Value);
+      }
+    }
 
     /// <summary>
     /// Error Text

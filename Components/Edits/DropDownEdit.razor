@@ -11,33 +11,19 @@
   </div>
     @if (Property != null)
     {
-      <select class="custom-select" id="inputGroupSelect01" @bind="Property.Value">
+      <select disabled="@(!IsEnabled)" class="custom-select" id="inputGroupSelect01" @bind="Property.Value">
         @for (int i = 0; i < SelectableValues.Count; i++)
         {
-          if (i == 0)
-          {
-            <option selected value="@SelectableValues[i]">@SelectableValues[i]</option>
-          }
-          else
-          {
-            <option value="@SelectableValues[i]">@SelectableValues[i]</option>
-          }
+          <option selected="@(i == 0)" value="@SelectableValues[i]">@SelectableValues[i]</option>
         }
       </select>
     }
     else
     {
-      <select class="custom-select" id="inputGroupSelect01" @bind="Value">
+      <select disabled="@(!IsEnabled)" class="custom-select" id="inputGroupSelect01" @bind="Value">
         @for (int i = 0; i < SelectableValues.Count; i++)
         {
-          if (i == 0)
-          {
-            <option selected value="@SelectableValues[i]">@SelectableValues[i]</option>
-          }
-          else
-          {
-            <option value="@SelectableValues[i]">@SelectableValues[i]</option>
-          }
+          <option selected="@(i == 0)" value="@SelectableValues[i]">@SelectableValues[i]</option>
         }
       </select>
     }
@@ -58,6 +44,12 @@
 {
   private string value;
   private IList<string> selectableValues = new List<string>();
+
+  /// <summary>
+  /// Determines whether the edit is enabled
+  /// </summary>
+  [Parameter]
+  public bool IsEnabled { get; set; } = true;
 
   /// <summary>
   /// Property proxy for binding
@@ -89,7 +81,12 @@
   public IList<string> SelectableValues
   {
     get => selectableValues;
-    set => selectableValues = value;
+    set
+    {
+      selectableValues = value;
+      if (selectableValues != null && selectableValues.Count > 0)
+        Value = selectableValues[0];
+    }
   }
 
   /// <summary>
