@@ -1,0 +1,50 @@
+﻿@page "/Decks"
+
+@using SpacedRepetitionSystem.Components.ViewModels;
+@using SpacedRepetitionSystem.Entities.Entities.SmartCards;
+@using SpacedRepetitionSystem.Components.ViewModels.SmartCards;
+@using SpacedRepetitionSystem.Components.Interaction;
+
+@inherits SearchPageBase<PracticeSet, PracticeSetSearchViewModel>
+
+<ViewModelArea ViewModel="@ViewModel">
+  <div class="card flex-grow-0 fullsizeCard">
+    <div class="card-header">
+      Search Decks
+    </div>
+    <div class="card-body scrollable">
+      <WaitSpinner Visible="ViewModel.IsSearching">
+        <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th class="th-sm">
+                ID
+              </th>
+              <th class="th-sm">
+                Name
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var item in ViewModel.SearchResults)
+            {
+              <tr>
+                <td><a href="/Decks/@item.PracticeSetId">@item.PracticeSetId</a></td>
+                <td>@item.Title</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </WaitSpinner>
+    </div>
+  </div>
+</ViewModelArea>
+
+@code
+{
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync();
+    await ViewModel.Search();
+  }
+}

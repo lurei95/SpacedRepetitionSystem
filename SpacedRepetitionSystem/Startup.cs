@@ -33,8 +33,11 @@ namespace SpacedRepetitionSystem
 
       services.AddScoped<SmartCardEditViewModel>();
       services.AddScoped<SmartCardSearchViewModel>();
+      services.AddScoped<PracticeSetSearchViewModel>();
 
       services.AddScoped<EntityControllerBase<SmartCard>, SmartCardsController>();
+      services.AddScoped<EntityControllerBase<PracticeSet>, PracticeSetsController>();
+      services.AddScoped<EntityControllerBase<SmartCardDefinition>, SmartCardDefinitionsController>();
 
       services.AddSmartCardPropertyValidator();
     }

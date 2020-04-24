@@ -139,7 +139,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="controller">Controller (Injected)</param>
     /// <param name="changeValidator">change validator (Injected)</param>
-    public SmartCardEditViewModel(DbContext context, NavigationManager navigationManager, EntityControllerBase<SmartCard> controller, 
+    public SmartCardEditViewModel(DbContext context, NavigationManager navigationManager, EntityControllerBase<SmartCard> controller,
       EntityChangeValidator<SmartCard> changeValidator) 
       : base(context, navigationManager, controller, changeValidator)
     { Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags)); }
