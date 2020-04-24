@@ -12,7 +12,7 @@
 @inherits EditPageBase<SmartCard, SmartCardEditViewModel>
 
 <ViewModelArea ViewModel="ViewModel">
-  <div class="card flex-grow-0" style="max-height:inherit">
+  <div class="card flex-grow-0 fullsizeCard">
     <div class="card-header">
       <div class="row">
         <div class="col col-md-auto">
@@ -31,29 +31,30 @@
         </div>
       </div>
     </div>
-    <div class="card-body scrollable">
+    <WaitSpinner>
+      <div class="card-body scrollable">
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
+            <h5 class="card-title">Main Properties</h5>
+            <DropDownEdit Caption="Deck" Property="ViewModel.PracticeSetTitleProperty" SelectableValues="ViewModel.AvailableDecks"></DropDownEdit>
+            <DropDownEdit Caption="Template" Property="ViewModel.SmartCardDefinitionTitleProperty" SelectableValues="ViewModel.AvailableSmartCardDefinitions"></DropDownEdit>
 
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
-          <h5 class="card-title">Main Properties</h5>
-          <DropDownEdit Caption="Deck" Property="ViewModel.PracticeSetTitleProperty" SelectableValues="ViewModel.AvailableDecks"></DropDownEdit>
-          <DropDownEdit Caption="Template" Property="ViewModel.SmartCardDefinitionTitleProperty" SelectableValues="ViewModel.AvailableSmartCardDefinitions"></DropDownEdit>
-
-          <h5 class="card-title">Fields</h5>
-          @foreach (SmartCardField field in ViewModel.Fields)
-          {
-            <TextEdit Caption="@field.FieldName" @bind-Value="field.Value"></TextEdit>
-          }
-          <h5 class="card-title">Tags</h5>
-          <TagEdit Tags="ViewModel.Tags"></TagEdit>
+            <h5 class="card-title">Fields</h5>
+            @foreach (SmartCardField field in ViewModel.Fields)
+            {
+              <TextEdit Caption="@field.FieldName" @bind-Value="field.Value"></TextEdit>
+            }
+            <h5 class="card-title">Tags</h5>
+            <TagEdit Tags="ViewModel.Tags"></TagEdit>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="card-footer">
-      <div class="d-flex justify-content-end">
-        <Button Command="ViewModel.SaveChangesCommand"></Button>
+      <div class="card-footer">
+        <div class="d-flex justify-content-end">
+          <Button Command="ViewModel.SaveChangesCommand"></Button>
+        </div>
       </div>
-    </div>
+    </WaitSpinner>
   </div>
 </ViewModelArea>
 

@@ -1,0 +1,39 @@
+﻿@if (Visible)
+{
+  <div class="d-flex justify-content-center waitSpinnerContainer">
+    <div class="spinner-border waitSpinner" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+}
+else
+{
+  @ChildContent
+}
+
+<style>
+  .waitSpinnerContainer {
+    height: calc(100vh - 200px);
+    align-items: center;
+  }
+
+  .waitSpinner {
+    width: 7rem;
+    height: 7rem;
+  }
+</style>
+
+@code
+{
+  /// <summary>
+  /// Wether the wait spinner is visible
+  /// </summary>
+  [Parameter]
+  public bool Visible { get; set; }
+
+  /// <summary>
+  /// ChildContent
+  /// </summary>
+  [Parameter]
+  public RenderFragment ChildContent { get; set; }
+}
