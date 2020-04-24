@@ -17,12 +17,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
-    /// <param name="controller">Controller (Injected)</param>
-    public SmartCardDefinitionSearchViewModel(DbContext context, NavigationManager navigationManager, EntityControllerBase<SmartCardDefinition> controller)
-      : base(context, navigationManager, controller)
+    /// <param name="apiConnector">ApiConnector (Injected)</param>
+    public SmartCardDefinitionSearchViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector)
+      : base(context, navigationManager, apiConnector)
     { }
 
     ///<inheritdoc/>
-    protected override async Task<List<SmartCardDefinition>> SearchCore() => await Controller.Get(null);
+    protected override async Task<List<SmartCardDefinition>> SearchCore() => await ApiConnector.Get<SmartCardDefinition>(null);
   }
 }

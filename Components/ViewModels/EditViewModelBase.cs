@@ -53,13 +53,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DbContext (Injected)</param>
+    /// <param name="context">DBContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
-    /// <param name="controller">Controller (Injected)</param>
+    /// <param name="apiConnector">ApiConnector (Injected)</param>
     /// <param name="changeValidator">Validator fpr property changes</param>
-    public EditViewModelBase(DbContext context, NavigationManager navigationManager, EntityControllerBase<TEntity> controller, 
+    public EditViewModelBase(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector, 
       EntityChangeValidator<TEntity> changeValidator)
-      : base(context, navigationManager, controller)
+      : base(context, navigationManager, apiConnector)
     {
       this.changeValidator = changeValidator;
 
@@ -113,7 +113,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Loads the Entity
     /// </summary>
     /// <param name="id">Id of the entity</param>
-    protected virtual void LoadEntity(object id) => Entity = Controller.Get(id);
+    protected virtual void LoadEntity(object id) => Entity = ApiConnector.Get<TEntity>(id);
 
     protected virtual void OnClosing()
     {
@@ -131,15 +131,15 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     protected virtual void SaveChanges()
     {
       if (IsNewEntity)
-        Controller.Post(Entity);
+        ApiConnector.Post(Entity);
       else
-        Controller.Put(Entity);
+        ApiConnector.Put(Entity);
       NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(Entity.GetDisplayName()));
     }
 
     protected virtual void DeleteEntity()
     {
-      Controller.Delete(Entity);
+      ApiConnector.Delete(Entity);
       NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(Entity.GetDisplayName()));
       NavigationManager.NavigateTo("/Home");
     }

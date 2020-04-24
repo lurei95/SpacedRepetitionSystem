@@ -17,9 +17,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public DbContext Context { get; private set; }
 
     /// <summary>
-    /// The controller used to perform actions on the entity
+    /// API-Connector to perform operations on entitites
     /// </summary>
-    protected EntityControllerBase<TEntity> Controller { get; private set; }
+    protected IApiConnector ApiConnector { get; private set; }
 
     /// <summary>
     /// Navigation Manager
@@ -31,12 +31,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
-    /// <param name="controller">Controller (Injected)</param>
-    public EntityViewModelBase(DbContext context, NavigationManager navigationManager, EntityControllerBase<TEntity> controller)
+    /// <param name="apiConnector">ApiConnetcor (Injected)</param>
+    public EntityViewModelBase(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector)
     {
       NavigationManager = navigationManager;
       Context = context;
-      Controller = controller;
+      ApiConnector = apiConnector;
     }
   }
 }

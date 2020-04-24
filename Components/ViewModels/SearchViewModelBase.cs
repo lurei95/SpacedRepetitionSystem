@@ -29,9 +29,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
-    /// <param name="controller">Controller (Injected)</param>
-    public SearchViewModelBase(DbContext context, NavigationManager navigationManager, EntityControllerBase<TEntity> controller) 
-      : base(context, navigationManager, controller)
+    /// <param name="apiConnector">ApiConnector (Injected)</param>
+    public SearchViewModelBase(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
+      : base(context, navigationManager, apiConnector)
     { }
 
     /// <summary>

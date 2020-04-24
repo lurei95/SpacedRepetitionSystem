@@ -137,11 +137,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
-    /// <param name="controller">Controller (Injected)</param>
+    /// <param name="apiConnector">ApiConnector (Injected)</param>
     /// <param name="changeValidator">change validator (Injected)</param>
-    public SmartCardEditViewModel(DbContext context, NavigationManager navigationManager, EntityControllerBase<SmartCard> controller,
+    public SmartCardEditViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector,
       EntityChangeValidator<SmartCard> changeValidator) 
-      : base(context, navigationManager, controller, changeValidator)
+      : base(context, navigationManager, apiConnector, changeValidator)
     { Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags)); }
 
     public override async Task InitializeAsync() 
@@ -159,9 +159,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
 
       await base.InitializeAsync();
 
-      foreach (PracticeSet deck in await Context.Set<PracticeSet>().ToListAsync())
+      foreach (PracticeSet deck in await ApiConnector.Get<PracticeSet>(null))
         availableDecks.Add(deck.Title, deck.PracticeSetId);
-      foreach (SmartCardDefinition smartCardDefinition in await Context.Set<SmartCardDefinition>().ToListAsync())
+      foreach (SmartCardDefinition smartCardDefinition in await ApiConnector.Get<SmartCardDefinition>(null))
         availableSmartCardDefinitions.Add(smartCardDefinition.Title, smartCardDefinition.SmartCardDefinitionId);
 
       PracticeSetTitleProperty.Validator = (value) => ValidatePractiecSetTitle(value);
@@ -178,10 +178,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
     private void ChangeSmartCardDefinition(long id)
     {
       Entity.SmartCardDefinitionId = id;
-      Entity.SmartCardDefinition = Context.Set<SmartCardDefinition>()
-        .Include(definition => definition.FieldDefinitions)
-        .AsNoTracking()
-        .FirstOrDefault(card => card.SmartCardDefinitionId == id);
+      Entity.SmartCardDefinition = ApiConnector.Get<SmartCardDefinition>(id);
       Entity.Fields.Clear();
       foreach (SmartCardFieldDefinition fieldDefinition in Entity.SmartCardDefinition.FieldDefinitions)
         Entity.Fields.Add(new SmartCardField()

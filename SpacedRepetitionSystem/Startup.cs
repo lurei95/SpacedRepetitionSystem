@@ -38,6 +38,7 @@ namespace SpacedRepetitionSystem
       services.AddScoped<EntityControllerBase<SmartCard>, SmartCardsController>();
       services.AddScoped<EntityControllerBase<PracticeSet>, PracticeSetsController>();
       services.AddScoped<EntityControllerBase<SmartCardDefinition>, SmartCardDefinitionsController>();
+      services.AddScoped<IApiConnector, ApiConnector>();
 
       services.AddSmartCardPropertyValidator();
     }
