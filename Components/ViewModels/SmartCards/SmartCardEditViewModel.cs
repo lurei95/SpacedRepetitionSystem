@@ -9,6 +9,7 @@ using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
 {
@@ -141,11 +142,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
     public SmartCardEditViewModel(DbContext context, NavigationManager navigationManager, EntityControllerBase<SmartCard> controller, 
       EntityChangeValidator<SmartCard> changeValidator) 
       : base(context, navigationManager, controller, changeValidator)
+    { Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags)); }
+
+    public override async Task InitializeAsync() 
     {
-      Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags));
       SmartCardDefinitionTitleProperty = new PropertyProxy(
-        () => SmartCardDefinitionTitle, 
-        (value) => SmartCardDefinitionTitle = value, 
+        () => SmartCardDefinitionTitle,
+        (value) => SmartCardDefinitionTitle = value,
         nameof(SmartCardDefinitionTitle)
       );
       PracticeSetTitleProperty = new PropertyProxy(
@@ -154,16 +157,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels.SmartCards
         nameof(PracticeSetTitle)
       );
 
-      foreach (PracticeSet deck in context.Set<PracticeSet>())
-        availableDecks.Add(deck.Title, deck.PracticeSetId);
-      foreach (SmartCardDefinition smartCardDefinition in context.Set<SmartCardDefinition>())
-        availableSmartCardDefinitions.Add(smartCardDefinition.Title, smartCardDefinition.SmartCardDefinitionId);
-    }
+      await base.InitializeAsync();
 
-    ///<inheritdoc/>
-    public override void LoadOrCreateEntity(object id)
-    {
-      base.LoadOrCreateEntity(id);
+      foreach (PracticeSet deck in await Context.Set<PracticeSet>().ToListAsync())
+        availableDecks.Add(deck.Title, deck.PracticeSetId);
+      foreach (SmartCardDefinition smartCardDefinition in await Context.Set<SmartCardDefinition>().ToListAsync())
+        availableSmartCardDefinitions.Add(smartCardDefinition.Title, smartCardDefinition.SmartCardDefinitionId);
+
       PracticeSetTitleProperty.Validator = (value) => ValidatePractiecSetTitle(value);
       SmartCardDefinitionTitleProperty.Validator = (value) => ValidateSmartCardDefinitionTitle(value);
     }

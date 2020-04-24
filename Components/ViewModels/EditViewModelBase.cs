@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
 {
@@ -21,6 +22,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   public abstract class EditViewModelBase<TEntity> : EntityViewModelBase<TEntity> where TEntity : IEntity
   {
     private readonly EntityChangeValidator<TEntity> changeValidator;
+
+    public object Id { get; set; }
 
     /// <summary>
     /// Whether the entity is new
@@ -80,20 +83,25 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       };
     }
 
+    public virtual async Task InitializeAsync() 
+    { 
+      LoadOrCreateEntity();
+      RegisterBindableProperties();
+    }
+
     /// <summary>
     /// Loads the entity or creates a new one
     /// </summary>
     /// <param name="id">Id of rthe entity</param>
-    public virtual void LoadOrCreateEntity(object id)
+    protected virtual void LoadOrCreateEntity()
     {
-      if (id == null)
+      if (Id == null)
       {
         CreateNewEntity();
         IsNewEntity = true;
       }
       else
-        LoadEntity(id);
-      RegisterBindableProperties();
+        LoadEntity(Id);
     }
 
     /// <summary>
@@ -139,7 +147,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     private void RegisterBindableProperties()
     {
       IEnumerable<PropertyProxy> proxies = GetType().GetTypeInfo().GetProperties()
-        .Where(property => property.PropertyType.IsAssignableFrom(typeof(PropertyProxy)))
+        .Where(property => property.PropertyType == typeof(PropertyProxy))
         .Select(property => property.GetValue(this) as PropertyProxy);
       foreach (var item in proxies)
         item.Validator = (newValue) => changeValidator.Validate(item.PropertyName, Entity, newValue); 

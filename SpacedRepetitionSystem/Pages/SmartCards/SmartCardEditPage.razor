@@ -16,7 +16,7 @@
     <div class="card-header">
       <div class="row">
         <div class="col col-md-auto">
-          @ViewModel.Entity.GetDisplayName()
+          @ViewModel?.Entity?.GetDisplayName()
         </div>
         <div class="col">
           <ul class="nav nav-tabs card-header-tabs pull-left" id="myTab" role="tablist">
@@ -26,12 +26,12 @@
           </ul>
         </div>
         <div class="col d-flex justify-content-end">
-          <Button Command="@ViewModel.DeleteCommand" IsIconButton="true" TextColor="black" Style="margin-top: 1px; margin-right: 10px"></Button>
-          <Button Command="@ViewModel.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+          <Button Command="@ViewModel?.DeleteCommand" IsIconButton="true" TextColor="black" Style="margin-top: 1px; margin-right: 10px"></Button>
+          <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
         </div>
       </div>
     </div>
-    <WaitSpinner>
+    <WaitSpinner Visible="IsLoading">
       <div class="card-body scrollable">
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">

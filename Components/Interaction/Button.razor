@@ -8,7 +8,7 @@
             data-toggle="tooltip"
             title="@Command.ToolTip"
             @onclick="ButtonClicked"
-            class="btn btn-lg btn-primary @(IsIconButton ? "iconButton" : null) @(string.IsNullOrEmpty(Classes) ? null: " " + Classes)"
+            class="btn btn-lg btn-primary @((IsIconButton ? "iconButton" : " ") + (string.IsNullOrEmpty(Classes) ? null: " ") + Classes)"
             disabled="@(Command?.IsEnabled == false)"
             style="@Style">
       @if (!string.IsNullOrEmpty(Command.Icon))
