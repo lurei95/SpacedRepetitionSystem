@@ -1,39 +1,70 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">SpacedRepetitionSystem</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+﻿<div class="vertical-nav bg-dark" id="sidebar">
+  <div class="px-3 bg-dark" style="height: 3.5rem; padding: 1rem; margin-bottom: 1rem; background: #1d2024!important;">
+    <div class="media d-flex align-items-center">
+      <div class="media-body text-white">
+        <h5 class="m-0">Jason Doe</h5>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">Main</p>
+
+  <ul class="nav flex-column bg-dark" mb-0">
+    <li class="nav-item">
+      <a href="Home" class="nav-link text-white bg-dark">
+        <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+        Home
+      </a>
+    </li>
+  </ul>
+
+  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">Decks</p>
+
+  <ul class="nav flex-column bg-dark" mb-0">
+    <li class="nav-item">
+      <a href="Decks/New" class="nav-link text-white bg-dark">
+        <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+        Add Deck
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="Decks" class="nav-link text-white bg-dark">
+        <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        Search Decks
+      </a>
+    </li>
+  </ul>
+
+  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">Cards</p>
+
+  <ul class="nav flex-column bg-dark" mb-0">
+    <li class="nav-item">
+      <a href="Cards" class="nav-link text-white bg-dark">
+        <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
+        Search Cards
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="Cards/Templates" class="nav-link text-white bg-dark">
+        <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
+        Card Templates
+      </a>
+    </li>
+  </ul>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Decks">
-                <span class="oi oi-beaker" aria-hidden="true"></span> Practice
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Cards">
-                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Search
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Cards/New">
-                <span class="oi oi-plus" aria-hidden="true"></span> Add Card
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Statistics">
-                <span class="oi oi-vertical-align-bottom" aria-hidden="true"></span> Statistics
-            </NavLink>
-        </li>
-    </ul>
-</div>
+<style>
+  .vertical-nav {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+  }
+
+</style>
 
 @code 
 {
