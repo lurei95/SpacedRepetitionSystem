@@ -10,7 +10,6 @@ using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
@@ -22,8 +21,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   public abstract class EditViewModelBase<TEntity> : EntityViewModelBase<TEntity> where TEntity : IEntity
   {
     private readonly EntityChangeValidator<TEntity> changeValidator;
-
-    public object Id { get; set; }
 
     /// <summary>
     /// Whether the entity is new
@@ -65,27 +62,26 @@ namespace SpacedRepetitionSystem.Components.ViewModels
 
       SaveChangesCommand = new Command() {
         CommandText = Messages.Save,
-        ExecuteAction = () => SaveChanges() 
+        ExecuteAction = (param) => SaveChanges() 
       };
 
       DeleteCommand = new Command()
       {
         Icon = "oi oi-trash",
         IsEnabled = IsNewEntity,
-        ExecuteAction = () => DeleteEntity()
+        ExecuteAction = (param) => DeleteEntity()
       };
 
       CloseCommand = new Command()
       {
         Icon = "oi oi-x",
         IsEnabled = true,
-        ExecuteAction = () => OnClosing()
+        ExecuteAction = (param) => OnClosing()
       };
     }
 
     public virtual async Task InitializeAsync() 
     { 
-      LoadOrCreateEntity();
       RegisterBindableProperties();
     }
 
@@ -93,15 +89,15 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Loads the entity or creates a new one
     /// </summary>
     /// <param name="id">Id of rthe entity</param>
-    protected virtual void LoadOrCreateEntity()
+    public virtual void LoadOrCreateEntity(object id)
     {
-      if (Id == null)
+      if (id == null)
       {
         CreateNewEntity();
         IsNewEntity = true;
       }
       else
-        LoadEntity(Id);
+        LoadEntity(id);
     }
 
     /// <summary>
@@ -137,6 +133,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(Entity.GetDisplayName()));
     }
 
+    /// <summary>
+    /// Deletes the Entity
+    /// </summary>
     protected virtual void DeleteEntity()
     {
       ApiConnector.Delete(Entity);

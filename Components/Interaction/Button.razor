@@ -48,6 +48,13 @@
   private Command command;
 
   /// <summary>
+  /// Parameter for executing the command
+  /// </summary>
+  [Parameter]
+  public object CommandParameter { get; set; }
+
+
+  /// <summary>
   /// Command of the button
   /// </summary>
   [Parameter]
@@ -91,7 +98,7 @@
   private void ButtonClicked()
   {
     if (Command != null)
-      Command.ExecuteCommand();
+      Command.ExecuteCommand(CommandParameter);
   }
 
   private void RefreshUi()

@@ -15,7 +15,7 @@ namespace SpacedRepetitionSystem.Pages
     public TViewModel ViewModel { get; set; }
 
     [Parameter]
-    public object Id { set => ViewModel.Id = value; }
+    public object Id { set => ViewModel.LoadOrCreateEntity(value); }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

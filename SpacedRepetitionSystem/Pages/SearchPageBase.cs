@@ -6,7 +6,7 @@ namespace SpacedRepetitionSystem.Pages
 {
   public abstract class SearchPageBase<TEntity, TViewModel> : ComponentBase
     where TViewModel : SearchViewModelBase<TEntity>
-    where TEntity : IEntity
+    where TEntity : class, IEntity
   {
     [Inject]
     public TViewModel ViewModel { get; set; }

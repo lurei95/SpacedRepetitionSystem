@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System.Collections.Generic;
@@ -13,6 +14,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
   public sealed class DeckSearchViewModel : SearchViewModelBase<Deck>
   {
     /// <summary>
+    /// Command for practicing the deck
+    /// </summary>
+    public Command PracticeDeckCommand { get; private set; }
+
+    /// <summary>
+    /// Command for adding a new card to the deck
+    /// </summary>
+    public Command AddCardsCommand { get; private set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -20,9 +31,30 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <param name="apiConnector">ApiConnector (Injected)</param>
     public DeckSearchViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
       : base(context, navigationManager, apiConnector)
-    { }
+    {
+      PracticeDeckCommand = new Command()
+      {
+        ExecuteAction = (param) => PracticeDeck((long)param),
+        Icon = "oi oi-media-play",
+        ToolTip = ""
+      };
+      AddCardsCommand = new Command()
+      {
+        ExecuteAction = (param) => AddCards((long)param),
+        Icon = "oi oi-plus",
+        ToolTip = ""
+      };
+    }
 
     ///<inheritdoc/>
     protected override async Task<List<Deck>> SearchCore() => await ApiConnector.Get<Deck>(null);
+
+    private void AddCards(long deckId)
+    { NavigationManager.NavigateTo($"/Decks/{deckId}/Cards/New"); }
+
+    private void PracticeDeck(long deckId)
+    {
+
+    }
   }
 }

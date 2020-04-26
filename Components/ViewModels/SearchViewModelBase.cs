@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,8 +15,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   /// </summary>
   /// <typeparam name="TEntity">The entity type</typeparam>
   public abstract class SearchViewModelBase<TEntity> : EntityViewModelBase<TEntity>
-    where TEntity : IEntity
+    where TEntity : class, IEntity
   {
+    /// <summary>
+    /// Command for Saving the changes
+    /// </summary>
+    public Command DeleteCommand { get; set; }
+
     /// <summary>
     /// Results of the search
     /// </summary>
@@ -32,7 +40,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <param name="apiConnector">ApiConnector (Injected)</param>
     public SearchViewModelBase(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
       : base(context, navigationManager, apiConnector)
-    { }
+    {
+      DeleteCommand = new Command()
+      {
+        Icon = "oi oi-trash",
+        ExecuteAction = (param) => DeleteEntity(param as TEntity)
+      };
+    }
 
     /// <summary>
     /// Executes the search
@@ -45,6 +59,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       SearchResults.Clear();
       SearchResults.AddRange(results);
       IsSearching = false;
+    }
+
+    protected virtual void DeleteEntity(TEntity entity)
+    {
+      ApiConnector.Delete(entity);
+      SearchResults.Remove(entity);
+      NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
     }
 
     /// <summary>

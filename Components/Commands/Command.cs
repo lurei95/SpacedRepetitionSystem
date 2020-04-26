@@ -23,7 +23,7 @@ namespace SpacedRepetitionSystem.Components.Commands
     /// <summary>
     /// Action performed when the command is executed
     /// </summary>
-    public virtual Action ExecuteAction { private get; set; }
+    public virtual Action<object> ExecuteAction { private get; set; }
 
     /// <summary>
     /// Whether the button is enabled
@@ -109,7 +109,8 @@ namespace SpacedRepetitionSystem.Components.Commands
     /// <summary>
     /// Executes the command
     /// </summary>
-    public void ExecuteCommand() => ExecuteAction.Invoke();
+    /// <param name="param">Parameter for executing the command</param>
+    public void ExecuteCommand(object param = null) => ExecuteAction.Invoke(param);
 
     private void OnPropertyChanged([CallerMemberName]string propertyName = "")
     { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
