@@ -61,29 +61,29 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deck- &quot;{0}&quot;.
-        /// </summary>
-        public static string PracticeSet {
-            get {
-                return ResourceManager.GetString("PracticeSet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Card - &quot;{0}&quot;.
         /// </summary>
-        public static string SmartCard {
+        public static string Card {
             get {
-                return ResourceManager.GetString("SmartCard", resourceCulture);
+                return ResourceManager.GetString("Card", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Card Template - &quot;{0}&quot;.
         /// </summary>
-        public static string SmartCardDefinition {
+        public static string CardTemplate {
             get {
-                return ResourceManager.GetString("SmartCardDefinition", resourceCulture);
+                return ResourceManager.GetString("CardTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deck- &quot;{0}&quot;.
+        /// </summary>
+        public static string Deck {
+            get {
+                return ResourceManager.GetString("Deck", resourceCulture);
             }
         }
     }

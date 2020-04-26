@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Core;
-using SpacedRepetitionSystem.Components.ViewModels.SmartCards;
-using SpacedRepetitionSystem.Entities.Entities.SmartCards;
+using SpacedRepetitionSystem.Components.ViewModels.Cards;
+using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
-using SpacedRepetitionSystem.Logic.Controllers.SmartCards;
+using SpacedRepetitionSystem.Logic.Controllers.Cards;
 using SpacedRepetitionSystem.Entities;
 
 namespace SpacedRepetitionSystem
@@ -31,16 +31,16 @@ namespace SpacedRepetitionSystem
         options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
       services.AddScoped<DbContext, SpacedRepetionSystemDBContext>();
 
-      services.AddScoped<SmartCardEditViewModel>();
-      services.AddScoped<SmartCardSearchViewModel>();
-      services.AddScoped<PracticeSetSearchViewModel>();
+      services.AddScoped<CardEditViewModel>();
+      services.AddScoped<CardSearchViewModel>();
+      services.AddScoped<DeckSearchViewModel>();
 
-      services.AddScoped<EntityControllerBase<SmartCard>, SmartCardsController>();
-      services.AddScoped<EntityControllerBase<PracticeSet>, PracticeSetsController>();
-      services.AddScoped<EntityControllerBase<SmartCardDefinition>, SmartCardDefinitionsController>();
+      services.AddScoped<EntityControllerBase<Card>, CardsController>();
+      services.AddScoped<EntityControllerBase<Deck>, DecksController>();
+      services.AddScoped<EntityControllerBase<CardTemplate>, CardTemplatesController>();
       services.AddScoped<IApiConnector, ApiConnector>();
 
-      services.AddSmartCardPropertyValidator();
+      services.AddCardPropertyValidator();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

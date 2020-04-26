@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SpacedRepetitionSystem.Entities.Entities.SmartCards;
+using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Entities.Validation.SmartCards;
+using SpacedRepetitionSystem.Entities.Validation.Cards;
 
 namespace SpacedRepetitionSystem.Entities
 {
@@ -20,12 +20,12 @@ namespace SpacedRepetitionSystem.Entities
       where TValidator : class where TImplementation : class, TValidator
       => services.AddSingleton<TValidator, TImplementation>();
 
-    public static void AddSmartCardPropertyValidator(this IServiceCollection services)
+    public static void AddCardPropertyValidator(this IServiceCollection services)
     {
-      EntityChangeValidator <SmartCard> validator = new EntityChangeValidator<SmartCard>();
-      validator.Register(nameof(SmartCard.SmartCardDefinitionId), new SmartCardSmartCardDefinitionIdValidator());
-      validator.Register(nameof(SmartCard.PracticeSetId), new SmartCardPracticeSetIdValidator());
-      services.AddSingleton(typeof(EntityChangeValidator<SmartCard>), validator);
+      EntityChangeValidator<Card> validator = new EntityChangeValidator<Card>();
+      validator.Register(nameof(Card.CardTemplateId), new CardCardTemplateIdValidator());
+      validator.Register(nameof(Card.DeckId), new CardDeckIdValidator());
+      services.AddSingleton(typeof(EntityChangeValidator<Card>), validator);
     }
   }
 }

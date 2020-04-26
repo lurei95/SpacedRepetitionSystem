@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PracticeSet" xml:space="preserve">
-    <value>Deck- "{0}"</value>
-  </data>
-  <data name="SmartCard" xml:space="preserve">
+  <data name="Card" xml:space="preserve">
     <value>Card - "{0}"</value>
   </data>
-  <data name="SmartCardDefinition" xml:space="preserve">
+  <data name="CardTemplate" xml:space="preserve">
     <value>Card Template - "{0}"</value>
+  </data>
+  <data name="Deck" xml:space="preserve">
+    <value>Deck- "{0}"</value>
   </data>
 </root>

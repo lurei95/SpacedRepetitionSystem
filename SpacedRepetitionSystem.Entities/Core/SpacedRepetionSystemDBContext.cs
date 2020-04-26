@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SpacedRepetitionSystem.Entities.Entities.SmartCards;
-using SpacedRepetitionSystem.Entities.Entities.SmartCards.Configurations;
+using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Entities.Entities.Cards.Configurations;
 
 namespace SpacedRepetitionSystem.Entities.Core
 {
@@ -10,19 +10,19 @@ namespace SpacedRepetitionSystem.Entities.Core
   public sealed class SpacedRepetionSystemDBContext : DbContext 
   {
     /// <summary>
-    /// SmartCards
+    /// Cards
     /// </summary>
-    public DbSet<SmartCard> SmartCards { get; set; }
+    public DbSet<Card> Cards { get; set; }
 
     /// <summary>
-    /// PracticeSets
+    /// decks
     /// </summary>
-    public DbSet<PracticeSet> PracticeSets { get; set; }
+    public DbSet<Deck> Decks { get; set; }
 
     /// <summary>
-    /// SmartCardDefinitions
+    /// CardTemplates
     /// </summary>
-    public DbSet<SmartCardDefinition> SmartCardDefinitions { get; set; }
+    public DbSet<CardTemplate> CardTemplates { get; set; }
 
     /// <summary>
     /// PracticeHistoryEntries 
@@ -40,11 +40,11 @@ namespace SpacedRepetitionSystem.Entities.Core
     {
       base.OnModelCreating(modelBuilder);
       modelBuilder.ApplyConfiguration(new PracticeHistoryEntryConfiguration());
-      modelBuilder.ApplyConfiguration(new PracticeSetConfiguration());
-      modelBuilder.ApplyConfiguration(new SmartCardConfiguration());
-      modelBuilder.ApplyConfiguration(new SmartCardDefinitionConfiguration());
-      modelBuilder.ApplyConfiguration(new SmartCardFieldConfiguration());
-      modelBuilder.ApplyConfiguration(new SmartCardFieldDefinitionConfiguration());
+      modelBuilder.ApplyConfiguration(new DeckConfiguration());
+      modelBuilder.ApplyConfiguration(new CardConfiguration());
+      modelBuilder.ApplyConfiguration(new CardTemplateConfiguration());
+      modelBuilder.ApplyConfiguration(new CardFieldConfiguration());
+      modelBuilder.ApplyConfiguration(new CardFieldDefinitionConfiguration());
     }
   }
 }

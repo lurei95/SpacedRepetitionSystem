@@ -1,4 +1,4 @@
-﻿using SpacedRepetitionSystem.Entities.Entities.SmartCards;
+﻿using SpacedRepetitionSystem.Entities.Entities.Cards;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,13 +12,13 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
   {
     readonly Dictionary<Type, object> controllers = new Dictionary<Type, object>();
     
-    public ApiConnector(EntityControllerBase<SmartCard> smartCardController, 
-      EntityControllerBase<PracticeSet> practiceSetController, 
-      EntityControllerBase<SmartCardDefinition> smartCardDefinitionController)
+    public ApiConnector(EntityControllerBase<Card> cardsController, 
+      EntityControllerBase<Deck> decksController, 
+      EntityControllerBase<CardTemplate> cardTemplatesController)
     {
-      controllers.Add(typeof(SmartCard), smartCardController);
-      controllers.Add(typeof(SmartCardDefinition), smartCardDefinitionController);
-      controllers.Add(typeof(PracticeSet), practiceSetController);
+      controllers.Add(typeof(Card), cardsController);
+      controllers.Add(typeof(CardTemplate), cardTemplatesController);
+      controllers.Add(typeof(Deck), decksController);
     }
 
     ///<inheritdoc/>
