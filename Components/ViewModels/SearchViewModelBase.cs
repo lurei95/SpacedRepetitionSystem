@@ -65,6 +65,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     {
       ApiConnector.Delete(entity);
       SearchResults.Remove(entity);
+      OnPropertyChanged(nameof(SearchResults));
       NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
     }
 

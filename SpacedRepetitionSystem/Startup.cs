@@ -31,9 +31,9 @@ namespace SpacedRepetitionSystem
         options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
       services.AddScoped<DbContext, SpacedRepetionSystemDBContext>();
 
-      services.AddScoped<CardEditViewModel>();
-      services.AddScoped<CardSearchViewModel>();
-      services.AddScoped<DeckSearchViewModel>();
+      services.AddTransient<CardEditViewModel>();
+      services.AddTransient<CardSearchViewModel>();
+      services.AddTransient<DeckSearchViewModel>();
 
       services.AddScoped<EntityControllerBase<Card>, CardsController>();
       services.AddScoped<EntityControllerBase<Deck>, DecksController>();
