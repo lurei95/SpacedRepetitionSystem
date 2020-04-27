@@ -1,5 +1,14 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.colButton {
+  font-size: 1.25rem !important;
+}
+
+.buttonCol {
+  width: 1rem;
+  padding: .5rem!important;
+}
+
 .fullsizeCard {
   min-height: calc(100vh - 100px);
   max-height: inherit;

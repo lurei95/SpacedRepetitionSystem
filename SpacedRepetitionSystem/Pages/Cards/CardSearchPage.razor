@@ -32,18 +32,22 @@
               <th class="th-sm">
                 Field 3
               </th>
+              <th class="th-sm buttonCol"></th>
             </tr>
           </thead>
           <tbody>
             @foreach (var item in ViewModel.SearchResults)
             {
-              <tr>
-                <td><a href="/Cards/@item.CardId">@item.CardId</a></td>
-                <td><a href="/Decks/@item.DeckId">@item.Deck?.Title</a></td>
-                <td>@item.Fields[0].Value</td>
-                <td>@item.Fields[1].Value</td>
-                <td>@(item.Fields.Count > 2 ? item.Fields[2].FieldName : "")</td>
-              </tr>
+            <tr>
+              <td><a href="/Cards/@item.CardId">@item.CardId</a></td>
+              <td><a href="/Decks/@item.DeckId">@item.Deck?.Title</a></td>
+              <td>@item.Fields[0].Value</td>
+              <td>@item.Fields[1].Value</td>
+              <td>@(item.Fields.Count > 2 ? item.Fields[2].FieldName : "")</td>
+              <th class="buttonCol">
+                <Button CommandParameter="item" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
+              </th>
+            </tr>
             }
           </tbody>
         </table>

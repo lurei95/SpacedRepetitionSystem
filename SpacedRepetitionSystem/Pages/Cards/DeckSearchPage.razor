@@ -35,13 +35,13 @@
               <td><a href="/Decks/@item.DeckId">@item.DeckId</a></td>
               <td>@item.Title</td>
               <td class="buttonCol">
-                <Button CommandParameter="item.DeckId" TextColor="#1b6ec2" IsIconButton="true" Command="ViewModel.PracticeDeckCommand"></Button>
+                <Button CommandParameter="item.DeckId" Classes="colButton" TextColor="#1b6ec2" IsIconButton="true" Command="ViewModel.PracticeDeckCommand"></Button>
               </td>
               <td class="buttonCol">
-                <Button CommandParameter="item.DeckId" TextColor="#27ae60" IsIconButton="true" Command="ViewModel.AddCardsCommand"></Button>
+                <Button CommandParameter="item.DeckId" Classes="colButton" TextColor="#27ae60" IsIconButton="true" Command="ViewModel.AddCardsCommand"></Button>
               </td>
               <td class="buttonCol">
-                <Button CommandParameter="item" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
+                <Button CommandParameter="item" Classes="colButton" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
               </td>
             </tr>
             }
@@ -51,13 +51,6 @@
     </div>
   </div>
 </ViewModelArea>
-
-<style>
-  .buttonCol
-  {
-    width: 1rem;
-  }
-</style>
 
 @code
 {
