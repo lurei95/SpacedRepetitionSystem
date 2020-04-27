@@ -81,9 +81,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     }
 
     public virtual async Task InitializeAsync() 
-    { 
-      RegisterBindableProperties();
-    }
+    { RegisterBindableProperties(); }
 
     /// <summary>
     /// Loads the entity or creates a new one

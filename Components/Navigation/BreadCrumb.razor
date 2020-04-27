@@ -38,14 +38,15 @@
     }
   }
 
-  private void OnLocationChanged(object sender, LocationChangedEventArgs e)
-  { CalculateNavigationList(e.Location); }
-
+  ///<inheritdoc/>
   protected override void OnInitialized()
   {
     base.OnInitialized();
     CalculateNavigationList(navigationManager.Uri);
   }
+
+  private void OnLocationChanged(object sender, LocationChangedEventArgs e)
+  { CalculateNavigationList(e.Location); }
 
   private void CalculateNavigationList(string uri)
   {

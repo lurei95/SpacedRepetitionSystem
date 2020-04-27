@@ -20,6 +20,10 @@ namespace SpacedRepetitionSystem.Entities
       where TValidator : class where TImplementation : class, TValidator
       => services.AddSingleton<TValidator, TImplementation>();
 
+    /// <summary>
+    /// Adds the Property validator for <see cref="Card"/>
+    /// </summary>
+    /// <param name="services">Service-collection</param>
     public static void AddCardPropertyValidator(this IServiceCollection services)
     {
       EntityChangeValidator<Card> validator = new EntityChangeValidator<Card>();

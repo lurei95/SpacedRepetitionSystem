@@ -8,7 +8,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   /// <summary>
   /// Base class for a view model associated with an entity
   /// </summary>
-  /// <typeparam name="TEntity"></typeparam>
+  /// <typeparam name="TEntity">Entity-Type</typeparam>
   public abstract class EntityViewModelBase<TEntity> : ViewModelBase where  TEntity : IEntity
   {
     /// <summary>

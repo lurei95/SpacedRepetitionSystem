@@ -61,6 +61,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       IsSearching = false;
     }
 
+    /// <summary>
+    /// Deletes the entity
+    /// </summary>
+    /// <param name="entity">The entity</param>
     protected virtual void DeleteEntity(TEntity entity)
     {
       ApiConnector.Delete(entity);

@@ -11,7 +11,13 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
   public sealed class ApiConnector : IApiConnector
   {
     readonly Dictionary<Type, object> controllers = new Dictionary<Type, object>();
-    
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="cardsController">CardsController</param>
+    /// <param name="decksController">DecksController</param>
+    /// <param name="cardTemplatesController">CardTemplatesController</param>
     public ApiConnector(EntityControllerBase<Card> cardsController, 
       EntityControllerBase<Deck> decksController, 
       EntityControllerBase<CardTemplate> cardTemplatesController)

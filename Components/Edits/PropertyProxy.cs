@@ -12,7 +12,7 @@ namespace SpacedRepetitionSystem.Components.Edits
     private readonly Func<string> getter;
     private readonly Action<string> setter;
     private string errorText;
-    Func<string, string> validator;
+    private Func<string, string> validator;
 
     /// <summary>
     /// Name of the property
@@ -82,17 +82,17 @@ namespace SpacedRepetitionSystem.Components.Edits
     }
 
     /// <summary>
+    /// Manually sets the error text
+    /// </summary>
+    /// <param name="error"></param>
+    public void SetError(string error) => ErrorText = error;
+
+    /// <summary>
     /// Property changed event
     /// </summary>
     public event PropertyChangedEventHandler PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName]string propertyName = "")
     { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); }
-
-    /// <summary>
-    /// Manually sets the error text
-    /// </summary>
-    /// <param name="error"></param>
-    public void SetError(string error) => ErrorText = error;
   }
 }

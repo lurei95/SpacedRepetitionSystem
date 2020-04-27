@@ -57,7 +57,6 @@ namespace SpacedRepetitionSystem.Components.Commands
       }
     }
 
-
     /// <summary>
     /// Ehether the button is visible
     /// </summary>
