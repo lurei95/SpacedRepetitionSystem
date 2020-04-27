@@ -40,9 +40,9 @@
               <tr>
                 <td><a href="/Cards/@item.CardId">@item.CardId</a></td>
                 <td><a href="/Decks/@item.DeckId">@item.Deck?.Title</a></td>
-                <td>@item.Fields[0].FieldName</td>
-                <td>@item.Fields[1].FieldName</td>
-                <td>@item.Fields.Count > 2 ? item.Fields[2].FieldName : null</td>
+                <td>@item.Fields[0].Value</td>
+                <td>@item.Fields[1].Value</td>
+                <td>@(item.Fields.Count > 2 ? item.Fields[2].FieldName : "")</td>
               </tr>
             }
           </tbody>

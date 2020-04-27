@@ -18,7 +18,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
   /// </summary>
   public sealed class CardEditViewModel : EditViewModelBase<Card>
   {
-    private readonly Dictionary<string, long> availableDecks = new Dictionary<string, long>();
     private readonly Dictionary<string, long> availableCardTemplates = new Dictionary<string, long>();
 
     private long? deckId;
@@ -38,16 +37,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           if (DeckId.HasValue)
           {
             Entity.DeckId = DeckId.Value;
-            Entity.Deck = Context.Set<Deck>().Find(DeckId);
-            CardTemplateId = Entity.Deck.DefaultCardTemplateId;
-            Entity.CardTemplate = Context.Set<CardTemplate>().Find(Entity.CardTemplateId);
+            Entity.Deck = ApiConnector.Get<Deck>(DeckId);
+            if (IsNewEntity)
+            {
+              CardTemplateId = Entity.Deck.DefaultCardTemplateId;
+              Entity.CardTemplate = ApiConnector.Get<CardTemplate>(Entity.CardTemplateId);
+            }
+            OnPropertyChanged();
           }
-          else
-          {
-            Entity.DeckId = default;
-            Entity.Deck = null;
-          }
-          OnPropertyChanged(nameof(DeckTitle));
         }
       }
     }
@@ -71,20 +68,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
             Entity.CardTemplate = null;
             Entity.Fields.Clear();
           }
-          OnPropertyChanged(nameof(DeckTitle));
+          OnPropertyChanged();
         }
       }
     }
 
     /// <summary>
-    /// Property for <see cref="DeckTitle"/>
+    /// Property for <see cref="CardTemplateTitle"/>
     /// </summary>
     public PropertyProxy CardTemplateTitleProperty { get; private set; }
 
-    /// <summary>
-    /// Property for <see cref="CardTemplateTitle"/>
-    /// </summary>
-    public PropertyProxy DeckTitleProperty { get; private set; }
 
     /// <summary>
     /// Title of the card template
@@ -98,24 +91,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           CardTemplateId = availableCardTemplates[value];
       }
     }
-
-    /// <summary>
-    /// Title of the deck
-    /// </summary>
-    public string DeckTitle
-    {
-      get => Entity?.Deck?.Title;
-      set
-      {
-        if (DeckTitle != value)
-          DeckId = availableDecks[value];
-      }
-    }
-
-    /// <summary>
-    /// The available decks
-    /// </summary>
-    public List<string> AvailableDecks => availableDecks.Keys.ToList();
 
     /// <summary>
     /// The available card templates
@@ -147,24 +122,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public override async Task InitializeAsync() 
     {
       CardTemplateTitleProperty = new PropertyProxy(
-        () => DeckTitle,
-        (value) => DeckTitle = value,
-        nameof(DeckTitle)
+        () => CardTemplateTitle,
+        (value) => CardTemplateTitle = value,
+        nameof(CardTemplateTitle)
       );
-      DeckTitleProperty = new PropertyProxy(
-        () => DeckTitle,
-        (value) => DeckTitle = value,
-        nameof(DeckTitle)
-      );
-
       await base.InitializeAsync();
 
-      foreach (Deck deck in await ApiConnector.Get<Deck>(null))
-        availableDecks.Add(deck.Title, deck.DeckId);
       foreach (CardTemplate cardTemplate in await ApiConnector.Get<CardTemplate>(null))
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate.CardTemplateId);
-
-      DeckTitleProperty.Validator = (value) => ValidatePractiecSetTitle(value);
       CardTemplateTitleProperty.Validator = (value) => ValidateCardTemplateTitle(value);
     }
 
@@ -188,9 +153,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           FieldName = fieldDefinition.FieldName
         });
     }
-
-    private string ValidatePractiecSetTitle(string value) 
-      => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(PropertyNames.Deck) : null;
 
     private string ValidateCardTemplateTitle(string value)
       => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(PropertyNames.CardTemplate) : null;
