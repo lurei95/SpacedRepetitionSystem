@@ -52,6 +52,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public PropertyProxy CardTemplateTitleProperty { get; private set; }
 
     /// <summary>
+    /// Property for <see cref="Entity.Title"/>
+    /// </summary>
+    public PropertyProxy TitleProperty { get; private set; }
+
+    /// <summary>
     /// Title of the card template
     /// </summary>
     public string CardTemplateTitle
@@ -88,6 +93,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         () => CardTemplateTitle,
         (value) => CardTemplateTitle = value,
         nameof(CardTemplateTitle)
+      );
+      TitleProperty = new PropertyProxy(
+        () => Entity.Title,
+        (value) => Entity.Title = value,
+        nameof(Entity.Title)
       );
       await base.InitializeAsync();
 

@@ -8,12 +8,12 @@
             data-toggle="tooltip"
             title="@Command.ToolTip"
             @onclick="ButtonClicked"
-            class="btn btn-lg btn-primary @((IsIconButton ? "iconButton" : " ") + (string.IsNullOrEmpty(Classes) ? null: " ") + Classes)"
+            class="btn btn-lg btn-primary @ClassString"
             disabled="@(Command?.IsEnabled == false)"
             style="@Style">
       @if (!string.IsNullOrEmpty(Command.Icon))
       {
-        <span class="@Command.Icon" style="@(!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null)" aria-hidden="true"></span>
+        <span class="@Command.Icon" style="@TextColorString" aria-hidden="true"></span>
       }
 
       @Command.CommandText
@@ -46,6 +46,10 @@
 @code
 {
   private Command command;
+
+  private string ClassString => (IsIconButton ? "iconButton" : " ") + (string.IsNullOrEmpty(Classes) ? "" : " ") + Classes;
+
+  private string TextColorString => (!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null);
 
   /// <summary>
   /// Parameter for executing the command

@@ -32,6 +32,7 @@ namespace SpacedRepetitionSystem
       services.AddScoped<DbContext, SpacedRepetionSystemDBContext>();
 
       services.AddTransient<CardEditViewModel>();
+      services.AddTransient<DeckEditViewModel>();
       services.AddTransient<CardSearchViewModel>();
       services.AddTransient<DeckSearchViewModel>();
 
@@ -41,6 +42,7 @@ namespace SpacedRepetitionSystem
       services.AddScoped<IApiConnector, ApiConnector>();
 
       services.AddCardPropertyValidator();
+      services.AddDecksPropertyValidator();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

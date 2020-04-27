@@ -31,5 +31,15 @@ namespace SpacedRepetitionSystem.Entities
       validator.Register(nameof(Card.DeckId), new CardDeckIdValidator());
       services.AddSingleton(typeof(EntityChangeValidator<Card>), validator);
     }
+
+    /// <summary>
+    /// Adds the Property validator for <see cref="Deck"/>
+    /// </summary>
+    /// <param name="services">Service-collection</param>
+    public static void AddDecksPropertyValidator(this IServiceCollection services)
+    {
+      EntityChangeValidator<Deck> validator = new EntityChangeValidator<Deck>();
+      services.AddSingleton(typeof(EntityChangeValidator<Deck>), validator);
+    }
   }
 }
