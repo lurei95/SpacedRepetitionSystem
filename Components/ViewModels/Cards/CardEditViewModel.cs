@@ -140,6 +140,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       CardTemplateId = CardTemplate.DefaultCardTemplateId;
     }
 
+    ///<inheritdoc/>
+    protected override void SaveChanges()
+    {
+      base.SaveChanges();
+      if (IsNewEntity)
+        NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
+    }
+
     private void ChangeCardTemplate(long id)
     {
       Entity.CardTemplateId = id;
