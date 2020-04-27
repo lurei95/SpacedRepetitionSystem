@@ -77,5 +77,23 @@ namespace SpacedRepetitionSystem.Entities {
                 return ResourceManager.GetString("Deck", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Template.
+        /// </summary>
+        public static string DefaultCardTemplate {
+            get {
+                return ResourceManager.GetString("DefaultCardTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
     }
 }
