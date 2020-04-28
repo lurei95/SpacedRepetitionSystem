@@ -34,6 +34,7 @@ namespace SpacedRepetitionSystem
       services.AddTransient<CardEditViewModel>();
       services.AddTransient<DeckEditViewModel>();
       services.AddTransient<CardSearchViewModel>();
+      services.AddTransient<CardTemplateSearchViewModel>();
       services.AddTransient<DeckSearchViewModel>();
 
       services.AddScoped<EntityControllerBase<Card>, CardsController>();
