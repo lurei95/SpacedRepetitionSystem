@@ -39,7 +39,10 @@
             <h5 class="card-title">Fields</h5>
             @for (int i = 0; i < ViewModel.FieldDefinitions.Count; i++)
             {
-              <TextEdit Caption="@("Field " + i)" @bind-Value="ViewModel.FieldDefinitions[i].FieldName"></TextEdit>
+              <div class="row d-felx" style="margin-right: 10px;">
+                <TextEdit Caption="@("Field " + i)" @bind-Value="ViewModel.FieldDefinitions[i].FieldName"></TextEdit>
+                <Button IsIconButton="true" TextColor="#e74c3c" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="ViewModel.FieldDefinitions[i]"></Button>
+              </div>
             }
           </div>
         </div>

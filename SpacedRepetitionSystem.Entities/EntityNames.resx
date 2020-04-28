@@ -124,6 +124,6 @@
     <value>Card Template - "{0}"</value>
   </data>
   <data name="Deck" xml:space="preserve">
-    <value>Deck- "{0}"</value>
+    <value>Deck - "{0}"</value>
   </data>
 </root>

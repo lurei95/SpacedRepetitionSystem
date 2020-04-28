@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
@@ -25,6 +26,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public List<CardFieldDefinition> FieldDefinitions => Entity.FieldDefinitions;
 
     /// <summary>
+    /// Command for removing a field definition
+    /// </summary>
+    public Command RemoveFieldDefinitionCommand { get; private set; }
+
+    /// <summary>
+    /// Command for adding a field definition
+    /// </summary>
+    public Command AddFieldDefinitionCommand { get; private set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -34,7 +45,19 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public CardTemplateEditViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector,
       EntityChangeValidator<CardTemplate> changeValidator)
       : base(context, navigationManager, apiConnector, changeValidator)
-    { }
+    {
+      AddFieldDefinitionCommand = new Command()
+      {
+        Icon = "oi oi-plus",
+        ExecuteAction = (param) => AddFieldDefiniton()
+      };
+      RemoveFieldDefinitionCommand = new Command()
+      {
+        Icon = "oi oi-x",
+        IsEnabled = true,
+        ExecuteAction = (param) => RemoveFieldDefiniton(param as CardFieldDefinition)
+      };
+    }
 
     ///<inheritdoc/>
     public override async Task InitializeAsync()
@@ -53,6 +76,20 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       Entity = new CardTemplate();
       Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Front" });
       Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Back" });
+    }
+
+    private void RemoveFieldDefiniton(CardFieldDefinition definition)
+    {
+      Entity.FieldDefinitions.Remove(definition);
+      RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 1;
+      OnPropertyChanged(nameof(FieldDefinitions));
+    }
+
+    private void AddFieldDefiniton()
+    {
+      Entity.FieldDefinitions.Add(new CardFieldDefinition());
+      RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 1;
+      OnPropertyChanged(nameof(FieldDefinitions));
     }
   }
 }

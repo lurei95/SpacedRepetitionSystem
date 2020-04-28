@@ -79,7 +79,7 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deck- &quot;{0}&quot;.
+        ///   Looks up a localized string similar to Deck - &quot;{0}&quot;.
         /// </summary>
         public static string Deck {
             get {

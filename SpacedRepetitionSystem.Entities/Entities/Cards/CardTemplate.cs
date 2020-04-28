@@ -33,6 +33,6 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     #endregion
 
     ///<inheritdoc>/>
-    public string GetDisplayName() => EntityNames.CardTemplate.FormatWith(CardTemplateId);
+    public string GetDisplayName() => EntityNames.CardTemplate.FormatWith(Title);
   }
 }
