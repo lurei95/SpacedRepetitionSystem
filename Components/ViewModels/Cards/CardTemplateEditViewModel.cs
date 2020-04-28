@@ -4,6 +4,7 @@ using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels.Cards
@@ -17,6 +18,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// Property for <see cref="Entity.Title"/>
     /// </summary>
     public PropertyProxy TitleProperty { get; private set; }
+
+    /// <summary>
+    /// The fields definitions of the template
+    /// </summary>
+    public List<CardFieldDefinition> FieldDefinitions => Entity.FieldDefinitions;
 
     /// <summary>
     /// Constructor

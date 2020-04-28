@@ -32,6 +32,7 @@ namespace SpacedRepetitionSystem
       services.AddScoped<DbContext, SpacedRepetionSystemDBContext>();
 
       services.AddTransient<CardEditViewModel>();
+      services.AddTransient<CardTemplateEditViewModel>();
       services.AddTransient<DeckEditViewModel>();
       services.AddTransient<CardSearchViewModel>();
       services.AddTransient<CardTemplateSearchViewModel>();
