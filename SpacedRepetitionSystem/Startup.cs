@@ -42,6 +42,7 @@ namespace SpacedRepetitionSystem
       services.AddScoped<EntityControllerBase<CardTemplate>, CardTemplatesController>();
       services.AddScoped<IApiConnector, ApiConnector>();
 
+      services.AddCardTemplatePropertyValidator();
       services.AddCardPropertyValidator();
       services.AddDecksPropertyValidator();
     }

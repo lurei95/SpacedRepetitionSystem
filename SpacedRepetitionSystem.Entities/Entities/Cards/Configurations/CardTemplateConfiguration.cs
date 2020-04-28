@@ -23,7 +23,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .HasMaxLength(100);
 
       builder.HasMany(cardDefinition => cardDefinition.FieldDefinitions)
-        .WithOne(fieldDefinition => fieldDefinition.CardDefinition)
+        .WithOne(fieldDefinition => fieldDefinition.CardTemplate)
         .HasForeignKey(fieldDefinition => fieldDefinition.CardTemplateId)
         .OnDelete(DeleteBehavior.Cascade);
     }

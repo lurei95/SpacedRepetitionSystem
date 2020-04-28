@@ -43,5 +43,16 @@ namespace SpacedRepetitionSystem.Entities
       validator.Register(nameof(Deck.Title), new DeckTitleValidator());
       services.AddSingleton(typeof(EntityChangeValidator<Deck>), validator);
     }
+
+    /// <summary>
+    /// Adds the Property validator for <see cref="CardTemplate"/>
+    /// </summary>
+    /// <param name="services">Service-collection</param>
+    public static void AddCardTemplatePropertyValidator(this IServiceCollection services)
+    {
+      EntityChangeValidator<CardTemplate> validator = new EntityChangeValidator<CardTemplate>();
+      validator.Register(nameof(CardTemplate.Title), new CardTemplateTitleValidator());
+      services.AddSingleton(typeof(EntityChangeValidator<CardTemplate>), validator);
+    }
   }
 }

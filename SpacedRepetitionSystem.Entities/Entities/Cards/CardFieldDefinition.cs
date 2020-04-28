@@ -20,7 +20,7 @@
     /// <summary>
     /// The card template the field definition belongs to
     /// </summary>
-    public CardTemplate CardDefinition { get; set; }
+    public CardTemplate CardTemplate { get; set; }
 
     #endregion
 
