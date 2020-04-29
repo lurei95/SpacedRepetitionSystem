@@ -1,4 +1,5 @@
-﻿using SpacedRepetitionSystem.Entities.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Entities.Entities;
 
 namespace SpacedRepetitionSystem.Entities.Validation.Core
 {
@@ -6,13 +7,24 @@ namespace SpacedRepetitionSystem.Entities.Validation.Core
   /// Validator for validating the saving of an entity
   /// </summary>
   /// <typeparam name="TEntity">Entity type</typeparam>
-  public abstract class CommitValidatorBase<TEntity> where TEntity: IEntity
+  public class CommitValidatorBase<TEntity> where TEntity: IEntity
   {
     /// <summary>
-    /// Validates the savin of the entity
+    /// Context
+    /// </summary>
+    protected DbContext Context { get; private set; }
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="context">Context (injected)</param>
+    public CommitValidatorBase(DbContext context) => Context = context;
+
+    /// <summary>
+    /// Validates the saving of the entity
     /// </summary>
     /// <param name="entity">The entity</param>
     /// <returns>Error message or null</returns>
-    public abstract string Validate(TEntity entity);
+    public virtual string Validate(TEntity entity) => null;
   }
 }

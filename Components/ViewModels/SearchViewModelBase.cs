@@ -67,10 +67,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <param name="entity">The entity</param>
     protected virtual void DeleteEntity(TEntity entity)
     {
-      ApiConnector.Delete(entity);
-      SearchResults.Remove(entity);
-      OnPropertyChanged(nameof(SearchResults));
-      NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
+      if (ApiConnector.Delete(entity))
+      {
+        SearchResults.Remove(entity);
+        OnPropertyChanged(nameof(SearchResults));
+      }
     }
 
     /// <summary>

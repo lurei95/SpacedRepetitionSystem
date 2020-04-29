@@ -61,6 +61,15 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The template &quot;{0}&quot; cannot be deleted because it is currently still in use..
+        /// </summary>
+        public static string CardTemplateInUse {
+            get {
+                return ResourceManager.GetString("CardTemplateInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} cannot be empty..
         /// </summary>
         public static string PropertyRequired {

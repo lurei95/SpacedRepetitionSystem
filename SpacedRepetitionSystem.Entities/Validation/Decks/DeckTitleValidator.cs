@@ -2,18 +2,18 @@
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
 
-namespace SpacedRepetitionSystem.Entities.Validation.Cards
+namespace SpacedRepetitionSystem.Entities.Validation.Decks
 {
   /// <summary>
-  /// Validator for <see cref="CardTemplate.Title"/>
+  /// Validator for <see cref="Deck.Title"/>
   /// </summary>
-  public sealed class CardTemplateTitleValidator : PropertyValidatorBase<CardTemplate, string>
+  public sealed class DeckTitleValidator : PropertyValidatorBase<Deck, string>
   {
     ///<inheritdoc/>
-    public override string PropertyName => nameof(CardTemplate.Title);
+    public override string PropertyName => nameof(Deck.Title);
 
     ///<inheritdoc/>
-    public override string Validate(CardTemplate entity, string newValue)
+    public override string Validate(Deck entity, string newValue)
     {
       if (string.IsNullOrEmpty(newValue))
         return Errors.PropertyRequired.FormatWith(PropertyNames.Title);

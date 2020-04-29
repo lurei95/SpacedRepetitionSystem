@@ -2,7 +2,7 @@
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
 
-namespace SpacedRepetitionSystem.Entities.Validation.Cards
+namespace SpacedRepetitionSystem.Entities.Validation.Decks
 {
   /// <summary>
   /// Validator for <see cref="Deck.DefaultCardTemplateId"/>

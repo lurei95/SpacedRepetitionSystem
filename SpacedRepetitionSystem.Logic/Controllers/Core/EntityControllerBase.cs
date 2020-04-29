@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+using SpacedRepetitionSystem.Entities.Entities;
+using SpacedRepetitionSystem.Entities.Validation.Core;
+using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,8 +11,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
   /// Base class for a controller for a specific entity
   /// </summary>
   /// <typeparam name="TEntity"></typeparam>
-  public abstract class EntityControllerBase<TEntity>
+  public abstract class EntityControllerBase<TEntity> where TEntity : IEntity
   {
+    private readonly DeleteValidatorBase<TEntity> deleteValidator;
+    private readonly CommitValidatorBase<TEntity> commitValidator;
+
     /// <summary>
     /// Context used to perform the actions
     /// </summary>
@@ -19,8 +24,15 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">Context used to perform the actions</param>
-    public EntityControllerBase(DbContext context) => Context = context;
+    /// <param name="context">Context (injected)</param>
+    /// <param name="commitValidator">CommitValidator (injected)</param>
+    /// <param name="deleteValidator">DeleteValidator (injected)</param>
+    public EntityControllerBase(DbContext context, DeleteValidatorBase<TEntity> deleteValidator, CommitValidatorBase<TEntity> commitValidator) 
+    { 
+      Context = context;
+      this.deleteValidator = deleteValidator;
+      this.commitValidator = commitValidator;
+    }
 
     /// <summary>
     /// Returns the entity with the Id
@@ -40,23 +52,66 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     /// Updates an existing entity
     /// </summary>
     /// <param name="entity">The updated entity</param>
-    public abstract void Put(TEntity entity);
-
-    /// <summary>
-    /// Deletes an existing entity
-    /// </summary>
-    /// <param name="entity">The entity to delete</param>
-    public abstract void Delete(TEntity entity);
+    public void Put(TEntity entity)
+    {
+      string error = commitValidator.Validate(entity);
+      if (string.IsNullOrEmpty(error))
+      {
+        UnitOfWork unitOfWork = new UnitOfWork(Context);
+        unitOfWork.Execute(() => PutCore(entity));
+      }
+      else
+        throw new NotifyException(error);
+    }
 
     /// <summary>
     /// Creates a new entity
     /// </summary>
     /// <param name="entity">The new entity</param>
-    public abstract void Post(TEntity entity);
-
-    protected void ShowSaveMessage()
+    public void Post(TEntity entity)
     {
-
+      string error = commitValidator.Validate(entity);
+      if (string.IsNullOrEmpty(error))
+      {
+        UnitOfWork unitOfWork = new UnitOfWork(Context);
+        unitOfWork.Execute(() => PostCore(entity));
+      }
+      else
+        throw new NotifyException(error);
     }
+
+    /// <summary>
+    /// Deletes an existing entity
+    /// </summary>
+    /// <param name="entity">The entity to delete</param>
+    public void Delete(TEntity entity)
+    {
+      string error = deleteValidator.Validate(entity);
+      if (string.IsNullOrEmpty(error))
+      {
+        UnitOfWork unitOfWork = new UnitOfWork(Context);
+        unitOfWork.Execute(() => DeleteCore(entity));
+      }
+      else
+        throw new NotifyException(error);
+    }
+
+    /// <summary>
+    /// Updates an existing entity
+    /// </summary>
+    /// <param name="entity">The updated entity</param>
+    protected virtual void PutCore(TEntity entity) { }
+
+    /// <summary>
+    /// Deletes an existing entity
+    /// </summary>
+    /// <param name="entity">The entity to delete</param>
+    protected virtual void DeleteCore(TEntity entity) => Context.Remove(entity);
+
+    /// <summary>
+    /// Creates a new entity
+    /// </summary>
+    /// <param name="entity">The new entity</param>
+    protected virtual void PostCore(TEntity entity) => Context.Add(entity);
   }
 }

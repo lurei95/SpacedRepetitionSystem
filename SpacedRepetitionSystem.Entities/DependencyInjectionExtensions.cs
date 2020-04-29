@@ -2,6 +2,8 @@
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
+using SpacedRepetitionSystem.Entities.Validation.Decks;
+using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
 
 namespace SpacedRepetitionSystem.Entities
 {
@@ -18,7 +20,7 @@ namespace SpacedRepetitionSystem.Entities
     /// <param name="services">service collection</param>
     public static void AddValidator<TValidator, TImplementation>(this IServiceCollection services)
       where TValidator : class where TImplementation : class, TValidator
-      => services.AddSingleton<TValidator, TImplementation>();
+      => services.AddScoped<TValidator, TImplementation>();
 
     /// <summary>
     /// Adds the Property validator for <see cref="Card"/>

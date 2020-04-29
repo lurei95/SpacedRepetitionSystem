@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">Context used to perform the actions</param>
-    public CardsController(DbContext context) : base(context) { }
-
-    ///<inheritdoc/>
-    public override void Delete(Card entity)
-    {
-      UnitOfWork unitOfWork = new UnitOfWork(Context);
-      unitOfWork.Execute(() => { Context.Remove(entity); });
-    }
+    /// <param name="context">Context (injected)</param>
+    /// <param name="commitValidator">CommitValidator (injected)</param>
+    /// <param name="deleteValidator">DeleteValidator (injected)</param>
+    public CardsController(DbContext context, DeleteValidatorBase<Card> deleteValidator, CommitValidatorBase<Card> commitValidator) 
+      : base(context, deleteValidator, commitValidator) { }
 
     ///<inheritdoc/>
     public override Card Get(object id)
@@ -43,20 +40,6 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         .Include(card => card.Deck)
         .Include(card => card.CardTemplate)
         .ToListAsync();
-    }
-
-    ///<inheritdoc/>
-    public override void Post(Card entity)
-    {
-      UnitOfWork unitOfWork = new UnitOfWork(Context);
-      unitOfWork.Execute(() => Context.Add(entity));
-    }
-
-    ///<inheritdoc/>
-    public override void Put(Card entity)
-    {
-      UnitOfWork unitOfWork = new UnitOfWork(Context);
-      unitOfWork.Execute(() => { });
     }
   }
 }

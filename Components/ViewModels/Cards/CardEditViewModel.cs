@@ -141,11 +141,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     }
 
     ///<inheritdoc/>
-    protected override void SaveChanges()
+    protected override bool SaveChanges()
     {
-      base.SaveChanges();
-      if (IsNewEntity)
+      bool success = base.SaveChanges();
+      if (success && IsNewEntity)
         NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
+      return success;
     }
 
     private void ChangeCardTemplate(long id)

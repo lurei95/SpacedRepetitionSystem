@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System;
 using System.Collections.Generic;
@@ -16,15 +17,12 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">Context used to perform the actions</param>
-    public DecksController(DbContext context) : base(context) { }
-
-    ///<inheritdoc/>
-    public override void Delete(Deck entity)
-    {
-      UnitOfWork unitOfWork = new UnitOfWork(Context);
-      unitOfWork.Execute(() => { Context.Remove(entity); });
-    }
+    /// <param name="context">Context (injected)</param>
+    /// <param name="commitValidator">CommitValidator (injected)</param>
+    /// <param name="deleteValidator">DeleteValidator (injected)</param>
+    public DecksController(DbContext context, DeleteValidatorBase<Deck> deleteValidator,
+      CommitValidatorBase<Deck> commitValidator)
+      : base(context, deleteValidator, commitValidator) { }
 
     ///<inheritdoc/>
     public override Deck Get(object id)
@@ -44,20 +42,6 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         result.Add(tuple.Item1);
       }
       return result;
-    }
-
-    ///<inheritdoc/>
-    public override void Post(Deck entity)
-    {
-      UnitOfWork unitOfWork = new UnitOfWork(Context);
-      unitOfWork.Execute(() => Context.Add(entity));
-    }
-
-    ///<inheritdoc/>
-    public override void Put(Deck entity)
-    {
-      UnitOfWork unitOfWork = new UnitOfWork(Context);
-      unitOfWork.Execute(() => { });
     }
   }
 }

@@ -10,6 +10,10 @@ using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Cards;
 using SpacedRepetitionSystem.Entities;
+using SpacedRepetitionSystem.Entities.Validation.Core;
+using SpacedRepetitionSystem.Entities.Validation.Cards;
+using SpacedRepetitionSystem.Entities.Validation.Decks;
+using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
 
 namespace SpacedRepetitionSystem
 {
@@ -43,6 +47,12 @@ namespace SpacedRepetitionSystem
       services.AddScoped<EntityControllerBase<CardTemplate>, CardTemplatesController>();
       services.AddScoped<IApiConnector, ApiConnector>();
 
+      services.AddScoped(typeof(CommitValidatorBase<>), typeof(CommitValidatorBase<>));
+      services.AddScoped(typeof(DeleteValidatorBase<>), typeof(DeleteValidatorBase<>));
+      services.AddValidator<CommitValidatorBase<Card>, CardCommitValidator>();
+      services.AddValidator<CommitValidatorBase<Deck>, DeckCommitValidator>();
+      services.AddValidator<CommitValidatorBase<CardTemplate>, CardTemplateCommitValidator>();
+      services.AddValidator<DeleteValidatorBase<CardTemplate>, CardTemplateDeleteValidator>();
       services.AddCardTemplatePropertyValidator();
       services.AddCardPropertyValidator();
       services.AddDecksPropertyValidator();

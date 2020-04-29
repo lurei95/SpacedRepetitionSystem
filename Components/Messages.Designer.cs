@@ -70,24 +70,6 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} was deleted successfully..
-        /// </summary>
-        internal static string EntityDeleted {
-            get {
-                return ResourceManager.GetString("EntityDeleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The {0} was saved successfully. .
-        /// </summary>
-        internal static string EntitySaved {
-            get {
-                return ResourceManager.GetString("EntitySaved", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         internal static string No {

@@ -1,4 +1,7 @@
-﻿using SpacedRepetitionSystem.Entities.Entities.Cards;
+﻿using SpacedRepetitionSystem.Entities.Entities;
+using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -28,23 +31,53 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     }
 
     ///<inheritdoc/>
-    public TEntity Get<TEntity>(object id) 
+    public TEntity Get<TEntity>(object id) where TEntity : IEntity
       => (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Get(id);
 
     ///<inheritdoc/>
-    public Task<List<TEntity>> Get<TEntity>(IDictionary<string, object> searchParameters) 
+    public Task<List<TEntity>> Get<TEntity>(IDictionary<string, object> searchParameters) where TEntity : IEntity
       => (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Get(searchParameters);
 
     ///<inheritdoc/>
-    public void Put<TEntity>(TEntity entity) 
-      => (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Put(entity);
+    public bool Put<TEntity>(TEntity entity) where TEntity : IEntity
+    {
+      try
+      {
+        (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Put(entity);
+        NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(entity.GetDisplayName()));
+        return true;
+      }
+      catch (NotifyException ex)
+      { NotificationMessageProvider.ShowErrorMessage(ex.Message); }
+      return false;
+    }
 
     ///<inheritdoc/>
-    public void Delete<TEntity>(TEntity entity)
-      => (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Delete(entity);
+    public bool Delete<TEntity>(TEntity entity) where TEntity : IEntity
+    {
+      try
+      {
+        (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Delete(entity);
+        NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
+        return true;
+      }
+      catch (NotifyException ex)
+      { NotificationMessageProvider.ShowErrorMessage(ex.Message); }
+      return false;
+    }
 
     ///<inheritdoc/>
-    public void Post<TEntity>(TEntity entity) 
-      => (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Post(entity);
+    public bool Post<TEntity>(TEntity entity) where TEntity : IEntity
+    {
+      try
+      {
+        (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Post(entity);
+        NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(entity.GetDisplayName()));
+        return true;
+      }
+      catch (NotifyException ex)
+      { NotificationMessageProvider.ShowErrorMessage(ex.Message); }
+      return false;
+    }
   }
 }

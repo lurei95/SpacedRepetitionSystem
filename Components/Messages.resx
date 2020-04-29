@@ -120,12 +120,6 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="EntityDeleted" xml:space="preserve">
-    <value>The {0} was deleted successfully.</value>
-  </data>
-  <data name="EntitySaved" xml:space="preserve">
-    <value>The {0} was saved successfully. </value>
-  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>

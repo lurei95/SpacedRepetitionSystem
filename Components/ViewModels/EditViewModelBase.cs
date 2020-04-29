@@ -5,8 +5,6 @@ using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
-using SpacedRepetitionSystem.Utility.Extensions;
-using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -122,13 +120,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Saves the changes
     /// </summary>
-    protected virtual void SaveChanges()
+    protected virtual bool SaveChanges()
     {
       if (IsNewEntity)
-        ApiConnector.Post(Entity);
+        return ApiConnector.Post(Entity);
       else
-        ApiConnector.Put(Entity);
-      NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(Entity.GetDisplayName()));
+        return ApiConnector.Put(Entity);
     }
 
     /// <summary>
@@ -136,8 +133,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// </summary>
     protected virtual void DeleteEntity()
     {
-      ApiConnector.Delete(Entity);
-      NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(Entity.GetDisplayName()));
+      ApiConnector.Delete(Entity); 
       NavigationManager.NavigateTo("/Home");
     }
 

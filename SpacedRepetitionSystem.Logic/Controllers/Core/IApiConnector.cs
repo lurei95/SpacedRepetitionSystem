@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SpacedRepetitionSystem.Entities.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Logic.Controllers.Core
@@ -13,31 +14,31 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     /// </summary>
     /// <param name="id">Id of the entity</param>
     /// <returns>The entity with the Id</returns>
-    TEntity Get<TEntity>(object id);
+    TEntity Get<TEntity>(object id) where TEntity : IEntity; 
 
     /// <summary>
     /// Returns a list of entities matching the filter
     /// </summary>
     /// <param name="searchParameters">A dictionary containing the search parameters</param>
     /// <returns>A list of entities matching the filter</returns>
-    Task<List<TEntity>> Get<TEntity>(IDictionary<string, object> searchParameters);
+    Task<List<TEntity>> Get<TEntity>(IDictionary<string, object> searchParameters) where TEntity : IEntity;
 
     /// <summary>
     /// Updates an existing entity
     /// </summary>
     /// <param name="entity">The updated entity</param>
-    void Put<TEntity>(TEntity entity);
+    bool Put<TEntity>(TEntity entity) where TEntity : IEntity;
 
     /// <summary>
     /// Deletes an existing entity
     /// </summary>
     /// <param name="entity">The entity to delete</param>
-    void Delete<TEntity>(TEntity entity);
+    bool Delete<TEntity>(TEntity entity) where TEntity : IEntity;
 
     /// <summary>
     /// Creates a new entity
     /// </summary>
     /// <param name="entity">The new entity</param>
-    void Post<TEntity>(TEntity entity);
+    bool Post<TEntity>(TEntity entity) where TEntity : IEntity;
   }
 }
