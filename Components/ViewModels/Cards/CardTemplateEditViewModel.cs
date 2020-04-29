@@ -36,6 +36,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public Command AddFieldDefinitionCommand { get; private set; }
 
     /// <summary>
+    /// FieldName Properties
+    /// </summary>
+    public List<PropertyProxy> FieldNameProperties { get; } = new List<PropertyProxy>();
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -65,8 +70,20 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       TitleProperty = new PropertyProxy(
         () => Entity.Title,
         (value) => Entity.Title = value,
-        nameof(Entity.Title)
+        nameof(Entity.Title),
+        Entity
       );
+
+      foreach (CardFieldDefinition fieldDefinition in Entity.FieldDefinitions)
+      {
+        FieldNameProperties.Add(new PropertyProxy(
+          () => fieldDefinition.FieldName,
+          (value) => fieldDefinition.FieldName = value,
+          nameof(CardFieldDefinition.FieldName),
+          fieldDefinition
+        ));
+      }
+
       await base.InitializeAsync();
     }
 

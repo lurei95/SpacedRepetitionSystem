@@ -7,7 +7,7 @@ namespace SpacedRepetitionSystem.Entities.Validation.Core
   /// Validator that validates the change of a proeprty of an entity
   /// </summary>
   /// <typeparam name="TEntity">Entity-Type</typeparam>
-  public sealed class EntityChangeValidator<TEntity> where TEntity : IEntity
+  public class EntityChangeValidator<TEntity> where TEntity : IEntity
   {
     private Dictionary<string, IPropertyValidator> PropertyValidators { get; } 
       = new Dictionary<string, IPropertyValidator>();
@@ -28,10 +28,10 @@ namespace SpacedRepetitionSystem.Entities.Validation.Core
     /// <param name="entity">The entity</param>
     /// <param name="newValue">The new value of the property</param>
     /// <returns>Error message or null</returns>
-    public string Validate<TProperty>(string propertyName, TEntity entity, TProperty newValue)
+    public virtual string Validate<TProperty>(string propertyName, object entity, TProperty newValue)
     {
-      if (PropertyValidators.ContainsKey(propertyName))
-        return (PropertyValidators[propertyName] as PropertyValidatorBase<TEntity, TProperty>).Validate(entity, newValue);
+      if (entity is TEntity entity1 && PropertyValidators.ContainsKey(propertyName))
+        return (PropertyValidators[propertyName] as PropertyValidatorBase<TEntity, TProperty>).Validate(entity1, newValue);
       return null;
     }
   }

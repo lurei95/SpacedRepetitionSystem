@@ -12,7 +12,12 @@ namespace SpacedRepetitionSystem.Components.Edits
     private readonly Func<string> getter;
     private readonly Action<string> setter;
     private string errorText;
-    private Func<string, string> validator;
+    private Func<string, object, string> validator;
+
+    /// <summary>
+    /// Entity which is bound
+    /// </summary>
+    public object Entity { get; set; }
 
     /// <summary>
     /// Name of the property
@@ -22,14 +27,14 @@ namespace SpacedRepetitionSystem.Components.Edits
     /// <summary>
     /// Validator
     /// </summary>
-    public Func<string, string> Validator 
+    public Func<string, object, string> Validator 
     {
       get => validator;
       set
       {
         validator = value;
         if (value != null)
-          ErrorText = Validator.Invoke(Value);
+          ErrorText = Validator.Invoke(Value, Entity);
       }
     }
 
@@ -61,7 +66,7 @@ namespace SpacedRepetitionSystem.Components.Edits
         {
           ErrorText = null;
           if (Validator != null)
-            ErrorText = Validator.Invoke(value);
+            ErrorText = Validator.Invoke(value, Entity);
           setter.Invoke(value);
           OnPropertyChanged();
         }
@@ -74,11 +79,12 @@ namespace SpacedRepetitionSystem.Components.Edits
     /// <param name="getter">getter</param>
     /// <param name="setter">setter</param>
     /// <param name="propertyName">Name of the property</param>
-    public PropertyProxy(Func<string> getter, Action<string> setter, string propertyName)
+    public PropertyProxy(Func<string> getter, Action<string> setter, string propertyName, object entity)
     {
       PropertyName = propertyName ?? throw new ArgumentNullException(nameof(propertyName));
       this.getter = getter ?? throw new ArgumentNullException(nameof(getter));
       this.setter = setter ?? throw new ArgumentNullException(nameof(setter));
+      this.Entity = entity;
     }
 
     /// <summary>

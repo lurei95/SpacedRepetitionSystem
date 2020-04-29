@@ -124,13 +124,15 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       CardTemplateTitleProperty = new PropertyProxy(
         () => CardTemplateTitle,
         (value) => CardTemplateTitle = value,
-        nameof(CardTemplateTitle)
+        nameof(CardTemplateTitle),
+        Entity
       );
+
       await base.InitializeAsync();
 
       foreach (CardTemplate cardTemplate in await ApiConnector.Get<CardTemplate>(null))
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate.CardTemplateId);
-      CardTemplateTitleProperty.Validator = (value) => ValidateCardTemplateTitle(value);
+      CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
     }
 
     ///<inheritdoc/>

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 
@@ -24,6 +26,8 @@ namespace SpacedRepetitionSystem.Entities.Validation.Cards
       error = new CardDeckIdValidator().Validate(entity, entity.DeckId);
       if (!string.IsNullOrEmpty(error))
         return error;
+      if (!entity.Fields.Any(field => !string.IsNullOrEmpty(field.Value)))
+        return Errors.CardRequiresFieldWithValue;
       return null;
     }
   }

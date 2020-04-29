@@ -143,7 +143,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         .Where(property => property.PropertyType == typeof(PropertyProxy))
         .Select(property => property.GetValue(this) as PropertyProxy);
       foreach (var item in proxies)
-        item.Validator = (newValue) => changeValidator.Validate(item.PropertyName, Entity, newValue); 
+        item.Validator = (newValue, entity) => changeValidator.Validate(item.PropertyName, entity, newValue);
+
+      IEnumerable<ICollection<PropertyProxy>> proxies1 = GetType().GetTypeInfo().GetProperties()
+        .Where(property => typeof(ICollection<PropertyProxy>).IsAssignableFrom(property.PropertyType))
+        .Select(property => property.GetValue(this) as ICollection<PropertyProxy>);
+      foreach (var collection in proxies1)
+        foreach (var item in collection)
+          item.Validator = (newValue, entity) => changeValidator.Validate(item.PropertyName, entity, newValue);
     }
   }
 }

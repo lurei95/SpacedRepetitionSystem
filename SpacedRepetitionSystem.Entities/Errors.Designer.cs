@@ -61,6 +61,15 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At least one of the fields requires a value..
+        /// </summary>
+        public static string CardRequiresFieldWithValue {
+            get {
+                return ResourceManager.GetString("CardRequiresFieldWithValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The template &quot;{0}&quot; cannot be deleted because it is currently still in use..
         /// </summary>
         public static string CardTemplateInUse {

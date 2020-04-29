@@ -52,7 +52,9 @@ namespace SpacedRepetitionSystem.Entities
     /// <param name="services">Service-collection</param>
     public static void AddCardTemplatePropertyValidator(this IServiceCollection services)
     {
-      EntityChangeValidator<CardTemplate> validator = new EntityChangeValidator<CardTemplate>();
+      EntityChangeValidator<CardFieldDefinition> fieldDefinitionChangeValidator = new EntityChangeValidator<CardFieldDefinition>();
+      fieldDefinitionChangeValidator.Register(nameof(CardFieldDefinition.FieldName), new CardFieldDefinitionFieldNameValidator());
+      EntityChangeValidator<CardTemplate> validator = new CardTemplateChangeValidator(fieldDefinitionChangeValidator);
       validator.Register(nameof(CardTemplate.Title), new CardTemplateTitleValidator());
       services.AddSingleton(typeof(EntityChangeValidator<CardTemplate>), validator);
     }

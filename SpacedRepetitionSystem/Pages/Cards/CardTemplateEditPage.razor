@@ -40,7 +40,7 @@
             @for (int i = 0; i < ViewModel.FieldDefinitions.Count; i++)
             {
               <div class="row d-felx" style="margin-right: 10px;">
-                <TextEdit Caption="@("Field " + i)" @bind-Value="ViewModel.FieldDefinitions[i].FieldName"></TextEdit>
+                <TextEdit Caption="@("Field " + i)" Property="ViewModel.FieldNameProperties[i]"></TextEdit>
                 <Button IsIconButton="true" TextColor="#e74c3c" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="ViewModel.FieldDefinitions[i]"></Button>
               </div>
             }
