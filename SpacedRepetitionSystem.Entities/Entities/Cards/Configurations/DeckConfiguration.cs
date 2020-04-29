@@ -12,25 +12,27 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     public void Configure(EntityTypeBuilder<Deck> builder)
     {
       builder.ToTable("Decks", "Cards");
-      builder.HasKey(set => set.DeckId);
+      builder.HasKey(deck => deck.DeckId);
 
-      builder.Property(set => set.DeckId)
+      builder.Ignore(deck => deck.CardCount);
+
+      builder.Property(deck => deck.DeckId)
         .IsRequired()
         .ValueGeneratedOnAdd();
 
-      builder.Property(set => set.Title)
+      builder.Property(deck => deck.Title)
         .IsRequired()
         .HasMaxLength(100);
 
-      builder.Property(set => set.DefaultCardTemplateId);
+      builder.Property(deck => deck.DefaultCardTemplateId);
 
-      builder.HasMany(set => set.Cards)
+      builder.HasMany(deck => deck.Cards)
         .WithOne(card => card.Deck)
         .HasForeignKey(card => card.DeckId)
         .OnDelete(DeleteBehavior.Cascade);
 
-      builder.HasOne(set => set.DefaultCardTemplate).WithMany()
-        .HasForeignKey(set => set.DefaultCardTemplateId)
+      builder.HasOne(deck => deck.DefaultCardTemplate).WithMany()
+        .HasForeignKey(deck => deck.DefaultCardTemplateId)
         .OnDelete(DeleteBehavior.Restrict);
     }
   }

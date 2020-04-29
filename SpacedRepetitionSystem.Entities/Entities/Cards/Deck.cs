@@ -26,6 +26,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public List<Card> Cards { get; } = new List<Card>();
 
     /// <summary>
+    /// Count of the Cards in the deck
+    /// </summary>
+    public int CardCount { get; set; }
+
+    /// <summary>
     /// Id of the default card template for the deck
     /// </summary>
     public long DefaultCardTemplateId { get; set; }

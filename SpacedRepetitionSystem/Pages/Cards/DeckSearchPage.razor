@@ -23,6 +23,9 @@
               <th class="th-sm">
                 Name
               </th>
+              <th class="th-sm">
+                Cards
+              </th>
               <th class="th-sm buttonCol"></th>
               <th class="th-sm buttonCol"></th>
               <th class="th-sm buttonCol"></th>
@@ -34,6 +37,7 @@
             <tr>
               <td><a href="/Decks/@item.DeckId">@item.DeckId</a></td>
               <td>@item.Title</td>
+              <td>@item.CardCount</td>
               <td class="buttonCol">
                 <Button CommandParameter="item.DeckId" Classes="colButton" TextColor="#1b6ec2" IsIconButton="true" Command="ViewModel.PracticeDeckCommand"></Button>
               </td>

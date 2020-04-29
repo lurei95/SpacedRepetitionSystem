@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,8 +36,14 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     ///<inheritdoc/>
     public override async Task<List<Deck>> Get(IDictionary<string, object> searchParameters)
     {
-      return await Context.Set<Deck>()
-        .ToListAsync();
+      List<Deck> result = new List<Deck>();
+      List<Tuple<Deck,int>> tuples = await Context.Set<Deck>().Select(deck => new Tuple<Deck, int>(deck, deck.Cards.Count())).ToListAsync();
+      foreach (Tuple<Deck, int> tuple in tuples)
+      {
+        tuple.Item1.CardCount = tuple.Item2;
+        result.Add(tuple.Item1);
+      }
+      return result;
     }
 
     ///<inheritdoc/>
