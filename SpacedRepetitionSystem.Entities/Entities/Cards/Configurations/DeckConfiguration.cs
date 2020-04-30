@@ -15,6 +15,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.HasKey(deck => deck.DeckId);
 
       builder.Ignore(deck => deck.CardCount);
+      builder.Ignore(deck => deck.DueCardCount);
 
       builder.Property(deck => deck.DeckId)
         .IsRequired()

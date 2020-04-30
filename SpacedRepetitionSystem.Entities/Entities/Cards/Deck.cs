@@ -31,6 +31,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public int CardCount { get; set; }
 
     /// <summary>
+    /// Count of the Cards in the deck that are due
+    /// </summary>
+    public int DueCardCount { get; set; }
+
+    /// <summary>
     /// Id of the default card template for the deck
     /// </summary>
     public long DefaultCardTemplateId { get; set; }

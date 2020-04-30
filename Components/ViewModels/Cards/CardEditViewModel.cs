@@ -7,6 +7,7 @@ using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -140,7 +141,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     ///<inheritdoc/>
     protected override void CreateNewEntity()
     {
-      Entity = new Card();
+      Entity = new Card { DueDate = DateTime.Today };
       CardTemplateId = CardTemplate.DefaultCardTemplateId;
     }
 

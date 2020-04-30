@@ -18,6 +18,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .IsRequired()
         .ValueGeneratedOnAdd();
 
+      builder.Property(card => card.DueDate)
+        .IsRequired();
+
       builder.Property(card => card.Tags)
         .IsRequired()
         .HasMaxLength(256);

@@ -1,4 +1,5 @@
 ﻿using SpacedRepetitionSystem.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Cards
@@ -8,6 +9,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// </summary>
   public sealed class Card : IEntity
   {
+    /// <summary>
+    /// Due date for practicing the card
+    /// </summary>
+    public DateTime DueDate { get; set; }
+
     /// <summary>
     /// Id of the card
     /// </summary>

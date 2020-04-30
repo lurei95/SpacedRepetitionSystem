@@ -36,10 +36,14 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     public override async Task<List<Deck>> Get(IDictionary<string, object> searchParameters)
     {
       List<Deck> result = new List<Deck>();
-      List<Tuple<Deck,int>> tuples = await Context.Set<Deck>().Select(deck => new Tuple<Deck, int>(deck, deck.Cards.Count())).ToListAsync();
-      foreach (Tuple<Deck, int> tuple in tuples)
+      List<Tuple<Deck, int, int>> tuples = await Context.Set<Deck>()
+        .Select(deck => new Tuple<Deck, int, int>(deck, deck.Cards.Count(), 
+          deck.Cards.Count(card => card.DueDate <= DateTime.Today)))
+        .ToListAsync();
+      foreach (Tuple<Deck, int, int> tuple in tuples)
       {
         tuple.Item1.CardCount = tuple.Item2;
+        tuple.Item1.DueCardCount = tuple.Item3;
         result.Add(tuple.Item1);
       }
       return result;
