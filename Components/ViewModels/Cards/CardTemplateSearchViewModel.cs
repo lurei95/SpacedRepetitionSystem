@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Utility.Dialogs;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,5 +26,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
     ///<inheritdoc/>
     protected override async Task<List<CardTemplate>> SearchCore() => await ApiConnector.Get<CardTemplate>(null);
+
+    ///<inheritdoc/>
+    protected override void DeleteEntity(CardTemplate entity)
+    {
+      ModalDialogManager.ShowDialog(Messages.DeleteCardTemplateDialogTitle,
+        Messages.DeleteCardTemplateDialogText.FormatWith(entity.Title), DialogButtons.YesNo, (result) =>
+      {
+        if (result == DialogResult.Yes)
+          base.DeleteEntity(entity);
+      });
+    }
   }
 }

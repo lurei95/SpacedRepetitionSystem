@@ -5,6 +5,7 @@ using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,6 +110,17 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       foreach (CardTemplate cardTemplate in await ApiConnector.Get<CardTemplate>(null))
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate.CardTemplateId);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
+    }
+
+    ///<inheritdoc/>
+    protected override void DeleteEntity()
+    {
+      ModalDialogManager.ShowDialog(Messages.DeleteDeckDialogTitle, 
+        Messages.DeleteDeckDialogText.FormatWith(Entity.Title), DialogButtons.YesNo, (result) =>
+      {
+        if (result == DialogResult.Yes)
+          base.DeleteEntity();
+      });
     }
 
     ///<inheritdoc/>

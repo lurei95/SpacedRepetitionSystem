@@ -5,6 +5,8 @@ using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Utility.Dialogs;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -95,6 +97,17 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       Entity = new CardTemplate();
       Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Front" });
       Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Back" });
+    }
+
+    ///<inheritdoc/>
+    protected override void DeleteEntity()
+    {
+      ModalDialogManager.ShowDialog(Messages.DeleteCardTemplateDialogTitle, 
+        Messages.DeleteCardTemplateDialogText.FormatWith(Entity.Title), DialogButtons.YesNo, (result) =>
+      {
+        if (result == DialogResult.Yes)
+          base.DeleteEntity();
+      });
     }
 
     private void RemoveFieldDefiniton(int index)

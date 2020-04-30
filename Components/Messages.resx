@@ -120,6 +120,24 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="DeleteCardDialogText" xml:space="preserve">
+    <value>Are you sure that you want to delete the card "{0}"?</value>
+  </data>
+  <data name="DeleteCardDialogTitle" xml:space="preserve">
+    <value>Delete Card</value>
+  </data>
+  <data name="DeleteCardTemplateDialogText" xml:space="preserve">
+    <value>Are you sure that you want to delete the template "{0}"?</value>
+  </data>
+  <data name="DeleteCardTemplateDialogTitle" xml:space="preserve">
+    <value>Delete Template</value>
+  </data>
+  <data name="DeleteDeckDialogText" xml:space="preserve">
+    <value>Are you sure that you want to delete the deck "{0}" and all its containing cards?</value>
+  </data>
+  <data name="DeleteDeckDialogTitle" xml:space="preserve">
+    <value>Delete Deck</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>

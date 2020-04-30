@@ -1,5 +1,9 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.noBorder{
+  border: none;
+}
+
 .colButton {
   font-size: 1.25rem !important;
 }

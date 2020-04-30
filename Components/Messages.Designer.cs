@@ -70,6 +70,60 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to delete the card &quot;{0}&quot;?.
+        /// </summary>
+        internal static string DeleteCardDialogText {
+            get {
+                return ResourceManager.GetString("DeleteCardDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Card.
+        /// </summary>
+        internal static string DeleteCardDialogTitle {
+            get {
+                return ResourceManager.GetString("DeleteCardDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to delete the template &quot;{0}&quot;?.
+        /// </summary>
+        internal static string DeleteCardTemplateDialogText {
+            get {
+                return ResourceManager.GetString("DeleteCardTemplateDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Template.
+        /// </summary>
+        internal static string DeleteCardTemplateDialogTitle {
+            get {
+                return ResourceManager.GetString("DeleteCardTemplateDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to delete the deck &quot;{0}&quot; and all its containing cards?.
+        /// </summary>
+        internal static string DeleteDeckDialogText {
+            get {
+                return ResourceManager.GetString("DeleteDeckDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Deck.
+        /// </summary>
+        internal static string DeleteDeckDialogTitle {
+            get {
+                return ResourceManager.GetString("DeleteDeckDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         internal static string No {

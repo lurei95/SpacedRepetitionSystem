@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Utility.Dialogs;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -44,6 +46,17 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         Icon = "oi oi-plus",
         ToolTip = ""
       };
+    }
+
+    ///<inheritdoc/>
+    protected override void DeleteEntity(Deck entity)
+    {
+      ModalDialogManager.ShowDialog(Messages.DeleteDeckDialogTitle, 
+        Messages.DeleteDeckDialogText.FormatWith(entity.Title), DialogButtons.YesNo, (result) =>
+      {
+        if (result == DialogResult.Yes)
+          base.DeleteEntity(entity);
+      });
     }
 
     ///<inheritdoc/>

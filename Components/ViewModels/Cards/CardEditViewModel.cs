@@ -5,6 +5,7 @@ using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -150,6 +151,17 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       if (success && IsNewEntity)
         NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
       return success;
+    }
+
+    ///<inheritdoc/>
+    protected override void DeleteEntity()
+    {
+      ModalDialogManager.ShowDialog(Messages.DeleteCardDialogTitle, 
+        Messages.DeleteCardDialogText.FormatWith(Entity.CardId), DialogButtons.YesNo, (result) =>
+      {
+        if (result == DialogResult.Yes)
+          base.DeleteEntity();
+      });
     }
 
     private void ChangeCardTemplate(long id)
