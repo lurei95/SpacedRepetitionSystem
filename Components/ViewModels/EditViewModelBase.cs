@@ -78,8 +78,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       };
     }
 
-    public virtual async Task InitializeAsync() 
-    { RegisterBindableProperties(); }
+    public virtual async Task InitializeAsync() { }
 
     /// <summary>
     /// Loads the entity or creates a new one
@@ -137,20 +136,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       NavigationManager.NavigateTo("/Home");
     }
 
-    private void RegisterBindableProperties()
-    {
-      IEnumerable<PropertyProxy> proxies = GetType().GetTypeInfo().GetProperties()
-        .Where(property => property.PropertyType == typeof(PropertyProxy))
-        .Select(property => property.GetValue(this) as PropertyProxy);
-      foreach (var item in proxies)
-        item.Validator = (newValue, entity) => changeValidator.Validate(item.PropertyName, entity, newValue);
-
-      IEnumerable<ICollection<PropertyProxy>> proxies1 = GetType().GetTypeInfo().GetProperties()
-        .Where(property => typeof(ICollection<PropertyProxy>).IsAssignableFrom(property.PropertyType))
-        .Select(property => property.GetValue(this) as ICollection<PropertyProxy>);
-      foreach (var collection in proxies1)
-        foreach (var item in collection)
-          item.Validator = (newValue, entity) => changeValidator.Validate(item.PropertyName, entity, newValue);
-    }
+    /// <summary>
+    /// Registers a PropertyProxy
+    /// </summary>
+    /// <param name="proxy">Proxy</param>
+    protected void RegisterPropertyProperty(PropertyProxy proxy)
+    { proxy.Validator = (newValue, entity) => changeValidator.Validate(proxy.PropertyName, entity, newValue); }
   }
 }

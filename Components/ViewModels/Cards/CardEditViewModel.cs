@@ -127,6 +127,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         nameof(CardTemplateTitle),
         Entity
       );
+      RegisterPropertyProperty(CardTemplateTitleProperty);
 
       await base.InitializeAsync();
 

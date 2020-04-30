@@ -36,16 +36,21 @@
             <h5 class="card-title">Main Properties</h5>
             <TextEdit Caption="Title" Property="ViewModel.TitleProperty"></TextEdit>
 
-            <h5 class="card-title">Fields</h5>
-            @for (int i = 0; i < ViewModel.FieldDefinitions.Count; i++)
-            {
-              <div class="row d-felx" style="margin-right: 10px;">
-                <TextEdit Caption="@("Field " + i)" Property="ViewModel.FieldNameProperties[i]"></TextEdit>
-                <Button IsIconButton="true" TextColor="#e74c3c" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="i"></Button>
+            <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
+              <h5 class="card-title">Fields</h5>
+              <div class="d-felx justify-content-end flex-fill">
+                <Button IsIconButton="true" TextColor="Gray" Command="ViewModel.AddFieldDefinitionCommand"></Button>
               </div>
-            }
+            </div>
+              @for (int i = 0; i < ViewModel.FieldDefinitions.Count; i++)
+              {
+                <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
+                  <TextEdit Caption="@("Field " + i)" Property="ViewModel.FieldNameProperties[i]"></TextEdit>
+                  <Button IsIconButton="true" TextColor="#e74c3c" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="i"></Button>
+                </div>
+              }
+            </div>
           </div>
-        </div>
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-end">
@@ -55,6 +60,12 @@
     </WaitSpinner>
   </div>
 </ViewModelArea>
+
+<style>
+  .customRow {
+    margin-left: 0px;
+  }
+</style>
 
 @code
 {

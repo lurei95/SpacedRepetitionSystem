@@ -76,12 +76,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
       foreach (CardFieldDefinition fieldDefinition in Entity.FieldDefinitions)
       {
-        FieldNameProperties.Add(new PropertyProxy(
+        PropertyProxy proxy = new PropertyProxy(
           () => fieldDefinition.FieldName,
           (value) => fieldDefinition.FieldName = value,
           nameof(CardFieldDefinition.FieldName),
           fieldDefinition
-        ));
+        );
+        RegisterPropertyProperty(proxy);
+        FieldNameProperties.Add(proxy);
       }
 
       await base.InitializeAsync();
@@ -107,12 +109,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     {
       CardFieldDefinition fieldDefinition = new CardFieldDefinition();
       Entity.FieldDefinitions.Add(fieldDefinition);
-      FieldNameProperties.Add(new PropertyProxy(
+      PropertyProxy proxy = new PropertyProxy(
         () => fieldDefinition.FieldName,
         (value) => fieldDefinition.FieldName = value,
         nameof(CardFieldDefinition.FieldName),
         fieldDefinition
-      ));
+      );
+      RegisterPropertyProperty(proxy);
+      FieldNameProperties.Add(proxy);
       RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 1;
       OnPropertyChanged(nameof(FieldDefinitions));
     }

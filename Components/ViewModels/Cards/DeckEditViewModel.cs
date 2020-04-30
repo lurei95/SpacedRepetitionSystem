@@ -95,12 +95,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         nameof(CardTemplateTitle),
         Entity
       );
+      RegisterPropertyProperty(CardTemplateTitleProperty);
       TitleProperty = new PropertyProxy(
         () => Entity.Title,
         (value) => Entity.Title = value,
         nameof(Entity.Title),
         Entity
       );
+      RegisterPropertyProperty(TitleProperty);
 
       await base.InitializeAsync();
 
