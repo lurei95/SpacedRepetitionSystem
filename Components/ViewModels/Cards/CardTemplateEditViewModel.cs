@@ -60,7 +60,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       {
         Icon = "oi oi-x",
         IsEnabled = true,
-        ExecuteAction = (param) => RemoveFieldDefiniton(param as CardFieldDefinition)
+        ExecuteAction = (param) => RemoveFieldDefiniton((int)param)
       };
     }
 
@@ -95,16 +95,24 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Back" });
     }
 
-    private void RemoveFieldDefiniton(CardFieldDefinition definition)
+    private void RemoveFieldDefiniton(int index)
     {
-      Entity.FieldDefinitions.Remove(definition);
+      Entity.FieldDefinitions.Remove(FieldDefinitions[index]);
+      FieldNameProperties.RemoveAt(index);
       RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 1;
       OnPropertyChanged(nameof(FieldDefinitions));
     }
 
     private void AddFieldDefiniton()
     {
-      Entity.FieldDefinitions.Add(new CardFieldDefinition());
+      CardFieldDefinition fieldDefinition = new CardFieldDefinition();
+      Entity.FieldDefinitions.Add(fieldDefinition);
+      FieldNameProperties.Add(new PropertyProxy(
+        () => fieldDefinition.FieldName,
+        (value) => fieldDefinition.FieldName = value,
+        nameof(CardFieldDefinition.FieldName),
+        fieldDefinition
+      ));
       RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 1;
       OnPropertyChanged(nameof(FieldDefinitions));
     }
