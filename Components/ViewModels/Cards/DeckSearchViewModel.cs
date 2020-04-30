@@ -66,8 +66,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     { NavigationManager.NavigateTo($"/Decks/{deckId}/Cards/New"); }
 
     private void PracticeDeck(long deckId)
-    {
-
-    }
+    { NavigationManager.NavigateTo($"/Decks/{deckId}/Practice"); }
   }
 }

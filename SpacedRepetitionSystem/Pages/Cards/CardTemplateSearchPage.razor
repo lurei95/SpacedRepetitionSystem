@@ -10,7 +10,17 @@
 <ViewModelArea ViewModel="@ViewModel">
   <div class="card flex-grow-0 fullsizeCard">
     <div class="card-header">
-      Search Cards
+      <div class="row">
+        <div class="col col-md-auto">
+          Search Templates
+        </div>
+        <div class="col d-flex justify-content-end">
+          <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+        </div>
+      </div>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
     </div>
     <div class="card-body scrollable">
       <WaitSpinner Visible="ViewModel.IsSearching">

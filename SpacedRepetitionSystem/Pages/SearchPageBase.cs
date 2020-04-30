@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Components;
-using SpacedRepetitionSystem.Components.ViewModels;
+﻿using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities;
 
 namespace SpacedRepetitionSystem.Pages
 {
-  public abstract class SearchPageBase<TEntity, TViewModel> : ComponentBase
+  /// <summary>
+  /// Baseclass for all SearchPages
+  /// </summary>
+  /// <typeparam name="TEntity">Entity-Type</typeparam>
+  /// <typeparam name="TViewModel">ViewModel-Type</typeparam>
+  public abstract class SearchPageBase<TEntity, TViewModel> : PageBase<TViewModel>
     where TViewModel : SearchViewModelBase<TEntity>
     where TEntity : class, IEntity
-  {
-    [Inject]
-    public TViewModel ViewModel { get; set; }
-  }
+  { }
 }

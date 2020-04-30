@@ -28,6 +28,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     public override Deck Get(object id)
     {
       return Context.Set<Deck>()
+        .Include(deck => deck.Cards)
         .FirstOrDefault(card => card.DeckId == (long)id);
     }
 

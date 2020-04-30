@@ -10,7 +10,17 @@
 <ViewModelArea ViewModel="@ViewModel">
   <div class="card flex-grow-0 fullsizeCard">
     <div class="card-header">
-      Search Decks
+      <div class="row">
+        <div class="col col-md-auto">
+          Search Decks
+        </div>
+        <div class="col d-flex justify-content-end">
+          <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+        </div>
+      </div>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
     </div>
     <div class="card-body scrollable">
       <WaitSpinner Visible="ViewModel.IsSearching">
@@ -34,20 +44,20 @@
           <tbody>
             @foreach (var item in ViewModel.SearchResults)
             {
-            <tr>
-              <td><a href="/Decks/@item.DeckId">@item.DeckId</a></td>
-              <td>@item.Title</td>
-              <td>@item.CardCount</td>
-              <td class="buttonCol">
-                <Button CommandParameter="item.DeckId" Classes="colButton" TextColor="#1b6ec2" IsIconButton="true" Command="ViewModel.PracticeDeckCommand"></Button>
-              </td>
-              <td class="buttonCol">
-                <Button CommandParameter="item.DeckId" Classes="colButton" TextColor="#27ae60" IsIconButton="true" Command="ViewModel.AddCardsCommand"></Button>
-              </td>
-              <td class="buttonCol">
-                <Button CommandParameter="item" Classes="colButton" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
-              </td>
-            </tr>
+              <tr>
+                <td><a href="/Decks/@item.DeckId">@item.DeckId</a></td>
+                <td>@item.Title</td>
+                <td>@item.CardCount</td>
+                <td class="buttonCol">
+                  <Button CommandParameter="item.DeckId" Classes="colButton" TextColor="#1b6ec2" IsIconButton="true" Command="ViewModel.PracticeDeckCommand"></Button>
+                </td>
+                <td class="buttonCol">
+                  <Button CommandParameter="item.DeckId" Classes="colButton" TextColor="#27ae60" IsIconButton="true" Command="ViewModel.AddCardsCommand"></Button>
+                </td>
+                <td class="buttonCol">
+                  <Button CommandParameter="item" Classes="colButton" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
+                </td>
+              </tr>
             }
           </tbody>
         </table>

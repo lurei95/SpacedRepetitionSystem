@@ -10,7 +10,14 @@
 <ViewModelArea ViewModel="@ViewModel">
   <div class="card flex-grow-0 fullsizeCard">
     <div class="card-header">
-      Search Cards
+      <div class="row">
+        <div class="col col-md-auto">
+          Search Cards
+        </div>
+        <div class="col d-flex justify-content-end">
+          <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+        </div>
+      </div>     
     </div>
     <div class="card-body scrollable">
       <WaitSpinner Visible="ViewModel.IsSearching">
@@ -38,16 +45,16 @@
           <tbody>
             @foreach (var item in ViewModel.SearchResults)
             {
-            <tr>
-              <td><a href="/Cards/@item.CardId">@item.CardId</a></td>
-              <td><a href="/Decks/@item.DeckId">@item.Deck?.Title</a></td>
-              <td>@item.Fields[0].Value</td>
-              <td>@item.Fields[1].Value</td>
-              <td>@(item.Fields.Count > 2 ? item.Fields[2].FieldName : "")</td>
-              <th class="buttonCol">
-                <Button CommandParameter="item" Classes="colButton" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
-              </th>
-            </tr>
+              <tr>
+                <td><a href="/Cards/@item.CardId">@item.CardId</a></td>
+                <td><a href="/Decks/@item.DeckId">@item.Deck?.Title</a></td>
+                <td>@item.Fields[0].Value</td>
+                <td>@item.Fields[1].Value</td>
+                <td>@(item.Fields.Count > 2 ? item.Fields[2].FieldName : "")</td>
+                <th class="buttonCol">
+                  <Button CommandParameter="item" Classes="colButton" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
+                </th>
+              </tr>
             }
           </tbody>
         </table>

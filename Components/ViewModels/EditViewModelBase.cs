@@ -5,9 +5,6 @@ using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
@@ -41,11 +38,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public Command DeleteCommand { get; set; }
 
     /// <summary>
-    /// Command for Saving the changes
-    /// </summary>
-    public Command CloseCommand { get; set; }
-
-    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DBContext (Injected)</param>
@@ -69,16 +61,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         IsEnabled = IsNewEntity,
         ExecuteAction = (param) => DeleteEntity()
       };
-
-      CloseCommand = new Command()
-      {
-        Icon = "oi oi-x",
-        IsEnabled = true,
-        ExecuteAction = (param) => OnClosing()
-      };
     }
-
-    public virtual async Task InitializeAsync() { }
 
     /// <summary>
     /// Loads the entity or creates a new one
@@ -105,16 +88,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// </summary>
     /// <param name="id">Id of the entity</param>
     protected virtual void LoadEntity(object id) => Entity = ApiConnector.Get<TEntity>(id);
-
-    protected virtual void OnClosing()
-    {
-      if (Context.ChangeTracker.HasChanges())
-      {
-
-      }
-
-      NavigationManager.NavigateTo("/Home");
-    }
 
     /// <summary>
     /// Saves the changes

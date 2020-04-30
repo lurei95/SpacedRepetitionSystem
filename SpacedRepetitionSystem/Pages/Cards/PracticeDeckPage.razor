@@ -1,0 +1,40 @@
+﻿@page "/Decks/{Id:long}/Practice/"
+
+@using SpacedRepetitionSystem.Components.ViewModels.Cards;
+@using SpacedRepetitionSystem.Components.Interaction;
+@using SpacedRepetitionSystem.Components.ViewModels;
+
+@inherits PageBase<PracticeDeckViewModel>
+
+<ViewModelArea ViewModel="ViewModel">
+  <div class="card flex-grow-0 fullsizeCard">
+    <div class="card-header">
+      <div class="row">
+        <div class="col col-md-auto">
+          @ViewModel?.Deck?.GetDisplayName()
+        </div>
+        <div class="col d-flex justify-content-end">
+          <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+        </div>
+      </div>
+    </div>
+    <WaitSpinner Visible="IsLoading">
+      <div class="card-body">
+      </div>
+      <div class="card-footer">
+        <div class="d-flex justify-content-end">
+        </div>
+      </div>
+    </WaitSpinner>
+  </div>
+</ViewModelArea>
+
+
+@code
+{
+  /// <summary>
+  /// Id of the Deck
+  /// </summary>
+  [Parameter]
+  public object Id { set => ViewModel.LoadEntity(value); }
+}
