@@ -11,7 +11,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     ///<inheritdoc/>
     public void Configure(EntityTypeBuilder<PracticeField> builder)
     {
-      builder.ToTable("Cards", "PracticeFields");
+      builder.ToTable("PracticeFields", "Cards");
       builder.HasKey(field => new { field.DeckId, field.CardId, field.FieldName });
 
       builder.Property(field => field.CardId)
@@ -25,7 +25,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 
       builder.HasOne(field => field.Field)
         .WithOne()
-        .HasForeignKey<CardField>(field => new { field.CardId, field.FieldName })
+        .HasForeignKey<PracticeField>(field => new { field.CardId, field.FieldName })
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.HasOne(field => field.Deck)

@@ -44,6 +44,7 @@ namespace SpacedRepetitionSystem.Entities.Core
       modelBuilder.ApplyConfiguration(new CardConfiguration());
       modelBuilder.ApplyConfiguration(new CardTemplateConfiguration());
       modelBuilder.ApplyConfiguration(new CardFieldConfiguration());
+      modelBuilder.ApplyConfiguration(new PracticeFieldConfiguration());
       modelBuilder.ApplyConfiguration(new CardFieldDefinitionConfiguration());
     }
   }

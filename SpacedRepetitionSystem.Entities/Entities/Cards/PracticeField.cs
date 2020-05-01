@@ -37,6 +37,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     /// </summary>
     public DateTime DueDate { get; set; }
 
+    /// <summary>
+    /// Returns whether the practice field is due
+    /// </summary>
+    public bool IsDue => DueDate <= DateTime.Today;
+
     ///<inheritdoc/>
     public string GetDisplayName() => null;
   }

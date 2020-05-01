@@ -140,10 +140,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
     ///<inheritdoc/>
     protected override void CreateNewEntity()
-    {
-      Entity = new Card { DueDate = DateTime.Today };
-      CardTemplateId = CardTemplate.DefaultCardTemplateId;
-    }
+    { CardTemplateId = CardTemplate.DefaultCardTemplateId; }
 
     ///<inheritdoc/>
     protected override bool SaveChanges()
