@@ -2,6 +2,7 @@
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,6 +41,42 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         .Include(card => card.Deck)
         .Include(card => card.CardTemplate)
         .ToListAsync();
+    }
+
+    ///<inheritdoc/>
+    protected override void PutCore(Card entity)
+    {
+      CreatePracticeFields(entity);
+      base.PutCore(entity);
+    }
+
+    ///<inheritdoc/>
+    protected override void PostCore(Card entity)
+    {
+      CreatePracticeFields(entity);
+      base.PostCore(entity);
+    }
+
+    private void CreatePracticeFields(Card card)
+    {
+      foreach (CardField field in card.Fields)
+      {
+        bool practiceFieldExists = Context.Set<PracticeField>()
+          .Any(practiceField => practiceField.CardId == card.CardId
+            && practiceField.DeckId == card.DeckId
+            && practiceField.FieldName == field.FieldName);
+        if (!practiceFieldExists)
+        {
+          PracticeField practiceField = new PracticeField()
+          {
+            CardId = card.CardId,
+            DeckId = card.DeckId,
+            FieldName = field.FieldName,
+            DueDate = DateTime.Today
+          };
+          Context.Add(practiceField);
+        }
+      }
     }
   }
 }

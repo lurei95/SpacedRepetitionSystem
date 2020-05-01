@@ -26,6 +26,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public List<Card> Cards { get; } = new List<Card>();
 
     /// <summary>
+    /// The fields to practice of the deck
+    /// </summary>
+    public List<PracticeField> PracticeFields { get; } = new List<PracticeField>();
+
+    /// <summary>
     /// Count of the Cards in the deck
     /// </summary>
     public int CardCount { get; set; }

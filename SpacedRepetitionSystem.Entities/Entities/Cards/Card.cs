@@ -10,11 +10,6 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   public sealed class Card : IEntity
   {
     /// <summary>
-    /// Due date for practicing the card
-    /// </summary>
-    public DateTime DueDate { get; set; }
-
-    /// <summary>
     /// Id of the card
     /// </summary>
     public long CardId { get; set; }
