@@ -15,6 +15,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
   public sealed class CardSearchViewModel : SearchViewModelBase<Card>
   {
     /// <summary>
+    /// Id of the deck
+    /// </summary>
+    public long? DeckId { get; set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -25,7 +30,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     { }
 
     ///<inheritdoc/>
-    protected override async Task<List<Card>> SearchCore() => await ApiConnector.Get<Card>(null);
+    protected override async Task<List<Card>> SearchCore()
+    {
+      Dictionary<string, object> parameters = new Dictionary<string, object>();
+      if (DeckId.HasValue)
+        parameters.Add(nameof(Deck.DeckId), DeckId);
+      return await ApiConnector.Get<Card>(parameters);
+    }
 
     ///<inheritdoc/>
     protected override void DeleteEntity(Card entity)

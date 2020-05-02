@@ -36,11 +36,13 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     ///<inheritdoc/>
     public override async Task<List<Card>> Get(IDictionary<string, object> searchParameters)
     {
-      return await Context.Set<Card>()
+      IQueryable<Card> query = Context.Set<Card>()
         .Include(card => card.Fields)
         .Include(card => card.Deck)
-        .Include(card => card.CardTemplate)
-        .ToListAsync();
+        .Include(card => card.CardTemplate);
+      if (searchParameters.ContainsKey(nameof(Deck.DeckId)))
+        query = query.Where(card => card.DeckId == (long)searchParameters[nameof(Deck.DeckId)]);
+      return await query.ToListAsync();
     }
 
     ///<inheritdoc/>
