@@ -33,25 +33,28 @@
               <div style="font-size: 3rem">@(ViewModel.CurrentFieldName + ": ?")</div>
             </div>
             <div class="d-flex justify-content-center">
-              <div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
-                <div class="input-group-prepend">
-                  <span class="input-group-text fieldLabel">Answer</span>
+              @if (ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
+              {
+                <div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text fieldLabel">Answer</span>
+                  </div>
+                  <input type="text" class="form-control" />
                 </div>
-                <input type="text" class="form-control" />
-              </div>
+              }
             </div>
           }
         </div>
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-center">
-          @if (ViewModel.IsShowingSolution)
+          @if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
           {
             <Button Command="ViewModel.DoesNotKnowResultCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
             <Button Command="ViewModel.DifficultResultCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
             <Button Command="ViewModel.EasyResultCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
           }
-          else
+          else if (ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
           {
             <Button Command="ViewModel.ShowSolutionCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
           }

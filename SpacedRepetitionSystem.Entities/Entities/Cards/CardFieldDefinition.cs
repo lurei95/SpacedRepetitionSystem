@@ -10,6 +10,11 @@
     /// </summary>
     public string FieldName { get; set; }
 
+    /// <summary>
+    /// Whether the input should be used for praticing purpose
+    /// </summary>
+    public bool ShowInputForPractice { get; set; } = false;
+
     #region References
 
     /// <summary>

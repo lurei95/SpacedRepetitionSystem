@@ -181,6 +181,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           await Context.Entry(field).Reference(field => field.Card).LoadAsync();
           await Context.Entry(field.Card).Collection(card => card.Fields).LoadAsync();
           await Context.Entry(field).Reference(field => field.Field).LoadAsync();
+          await Context.Entry(field.Field).Reference(field => field.CardFieldDefinition).LoadAsync();
         }
         Current = PracticeFields[0];
       }

@@ -18,6 +18,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .IsRequired()
         .HasMaxLength(100);
 
+      builder.Property(definition => definition.ShowInputForPractice)
+        .IsRequired();
+
       builder.Property(definition => definition.CardTemplateId)
         .IsRequired();
     }
