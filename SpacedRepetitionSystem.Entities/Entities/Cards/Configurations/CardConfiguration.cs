@@ -34,6 +34,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .WithOne(field => field.Card)
         .HasForeignKey(field => field.CardId)
         .OnDelete(DeleteBehavior.Cascade);
+
+      builder.HasMany(card => card.PracticeFields)
+        .WithOne(field => field.Card)
+        .HasForeignKey(field => field.CardId)
+        .OnDelete(DeleteBehavior.Cascade);
     }
   }
 }

@@ -46,6 +46,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     /// </summary>
     public List<CardField> Fields { get; } = new List<CardField>();
 
+    /// <summary>
+    /// The fields of the card
+    /// </summary>
+    public List<PracticeField> PracticeFields { get; } = new List<PracticeField>();
+
     #endregion
 
     ///<inheritdoc>/>

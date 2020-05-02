@@ -23,6 +23,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public long CardId { get; set; }
 
     /// <summary>
+    /// The Card
+    /// </summary>
+    public Card Card { get; set; }
+
+    /// <summary>
     /// Name of the field
     /// </summary>
     public string FieldName { get; set; }

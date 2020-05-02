@@ -69,12 +69,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         {
           PracticeField practiceField = new PracticeField()
           {
-            CardId = card.CardId,
             DeckId = card.DeckId,
             FieldName = field.FieldName,
             DueDate = DateTime.Today
           };
-          Context.Add(practiceField);
+          card.PracticeFields.Add(practiceField);
         }
       }
     }
