@@ -10,7 +10,7 @@
       }
       else
       {
-        <li class="breadcrumb-item text-white"><a class="text-white" href="@navigationList[i]">@navigationList[i]</a></li>
+        <li class="breadcrumb-item text-white"><a class="text-white" href="@GetLink(i)">@navigationList[i]</a></li>
       }
     }
   </ol>
@@ -43,6 +43,14 @@
   {
     base.OnInitialized();
     CalculateNavigationList(navigationManager.Uri);
+  }
+
+  private string GetLink(int index)
+  {
+    string link = "";
+    for (int i = 1; i < index+1; i++)
+      link += navigationList[i] + "/";
+    return link;
   }
 
   private void OnLocationChanged(object sender, LocationChangedEventArgs e)
