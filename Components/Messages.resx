@@ -147,6 +147,9 @@
   <data name="Easy" xml:space="preserve">
     <value>Easy</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>

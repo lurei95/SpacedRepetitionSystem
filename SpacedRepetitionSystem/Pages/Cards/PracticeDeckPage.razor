@@ -22,10 +22,10 @@
       <div class="card-body d-flex">
         <div class="d-flex mt-4 flex-column flex-grow-1">
           <div class="d-flex justify-content-center">
-            <div style="font-size: 1.5rem">@(ViewModel.IsShowingSolution ? ViewModel.CurrentFieldName : ViewModel.DisplayedFieldName)</div>
+            <div style="font-size: 1.5rem" class="@ViewModel.ValidationClass">@(ViewModel.IsShowingSolution ? ViewModel.CurrentFieldName : ViewModel.DisplayedFieldName)</div>
           </div>
           <div class="d-flex justify-content-center">
-            <div style="font-size: 3rem">@(ViewModel.IsShowingSolution ? ViewModel.Solution : ViewModel.DisplayedFieldValue)</div>
+            <div style="font-size: 3rem" class="@ViewModel.ValidationClass">@(ViewModel.IsShowingSolution ? ViewModel.Solution : ViewModel.DisplayedFieldValue)</div>
           </div>
           @if (!ViewModel.IsShowingSolution)
           {
@@ -35,12 +35,17 @@
             <div class="d-flex justify-content-center">
               @if (ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
               {
-                <div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text fieldLabel">Answer</span>
-                  </div>
-                  <input type="text" class="form-control" />
+              <div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
+                <div class="input-group-prepend">
+                  <span class="input-group-text fieldLabel @ViewModel.ValidationClass">Answer</span>
                 </div>
+                <input type="text" class="form-control" @onkeypress="KeyPressed" @bind="ViewModel.InputText" @bind:event="oninput"/>
+                <div class="input-group-append">
+                  <button style="padding-top: 8px; padding-bottom: 4px;" class="btn btn-secondary" type="button" id="button-addon2" @onclick="ViewModel.OnInputFinished">
+                    <span class="oi oi-chevron-right" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
               }
             </div>
           }
@@ -54,6 +59,10 @@
             <Button Command="ViewModel.DifficultResultCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
             <Button Command="ViewModel.EasyResultCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
           }
+          else if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
+          {
+            <Button Command="ViewModel.NextCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
+          }
           else if (ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
           {
             <Button Command="ViewModel.ShowSolutionCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
@@ -64,6 +73,15 @@
   </div>
 </ViewModelArea>
 
+<style>
+  .right {
+   color: #28a745;
+  }
+
+  .wrong {
+    color: #dc3545
+  }
+</style>
 
 @code
 {
@@ -72,4 +90,10 @@
   /// </summary>
   [Parameter]
   public object Id { set => ViewModel.LoadEntity(value); }
+
+  private void KeyPressed(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter")
+      ViewModel.OnInputFinished();
+  }
 }

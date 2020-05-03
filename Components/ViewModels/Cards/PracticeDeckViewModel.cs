@@ -22,6 +22,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     private CardField displayedCardField;
     private static readonly Random random = new Random();
     private PracticeField current;
+    string inputText;
+    private bool? wasInputCorrect;
 
     /// <summary>
     /// Whether the results should be shown 
@@ -34,6 +36,44 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         if (value != IsShowingSolution)
         {
           isShowingSolution = value;
+          OnPropertyChanged();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Whther the input was correct
+    /// </summary>
+    public bool? WasInputCorrect
+    {
+      get => wasInputCorrect;
+      set
+      {
+        if (value != wasInputCorrect)
+        {
+          wasInputCorrect = value;
+          OnPropertyChanged();
+        }
+      }
+    }
+
+    /// <summary>
+    /// Class for validation
+    /// </summary>
+    public string ValidationClass 
+      => WasInputCorrect == true ? "right" : WasInputCorrect == false ? "wrong" : null;
+
+    /// <summary>
+    /// Text of the Input
+    /// </summary>
+    public string InputText
+    {
+      get => inputText;
+      set
+      {
+        if (value != inputText)
+        {
+          inputText = value;
           OnPropertyChanged();
         }
       }
@@ -119,6 +159,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public Command ShowSolutionCommand { get; private set; }
 
     /// <summary>
+    /// Command for going to the next entry
+    /// </summary>
+    public Command NextCommand { get; set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -149,6 +194,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       {
         CommandText = Messages.DoesNotKnow,
         ExecuteAction = (param) => ReportPracticeResult(PracticeResultKind.Failed)
+      };
+
+      NextCommand = new Command()
+      {
+        CommandText = Messages.Next,
+        ExecuteAction = (param) => Next()
       };
     }
 
@@ -187,16 +238,36 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       }
     }
 
+    /// <summary>
+    /// The input has finished
+    /// </summary>
+    public void OnInputFinished()
+    {
+      if (InputText == Solution)
+        ReportPracticeResult(PracticeResultKind.Easy);
+      else
+        ReportPracticeResult(PracticeResultKind.Failed);
+    }
+
     private void ReportPracticeResult(PracticeResultKind result)
     {
-      //Report
-      Next();
+      if (result == PracticeResultKind.Failed) // if failed insert at random position again 
+      {
+        int i = random.Next(currentIndex + 1, PracticeFields.Count);
+        PracticeFields.Insert(i, Current);
+      }
+
+      if (Current.Field.CardFieldDefinition.ShowInputForPractice)
+        ShowSolution();
+      else
+        Next();
     }
 
     private void ShowSolution()
     {
+      if (Current.Field.CardFieldDefinition.ShowInputForPractice)
+        WasInputCorrect = InputText == Solution;
       IsShowingSolution = true;
-
     }
 
     private void Next()
@@ -206,6 +277,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         currentIndex++;
         Current = PracticeFields[currentIndex];
         IsShowingSolution = false;
+        InputText = string.Empty;
+        WasInputCorrect = null;
       }
       else
         NavigationManager.NavigateTo("/");
