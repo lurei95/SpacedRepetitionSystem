@@ -24,6 +24,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     private PracticeField current;
     string inputText;
     private bool? wasInputCorrect;
+    private bool isSummary = true;
+
+    private readonly Dictionary<long, CardPracticeResult> practiceResults = new Dictionary<long, CardPracticeResult>();
 
     /// <summary>
     /// Whether the results should be shown 
@@ -42,7 +45,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     }
 
     /// <summary>
-    /// Whther the input was correct
+    /// Whether the input was correct
     /// </summary>
     public bool? WasInputCorrect
     {
@@ -54,6 +57,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           wasInputCorrect = value;
           OnPropertyChanged();
         }
+      }
+    }
+
+    public bool IsSummary
+    {
+      get => isSummary;
+      set
+      {
+        isSummary = value;
+        OnPropertyChanged();
       }
     }
 
@@ -251,6 +264,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
     private void ReportPracticeResult(PracticeResultKind result)
     {
+      AddResult(result);
       if (result == PracticeResultKind.Failed) // if failed insert at random position again 
       {
         int i = random.Next(currentIndex + 1, PracticeFields.Count);
@@ -297,6 +311,56 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           current++;
         }
       }
+    }
+
+    private void AddResult(PracticeResultKind resultKind)
+    {
+      CardPracticeResult cardResult;
+      if (practiceResults.ContainsKey(Current.CardId))
+      {
+        cardResult = practiceResults[current.CardId];
+        if (cardResult.FieldResults.ContainsKey(current.FieldName))
+        {
+          switch (resultKind)
+          {
+            case PracticeResultKind.Easy:
+              cardResult.FieldResults[current.FieldName].Correct++;
+              break;
+            case PracticeResultKind.Hard:
+              cardResult.FieldResults[current.FieldName].Difficult++;
+              break;
+            case PracticeResultKind.Failed:
+              cardResult.FieldResults[current.FieldName].Wrong++;
+              break;
+            default:
+              break;
+          }
+        }
+        else
+          AddNewFieldResult(cardResult, resultKind);
+      }
+      else
+      {
+        cardResult = new CardPracticeResult()
+        {
+          Correct = resultKind == PracticeResultKind.Easy ? 1 : 0,
+          Difficult = resultKind == PracticeResultKind.Hard ? 1 : 0,
+          Wrong = resultKind == PracticeResultKind.Failed ? 1 : 0
+        };
+        AddNewFieldResult(cardResult, resultKind);
+      }
+      practiceResults.Add(current.CardId, cardResult);
+    }
+
+    private void AddNewFieldResult(CardPracticeResult cardPracticeResult, PracticeResultKind resultKind)
+    {
+      PracticeResult result = new PracticeResult()
+      {
+        Correct = resultKind == PracticeResultKind.Easy ? 1 : 0,
+        Difficult = resultKind == PracticeResultKind.Hard ? 1 : 0,
+        Wrong = resultKind == PracticeResultKind.Failed ? 1 : 0
+      };
+      cardPracticeResult.FieldResults.Add(current.FieldName, result);
     }
   }
 }
