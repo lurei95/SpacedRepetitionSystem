@@ -4,7 +4,7 @@
 <ViewModelArea ViewModel="@Command">
   @if (Command?.IsVisible == true)
   {
-    <button type="button"
+    <button type="button" @onkeypress="KeyPressed"
             data-toggle="tooltip"
             title="@Command.ToolTip"
             @onclick="ButtonClicked"
@@ -107,4 +107,10 @@
 
   private void RefreshUi()
   { InvokeAsync(() => StateHasChanged()); }
+
+  private void KeyPressed(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter")
+      Command.ExecuteCommand(CommandParameter);
+  }
 }
