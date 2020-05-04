@@ -24,11 +24,10 @@ namespace SpacedRepetitionSystem.Pages
     ///<inheritdoc/>
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+      await base.OnAfterRenderAsync(firstRender);
       if (firstRender)
       {
-        IsLoading = true;
         StateHasChanged();
-        await base.OnAfterRenderAsync(firstRender);
         await ViewModel.InitializeAsync();
         IsLoading = false;
         StateHasChanged();

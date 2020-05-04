@@ -4,7 +4,7 @@
 <ViewModelArea ViewModel="@Command">
   @if (Command?.IsVisible == true)
   {
-    <button type="button" @onkeypress="KeyPressed"
+    <button type="button" @onkeypress="KeyPressed" id="@Id"
             data-toggle="tooltip"
             title="@Command.ToolTip"
             @onclick="ButtonClicked"
@@ -52,6 +52,12 @@
   private string TextColorString => (!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null);
 
   /// <summary>
+  /// Id of the button element
+  /// </summary>
+  [Parameter]
+  public string Id { get; set; }
+
+  /// <summary>F
   /// Parameter for executing the command
   /// </summary>
   [Parameter]
