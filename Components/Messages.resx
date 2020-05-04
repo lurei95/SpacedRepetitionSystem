@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="DeleteCardDialogText" xml:space="preserve">
     <value>Are you sure that you want to delete the card "{0}"?</value>
   </data>
@@ -155,6 +158,12 @@
   </data>
   <data name="Okay" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="PracticePageSummaryTitle" xml:space="preserve">
+    <value>Practice Summary</value>
+  </data>
+  <data name="PracticePageTitle" xml:space="preserve">
+    <value>Practice {0}</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>

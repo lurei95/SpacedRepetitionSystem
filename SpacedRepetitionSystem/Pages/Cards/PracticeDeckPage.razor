@@ -11,7 +11,7 @@
     <div class="card-header">
       <div class="row">
         <div class="col col-md-auto">
-          @ViewModel?.Deck?.GetDisplayName()
+          @ViewModel?.Title
         </div>
         <div class="col d-flex justify-content-end">
           <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
@@ -22,12 +22,48 @@
       <div class="card-body d-flex">
         @if (ViewModel.IsSummary)
         {
-          <div class="d-flex flex-column">
-            <div class="d-flex">
-              <h3>Reuslts:</h3>
-            </div>
-            <div class="d-flex flex-grow-1">
-
+          <div class="d-flex flex-column flex-grow-1">
+            <div class="d-flex flex-grow-1 flex-row">
+              <ul class="list-group list-group-flush jus" style="width:100%">
+                @foreach (var item in ViewModel.PracticeResults)
+                {
+                  <li class="list-group-item custom-li mt-2">
+                    <div class="d-flex row justify-content-between">
+                      <div class="d-flex col">
+                        <label>Card - @item.Key</label>
+                      </div>
+                      <div class="d-flex justify-content-center ml-4 col">
+                        <label class="right">@item.Value.Correct</label>
+                      </div>
+                      <div class="d-flex justify-content-center col">
+                        <label class="hard">@item.Value.Difficult</label>
+                      </div>
+                      <div class="d-flex justify-content-center col">
+                        <label class="wrong">@item.Value.Wrong</label>
+                      </div>
+                    </div>
+                  </li>
+                  @foreach (var subItem in item.Value.FieldResults)
+                  {
+                    <li class="list-group-item ml-4 custom-li">
+                      <div class="d-flex row justify-content-between">
+                        <div class="d-flex col">
+                          <label>@subItem.Key</label>
+                        </div>
+                        <div class="d-flex justify-content-center col">
+                          <label class="right">@subItem.Value.Correct</label>
+                        </div>
+                        <div class="d-flex justify-content-center col">
+                          <label class="hard">@subItem.Value.Difficult</label>
+                        </div>
+                        <div class="d-flex justify-content-center col">
+                          <label class="wrong">@subItem.Value.Wrong</label>
+                        </div>           
+                      </div>
+                    </li>
+                  }
+               }
+              </ul>
             </div>
           </div>
         }
@@ -64,11 +100,14 @@
             }
           </div>
         }
-
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-center">
-          @if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
+          @if (ViewModel.IsSummary)
+          {
+            <Button Command="ViewModel.CloseSummaryCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
+          }
+          else if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
           {
             <Button Command="ViewModel.DoesNotKnowResultCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
             <Button Command="ViewModel.DifficultResultCommand" Classes="btn-lg ml-1 mr-1 btn-secondary"></Button>
@@ -93,8 +132,18 @@
    color: #28a745;
   }
 
+  .hard {
+    color: #f39c12
+  }
+
   .wrong {
     color: #dc3545
+  }
+
+  .custom-li {
+    border-top-width: 0px;
+    border-bottom-width: 1px;
+    margin-bottom: 0px;
   }
 </style>
 

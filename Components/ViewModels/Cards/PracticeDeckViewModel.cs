@@ -24,9 +24,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     private PracticeField current;
     string inputText;
     private bool? wasInputCorrect;
-    private bool isSummary = true;
-
-    private readonly Dictionary<long, CardPracticeResult> practiceResults = new Dictionary<long, CardPracticeResult>();
+    private bool isSummary = false;
 
     /// <summary>
     /// Whether the results should be shown 
@@ -44,6 +42,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       }
     }
 
+    public Dictionary<long, CardPracticeResult> PracticeResults = new Dictionary<long, CardPracticeResult>();
+
     /// <summary>
     /// Whether the input was correct
     /// </summary>
@@ -60,6 +60,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       }
     }
 
+    /// <summary>
+    /// Whether the practice summary is shown 
+    /// </summary>
     public bool IsSummary
     {
       get => isSummary;
@@ -69,6 +72,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         OnPropertyChanged();
       }
     }
+
+    /// <summary>
+    /// Title of the page
+    /// </summary>
+    public string Title => IsSummary ? Messages.PracticePageSummaryTitle : Messages.PracticePageTitle.FormatWith(Deck.Title);
 
     /// <summary>
     /// Class for validation
@@ -177,6 +185,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public Command NextCommand { get; set; }
 
     /// <summary>
+    /// Command for closing the summary
+    /// </summary>
+    public Command CloseSummaryCommand { get; set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -213,6 +226,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       {
         CommandText = Messages.Next,
         ExecuteAction = (param) => Next()
+      };
+
+      CloseSummaryCommand = new Command()
+      {
+        CommandText = Messages.Close,
+        ExecuteAction = (param) => NavigationManager.NavigateTo("/")
       };
     }
 
@@ -295,7 +314,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         WasInputCorrect = null;
       }
       else
-        NavigationManager.NavigateTo("/");
+        IsSummary = true;
     }
 
     private void SelectRandomDisplayField()
@@ -316,9 +335,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     private void AddResult(PracticeResultKind resultKind)
     {
       CardPracticeResult cardResult;
-      if (practiceResults.ContainsKey(Current.CardId))
+      if (PracticeResults.ContainsKey(Current.CardId))
       {
-        cardResult = practiceResults[current.CardId];
+        cardResult = PracticeResults[current.CardId];
         if (cardResult.FieldResults.ContainsKey(current.FieldName))
         {
           switch (resultKind)
@@ -348,8 +367,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           Wrong = resultKind == PracticeResultKind.Failed ? 1 : 0
         };
         AddNewFieldResult(cardResult, resultKind);
+        PracticeResults.Add(current.CardId, cardResult);
       }
-      practiceResults.Add(current.CardId, cardResult);
     }
 
     private void AddNewFieldResult(CardPracticeResult cardPracticeResult, PracticeResultKind resultKind)
