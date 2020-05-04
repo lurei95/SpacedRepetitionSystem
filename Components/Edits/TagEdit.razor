@@ -1,9 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Components.Web;
 @using Microsoft.JSInterop;
 
+@inherits SpacedRepetitionSystem.Components.CustomComponentBase
+
 @inject IJSRuntime JSRuntime;
 
-<div class="input-group mb-3 fieldDiv">
+<div class="input-group mb-3 fieldDiv @Class" style="@Style" id="@Id">
   @foreach (string tag in Tags)
   {
     <div class="badge badge-secondary tag1">

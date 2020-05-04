@@ -1,10 +1,11 @@
 ﻿@using SpacedRepetitionSystem.Utility.Notification;
 
+@inherits SpacedRepetitionSystem.Components.CustomComponentBase
 @implements INotificationProvider
 
 @if (alertVisible)
 {
-  <div class="@alertClass" role="alert">
+  <div class="@alertClass" style="@Style" id="@Id" role="alert">
     @message
     <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="ResetNotification">
       <span aria-hidden="true">&times;</span>
@@ -35,19 +36,19 @@
     switch (notificationKind)
     {
       case NotificationKind.SuccessNotification:
-        alertClass = "alert alert-success bottomBar";
+        alertClass = "alert alert-success bottomBar " + Class;
         alertVisible = true;
         break;
       case NotificationKind.InformationNotification:
-        alertClass = "alert alert-info bottomBar";
+        alertClass = "alert alert-info bottomBar " + Class;
         alertVisible = true;
         break;
       case NotificationKind.WarningNotification:
-        alertClass = "alert alert-warning bottomBar";
+        alertClass = "alert alert-warning bottomBar " + Class;
         alertVisible = true;
         break;
       case NotificationKind.ErrorNotification:
-        alertClass = "alert alert-danger bottomBar";
+        alertClass = "alert alert-danger bottomBar " + Class;
         alertVisible = true;
         break;
       default:

@@ -1,6 +1,8 @@
-﻿@if (Visible)
+﻿@inherits SpacedRepetitionSystem.Components.CustomComponentBase
+
+@if (Visible)
 {
-  <div class="d-flex justify-content-center waitSpinnerContainer">
+  <div class="d-flex justify-content-center waitSpinnerContainer @Class" style="@Style" id="@Id">
     <div class="spinner-border waitSpinner" role="status">
       <span class="sr-only">Loading...</span>
     </div>
@@ -30,7 +32,7 @@ else
   /// </summary>
 
   [Parameter]
-  public bool Visible { get;  set; }
+  public bool Visible { get; set; }
 
   /// <summary>
   /// ChildContent

@@ -7,7 +7,7 @@ namespace SpacedRepetitionSystem.Components.Modals
 	/// <summary>
 	/// Base Class for a modal dialog
 	/// </summary>
-	public class ModalDialogBase : ComponentBase, IDialogProvider
+	public class ModalDialogBase : CustomComponentBase, IDialogProvider
 	{
 		/// <summary>
 		/// Whether the dialog is visible 

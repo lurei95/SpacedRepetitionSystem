@@ -1,6 +1,8 @@
 ﻿@using SpacedRepetitionSystem.Components.Commands;
 @using SpacedRepetitionSystem.Components.ViewModels;
 
+@inherits SpacedRepetitionSystem.Components.CustomComponentBase
+
 <ViewModelArea ViewModel="@Command">
   @if (Command?.IsVisible == true)
   {
@@ -47,15 +49,10 @@
 {
   private Command command;
 
-  private string ClassString => (IsIconButton ? "iconButton" : " ") + (string.IsNullOrEmpty(Classes) ? "" : " ") + Classes;
+  private string ClassString => (IsIconButton ? "iconButton" : " ") + (string.IsNullOrEmpty(Class) ? "" : " ") + Class;
 
   private string TextColorString => (!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null);
 
-  /// <summary>
-  /// Id of the button element
-  /// </summary>
-  [Parameter]
-  public string Id { get; set; }
 
   /// <summary>F
   /// Parameter for executing the command
@@ -82,7 +79,7 @@
   }
 
   /// <summary>
-  /// Determinds whether the button is a Icon Button 
+  /// Determinds whether the button is a Icon Button
   /// </summary>
   [Parameter]
   public bool IsIconButton { get; set; }
@@ -92,18 +89,6 @@
   /// </summary>
   [Parameter]
   public string TextColor { get; set; }
-
-  /// <summary>
-  /// The style of the component
-  /// </summary>
-  [Parameter]
-  public string Style { get; set; }
-
-  /// <summary>
-  /// Classes string
-  /// </summary>
-  [Parameter]
-  public string Classes { get; set; }
 
   private void ButtonClicked()
   {

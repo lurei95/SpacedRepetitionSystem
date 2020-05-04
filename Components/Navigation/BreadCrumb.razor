@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Components.Routing;
 
-<nav aria-label="breadcrumb">
+@inherits SpacedRepetitionSystem.Components.CustomComponentBase
+
+<nav aria-label="breadcrumb" style="@Style" class="@Class" id="@Id">
   <ol class="breadcrumb" style="background-color:transparent">
     @for (int i = 0; i < navigationList.Count; i++)
     {
@@ -48,7 +50,7 @@
   private string GetLink(int index)
   {
     string link = "";
-    for (int i = 1; i < index+1; i++)
+    for (int i = 1; i < index + 1; i++)
       link += navigationList[i] + "/";
     return link;
   }

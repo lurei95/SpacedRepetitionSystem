@@ -1,4 +1,6 @@
-﻿<div class="row d-flex flex-fill" style="align-items: center; margin-left: 10px; margin-right: 10px;">
+﻿@inherits SpacedRepetitionSystem.Components.CustomComponentBase
+
+<div class="row d-flex flex-fill @Class" style="align-items: center; margin-left: 10px; margin-right: 10px; @Style" id="@Id">
   @if (Property != null && !string.IsNullOrEmpty(Property.ErrorText))
   {
     <div class="col-auto" style="padding: 0px; margin-right: 7px;">
