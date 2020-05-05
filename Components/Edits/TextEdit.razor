@@ -17,11 +17,11 @@
     </div>
     @if (Property != null)
     {
-      <input id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Property.Value" @bind:event="oninput" @onkeydown="KeyDown" />
+      <input autocomplete="off" id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Property.Value" @bind:event="oninput" @onkeydown="KeyDown" />
     }
     else
     {
-      <input id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Value" @bind:event="oninput" @onkeydown="KeyDown" />
+      <input autocomplete="off" id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Value" @bind:event="oninput" @onkeydown="KeyDown" />
     }
     <div class="input-group-append">
       @ChildContent
