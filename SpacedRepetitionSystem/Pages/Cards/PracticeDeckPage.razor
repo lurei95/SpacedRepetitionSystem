@@ -2,10 +2,10 @@
 
 @using SpacedRepetitionSystem.Components.ViewModels.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
+@using SpacedRepetitionSystem.Components.Edits;
 @using SpacedRepetitionSystem.Components.ViewModels;
 
 @inherits PageBase<PracticeDeckViewModel>
-@inject IJSRuntime JSRuntime;
 
 <ViewModelArea ViewModel="ViewModel">
   <div class="card flex-grow-0 fullsizeCard">
@@ -86,19 +86,12 @@
             @if (!ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
             {
               <div class="d-flex justify-content-center">
-                <div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text fieldLabel @ViewModel.ValidationClass">Answer</span>
-                  </div>
-                  <input type="text" class="form-control" @onkeypress="KeyPressed" @bind="ViewModel.InputText" @bind:event="oninput" id="input"/>
-                  <div class="input-group-append">
-                    <button style="padding-top: 8px; padding-bottom: 4px;" class="btn btn-secondary" type="button" id="button-addon2" @onclick="ViewModel.OnInputFinished">
-                      <span class="oi oi-chevron-right" aria-hidden="true"></span>
-                    </button>
-                  </div>
-                </div>
+                <TextEdit Caption="Answer" @bind-Value="ViewModel.InputText" ButtonAction="ViewModel.OnInputFinished" EnterAction="ViewModel.OnInputFinished" Id="answerEdit" IsFocued="true">
+                  <button style="padding-top: 8px; padding-bottom: 4px;" class="btn btn-secondary" type="button" id="button-addon2" @onclick="ViewModel.OnInputFinished">
+                    <span class="oi oi-chevron-right" aria-hidden="true"></span>
+                  </button>
+                </TextEdit>
               </div>
-              JSRuntime.InvokeVoidAsync("utilities.focusElement", "input");
             }
           </div>
         }
@@ -107,7 +100,7 @@
         <div class="d-flex justify-content-center">
           @if (ViewModel.IsSummary)
           {
-            <Button Command="ViewModel.CloseSummaryCommand" Id="closeSummaryButton" Class="btn-lg ml-1 mr-1 btn-secondary"></Button>
+            <Button Command="ViewModel.CloseSummaryCommand" Id="closeSummaryButton" Class="btn-lg ml-1 mr-1 btn-secondary" IsFocued="true"></Button>
           }
           else if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
           {
@@ -117,11 +110,11 @@
           }
           else if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
           {
-            <Button Command="ViewModel.NextCommand" Id="nextButton" Class="btn-lg ml-1 mr-1 btn-secondary"></Button>
+            <Button Command="ViewModel.NextCommand" Id="nextButton" Class="btn-lg ml-1 mr-1 btn-secondary" IsFocued="true"></Button>
           }
           else if (ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
           {
-            <Button Command="ViewModel.ShowSolutionCommand" Id="showSolutionButton" Class="btn-lg ml-1 mr-1 btn-secondary"></Button>
+            <Button Command="ViewModel.ShowSolutionCommand" Id="showSolutionButton" Class="btn-lg ml-1 mr-1 btn-secondary" IsFocued="true"></Button>
           }
         </div>
       </div>
@@ -156,24 +149,4 @@
   /// </summary>
   [Parameter]
   public object Id { set => ViewModel.LoadEntity(value); }
-
-  private void KeyPressed(KeyboardEventArgs e)
-  {
-    if (e.Key == "Enter")
-      ViewModel.OnInputFinished();
-  }
-
-  ///<inheritdoc/>
-  protected override async Task OnAfterRenderAsync(bool firstRender)
-  {
-    await base.OnAfterRenderAsync(firstRender);
-    if (ViewModel.IsSummary)
-      await JSRuntime.InvokeVoidAsync("utilities.focusElement", "closeSummaryButton");
-    else if (!ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
-      await JSRuntime.InvokeVoidAsync("utilities.focusElement", "input");
-    else if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
-      await JSRuntime.InvokeVoidAsync("utilities.focusElement", "nextButton");
-    else if (ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
-      await JSRuntime.InvokeVoidAsync("utilities.focusElement", "showSolutionButton");
-  }
 }

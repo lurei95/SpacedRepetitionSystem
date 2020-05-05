@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.JSInterop;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
@@ -26,7 +25,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     string inputText;
     private bool? wasInputCorrect;
     private bool isSummary = false;
-    private readonly IJSRuntime jsRuntime;
 
     /// <summary>
     /// Whether the results should be shown 
@@ -199,11 +197,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnetcor (Injected)</param>
     /// <param name="jsRuntime">JSRuntime (injected)</param>
-    public PracticeDeckViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector, IJSRuntime jsRuntime) 
+    public PracticeDeckViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
       : base(context, navigationManager, apiConnector)
     {
-      this.jsRuntime = jsRuntime;
-
       ShowSolutionCommand = new Command()
       {
         CommandText = Messages.Show,

@@ -27,7 +27,6 @@ namespace SpacedRepetitionSystem.Pages
       await base.OnAfterRenderAsync(firstRender);
       if (firstRender)
       {
-        StateHasChanged();
         await ViewModel.InitializeAsync();
         IsLoading = false;
         StateHasChanged();

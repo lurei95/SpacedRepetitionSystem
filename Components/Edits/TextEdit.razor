@@ -1,4 +1,8 @@
-﻿@inherits SpacedRepetitionSystem.Components.CustomComponentBase
+﻿@using Microsoft.JSInterop;
+
+@inherits SpacedRepetitionSystem.Components.CustomComponentBase
+
+@inject IJSRuntime JSRuntime;
 
 <div class="row d-flex flex-fill @Class" style="align-items: center; margin-left: 10px; margin-right: 10px; @Style" id="@Id">
   @if (Property != null && !string.IsNullOrEmpty(Property.ErrorText))
@@ -13,13 +17,14 @@
     </div>
     @if (Property != null)
     {
-      <input disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Property.Value" />
+      <input id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Property.Value" @bind:event="oninput" @onkeydown="KeyDown" />
     }
     else
     {
-      <input disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Value" />
+      <input id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Value" @bind:event="oninput" @onkeydown="KeyDown" />
     }
     <div class="input-group-append">
+      @ChildContent
       @if (!string.IsNullOrEmpty(ButtonText))
       {
         <button disabled="@(!IsEnabled)" class="btn btn-outline-secondary" type="button" id="button-addon1" @onclick="() => ButtonAction()">@ButtonText</button>
@@ -31,6 +36,12 @@
 @code
 {
   private string value;
+
+  /// <summary>
+  /// ChildContent
+  /// </summary>
+  [Parameter]
+  public RenderFragment ChildContent { get; set; }
 
   /// <summary>
   /// Determines whether the edit is enabled
@@ -49,6 +60,12 @@
   /// </summary>
   [Parameter]
   public string Caption { get; set; }
+
+  /// <summary>
+  /// If the edit should be focued
+  /// </summary>
+  [Parameter]
+  public bool IsFocued { get; set; }
 
   /// <summary>
   /// Value of the text edit
@@ -80,8 +97,28 @@
   public Action ButtonAction { get; set; }
 
   /// <summary>
+  /// Action when pressing enter
+  /// </summary>
+  [Parameter]
+  public Action EnterAction { get; set; }
+
+  /// <summary>
   /// Value changed event
   /// </summary>
   [Parameter]
   public EventCallback<string> ValueChanged { get; set; }
+
+  private void KeyDown(KeyboardEventArgs e)
+  {
+    if (e.Key == "Enter" && EnterAction != null)
+      EnterAction.Invoke();
+  }
+
+  ///<inheritdoc/>
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    await base.OnAfterRenderAsync(firstRender);
+    if (IsFocued)
+      await JSRuntime.InvokeVoidAsync("utilities.focusElement", Id + "-input");
+  }
 }

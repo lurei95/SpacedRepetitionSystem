@@ -1,12 +1,14 @@
 ﻿@using SpacedRepetitionSystem.Components.Commands;
 @using SpacedRepetitionSystem.Components.ViewModels;
+@using Microsoft.JSInterop;
 
 @inherits SpacedRepetitionSystem.Components.CustomComponentBase
+@inject IJSRuntime JSRuntime;
 
 <ViewModelArea ViewModel="@Command">
   @if (Command?.IsVisible == true)
   {
-    <button type="button" @onkeypress="KeyPressed" id="@Id"
+    <button type="button" id="@Id"
             data-toggle="tooltip"
             title="@Command.ToolTip"
             @onclick="ButtonClicked"
@@ -53,13 +55,17 @@
 
   private string TextColorString => (!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null);
 
+  /// <summary>
+  /// If the edit should be focued
+  /// </summary>
+  [Parameter]
+  public bool IsFocued { get; set; }
 
   /// <summary>F
   /// Parameter for executing the command
   /// </summary>
   [Parameter]
   public object CommandParameter { get; set; }
-
 
   /// <summary>
   /// Command of the button
@@ -99,9 +105,11 @@
   private void RefreshUi()
   { InvokeAsync(() => StateHasChanged()); }
 
-  private void KeyPressed(KeyboardEventArgs e)
+  ///<inheritdoc/>
+  protected override async Task OnAfterRenderAsync(bool firstRender)
   {
-    if (e.Key == "Enter")
-      Command.ExecuteCommand(CommandParameter);
+    await base.OnAfterRenderAsync(firstRender);
+    if (IsFocued)
+      await JSRuntime.InvokeVoidAsync("utilities.focusElement", Id);
   }
 }

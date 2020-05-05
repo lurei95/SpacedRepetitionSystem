@@ -14,6 +14,9 @@ using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Decks;
 using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
+using Blazorise;
+using Blazorise.Bootstrap;
+using Blazorise.Icons.FontAwesome;
 
 namespace SpacedRepetitionSystem
 {
@@ -31,6 +34,10 @@ namespace SpacedRepetitionSystem
       services.AddRazorPages();
       services.AddServerSideBlazor();
 
+      services.AddBlazorise(options => { options.ChangeTextOnKeyPress = true; })
+        .AddBootstrapProviders()
+        .AddFontAwesomeIcons();
+
       services.AddDbContext<SpacedRepetionSystemDBContext>(
         options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
       services.AddScoped<DbContext, SpacedRepetionSystemDBContext>();
@@ -43,14 +50,14 @@ namespace SpacedRepetitionSystem
       services.AddTransient<DeckSearchViewModel>();
       services.AddTransient<PracticeDeckViewModel>();
 
-      services.AddScoped<EntityControllerBase<Card>, CardsController>();
+      services.AddScoped<EntityControllerBase<Entities.Entities.Cards.Card>, CardsController>();
       services.AddScoped<EntityControllerBase<Deck>, DecksController>();
       services.AddScoped<EntityControllerBase<CardTemplate>, CardTemplatesController>();
       services.AddScoped<IApiConnector, ApiConnector>();
 
       services.AddScoped(typeof(CommitValidatorBase<>), typeof(CommitValidatorBase<>));
       services.AddScoped(typeof(DeleteValidatorBase<>), typeof(DeleteValidatorBase<>));
-      services.AddValidator<CommitValidatorBase<Card>, CardCommitValidator>();
+      services.AddValidator<CommitValidatorBase<Entities.Entities.Cards.Card>, CardCommitValidator>();
       services.AddValidator<CommitValidatorBase<Deck>, DeckCommitValidator>();
       services.AddValidator<CommitValidatorBase<CardTemplate>, CardTemplateCommitValidator>();
       services.AddValidator<DeleteValidatorBase<CardTemplate>, CardTemplateDeleteValidator>();
