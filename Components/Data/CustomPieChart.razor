@@ -1,0 +1,51 @@
+﻿@using Blazorise.Charts;
+
+@if (IsVisible)
+{
+  <PieChart @ref="chart" TItem="int" />
+}
+
+@code
+{
+  [Parameter]
+  public bool IsVisible { get; set; }
+
+  [Parameter]
+  public List<string> BackgroundColors { get; set; }
+
+  [Parameter]
+  public List<string> BorderColors { get; set; }
+
+  [Parameter]
+  public string[] Labels { get; set; }
+
+  [Parameter]
+  public List<int> Values { get; set; }
+
+  [Parameter]
+  public string Label { get; set; }
+
+  private PieChart<int> chart;
+
+  private async Task Redraw()
+  {
+    await chart.Clear();
+    await chart.AddLabel(Labels);
+    await chart.AddDataSet(new PieChartDataset<int>
+    {
+      Label = Label,
+      Data = Values,
+      BackgroundColor = BackgroundColors,
+      BorderWidth = 1,
+      BorderColor = BorderColors
+    });
+
+    await chart.Update();
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    await base.OnAfterRenderAsync(firstRender);
+    await Redraw();
+  }
+}
