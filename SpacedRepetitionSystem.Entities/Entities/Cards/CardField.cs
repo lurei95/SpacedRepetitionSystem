@@ -5,6 +5,9 @@
   /// </summary>
   public sealed class CardField : IEntity
   {
+    ///<inheritdoc/>
+    public object Id => new { CardId, FieldName };
+
     /// <summary>
     /// Value of the field
     /// </summary>

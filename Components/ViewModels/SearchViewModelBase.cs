@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
-using SpacedRepetitionSystem.Utility.Extensions;
-using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,14 +16,29 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     where TEntity : class, IEntity
   {
     /// <summary>
-    /// Command for Saving the changes
+    /// Command for deleting an entity
     /// </summary>
     public Command DeleteCommand { get; set; }
+
+    /// <summary>
+    /// Command for editing an entity
+    /// </summary>
+    public Command EditCommand { get; set; }
+
+    /// <summary>
+    /// Command for creating a new entity
+    /// </summary>
+    public Command NewCommand { get; set; }
 
     /// <summary>
     /// Results of the search
     /// </summary>
     public List<TEntity> SearchResults { get; } = new List<TEntity>();
+
+    /// <summary>
+    /// The currently selected entity
+    /// </summary>
+    public TEntity SelectedEntity { get; set; }
 
     /// <summary>
     /// Whether the search is currently executed
@@ -43,8 +56,20 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     {
       DeleteCommand = new Command()
       {
-        Icon = "oi oi-trash",
+        CommandText = Messages.Delete,
         ExecuteAction = (param) => DeleteEntity(param as TEntity)
+      };
+
+      EditCommand = new Command()
+      {
+        CommandText = Messages.Edit,
+        ExecuteAction = (param) => EditEntity(param as TEntity)
+      };
+
+      NewCommand = new Command()
+      {
+        CommandText = Messages.New,
+        ExecuteAction = (param) => NewEntity()
       };
     }
 
@@ -58,6 +83,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       List<TEntity> results = await SearchCore();
       SearchResults.Clear();
       SearchResults.AddRange(results);
+      if (SearchResults.Count > 0)
+        SelectedEntity = SearchResults[0];
       IsSearching = false;
     }
 
@@ -73,6 +100,19 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         OnPropertyChanged(nameof(SearchResults));
       }
     }
+
+    /// <summary>
+    /// Opens the entity for editing
+    /// </summary>
+    /// <param name="entity">The entity</param>
+    protected virtual void EditEntity(TEntity entity)
+    { NavigationManager.NavigateTo(NavigationManager.Uri + "/" + entity.Id); }
+
+    /// <summary>
+    /// Adds a new entity
+    /// </summary>
+    protected virtual void NewEntity()
+    { NavigationManager.NavigateTo(NavigationManager.Uri + "/New/"); }
 
     /// <summary>
     /// Performs the actual search

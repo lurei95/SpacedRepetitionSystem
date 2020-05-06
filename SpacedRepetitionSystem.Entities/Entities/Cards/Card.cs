@@ -9,6 +9,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// </summary>
   public sealed class Card : IEntity
   {
+    ///<inheritdoc/>
+    public object Id => CardId;
+
     /// <summary>
     /// Id of the card
     /// </summary>

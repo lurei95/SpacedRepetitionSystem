@@ -5,6 +5,9 @@
   /// </summary>
   public sealed class CardFieldDefinition : IEntity
   {
+    ///<inheritdoc/>
+    public object Id => new { CardTemplateId, FieldName };
+
     /// <summary>
     /// Name of the field
     /// </summary>

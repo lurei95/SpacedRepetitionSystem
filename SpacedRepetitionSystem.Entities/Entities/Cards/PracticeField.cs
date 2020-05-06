@@ -7,6 +7,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// </summary>
   public sealed class PracticeField : IEntity
   {
+    ///<inheritdoc/>
+    public object Id => new { DeckId, CardId, FieldName };
+
     /// <summary>
     /// Id of the deck
     /// </summary>

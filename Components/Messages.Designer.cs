@@ -79,6 +79,15 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure that you want to delete the card &quot;{0}&quot;?.
         /// </summary>
         internal static string DeleteCardDialogText {
@@ -156,6 +165,24 @@ namespace SpacedRepetitionSystem.Components {
         internal static string Easy {
             get {
                 return ResourceManager.GetString("Easy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        internal static string New {
+            get {
+                return ResourceManager.GetString("New", resourceCulture);
             }
         }
         

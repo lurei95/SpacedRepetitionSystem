@@ -25,11 +25,6 @@ namespace SpacedRepetitionSystem.Entities.Core
     public DbSet<CardTemplate> CardTemplates { get; set; }
 
     /// <summary>
-    /// PracticeHistoryEntries 
-    /// </summary>
-    public DbSet<PracticeHistoryEntry> PracticeHistoryEntries { get; set; }
-
-    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="options">The options</param>
@@ -39,7 +34,6 @@ namespace SpacedRepetitionSystem.Entities.Core
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
-      modelBuilder.ApplyConfiguration(new PracticeHistoryEntryConfiguration());
       modelBuilder.ApplyConfiguration(new DeckConfiguration());
       modelBuilder.ApplyConfiguration(new CardConfiguration());
       modelBuilder.ApplyConfiguration(new CardTemplateConfiguration());

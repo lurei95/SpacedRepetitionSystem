@@ -1,5 +1,32 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.grid-delete-button {
+  color: #FFFFFF;
+  background-color: #DB3C30;
+  border-color: #F55A4F;
+}
+
+.grid-delete-button {
+  color: #FFFFFF;
+  background-color: #DB3C30;
+  border-color: #F55A4F;
+}
+
+.grid-new-button {
+  color: #FFFFFF;
+  background-color: #4CAF50;
+  border-color: #5DB761;
+}
+
+.grid-edit-button {
+  color: #FFFFFF;
+  background-color: #017ABC;
+  border-color: #2196D6;
+}
+
+.bg-primary {
+  background-color: #0288D1 !important;
+}
 .noBorder{
   border: none;
 }

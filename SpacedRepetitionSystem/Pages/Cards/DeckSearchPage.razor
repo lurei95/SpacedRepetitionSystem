@@ -4,6 +4,7 @@
 @using SpacedRepetitionSystem.Entities.Entities.Cards;
 @using SpacedRepetitionSystem.Components.ViewModels.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
+@using Blazorise.DataGrid;
 
 @inherits SearchPageBase<Deck, DeckSearchViewModel>
 
@@ -21,47 +22,53 @@
     </div>
     <div class="card-body scrollable">
       <WaitSpinner Visible="ViewModel.IsSearching">
-        <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th class="th-sm">
-                ID
-              </th>
-              <th class="th-sm">
-                Name
-              </th>
-              <th class="th-sm">
-                Cards
-              </th>
-              <th class="th-sm">
-                Due Cards
-              </th>
-              <th class="th-sm buttonCol"></th>
-              <th class="th-sm buttonCol"></th>
-              <th class="th-sm buttonCol"></th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach (var item in ViewModel.SearchResults)
-            {
-            <tr>
-              <td><a href="/Decks/@item.DeckId">@item.DeckId</a></td>
-              <td>@item.Title</td>
-              <td>@item.CardCount</td>
-              <td>@item.DueCardCount</td>
-              <td class="buttonCol">
-                <Button CommandParameter="item.DeckId" Class="colButton" TextColor="#1b6ec2" IsIconButton="true" Command="ViewModel.PracticeDeckCommand"></Button>
-              </td>
-              <td class="buttonCol">
-                <Button CommandParameter="item.DeckId" Class="colButton" TextColor="#27ae60" IsIconButton="true" Command="ViewModel.AddCardsCommand"></Button>
-              </td>
-              <td class="buttonCol">
-                <Button CommandParameter="item" Class="colButton" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
-              </td>
-            </tr>
-            }
-          </tbody>
-        </table>
+        <DataGrid TItem="Deck"
+                  Data="@ViewModel.SearchResults" ShowPager="true"
+                  @bind-SelectedRow="@ViewModel.SelectedEntity" Editable="true"
+                  Striped="true" Bordered="true" Hoverable="true"
+                  PageSize="12">
+          <DataGridCommandColumn TItem="Deck" Width="160px">
+            <EditCommandTemplate>
+              <Button Class="grid-edit-button" CommandParameter="@context.Item" Command="@ViewModel?.EditCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+            </EditCommandTemplate>
+            <DeleteCommandTemplate>
+              <Button Class="grid-delete-button" CommandParameter="@context.Item" Command="@ViewModel?.DeleteCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+            </DeleteCommandTemplate>
+            <NewCommandTemplate>
+              <Button Class="grid-new-button" Command="@ViewModel?.NewCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+            </NewCommandTemplate>
+          </DataGridCommandColumn>
+          <DataGridColumn TItem="Deck"
+                          Field="@nameof(Deck.DeckId)"
+                          Caption="#" Sortable="true" />
+          <DataGridColumn TItem="Deck"
+                          Field="@nameof(Deck.Title)"
+                          Caption="Title" Sortable="true" />
+          <DataGridColumn TItem="Deck"
+                          Field="@nameof(Deck.CardCount)"
+                          Caption="Cards" Sortable="false" />
+          <DataGridColumn TItem="Deck"
+                          Field="@nameof(Deck.DueCardCount)"
+                          Caption="Cards" Sortable="false" />
+          <DataGridColumn TItem="Deck"
+                          Field="@nameof(Deck.DeckId)"
+                          Caption="" Sortable="false">
+            <DisplayTemplate>
+              @{
+                <Button CommandParameter="context.DeckId" Class="colButton" TextColor="#1b6ec2" IsIconButton="true" Command="ViewModel.PracticeDeckCommand"></Button>
+              }
+            </DisplayTemplate>
+          </DataGridColumn>
+          <DataGridColumn TItem="Deck"
+                          Field="@nameof(Deck.DeckId)"
+                          Caption="" Sortable="false">
+            <DisplayTemplate>
+              @{
+                <Button CommandParameter="(context as Deck).DeckId" Class="colButton" TextColor="#27ae60" IsIconButton="true" Command="ViewModel.AddCardsCommand"></Button>
+              }
+            </DisplayTemplate>
+          </DataGridColumn>
+        </DataGrid>
       </WaitSpinner>
     </div>
   </div>

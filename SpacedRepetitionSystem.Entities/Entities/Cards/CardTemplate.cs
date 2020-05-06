@@ -8,6 +8,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// </summary>
   public sealed class CardTemplate : IEntity
   {
+    ///<inheritdoc/>
+    public object Id => CardTemplateId;
+
     /// <summary>
     /// The id of the default template
     /// </summary>

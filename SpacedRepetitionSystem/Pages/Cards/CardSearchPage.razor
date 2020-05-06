@@ -2,9 +2,9 @@
 @page "/Decks/{DeckId:long}/Cards"
 
 @using SpacedRepetitionSystem.Components.ViewModels;
-@using SpacedRepetitionSystem.Entities.Entities.Cards;
 @using SpacedRepetitionSystem.Components.ViewModels.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
+@using Blazorise.DataGrid;
 
 @inherits SearchPageBase<SpacedRepetitionSystem.Entities.Entities.Cards.Card, CardSearchViewModel>
 
@@ -22,43 +22,63 @@
     </div>
     <div class="card-body scrollable">
       <WaitSpinner Visible="ViewModel.IsSearching">
-        <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th class="th-sm">
-                ID
-              </th>
-              <th class="th-sm">
-                Deck
-              </th>
-              <th class="th-sm">
-                Field 1
-              </th>
-              <th class="th-sm">
-                Field 2
-              </th>
-              <th class="th-sm">
-                Field 3
-              </th>
-              <th class="th-sm buttonCol"></th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach (var item in ViewModel.SearchResults)
-            {
-              <tr>
-                <td><a href="/Cards/@item.CardId">@item.CardId</a></td>
-                <td><a href="/Decks/@item.DeckId">@item.Deck?.Title</a></td>
-                <td>@item.Fields[0].Value</td>
-                <td>@item.Fields[1].Value</td>
-                <td>@(item.Fields.Count > 2 ? item.Fields[2].FieldName : "")</td>
-                <th class="buttonCol">
-                  <Button CommandParameter="item" Class="colButton" TextColor="black" IsIconButton="true" Command="ViewModel.DeleteCommand"></Button>
-                </th>
-              </tr>
-            }
-          </tbody>
-        </table>
+        <DataGrid TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
+                  Data="@ViewModel.SearchResults" ShowPager="true"
+                  @bind-SelectedRow="@ViewModel.SelectedEntity" Editable="true"
+                  Striped="true" Bordered="true" Hoverable="true"
+                  PageSize="12">
+          <DataGridCommandColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card" Width="160px">
+            <EditCommandTemplate>
+              <Button Class="grid-edit-button" CommandParameter="@context.Item" Command="@ViewModel?.EditCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+            </EditCommandTemplate>
+            <DeleteCommandTemplate>
+              <Button Class="grid-delete-button" CommandParameter="@context.Item" Command="@ViewModel?.DeleteCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+            </DeleteCommandTemplate>
+            <NewCommandTemplate>
+              <Button Class="grid-new-button" Command="@ViewModel?.NewCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+            </NewCommandTemplate>
+          </DataGridCommandColumn>
+          <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
+                          Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
+                          Caption="#" Sortable="true" />
+          <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
+                          Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.Fields)"
+                          Caption="Field 1" Sortable="false">
+            <DisplayTemplate>
+              @{
+                string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[0].FieldName;
+                if (!string.IsNullOrEmpty(value))
+                  @($"{value}")
+              }
+            </DisplayTemplate>
+          </DataGridColumn>
+          <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
+                          Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.Fields)"
+                          Caption="Field 2" Sortable="false">
+            <DisplayTemplate>
+              @{
+                string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[1].FieldName;
+                if (!string.IsNullOrEmpty(value))
+                  @($"{value}")
+              }
+            </DisplayTemplate>
+          </DataGridColumn>
+          <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
+                          Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.Fields)"
+                          Caption="Field 3" Sortable="false">
+            <DisplayTemplate>
+              @{
+                SpacedRepetitionSystem.Entities.Entities.Cards.Card card = context as SpacedRepetitionSystem.Entities.Entities.Cards.Card;
+                if (card != null)
+                {
+                  string value = card.Fields.Count > 2 ? card.Fields[2].FieldName : String.Empty;
+                  if (!string.IsNullOrEmpty(value))
+                    @($"{value}")
+                  }
+              }
+            </DisplayTemplate>
+          </DataGridColumn>
+        </DataGrid>
       </WaitSpinner>
     </div>
   </div>

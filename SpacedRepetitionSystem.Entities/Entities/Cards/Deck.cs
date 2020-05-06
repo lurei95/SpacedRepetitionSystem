@@ -1,5 +1,4 @@
 ﻿using SpacedRepetitionSystem.Utility.Extensions;
-using System;
 using System.Collections.Generic;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Cards
@@ -9,6 +8,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// </summary>
   public sealed class Deck : IEntity
   {
+    ///<inheritdoc/>
+    public object Id => DeckId;
+
     /// <summary>
     /// Id of the deck
     /// </summary>

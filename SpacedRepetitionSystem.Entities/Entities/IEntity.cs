@@ -10,5 +10,10 @@
     /// </summary>
     /// <returns>The display name of the entity</returns>
     string GetDisplayName();
+
+    /// <summary>
+    /// ID of the entity
+    /// </summary>
+    object Id { get; }
   }
 }
