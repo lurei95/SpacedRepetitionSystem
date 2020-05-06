@@ -42,6 +42,15 @@
                           Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
                           Caption="#" Sortable="true" />
           <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
+                          Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
+                          Caption="Deck" Sortable="true">
+            <DisplayTemplate>
+              @{
+                @($"{context.Deck.Title}")
+              }
+            </DisplayTemplate>
+          </DataGridColumn>
+          <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                           Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.Fields)"
                           Caption="Field 1" Sortable="false">
             <DisplayTemplate>

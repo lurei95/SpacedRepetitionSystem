@@ -19,6 +19,17 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// </summary>
     public long? DeckId { get; set; }
 
+    ///<inheritdoc/>
+    public override Card SelectedEntity 
+    { 
+      get => base.SelectedEntity; 
+      set
+      { 
+        base.SelectedEntity = value;
+        NewCommand.IsEnabled = SelectedEntity != null;
+      }
+    }
+
     /// <summary>
     /// Constructor
     /// </summary>
@@ -48,5 +59,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           base.DeleteEntity(entity);
       });
     }
+
+    ///<inheritdoc/>
+    protected override void NewEntity()
+    { NavigationManager.NavigateTo("/Decks/" + SelectedEntity.DeckId + "/Cards/New"); }
   }
 }

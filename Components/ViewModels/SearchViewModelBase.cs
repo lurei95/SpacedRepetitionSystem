@@ -15,6 +15,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   public abstract class SearchViewModelBase<TEntity> : EntityViewModelBase<TEntity>
     where TEntity : class, IEntity
   {
+    private TEntity selectedEntity;
+
     /// <summary>
     /// Command for deleting an entity
     /// </summary>
@@ -38,7 +40,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// The currently selected entity
     /// </summary>
-    public TEntity SelectedEntity { get; set; }
+    public virtual TEntity SelectedEntity 
+    {
+      get => selectedEntity;
+      set => selectedEntity = value;
+    }
 
     /// <summary>
     /// Whether the search is currently executed
