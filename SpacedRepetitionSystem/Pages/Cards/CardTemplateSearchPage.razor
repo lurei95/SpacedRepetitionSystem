@@ -29,13 +29,13 @@
                   PageSize="12">
           <DataGridCommandColumn TItem="CardTemplate" Width="160px">
             <EditCommandTemplate>
-              <Button Class="grid-edit-button" CommandParameter="@context.Item" Command="@ViewModel?.EditCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+              <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="@ViewModel?.EditCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
             </EditCommandTemplate>
             <DeleteCommandTemplate>
-              <Button Class="grid-delete-button" CommandParameter="@context.Item" Command="@ViewModel?.DeleteCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+              <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="@ViewModel?.DeleteCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
             </DeleteCommandTemplate>
             <NewCommandTemplate>
-              <Button Class="grid-new-button" Command="@ViewModel?.NewCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+              <Button Class="grid-new-button column-button" Command="@ViewModel?.NewCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
             </NewCommandTemplate>
           </DataGridCommandColumn>
           <DataGridColumn TItem="CardTemplate"

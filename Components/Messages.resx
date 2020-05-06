@@ -159,6 +159,9 @@
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="NewCard" xml:space="preserve">
+    <value>New Card</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="Okay" xml:space="preserve">
     <value>OK</value>
+  </data>
+  <data name="Practice" xml:space="preserve">
+    <value>Practice</value>
   </data>
   <data name="PracticePageSummaryTitle" xml:space="preserve">
     <value>Practice Summary</value>

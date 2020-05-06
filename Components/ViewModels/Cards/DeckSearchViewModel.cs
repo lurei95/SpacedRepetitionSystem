@@ -37,13 +37,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       PracticeDeckCommand = new Command()
       {
         ExecuteAction = (param) => PracticeDeck((long)param),
-        Icon = "oi oi-media-play",
+        CommandText = Messages.Practice,
         ToolTip = ""
       };
       AddCardsCommand = new Command()
       {
         ExecuteAction = (param) => AddCards((long)param),
-        Icon = "oi oi-plus",
+        CommandText = Messages.NewCard,
         ToolTip = ""
       };
     }

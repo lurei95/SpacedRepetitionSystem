@@ -29,13 +29,13 @@
                   PageSize="12">
           <DataGridCommandColumn TItem="Deck" Width="160px">
             <EditCommandTemplate>
-              <Button Class="grid-edit-button" CommandParameter="@context.Item" Command="@ViewModel?.EditCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+              <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="@ViewModel?.EditCommand"></Button>
             </EditCommandTemplate>
             <DeleteCommandTemplate>
-              <Button Class="grid-delete-button" CommandParameter="@context.Item" Command="@ViewModel?.DeleteCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+              <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="@ViewModel?.DeleteCommand"></Button>
             </DeleteCommandTemplate>
             <NewCommandTemplate>
-              <Button Class="grid-new-button" Command="@ViewModel?.NewCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
+              <Button Class="grid-new-button column-button" Command="@ViewModel?.NewCommand"></Button>
             </NewCommandTemplate>
           </DataGridCommandColumn>
           <DataGridColumn TItem="Deck"
@@ -54,21 +54,21 @@
           <DataGridColumn TItem="Deck"
                           Field="@nameof(Deck.DueCardCount)"
                           Caption="Cards" Sortable="false" />
-          <DataGridColumn TItem="Deck"
+          <DataGridColumn TItem="Deck" Width="100"
                           Field="@nameof(Deck.DeckId)"
                           Caption="" Sortable="false">
             <DisplayTemplate>
               @{
-                <Button CommandParameter="context.DeckId" Class="colButton" TextColor="#1b6ec2" IsIconButton="true" Command="ViewModel.PracticeDeckCommand"></Button>
+                <Button CommandParameter="context.DeckId" Class="grid-edit-button column-button" Command="ViewModel.PracticeDeckCommand"></Button>
               }
             </DisplayTemplate>
           </DataGridColumn>
-          <DataGridColumn TItem="Deck"
+          <DataGridColumn TItem="Deck" Width="130"
                           Field="@nameof(Deck.DeckId)"
                           Caption="" Sortable="false">
             <DisplayTemplate>
               @{
-                <Button CommandParameter="(context as Deck).DeckId" Class="colButton" TextColor="#27ae60" IsIconButton="true" Command="ViewModel.AddCardsCommand"></Button>
+                <Button CommandParameter="(context as Deck).DeckId" Class="grid-new-button column-button" Command="ViewModel.AddCardsCommand"></Button>
               }
             </DisplayTemplate>
           </DataGridColumn>

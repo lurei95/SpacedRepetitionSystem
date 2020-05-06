@@ -187,6 +187,15 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Card.
+        /// </summary>
+        internal static string NewCard {
+            get {
+                return ResourceManager.GetString("NewCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         internal static string Next {
@@ -210,6 +219,15 @@ namespace SpacedRepetitionSystem.Components {
         internal static string Okay {
             get {
                 return ResourceManager.GetString("Okay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Practice.
+        /// </summary>
+        internal static string Practice {
+            get {
+                return ResourceManager.GetString("Practice", resourceCulture);
             }
         }
         

@@ -31,8 +31,10 @@
   border: none;
 }
 
-.colButton {
-  font-size: 1.25rem !important;
+.column-button {
+
+  margin-top: -5px;
+  margin-bottom: -5px;
 }
 
 .fieldDiv {
