@@ -40,14 +40,16 @@
           </DataGridCommandColumn>
           <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                           Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
-                          Caption="#" Sortable="true" />
+                          Caption="#" Sortable="true">
+            <DisplayTemplate>
+              <a href="@("/Cards/" + @context.CardId)">@context.CardId</a>
+            </DisplayTemplate>
+          </DataGridColumn>
           <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                           Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
                           Caption="Deck" Sortable="true">
             <DisplayTemplate>
-              @{
-                @($"{context.Deck.Title}")
-              }
+              <a href="@("/Decks/" + @context.DeckId)">@context.Deck.Title</a>
             </DisplayTemplate>
           </DataGridColumn>
           <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"

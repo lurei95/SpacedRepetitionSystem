@@ -40,7 +40,11 @@
           </DataGridCommandColumn>
           <DataGridColumn TItem="Deck"
                           Field="@nameof(Deck.DeckId)"
-                          Caption="#" Sortable="true" />
+                          Caption="#" Sortable="true">
+            <DisplayTemplate>
+              <a href="@("/Decks/" + @context.DeckId)">@context.DeckId</a>
+            </DisplayTemplate>
+          </DataGridColumn>
           <DataGridColumn TItem="Deck"
                           Field="@nameof(Deck.Title)"
                           Caption="Title" Sortable="true" />
