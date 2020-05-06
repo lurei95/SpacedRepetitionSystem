@@ -340,25 +340,25 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       if (PracticeResults.ContainsKey(Current.CardId))
       {
         cardResult = PracticeResults[current.CardId];
-        if (cardResult.FieldResults.ContainsKey(current.FieldName))
+        if (!cardResult.FieldResults.ContainsKey(current.FieldName))
+          cardResult.FieldResults.Add(current.FieldName, new PracticeResult());
+        switch (resultKind)
         {
-          switch (resultKind)
-          {
-            case PracticeResultKind.Easy:
-              cardResult.FieldResults[current.FieldName].Correct++;
-              break;
-            case PracticeResultKind.Hard:
-              cardResult.FieldResults[current.FieldName].Difficult++;
-              break;
-            case PracticeResultKind.Failed:
-              cardResult.FieldResults[current.FieldName].Wrong++;
-              break;
-            default:
-              break;
-          }
+          case PracticeResultKind.Easy:
+            cardResult.Correct++;
+            cardResult.FieldResults[current.FieldName].Correct++;
+            break;
+          case PracticeResultKind.Hard:
+            cardResult.Difficult++;
+            cardResult.FieldResults[current.FieldName].Difficult++;
+            break;
+          case PracticeResultKind.Failed:
+            cardResult.Wrong++;
+            cardResult.FieldResults[current.FieldName].Wrong++;
+            break;
+          default:
+            break;
         }
-        else
-          AddNewFieldResult(cardResult, resultKind);
       }
       else
       {
