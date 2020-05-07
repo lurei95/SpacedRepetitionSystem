@@ -29,6 +29,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     {
       return Context.Set<Deck>()
         .Include(deck => deck.Cards)
+        .ThenInclude(card => card.Fields)
         .FirstOrDefault(card => card.DeckId == (long)id);
     }
 

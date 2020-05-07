@@ -14,31 +14,27 @@
   <TabCard Title="@ViewModel?.Entity?.GetDisplayName()" IsLoading="@IsLoading">
     <CardTabs>
       <CardTab Title="Main">
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
-            <h5 class="card-title">Main Properties</h5>
-            <TextEdit Caption="Title" Property="ViewModel.TitleProperty"></TextEdit>
+        <h5 class="card-title">Main Properties</h5>
+        <TextEdit Caption="Title" Property="ViewModel.TitleProperty"></TextEdit>
 
-            <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
-              <h5 class="card-title">Fields</h5>
-              <div class="d-felx justify-content-end flex-fill">
-                <Button IsIconButton="true" TextColor="Gray" Command="ViewModel.AddFieldDefinitionCommand"></Button>
-              </div>
-            </div>
-            @for (int i = 0; i < ViewModel.FieldDefinitions.Count; i++)
-            {
-              int c = i;
-              <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
-                <TextEdit Caption="@("Field " + i)" Property="ViewModel.FieldNameProperties[i]"></TextEdit>
-                <Button IsIconButton="true" TextColor="#e74c3c" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="i"></Button>
-              </div>
-              <div class="custom-control custom-checkbox checkbox-lg ml-3 mb-3">
-                <input @bind="ViewModel.FieldDefinitions[c].ShowInputForPractice" type="checkbox" class="custom-control-input" id="@("customCheck" + i)">
-                <label class="custom-control-label" for="@("customCheck" + i)">Use input for practice</label>
-              </div>
-            }
+        <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
+          <h5 class="card-title">Fields</h5>
+          <div class="d-felx justify-content-end flex-fill">
+            <Button IsIconButton="true" TextColor="Gray" Command="ViewModel.AddFieldDefinitionCommand"></Button>
           </div>
         </div>
+        @for (int i = 0; i < ViewModel.FieldDefinitions.Count; i++)
+            {
+              int c = i;
+        <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
+          <TextEdit Caption="@("Field " + i)" Property="ViewModel.FieldNameProperties[i]"></TextEdit>
+          <Button IsIconButton="true" TextColor="#e74c3c" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="i"></Button>
+        </div>
+        <div class="custom-control custom-checkbox checkbox-lg ml-3 mb-3">
+          <input @bind="ViewModel.FieldDefinitions[c].ShowInputForPractice" type="checkbox" class="custom-control-input" id="@("customCheck" + i)">
+          <label class="custom-control-label" for="@("customCheck" + i)">Use input for practice</label>
+        </div>
+            }
       </CardTab>
     </CardTabs>
     <HeaderButtons>

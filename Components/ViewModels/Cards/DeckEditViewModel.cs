@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
@@ -7,6 +8,7 @@ using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,6 +78,21 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public List<string> AvailableCardTemplates => availableCardTemplates.Keys.ToList();
 
     /// <summary>
+    /// Command for editing a card from the deck
+    /// </summary>
+    public Command EditCardCommand { get; private set; }
+
+    /// <summary>
+    /// Command for deleting a card from the deck
+    /// </summary>
+    public Command DeleteCardCommand { get; private set; }
+
+    /// <summary>
+    /// Command for adding a new card to the deck
+    /// </summary>
+    public Command NewCardCommand { get; private set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -85,7 +102,25 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public DeckEditViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector,
       EntityChangeValidator<Deck> changeValidator)
       : base(context, navigationManager, apiConnector, changeValidator)
-    { }
+    {
+      EditCardCommand = new Command()
+      {
+        CommandText = Messages.Edit,
+        ExecuteAction = (param) => EditCard(param as Card)
+      };
+
+      DeleteCardCommand = new Command()
+      {
+        CommandText = Messages.Delete,
+        ExecuteAction = (param) => DeleteCard(param as Card)
+      };
+
+      NewCardCommand = new Command()
+      {
+        CommandText = Messages.New,
+        ExecuteAction = (param) => NewCard()
+      };
+    }
 
     ///<inheritdoc/>
     public override async Task InitializeAsync()
@@ -129,6 +164,18 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       Entity = new Deck();
       CardTemplateId = CardTemplate.DefaultCardTemplateId;
     }
+
+    private void DeleteCard(Card card)
+    {
+      if (ApiConnector.Delete(card))
+        NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(card.GetDisplayName()));
+    }
+
+    private void EditCard(Card card)
+    { NavigationManager.NavigateTo(NavigationManager.Uri + "/Cards/" + card.Id); }
+
+    private void NewCard()
+    { NavigationManager.NavigateTo(NavigationManager.Uri + "/Cards/New"); }
 
     private string ValidateCardTemplateTitle(string value)
       => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(PropertyNames.CardTemplate) : null;

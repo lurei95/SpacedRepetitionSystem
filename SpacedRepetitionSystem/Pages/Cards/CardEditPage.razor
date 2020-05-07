@@ -16,20 +16,16 @@
   <TabCard Title="@ViewModel?.Entity?.GetDisplayName()" IsLoading="@IsLoading">
     <CardTabs>
       <CardTab Title="Main">
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
-            <h5 class="card-title">Main Properties</h5>
-            <DropDownEdit Caption="Template" Property="ViewModel.CardTemplateTitleProperty" SelectableValues="ViewModel.AvailableCardTemplates"></DropDownEdit>
+        <h5 class="card-title">Main Properties</h5>
+        <DropDownEdit Caption="Template" Property="ViewModel.CardTemplateTitleProperty" SelectableValues="ViewModel.AvailableCardTemplates"></DropDownEdit>
 
-            <h5 class="card-title">Fields</h5>
-            @foreach (CardField field in ViewModel.Fields)
-            {
-              <TextEdit Caption="@field.FieldName" @bind-Value="field.Value"></TextEdit>
-            }
-            <h5 class="card-title">Tags</h5>
-            <TagEdit Tags="ViewModel.Tags"></TagEdit>
-          </div>
-        </div>
+        <h5 class="card-title">Fields</h5>
+        @foreach (CardField field in ViewModel.Fields)
+        {
+          <TextEdit Caption="@field.FieldName" @bind-Value="field.Value"></TextEdit>
+        }
+        <h5 class="card-title">Tags</h5>
+        <TagEdit Tags="ViewModel.Tags"></TagEdit>
       </CardTab>
     </CardTabs>
     <HeaderButtons>
