@@ -1,0 +1,114 @@
+﻿@using SpacedRepetitionSystem.Components.Interaction;
+
+<div class="card flex-grow-0 fullsizeCard">
+  <div class="card-header bg-dark">
+    <div class="row">
+      <div class="col col-md-auto text-white">
+        @Title
+      </div>
+      <div class="col">
+        @if (Tabs.Count > 0)
+        {
+          <ul class="nav nav-tabs card-header-tabs pull-left" id="myTab" role="tablist">
+            @foreach (CardTab tab in Tabs)
+            {
+              <li class="nav-item">
+                <a class="nav-link @(tab.IsSelected ? "active" : "text-white")" data-toggle="tab" role="tab" @onclick="() => Select(tab)">@tab.Title</a>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+      <div class="col d-flex justify-content-end">
+        @HeaderButtons
+      </div>
+    </div>
+  </div>
+  <WaitSpinner Visible="@IsLoading">
+    <div class="card-body scrollable">
+      @if (SelectedTab != null)
+      {
+        @SelectedTab.ChildContent
+      }
+    </div>
+    <div class="card-footer">
+      @ChildContent
+    </div>
+  </WaitSpinner>
+</div>
+
+<CascadingValue Value=this>
+  @CardTabs
+</CascadingValue>
+
+@code
+{
+  private CardTab selectedTab;
+
+  /// <summary>
+  /// Title of the Card
+  /// </summary>
+  [Parameter]
+  public string Title { get; set; }
+
+  /// <summary>
+  /// Whther the waitspinner should be shown
+  /// </summary>
+  [Parameter]
+  public bool IsLoading { get; set; }
+
+  /// <summary>
+  /// Template for holding the datagrid columns.
+  /// </summary>
+  [Parameter]
+  public RenderFragment CardTabs { get; set; }
+
+  /// <summary>
+  /// Template for holding the datagrid columns.
+  /// </summary>
+  [Parameter]
+  public RenderFragment HeaderButtons { get; set; }
+
+  /// <summary>
+  /// Template for holding the datagrid columns.
+  /// </summary>
+  [Parameter]
+  public RenderFragment ChildContent { get; set; }
+
+  /// <summary>
+  /// The selected tab
+  /// </summary>
+  public CardTab SelectedTab
+  {
+    get => selectedTab;
+    set
+    {
+      if (selectedTab != null)
+        selectedTab.IsSelected = false;
+      selectedTab = value;
+      selectedTab.IsSelected = true;
+    }
+  }
+
+  /// <summary>
+  /// The tabs of the card
+  /// </summary>
+  public List<CardTab> Tabs { get; } = new List<CardTab>();
+
+  /// <summary>
+  /// Links the child column with this datagrid.
+  /// </summary>
+  /// <param name="column">Column to link with this datagrid.</param>
+  internal void Hook(CardTab tab)
+  {
+    Tabs.Add(tab);
+    if (SelectedTab == null)
+      SelectedTab = tab;
+  }
+
+  private void Select(CardTab tab)
+  {
+    if (!tab.IsSelected)
+      SelectedTab = tab;
+  }
+}

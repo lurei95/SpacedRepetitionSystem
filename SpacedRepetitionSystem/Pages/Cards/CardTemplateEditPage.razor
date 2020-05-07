@@ -6,31 +6,14 @@
 @using SpacedRepetitionSystem.Components.Interaction;
 @using SpacedRepetitionSystem.Components.Edits;
 @using SpacedRepetitionSystem.Components.ViewModels;
+@using SpacedRepetitionSystem.Components.Containers;
 
 @inherits EditPageBase<CardTemplate, CardTemplateEditViewModel>
 
 <ViewModelArea ViewModel="ViewModel">
-  <div class="card flex-grow-0 fullsizeCard">
-    <div class="card-header bg-dark">
-      <div class="row">
-        <div class="col col-md-auto text-white">
-          @ViewModel?.Entity?.GetDisplayName()
-        </div>
-        <div class="col">
-          <ul class="nav nav-tabs card-header-tabs pull-left" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="main-tab" data-toggle="tab" href="#" role="tab" aria-controls="main" aria-selected="true">Main</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col d-flex justify-content-end">
-          <Button Command="@ViewModel?.DeleteCommand" IsIconButton="true" TextColor="black" Style="margin-top: 1px; margin-right: 10px"></Button>
-          <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
-        </div>
-      </div>
-    </div>
-    <WaitSpinner Visible="IsLoading">
-      <div class="card-body scrollable">
+  <TabCard Title="@ViewModel?.Entity?.GetDisplayName()" IsLoading="@IsLoading">
+    <CardTabs>
+      <CardTab Title="Main">
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="home-tab">
             <h5 class="card-title">Main Properties</h5>
@@ -55,15 +38,19 @@
               </div>
             }
           </div>
-          </div>
-      </div>
-      <div class="card-footer">
-        <div class="d-flex justify-content-end">
-          <Button Class="btn-primary btn-lg" Command="ViewModel.SaveChangesCommand"></Button>
         </div>
+      </CardTab>
+    </CardTabs>
+    <HeaderButtons>
+      <Button Command="@ViewModel?.DeleteCommand" IsIconButton="true" TextColor="black" Style="margin-top: 1px; margin-right: 10px"></Button>
+      <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+    </HeaderButtons>
+    <ChildContent>
+      <div class="d-flex justify-content-end">
+        <Button Class="btn-primary btn-lg" Command="ViewModel.SaveChangesCommand"></Button>
       </div>
-    </WaitSpinner>
-  </div>
+    </ChildContent>
+  </TabCard>
 </ViewModelArea>
 
 <style>

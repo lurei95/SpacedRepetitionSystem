@@ -1,0 +1,28 @@
+﻿@code 
+{
+  /// <summary>
+  /// Title of the tab
+  /// </summary>
+  [Parameter]
+  public string Title { get; set; }
+
+  /// <summary>
+  /// Template for holding the datagrid columns.
+  /// </summary>
+  [Parameter]
+  public RenderFragment ChildContent { get; set; }
+
+  /// <summary>
+  /// The parent containing the tab
+  /// </summary>
+  [CascadingParameter]
+  private TabCard Parent { get; set; }
+  
+  /// <summary>
+  /// Whether the tab is selected
+  /// </summary>
+  public bool IsSelected { get; set; }
+
+  ///<inheritdoc/>
+  protected override void OnInitialized() => Parent.Hook(this);
+}
