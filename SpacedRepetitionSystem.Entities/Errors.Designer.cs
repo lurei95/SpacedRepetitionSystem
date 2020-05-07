@@ -79,6 +79,24 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A template with the title &quot;{0}&quot; already exists..
+        /// </summary>
+        public static string CardTemplateTitleNotUnique {
+            get {
+                return ResourceManager.GetString("CardTemplateTitleNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A deck with the title &quot;{0}&quot; already exists..
+        /// </summary>
+        public static string DeckTitleNotUnique {
+            get {
+                return ResourceManager.GetString("DeckTitleNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} cannot be empty..
         /// </summary>
         public static string PropertyRequired {

@@ -75,6 +75,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         nameof(Entity.Title),
         Entity
       );
+      RegisterPropertyProperty(TitleProperty);
 
       foreach (CardFieldDefinition fieldDefinition in Entity.FieldDefinitions)
       {

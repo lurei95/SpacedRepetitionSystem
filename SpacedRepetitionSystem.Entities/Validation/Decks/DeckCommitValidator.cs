@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
+using SpacedRepetitionSystem.Utility.Extensions;
 
 namespace SpacedRepetitionSystem.Entities.Validation.Decks
 {
@@ -24,6 +27,8 @@ namespace SpacedRepetitionSystem.Entities.Validation.Decks
       error = new DeckTitleValidator().Validate(entity, entity.Title);
       if (!string.IsNullOrEmpty(error))
         return error;
+      if (Context.Set<Deck>().Any(deck => deck.Title == entity.Title))
+        return Errors.DeckTitleNotUnique.FormatWith(entity.Title);
       return null;
     }
   }
