@@ -156,6 +156,12 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="EntityDeleted" xml:space="preserve">
+    <value>The {0} was deleted successfully.</value>
+  </data>
+  <data name="EntitySaved" xml:space="preserve">
+    <value>The {0} was saved successfully. </value>
+  </data>
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>

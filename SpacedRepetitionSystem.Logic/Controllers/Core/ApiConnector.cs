@@ -1,6 +1,5 @@
 ﻿using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.Utility.Notification;
 using System;
 using System.Collections.Generic;
@@ -18,16 +17,19 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="cardsController">CardsController</param>
-    /// <param name="decksController">DecksController</param>
-    /// <param name="cardTemplatesController">CardTemplatesController</param>
+    /// <param name="cardsController">CardsController (Injected)</param>
+    /// <param name="decksController">DecksController (Injected)</param>
+    /// <param name="cardTemplatesController">CardTemplatesController (Injected)</param>
+    /// <param name="practiceHistoryEntryController">PracticeHistoryEntryController (Injected)</param>
     public ApiConnector(EntityControllerBase<Card> cardsController, 
       EntityControllerBase<Deck> decksController, 
-      EntityControllerBase<CardTemplate> cardTemplatesController)
+      EntityControllerBase<CardTemplate> cardTemplatesController,
+      EntityControllerBase<PracticeHistoryEntry> practiceHistoryEntryController)
     {
       controllers.Add(typeof(Card), cardsController);
       controllers.Add(typeof(CardTemplate), cardTemplatesController);
       controllers.Add(typeof(Deck), decksController);
+      controllers.Add(typeof(PracticeHistoryEntry), practiceHistoryEntryController);
     }
 
     ///<inheritdoc/>
@@ -44,7 +46,6 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
       try
       {
         (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Put(entity);
-        NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(entity.GetDisplayName()));
         return true;
       }
       catch (NotifyException ex)
@@ -58,7 +59,6 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
       try
       {
         (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Delete(entity);
-        NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
         return true;
       }
       catch (NotifyException ex)
@@ -72,7 +72,6 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
       try
       {
         (controllers[typeof(TEntity)] as EntityControllerBase<TEntity>).Post(entity);
-        NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(entity.GetDisplayName()));
         return true;
       }
       catch (NotifyException ex)

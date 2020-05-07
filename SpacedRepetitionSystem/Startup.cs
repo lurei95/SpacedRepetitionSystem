@@ -52,6 +52,7 @@ namespace SpacedRepetitionSystem
 
       services.AddScoped<EntityControllerBase<Entities.Entities.Cards.Card>, CardsController>();
       services.AddScoped<EntityControllerBase<Deck>, DecksController>();
+      services.AddScoped<EntityControllerBase<PracticeHistoryEntry>, PracticeHistoryEntriesController>();
       services.AddScoped<EntityControllerBase<CardTemplate>, CardTemplatesController>();
       services.AddScoped<IApiConnector, ApiConnector>();
 

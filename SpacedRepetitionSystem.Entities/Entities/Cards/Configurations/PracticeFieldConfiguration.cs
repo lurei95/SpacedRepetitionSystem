@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 {
   /// <summary>
-  /// Configuration für <see cref="PracticeFieldConfiguration"/>
+  /// Configuration for <see cref="PracticeField"/>
   /// </summary>
   public sealed class PracticeFieldConfiguration : IEntityTypeConfiguration<PracticeField>
   {

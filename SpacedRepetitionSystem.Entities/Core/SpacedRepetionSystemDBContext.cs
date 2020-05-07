@@ -25,6 +25,11 @@ namespace SpacedRepetitionSystem.Entities.Core
     public DbSet<CardTemplate> CardTemplates { get; set; }
 
     /// <summary>
+    /// PracticeHistoryEntries
+    /// </summary>
+    public DbSet<PracticeHistoryEntry> PracticeHistoryEntries { get; set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="options">The options</param>
@@ -40,6 +45,7 @@ namespace SpacedRepetitionSystem.Entities.Core
       modelBuilder.ApplyConfiguration(new CardFieldConfiguration());
       modelBuilder.ApplyConfiguration(new PracticeFieldConfiguration());
       modelBuilder.ApplyConfiguration(new CardFieldDefinitionConfiguration());
+      modelBuilder.ApplyConfiguration(new PracticeHistoryEntryConfiguration());
     }
   }
 }

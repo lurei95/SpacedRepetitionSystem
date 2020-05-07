@@ -292,6 +292,18 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         PracticeFields.Insert(i, Current);
       }
 
+      PracticeHistoryEntry entry = new PracticeHistoryEntry()
+      {
+        PracticeDate = DateTime.Today,
+        CardId = Current.CardId,
+        DeckId = Current.DeckId,
+        FieldName = Current.FieldName,
+        CorrectCount = result == PracticeResultKind.Easy ? 1 : 0,
+        HardCount = result == PracticeResultKind.Hard ? 1 : 0,
+        WrongCount = result == PracticeResultKind.Failed ? 1 : 0
+      };
+      ApiConnector.Post(entry);
+
       if (Current.Field.CardFieldDefinition.ShowInputForPractice)
         ShowSolution();
       else

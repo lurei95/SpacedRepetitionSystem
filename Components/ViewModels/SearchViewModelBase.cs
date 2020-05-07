@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -102,6 +104,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     {
       if (ApiConnector.Delete(entity))
       {
+        NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
         SearchResults.Remove(entity);
         OnPropertyChanged(nameof(SearchResults));
       }
