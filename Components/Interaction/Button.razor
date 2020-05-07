@@ -17,7 +17,7 @@
             style="@Style">
       @if (!string.IsNullOrEmpty(Command.Icon))
       {
-        <span class="@Command.Icon" style="@TextColorString" aria-hidden="true"></span>
+        <span class="@Command.Icon" style="@TextColorString"></span>
       }
 
       @Command.CommandText
@@ -27,13 +27,7 @@
 
 <style>
   .iconButton:hover {
-    font-size: 1.1rem;
-    background-color: transparent !important;
-    border-color: transparent !important;
-    padding: 0px;
-    line-height: unset;
-    margin-left: 10px;
-    margin-right: 5px;
+    filter: brightness(80%);
   }
 
   .iconButton {
