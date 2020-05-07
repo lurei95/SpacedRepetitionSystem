@@ -18,6 +18,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     where TEntity : class, IEntity
   {
     private TEntity selectedEntity;
+    private bool isSearching = false;
 
     /// <summary>
     /// Command for deleting an entity
@@ -51,7 +52,15 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Whether the search is currently executed
     /// </summary>
-    public bool IsSearching { get; protected set; }
+    public bool IsSearching
+    {
+      get => isSearching;
+      set
+      {
+        isSearching = value;
+        OnPropertyChanged();
+      }
+    }
 
     /// <summary>
     /// Constructor

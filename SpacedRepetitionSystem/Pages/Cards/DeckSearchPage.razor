@@ -4,6 +4,7 @@
 @using SpacedRepetitionSystem.Entities.Entities.Cards;
 @using SpacedRepetitionSystem.Components.ViewModels.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
+@using SpacedRepetitionSystem.Components.Containers;
 @using Blazorise.DataGrid;
 
 @inherits SearchPageBase<Deck, DeckSearchViewModel>
@@ -21,23 +22,16 @@
       </div>
     </div>
     <div class="card-body scrollable">
-      <WaitSpinner Visible="ViewModel.IsSearching">
-        <DataGrid TItem="Deck"
-                  Data="@ViewModel.SearchResults" ShowPager="true"
-                  @bind-SelectedRow="@ViewModel.SelectedEntity" Editable="true"
-                  Striped="true" Bordered="true" Hoverable="true"
-                  PageSize="12">
-          <DataGridCommandColumn TItem="Deck" Width="160px">
-            <EditCommandTemplate>
-              <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="@ViewModel?.EditCommand"></Button>
-            </EditCommandTemplate>
-            <DeleteCommandTemplate>
-              <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="@ViewModel?.DeleteCommand"></Button>
-            </DeleteCommandTemplate>
-            <NewCommandTemplate>
-              <Button Class="grid-new-button column-button" Command="@ViewModel?.NewCommand"></Button>
-            </NewCommandTemplate>
-          </DataGridCommandColumn>
+      <SearchGrid TItem="Deck"
+                  WaitSpinnerVisible="ViewModel.IsSearching"
+                  Items="@ViewModel.SearchResults"
+                  @bind-SelectedItem="@ViewModel.SelectedEntity"
+                  PageSize="12"
+                  ShowPager="true"
+                  DeleteCommand="@ViewModel.DeleteCommand"
+                  EditCommand="@ViewModel.EditCommand"
+                  NewCommand="@ViewModel.NewCommand">
+        <Columns>
           <DataGridColumn TItem="Deck"
                           Field="@nameof(Deck.DeckId)"
                           Caption="#" Sortable="true">
@@ -72,8 +66,8 @@
               }
             </DisplayTemplate>
           </DataGridColumn>
-        </DataGrid>
-      </WaitSpinner>
+        </Columns>
+      </SearchGrid>
     </div>
   </div>
 </ViewModelArea>

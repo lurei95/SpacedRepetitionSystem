@@ -5,6 +5,7 @@
 @using SpacedRepetitionSystem.Components.ViewModels.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
 @using Blazorise.DataGrid;
+@using SpacedRepetitionSystem.Components.Containers;
 
 @inherits SearchPageBase<SpacedRepetitionSystem.Entities.Entities.Cards.Card, CardSearchViewModel>
 
@@ -21,23 +22,16 @@
       </div>
     </div>
     <div class="card-body scrollable">
-      <WaitSpinner Visible="ViewModel.IsSearching">
-        <DataGrid TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
-                  Data="@ViewModel.SearchResults" ShowPager="true"
-                  @bind-SelectedRow="@ViewModel.SelectedEntity" Editable="true"
-                  Striped="true" Bordered="true" Hoverable="true"
-                  PageSize="12">
-          <DataGridCommandColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card" Width="160px">
-            <EditCommandTemplate>
-              <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="@ViewModel?.EditCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
-            </EditCommandTemplate>
-            <DeleteCommandTemplate>
-              <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="@ViewModel?.DeleteCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
-            </DeleteCommandTemplate>
-            <NewCommandTemplate>
-              <Button Class="grid-new-button column-button" Command="@ViewModel?.NewCommand" Style="margin-top: -5px; margin-bottom: -5px"></Button>
-            </NewCommandTemplate>
-          </DataGridCommandColumn>
+      <SearchGrid TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
+                  Items="@ViewModel.SearchResults"
+                  WaitSpinnerVisible="ViewModel.IsSearching"
+                  @bind-SelectedItem="@ViewModel.SelectedEntity"
+                  PageSize="12"
+                  ShowPager="true"
+                  DeleteCommand="@ViewModel.DeleteCommand"
+                  EditCommand="@ViewModel.EditCommand"
+                  NewCommand="@ViewModel.NewCommand">
+        <Columns>
           <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                           Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
                           Caption="#" Sortable="true">
@@ -89,8 +83,8 @@
               }
             </DisplayTemplate>
           </DataGridColumn>
-        </DataGrid>
-      </WaitSpinner>
+        </Columns>
+      </SearchGrid>
     </div>
   </div>
 </ViewModelArea>

@@ -1,0 +1,118 @@
+﻿@using Blazorise.DataGrid;
+@using SpacedRepetitionSystem.Components.Commands;
+@using SpacedRepetitionSystem.Components.Interaction;
+
+@inherits CustomComponentBase
+@typeparam TItem
+
+  <WaitSpinner Visible="WaitSpinnerVisible">
+    <DataGrid TItem="TItem"
+              Style="Style"
+              Class="Class"
+              Data="Items"
+              ShowPager="ShowPager"
+              @bind-SelectedRow="SelectedItem"
+              Editable="true"
+              Striped="true"
+              Bordered="true"
+              Hoverable="true"
+              PageSize="@PageSize">
+      <DataGridCommandColumn TItem="TItem" Width="160px">
+        <EditCommandTemplate>
+          @if (EditCommand != null)
+          {
+            <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="EditCommand"></Button>
+          }
+        </EditCommandTemplate>
+        <DeleteCommandTemplate>
+          @if (DeleteCommand != null)
+          {
+            <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="DeleteCommand"></Button>
+          }
+        </DeleteCommandTemplate>
+        <NewCommandTemplate>
+          @if (NewCommand != null)
+          {
+            <Button Class="grid-new-button column-button" Command="NewCommand"></Button>
+          }
+        </NewCommandTemplate>
+      </DataGridCommandColumn>
+      @Columns
+    </DataGrid>
+  </WaitSpinner>
+
+@code
+{
+  private TItem selectedItem;
+
+  /// <summary>
+  /// Whether the wait spinner is visible
+  /// </summary>
+  [Parameter]
+  public bool WaitSpinnerVisible { get; set; }
+
+  /// <summary>
+  /// Command for editing an item
+  /// </summary>
+  [Parameter]
+  public Command EditCommand { get; set; }
+
+  /// <summary>
+  /// Command for deleting an item
+  /// </summary>
+  [Parameter]
+  public Command DeleteCommand { get; set; }
+
+  /// <summary>
+  /// Command for creating a new item
+  /// </summary>
+  [Parameter]
+  public Command NewCommand { get; set; }
+
+  /// <summary>
+  /// maximum items per page
+  /// </summary>
+  [Parameter]
+  public int PageSize { get; set; }
+
+  /// <summary>
+  /// Whether the pager should be displayed
+  /// </summary>
+  [Parameter]
+  public bool ShowPager { get; set; }
+
+  /// <summary>
+  /// The selected item
+  /// </summary>
+  [Parameter]
+  public TItem SelectedItem
+  {
+    get => selectedItem;
+    set
+    {
+      if (!(SelectedItem== null && value == null) && !value.Equals(selectedItem))
+      {
+        selectedItem = value;
+        SelectedItemChanged.InvokeAsync(value);
+      }
+    }
+  }
+
+  /// <summary>
+  /// Items to display in the grid
+  /// </summary>
+  [Parameter]
+  public List<TItem> Items { get; set; }
+
+  /// <summary>
+  /// The Columns of the Grid
+  /// </summary>
+  [Parameter]
+  public RenderFragment Columns { get; set; }
+
+  /// <summary>
+  /// Value changed event
+  /// </summary>
+  [Parameter]
+  public EventCallback<TItem> SelectedItemChanged { get; set; }
+}
