@@ -40,8 +40,9 @@ namespace SpacedRepetitionSystem
         .AddFontAwesomeIcons();
 
       services.AddDbContext<SpacedRepetionSystemDBContext>(
-        options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
-      services.AddScoped<DbContext, SpacedRepetionSystemDBContext>();
+        options => options.UseSqlServer(Configuration.GetConnectionString("Default")), 
+        ServiceLifetime.Transient);
+      services.AddTransient<DbContext, SpacedRepetionSystemDBContext>();
 
       services.AddTransient<CardEditViewModel>();
       services.AddTransient<CardTemplateEditViewModel>();

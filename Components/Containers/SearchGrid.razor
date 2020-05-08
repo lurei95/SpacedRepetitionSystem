@@ -15,28 +15,32 @@
               Editable="true"
               Striped="true"
               Bordered="true"
+              RowSelectable="(item) => SelectionEnabled"
               Hoverable="true"
               PageSize="@PageSize">
-      <DataGridCommandColumn TItem="TItem" Width="160px">
-        <EditCommandTemplate>
-          @if (EditCommand != null)
-          {
-            <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="EditCommand"></Button>
-          }
-        </EditCommandTemplate>
-        <DeleteCommandTemplate>
-          @if (DeleteCommand != null)
-          {
-            <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="DeleteCommand"></Button>
-          }
-        </DeleteCommandTemplate>
-        <NewCommandTemplate>
-          @if (NewCommand != null)
-          {
-            <Button Class="grid-new-button column-button" Command="NewCommand"></Button>
-          }
-        </NewCommandTemplate>
-      </DataGridCommandColumn>
+      @if (EditCommand != null || DeleteCommand != null || NewCommand != null)
+      {
+        <DataGridCommandColumn TItem="TItem" Width="160px">
+          <EditCommandTemplate>
+            @if (EditCommand != null)
+            {
+              <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="EditCommand"></Button>
+            }
+          </EditCommandTemplate>
+          <DeleteCommandTemplate>
+            @if (DeleteCommand != null)
+            {
+              <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="DeleteCommand"></Button>
+            }
+          </DeleteCommandTemplate>
+          <NewCommandTemplate>
+            @if (NewCommand != null)
+            {
+              <Button Class="grid-new-button column-button" Command="NewCommand"></Button>
+            }
+          </NewCommandTemplate>
+        </DataGridCommandColumn>
+      }
       @Columns
     </DataGrid>
   </WaitSpinner>
@@ -44,6 +48,12 @@
 @code
 {
   private TItem selectedItem;
+
+  /// <summary>
+  /// Whether selection is enabled
+  /// </summary>
+  [Parameter]
+  public bool SelectionEnabled { get; set; } = true;
 
   /// <summary>
   /// Whether the wait spinner is visible

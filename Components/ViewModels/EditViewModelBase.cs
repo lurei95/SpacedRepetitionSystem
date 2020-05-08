@@ -59,7 +59,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       DeleteCommand = new Command()
       {
         CommandText = Messages.Delete,
-        IsEnabled = IsNewEntity,
         ExecuteAction = (param) => DeleteEntity()
       };
     }
@@ -77,6 +76,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       }
       else
         LoadEntity(id);
+      DeleteCommand.IsEnabled = !IsNewEntity;
     }
 
     /// <summary>

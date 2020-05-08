@@ -77,6 +77,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     { NavigationManager.NavigateTo("/Decks/" + SelectedEntity.DeckId + "/Cards/New"); }
 
     ///<inheritdoc/>
+    protected override void EditEntity(Card entity)
+    { NavigationManager.NavigateTo("/Decks/" + entity.DeckId + "/Cards/" + entity.CardId); }
+
+    ///<inheritdoc/>
     private void ShowStatistics(Card card)
     { NavigationManager.NavigateTo("/Decks/" + card.DeckId + "/Cards/" + card.CardId + "/Statistics/"); }
   }

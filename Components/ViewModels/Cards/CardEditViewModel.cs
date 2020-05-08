@@ -128,7 +128,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       ShowStatisticsCommand = new Command()
       {
         CommandText = Messages.PracticeStatistics,
-        ExecuteAction = (param) => NavigationManager.NavigateTo(NavigationManager.BaseUri + "/Statistics/")
+        ExecuteAction = (param) => NavigationManager.NavigateTo(NavigationManager.Uri + "/Statistics/")
       };
     }
 
@@ -148,6 +148,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       foreach (CardTemplate cardTemplate in await ApiConnector.Get<CardTemplate>(null))
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate.CardTemplateId);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
+
+      ShowStatisticsCommand.IsEnabled = !IsNewEntity;
     }
 
     ///<inheritdoc/>

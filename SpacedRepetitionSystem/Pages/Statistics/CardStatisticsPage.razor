@@ -23,12 +23,16 @@
           <h5 class="card-title mb-4">Practice History</h5>
           <SearchGrid TItem="PracticeHistoryEntry"
                       Items="@ViewModel.PracticeHistoryEntries"
-                      PageSize="10"
+                      PageSize="10" SelectionEnabled="false"
                       ShowPager="true">
             <Columns>
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.PracticeDate)"
-                              Caption="Practice Date" Sortable="true" />
+                              Caption="Practice Date" Sortable="true">
+                <DisplayTemplate>
+                  @context.PracticeDate.ToString("dd/MM/yyyy")
+                </DisplayTemplate>
+              </DataGridColumn>
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.FieldName)"
                               Caption="Field Name" Sortable="true" />
