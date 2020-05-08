@@ -17,6 +17,7 @@ using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using SpacedRepetitionSystem.Components.ViewModels.Statistics;
 
 namespace SpacedRepetitionSystem
 {
@@ -49,6 +50,7 @@ namespace SpacedRepetitionSystem
       services.AddTransient<CardTemplateSearchViewModel>();
       services.AddTransient<DeckSearchViewModel>();
       services.AddTransient<PracticeDeckViewModel>();
+      services.AddTransient<CardStatisticsViewModel>();
 
       services.AddScoped<EntityControllerBase<Entities.Entities.Cards.Card>, CardsController>();
       services.AddScoped<EntityControllerBase<Deck>, DecksController>();

@@ -186,6 +186,9 @@
   <data name="PracticePageTitle" xml:space="preserve">
     <value>Practice {0}</value>
   </data>
+  <data name="PracticeStatistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>

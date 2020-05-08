@@ -268,6 +268,15 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statistics.
+        /// </summary>
+        internal static string PracticeStatistics {
+            get {
+                return ResourceManager.GetString("PracticeStatistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string Save {

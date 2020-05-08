@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
@@ -7,7 +8,6 @@ using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -109,6 +109,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public ObservableCollection<string> Tags { get; } = new ObservableCollection<string>();
 
     /// <summary>
+    /// Command for showing the practice statistics
+    /// </summary>
+    public Command ShowStatisticsCommand { get; private set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -118,7 +123,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public CardEditViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector,
       EntityChangeValidator<Card> changeValidator) 
       : base(context, navigationManager, apiConnector, changeValidator)
-    { Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags)); }
+    { 
+      Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags));
+      ShowStatisticsCommand = new Command()
+      {
+        CommandText = Messages.PracticeStatistics,
+        ExecuteAction = (param) => NavigationManager.NavigateTo(NavigationManager.BaseUri + "/Statistics/")
+      };
+    }
 
     ///<inheritdoc/>
     public override async Task InitializeAsync() 

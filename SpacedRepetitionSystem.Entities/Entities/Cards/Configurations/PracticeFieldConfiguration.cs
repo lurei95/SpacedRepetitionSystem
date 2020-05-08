@@ -28,9 +28,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .HasForeignKey(field => field.DeckId)
         .OnDelete(DeleteBehavior.Cascade);
 
-      builder.HasOne(entry => entry.Card)
-        .WithOne()
-        .HasForeignKey<PracticeField>(entry => entry.CardId)
+      builder.HasOne(field => field.Card)
+        .WithMany(card => card.PracticeFields)
+        .HasForeignKey(field => field.CardId)
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.HasOne(field => field.Field)

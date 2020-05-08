@@ -33,7 +33,7 @@
               </DisplayTemplate>
             </DataGridColumn>
             <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
-                            Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
+                            Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.DeckId)"
                             Caption="Deck" Sortable="true">
               <DisplayTemplate>
                 <a href="@("/Decks/" + @context.DeckId)">@context.Deck.Title</a>
@@ -73,6 +73,15 @@
                     if (!string.IsNullOrEmpty(value))
                       @($"{value}")
                     }
+                }
+              </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card" Width="100"
+                            Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
+                            Caption="" Sortable="false">
+              <DisplayTemplate>
+                @{
+                  <Button CommandParameter="context" Class="grid-edit-button column-button" Command="ViewModel.ShowStatisticsCommand"></Button>
                 }
               </DisplayTemplate>
             </DataGridColumn>

@@ -1,5 +1,17 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.right {
+  color: #28a745;
+}
+
+.hard {
+  color: #f39c12
+}
+
+.wrong {
+  color: #dc3545
+}
+
 .dropdown-no-text {
   background: none;
   border: none

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
@@ -31,6 +32,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     }
 
     /// <summary>
+    /// Command for showing the practice statistics
+    /// </summary>
+    public Command ShowStatisticsCommand { get; private set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">DbContext (Injected)</param>
@@ -38,7 +44,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <param name="apiConnector">ApiConnector (Injected)</param>
     public CardSearchViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
       : base(context, navigationManager, apiConnector)
-    { }
+    {
+      ShowStatisticsCommand = new Command()
+      {
+        CommandText = Messages.PracticeStatistics,
+        ExecuteAction = (param) => ShowStatistics(param as Card)
+      };
+    }
 
     ///<inheritdoc/>
     protected override async Task<List<Card>> SearchCore()
@@ -63,5 +75,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     ///<inheritdoc/>
     protected override void NewEntity()
     { NavigationManager.NavigateTo("/Decks/" + SelectedEntity.DeckId + "/Cards/New"); }
+
+    ///<inheritdoc/>
+    private void ShowStatistics(Card card)
+    { NavigationManager.NavigateTo("/Decks/" + card.DeckId + "/Cards/" + card.CardId + "/Statistics/"); }
   }
 }

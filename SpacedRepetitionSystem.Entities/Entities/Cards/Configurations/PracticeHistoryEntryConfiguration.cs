@@ -16,7 +16,8 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.HasKey(entry => entry.PracticeHistoryEntryId);
 
       builder.Property(entry => entry.PracticeHistoryEntryId)
-        .IsRequired();
+        .IsRequired()
+        .ValueGeneratedOnAdd();
       builder.Property(entry => entry.CardId)
         .IsRequired();
       builder.Property(entry => entry.FieldName)

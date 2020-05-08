@@ -1,0 +1,73 @@
+﻿@page "/Decks/{DeckId:long}/Cards/{CardId:long}/Statistics/"
+
+@using SpacedRepetitionSystem.Components.ViewModels.Statistics;
+@using SpacedRepetitionSystem.Entities.Entities.Cards;
+@using SpacedRepetitionSystem.Components.Interaction;
+@using SpacedRepetitionSystem.Components.ViewModels;
+@using SpacedRepetitionSystem.Components.Data;
+@using Blazorise.DataGrid;
+@using SpacedRepetitionSystem.Components.Containers;
+
+@inherits PageBase<CardStatisticsViewModel>
+
+<ViewModelArea ViewModel="ViewModel">
+  <TabCard Title="@ViewModel?.Entity?.GetDisplayName()" IsLoading="@IsLoading" BodyClass="d-flex">
+    <CardTabs>
+      <CardTab Title="Overview">
+        <div class="d-flex flex-grow-1 summary-element flex-column justify-content-center align-items-center">
+          <CustomPieChart BackgroundColors="backgroundColors" Labels="chartLabels" BorderColors="borderColors" Values="ViewModel.ResultValues"></CustomPieChart>
+        </div>
+      </CardTab>
+      <CardTab Title="Practice History">
+        <div class="d-flex flex-column flex-grow-1">
+          <h5 class="card-title mb-4">Practice History</h5>
+          <SearchGrid TItem="PracticeHistoryEntry"
+                      Items="@ViewModel.PracticeHistoryEntries"
+                      PageSize="10"
+                      ShowPager="true">
+            <Columns>
+              <DataGridColumn TItem="PracticeHistoryEntry"
+                              Field="@nameof(PracticeHistoryEntry.PracticeDate)"
+                              Caption="Practice Date" Sortable="true" />
+              <DataGridColumn TItem="PracticeHistoryEntry"
+                              Field="@nameof(PracticeHistoryEntry.FieldName)"
+                              Caption="Field Name" Sortable="true" />
+              <DataGridColumn TItem="PracticeHistoryEntry"
+                              Field="@nameof(PracticeHistoryEntry.CorrectCount)"
+                              Caption="Correct" Sortable="true" CellClass="@((item) => "right")" />
+              <DataGridColumn TItem="PracticeHistoryEntry"
+                              Field="@nameof(PracticeHistoryEntry.HardCount)"
+                              Caption="Hard" Sortable="true" CellClass="@((item) => "hard")" />
+              <DataGridColumn TItem="PracticeHistoryEntry"
+                              Field="@nameof(PracticeHistoryEntry.WrongCount)"
+                              Caption="Wrong" Sortable="true" CellClass="@((item) => "wrong")" />
+            </Columns>
+          </SearchGrid>
+        </div>
+      </CardTab>
+    </CardTabs>
+    <HeaderButtons>
+      <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+    </HeaderButtons>
+  </TabCard>
+</ViewModelArea>
+
+@code 
+{
+  private string[] chartLabels = { "Correct/Easy", "Hard", "Wrong" };
+  private List<string> borderColors = new List<string>() { "#88d5d5", "#ffa854", "#ffa1b5" };
+  private List<string> backgroundColors = new List<string>() { "#dbf2f2", "#ffecd9", "#ffe0e6" };
+  private List<int> resultValues = new List<int>();
+
+  /// <summary>
+  /// Id of the card
+  /// </summary>
+  [Parameter]
+  public long CardId { set => ViewModel.LoadEntity(value); }
+
+  /// <summary>
+  /// Id of the deck
+  /// </summary>
+  [Parameter]
+  public long DeckId { get; set; }
+}
