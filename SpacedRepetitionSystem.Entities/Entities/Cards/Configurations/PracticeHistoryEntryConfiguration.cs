@@ -12,22 +12,40 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     public void Configure(EntityTypeBuilder<PracticeHistoryEntry> builder)
     {
       builder.ToTable("PracticeHistoryEntries", "Cards");
-      builder.HasKey(field => new { field.DeckId, field.CardId, field.FieldName });
 
-      builder.Property(field => field.CardId)
+      builder.HasKey(entry => entry.PracticeHistoryEntryId);
+
+      builder.Property(entry => entry.PracticeHistoryEntryId)
         .IsRequired();
-      builder.Property(field => field.FieldName)
+      builder.Property(entry => entry.CardId)
         .IsRequired();
-      builder.Property(field => field.DeckId)
+      builder.Property(entry => entry.FieldName)
         .IsRequired();
-      builder.Property(field => field.PracticeDate)
+      builder.Property(entry => entry.DeckId)
         .IsRequired();
-      builder.Property(field => field.CorrectCount)
+      builder.Property(entry => entry.PracticeDate)
         .IsRequired();
-      builder.Property(field => field.HardCount)
+      builder.Property(entry => entry.CorrectCount)
         .IsRequired();
-      builder.Property(field => field.WrongCount)
+      builder.Property(entry => entry.HardCount)
         .IsRequired();
+      builder.Property(entry => entry.WrongCount)
+        .IsRequired();
+
+      builder.HasOne(entry => entry.Deck)
+        .WithMany()
+        .HasForeignKey(entry => entry.DeckId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+      builder.HasOne(entry => entry.Card)
+        .WithOne()
+        .HasForeignKey<PracticeHistoryEntry>(entry => entry.CardId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+      builder.HasOne(entry => entry.Field)
+        .WithOne()
+        .HasForeignKey<PracticeHistoryEntry>(entry => new { entry.CardId, entry.FieldName })
+        .OnDelete(DeleteBehavior.Cascade);
     }
   }
 }

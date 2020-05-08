@@ -23,14 +23,19 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.Property(field => field.DueDate)
         .IsRequired();
 
-      builder.HasOne(field => field.Field)
-        .WithOne()
-        .HasForeignKey<PracticeField>(field => new { field.CardId, field.FieldName })
-        .OnDelete(DeleteBehavior.Cascade);
-
       builder.HasOne(field => field.Deck)
         .WithMany(deck => deck.PracticeFields)
         .HasForeignKey(field => field.DeckId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+      builder.HasOne(entry => entry.Card)
+        .WithOne()
+        .HasForeignKey<PracticeField>(entry => entry.CardId)
+        .OnDelete(DeleteBehavior.Cascade);
+
+      builder.HasOne(field => field.Field)
+        .WithOne()
+        .HasForeignKey<PracticeField>(field => new { field.CardId, field.FieldName })
         .OnDelete(DeleteBehavior.Cascade);
     }
   }

@@ -11,6 +11,21 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public object Id => new { DeckId, CardId, FieldName };
 
     /// <summary>
+    /// The next due date for practicing the field
+    /// </summary>
+    public DateTime DueDate { get; set; }
+
+    /// <summary>
+    /// Returns whether the practice field is due
+    /// </summary>
+    public bool IsDue => DueDate <= DateTime.Today;
+
+    ///<inheritdoc/>
+    public string GetDisplayName() => null;
+
+    #region References
+
+    /// <summary>
     /// Id of the deck
     /// </summary>
     public long DeckId { get; set; }
@@ -40,17 +55,6 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     /// </summary>
     public CardField Field { get; set; }
 
-    /// <summary>
-    /// The next due date for practicing the field
-    /// </summary>
-    public DateTime DueDate { get; set; }
-
-    /// <summary>
-    /// Returns whether the practice field is due
-    /// </summary>
-    public bool IsDue => DueDate <= DateTime.Today;
-
-    ///<inheritdoc/>
-    public string GetDisplayName() => null;
+    #endregion
   }
 }
