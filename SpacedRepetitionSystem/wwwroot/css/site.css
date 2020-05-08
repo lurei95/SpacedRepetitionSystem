@@ -1,5 +1,10 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.dropdown-no-text {
+  background: none;
+  border: none
+}
+
 .grid-delete-button {
   color: #FFFFFF;
   background-color: #DB3C30;

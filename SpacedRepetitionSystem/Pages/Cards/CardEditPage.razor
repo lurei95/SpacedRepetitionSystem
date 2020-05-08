@@ -29,7 +29,13 @@
       </CardTab>
     </CardTabs>
     <HeaderButtons>
-      <Button Command="@ViewModel?.DeleteCommand" IsIconButton="true" TextColor="black" Style="margin-top: 1px; margin-right: 10px"></Button>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle dropdown-no-text mr-1" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 0px;"/>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+          <Button Command="@ViewModel?.DeleteCommand" Class="dropdown-item"></Button>
+          <Button Command="@ViewModel?.SaveChangesCommand" Class="dropdown-item"></Button>
+        </div>
+      </div>
       <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
     </HeaderButtons>
     <ChildContent>

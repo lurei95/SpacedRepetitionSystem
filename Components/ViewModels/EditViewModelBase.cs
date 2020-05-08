@@ -7,7 +7,6 @@ using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.Utility.Notification;
-using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
 {
@@ -59,7 +58,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
 
       DeleteCommand = new Command()
       {
-        Icon = "oi oi-trash",
+        CommandText = Messages.Delete,
         IsEnabled = IsNewEntity,
         ExecuteAction = (param) => DeleteEntity()
       };
