@@ -27,15 +27,21 @@
     </div>
   </div>
   <WaitSpinner Visible="@IsLoading">
-    <div class="card-body scrollable">
+    <div class="card-body scrollable @BodyClass" style="@BodyStyle">
       @if (SelectedTab != null)
       {
         @SelectedTab.ChildContent
       }
+      else
+        @ChildContent
+
     </div>
-    <div class="card-footer">
-      @ChildContent
-    </div>
+    @if (CardFooter != null)
+    {
+      <div class="card-footer">
+        @CardFooter
+      </div>
+    }
   </WaitSpinner>
 </div>
 
@@ -46,6 +52,18 @@
 @code
 {
   private CardTab selectedTab;
+
+  /// <summary>
+  /// Style for the body
+  /// </summary>
+  [Parameter]
+  public string BodyStyle { get; set; }
+
+  /// <summary>
+  /// Classes for the body
+  /// </summary>
+  [Parameter]
+  public string BodyClass { get; set; }
 
   /// <summary>
   /// Title of the Card
@@ -60,22 +78,28 @@
   public bool IsLoading { get; set; }
 
   /// <summary>
-  /// Template for holding the datagrid columns.
+  /// The tabs of the card
   /// </summary>
   [Parameter]
   public RenderFragment CardTabs { get; set; }
 
   /// <summary>
-  /// Template for holding the datagrid columns.
+  /// The header button in the card
   /// </summary>
   [Parameter]
   public RenderFragment HeaderButtons { get; set; }
 
   /// <summary>
-  /// Template for holding the datagrid columns.
+  /// The content of the card
   /// </summary>
   [Parameter]
   public RenderFragment ChildContent { get; set; }
+
+  /// <summary>
+  /// The footer of the card
+  /// </summary>
+  [Parameter]
+  public RenderFragment CardFooter { get; set; }
 
   /// <summary>
   /// The selected tab

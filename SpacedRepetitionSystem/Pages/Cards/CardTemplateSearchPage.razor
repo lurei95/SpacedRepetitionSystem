@@ -9,53 +9,46 @@
 
 @inherits SearchPageBase<CardTemplate, CardTemplateSearchViewModel>
 
-<ViewModelArea ViewModel="@ViewModel">
-  <div class="card flex-grow-0 fullsizeCard">
-    <div class="card-header bg-dark">
-      <div class="row">
-        <div class="col col-md-auto text-white">
-          Search Templates
-        </div>
-        <div class="col d-flex justify-content-end">
-          <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
-        </div>
-      </div>
-    </div>
-    <div class="card-body scrollable">
-      <SearchGrid TItem="CardTemplate"
-                  Items="@ViewModel.SearchResults"
-                  @bind-SelectedItem="@ViewModel.SelectedEntity"
-                  WaitSpinnerVisible="ViewModel.IsSearching"
-                  PageSize="12"
-                  ShowPager="true"
-                  DeleteCommand="@ViewModel.DeleteCommand"
-                  EditCommand="@ViewModel.EditCommand"
-                  NewCommand="@ViewModel.NewCommand">
-        <Columns>
-          <DataGridColumn TItem="CardTemplate"
-                          Field="@nameof(CardTemplate.CardTemplateId)"
-                          Caption="#" Sortable="true">
-            <DisplayTemplate>
-              <a href="@("/Templates/" + @context.CardTemplateId)">@context.CardTemplateId</a>
-            </DisplayTemplate>
-          </DataGridColumn>
-          <DataGridColumn TItem="CardTemplate"
-                          Field="@nameof(CardTemplate.Title)"
-                          Caption="Title" Sortable="true" />
-          <DataGridColumn TItem="CardTemplate"
-                          Field="@nameof(CardTemplate.FieldDefinitions)"
-                          Caption="Field Count" Sortable="false">
-            <DisplayTemplate>
-              @{
-                @($"{(context as CardTemplate)?.FieldDefinitions.Count }")
-              }
-            </DisplayTemplate>
-          </DataGridColumn>
-        </Columns>
-      </SearchGrid>
-    </div>
-  </div>
-</ViewModelArea>
+  <ViewModelArea ViewModel="@ViewModel">
+    <TabCard Title="Search Templates">
+      <HeaderButtons>
+        <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+      </HeaderButtons>
+      <ChildContent>
+        <SearchGrid TItem="CardTemplate"
+                    Items="@ViewModel.SearchResults"
+                    @bind-SelectedItem="@ViewModel.SelectedEntity"
+                    WaitSpinnerVisible="ViewModel.IsSearching"
+                    PageSize="12"
+                    ShowPager="true"
+                    DeleteCommand="@ViewModel.DeleteCommand"
+                    EditCommand="@ViewModel.EditCommand"
+                    NewCommand="@ViewModel.NewCommand">
+          <Columns>
+            <DataGridColumn TItem="CardTemplate"
+                            Field="@nameof(CardTemplate.CardTemplateId)"
+                            Caption="#" Sortable="true">
+              <DisplayTemplate>
+                <a href="@("/Templates/" + @context.CardTemplateId)">@context.CardTemplateId</a>
+              </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn TItem="CardTemplate"
+                            Field="@nameof(CardTemplate.Title)"
+                            Caption="Title" Sortable="true" />
+            <DataGridColumn TItem="CardTemplate"
+                            Field="@nameof(CardTemplate.FieldDefinitions)"
+                            Caption="Field Count" Sortable="false">
+              <DisplayTemplate>
+                @{
+                  @($"{(context as CardTemplate)?.FieldDefinitions.Count }")
+                }
+              </DisplayTemplate>
+            </DataGridColumn>
+          </Columns>
+        </SearchGrid>
+      </ChildContent>
+    </TabCard>
+  </ViewModelArea>
 
 @code
 {

@@ -5,23 +5,16 @@
 @using SpacedRepetitionSystem.Components.Edits;
 @using SpacedRepetitionSystem.Components.ViewModels;
 @using SpacedRepetitionSystem.Components.Data;
+@using SpacedRepetitionSystem.Components.Containers
 
 @inherits PageBase<PracticeDeckViewModel>
 
-<ViewModelArea ViewModel="ViewModel">
-  <div class="card flex-grow-0 fullsizeCard">
-    <div class="card-header bg-dark">
-      <div class="row">
-        <div class="col col-md-auto text-white">
-          @ViewModel?.Title
-        </div>
-        <div class="col d-flex justify-content-end">
-          <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
-        </div>
-      </div>
-    </div>
-    <WaitSpinner Visible="IsLoading">
-      <div class="card-body d-flex scrollable p-0">
+  <ViewModelArea ViewModel="ViewModel">
+    <TabCard Title="@ViewModel?.Title" IsLoading="IsLoading" BodyClass="d-flex">
+      <HeaderButtons>
+        <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
+      </HeaderButtons>
+      <ChildContent>
         @if (ViewModel.IsSummary)
         {
           <div class="d-flex flex-grow-1 summary-element flex-column justify-content-center align-items-center">
@@ -100,8 +93,8 @@
             }
           </div>
         }
-      </div>
-      <div class="card-footer">
+      </ChildContent>
+      <CardFooter>
         <div class="d-flex justify-content-center">
           @if (ViewModel.IsSummary)
           {
@@ -122,10 +115,9 @@
             <Button Command="ViewModel.ShowSolutionCommand" Id="showSolutionButton" Class="btn-lg ml-1 mr-1 btn-secondary" IsFocued="true"></Button>
           }
         </div>
-      </div>
-    </WaitSpinner>
-  </div>
-</ViewModelArea>
+      </CardFooter>
+    </TabCard>
+  </ViewModelArea>
 
 <style>
   .right {
