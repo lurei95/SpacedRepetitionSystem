@@ -1,37 +1,29 @@
 ﻿@using Blazorise.Charts;
 
+@typeparam TItem
+@inherits ChartComponentBase<TItem>
+
 @if (IsVisible)
 {
-  <PieChart @ref="chart" TItem="int" />
+  <PieChart @ref="chart" TItem="TItem" />
 }
 
 @code
 {
+  private PieChart<TItem> chart;
+
+  /// <summary>
+  /// The data
+  /// </summary>
   [Parameter]
-  public bool IsVisible { get; set; } = true;
+  public List<TItem> Values { get; set; }
 
-  [Parameter]
-  public List<string> BackgroundColors { get; set; }
-
-  [Parameter]
-  public List<string> BorderColors { get; set; }
-
-  [Parameter]
-  public string[] Labels { get; set; }
-
-  [Parameter]
-  public List<int> Values { get; set; }
-
-  [Parameter]
-  public string Label { get; set; }
-
-  private PieChart<int> chart;
-
-  private async Task Redraw()
+  ///<inheritdoc/>
+  public override async Task Redraw()
   {
     await chart.Clear();
     await chart.AddLabel(Labels);
-    await chart.AddDataSet(new PieChartDataset<int>
+    await chart.AddDataSet(new PieChartDataset<TItem>
     {
       Label = Label,
       Data = Values,
@@ -41,11 +33,5 @@
     });
 
     await chart.Update();
-  }
-
-  protected override async Task OnAfterRenderAsync(bool firstRender)
-  {
-    await base.OnAfterRenderAsync(firstRender);
-    await Redraw();
   }
 }

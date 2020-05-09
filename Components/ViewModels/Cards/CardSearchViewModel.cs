@@ -39,11 +39,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnector (Injected)</param>
-    public CardSearchViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
-      : base(context, navigationManager, apiConnector)
+    public CardSearchViewModel(NavigationManager navigationManager, IApiConnector apiConnector) 
+      : base(navigationManager, apiConnector)
     {
       ShowStatisticsCommand = new Command()
       {

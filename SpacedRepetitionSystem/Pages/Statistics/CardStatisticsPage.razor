@@ -6,6 +6,7 @@
 @using SpacedRepetitionSystem.Components.ViewModels;
 @using SpacedRepetitionSystem.Components.Data;
 @using Blazorise.DataGrid;
+@using SpacedRepetitionSystem.Components.Edits;
 @using SpacedRepetitionSystem.Components.Containers;
 
 @inherits PageBase<CardStatisticsViewModel>
@@ -14,8 +15,21 @@
   <TabCard Title="@ViewModel?.Entity?.GetDisplayName()" IsLoading="@IsLoading" BodyClass="d-flex">
     <CardTabs>
       <CardTab Title="Overview">
-        <div class="d-flex flex-grow-1 summary-element flex-column justify-content-center align-items-center">
-          <CustomPieChart BackgroundColors="backgroundColors" Labels="chartLabels" BorderColors="borderColors" Values="ViewModel.ResultValues"></CustomPieChart>
+        <div class="d-flex flex-column flex-grow-1">
+          <h5 class="card-title">Settings</h5>
+          <DropDownEdit Caption="Data Source"></DropDownEdit>
+          <DropDownEdit Caption="Timespan"></DropDownEdit>
+          <h5 class="card-title">Data</h5>
+          <div class="d-flex">
+            <div class="d-flex flex-grow-1 chart-container summary-element flex-column justify-content-center align-items-center">
+              <h3 class="mb-4">Total</h3>
+              <CustomPieChart BackgroundColors="backgroundColors" TItem="int" Labels="chartLabels" BorderColors="borderColors" Values="ViewModel.ResultValues"></CustomPieChart>
+            </div>
+            <div class="d-flex flex-grow-1 chart-container summary-element flex-column justify-content-center align-items-center">
+              <h3 class="mb-4">Practice History</h3>
+              <CustomLineChart BackgroundColors="backgroundColors" TItem="int" Labels="ViewModel.LineChartLabels.ToArray()" BorderColors="borderColors" Values="ViewModel.LineChartData"></CustomLineChart>
+            </div>
+          </div>
         </div>
       </CardTab>
       <CardTab Title="Practice History">
@@ -56,7 +70,13 @@
   </TabCard>
 </ViewModelArea>
 
-@code 
+<style>
+  .chart-container {
+    width: 50%;
+  }
+</style>
+
+@code
 {
   private string[] chartLabels = { "Correct/Easy", "Hard", "Wrong" };
   private List<string> borderColors = new List<string>() { "#88d5d5", "#ffa854", "#ffa1b5" };

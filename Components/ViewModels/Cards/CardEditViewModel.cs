@@ -116,13 +116,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnector (Injected)</param>
     /// <param name="changeValidator">change validator (Injected)</param>
-    public CardEditViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector,
+    public CardEditViewModel(NavigationManager navigationManager, IApiConnector apiConnector,
       EntityChangeValidator<Card> changeValidator) 
-      : base(context, navigationManager, apiConnector, changeValidator)
+      : base(navigationManager, apiConnector, changeValidator)
     { 
       Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags));
       ShowStatisticsCommand = new Command()

@@ -33,20 +33,8 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.Property(entry => entry.WrongCount)
         .IsRequired();
 
-      builder.HasOne(entry => entry.Deck)
-        .WithMany()
-        .HasForeignKey(entry => entry.DeckId)
-        .OnDelete(DeleteBehavior.Cascade);
-
-      builder.HasOne(entry => entry.Card)
-        .WithOne()
-        .HasForeignKey<PracticeHistoryEntry>(entry => entry.CardId)
-        .OnDelete(DeleteBehavior.Cascade);
-
-      builder.HasOne(entry => entry.Field)
-        .WithOne()
-        .HasForeignKey<PracticeHistoryEntry>(entry => new { entry.CardId, entry.FieldName })
-        .OnDelete(DeleteBehavior.Cascade);
+      builder.HasIndex(entry => entry.DeckId).IsUnique(false);
+      builder.HasIndex(entry => entry.CardId).IsUnique(false);
     }
   }
 }

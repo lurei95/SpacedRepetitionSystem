@@ -43,29 +43,14 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public long CardId { get; set; }
 
     /// <summary>
-    /// The template of the card
-    /// </summary>
-    public Card Card { get; set; }
-
-    /// <summary>
     /// Id of the deck the card belongs to
     /// </summary>
     public long DeckId { get; set; }
 
     /// <summary>
-    /// The deck card belongs to
-    /// </summary>
-    public Deck Deck { get; set; }
-
-    /// <summary>
     /// Name of the field
     /// </summary>
     public string FieldName { get; set; }
-
-    /// <summary>
-    /// The field
-    /// </summary>
-    public CardField Field { get; set; }
 
     #endregion
 

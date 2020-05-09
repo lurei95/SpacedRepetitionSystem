@@ -1,4 +1,5 @@
-﻿using SpacedRepetitionSystem.Entities.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Entities.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +10,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
   /// </summary>
   public interface IApiConnector
   {
+    /// <summary>
+    /// DbContext
+    /// </summary>
+    DbContext Context { get; set; }
+
     /// <summary>
     /// Returns the entity with the Id
     /// </summary>

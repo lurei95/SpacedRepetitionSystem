@@ -53,11 +53,11 @@ namespace SpacedRepetitionSystem
       services.AddTransient<PracticeDeckViewModel>();
       services.AddTransient<CardStatisticsViewModel>();
 
-      services.AddScoped<EntityControllerBase<Entities.Entities.Cards.Card>, CardsController>();
-      services.AddScoped<EntityControllerBase<Deck>, DecksController>();
-      services.AddScoped<EntityControllerBase<PracticeHistoryEntry>, PracticeHistoryEntriesController>();
-      services.AddScoped<EntityControllerBase<CardTemplate>, CardTemplatesController>();
-      services.AddScoped<IApiConnector, ApiConnector>();
+      services.AddTransient<EntityControllerBase<Entities.Entities.Cards.Card>, CardsController>();
+      services.AddTransient<EntityControllerBase<Deck>, DecksController>();
+      services.AddTransient<EntityControllerBase<PracticeHistoryEntry>, PracticeHistoryEntriesController>();
+      services.AddTransient<EntityControllerBase<CardTemplate>, CardTemplatesController>();
+      services.AddTransient<IApiConnector, ApiConnector>();
 
       services.AddScoped(typeof(CommitValidatorBase<>), typeof(CommitValidatorBase<>));
       services.AddScoped(typeof(DeleteValidatorBase<>), typeof(DeleteValidatorBase<>));

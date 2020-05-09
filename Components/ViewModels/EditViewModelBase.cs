@@ -41,13 +41,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DBContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnector (Injected)</param>
     /// <param name="changeValidator">Validator fpr property changes</param>
-    public EditViewModelBase(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector, 
+    public EditViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector, 
       EntityChangeValidator<TEntity> changeValidator)
-      : base(context, navigationManager, apiConnector)
+      : base(navigationManager, apiConnector)
     {
       this.changeValidator = changeValidator;
 

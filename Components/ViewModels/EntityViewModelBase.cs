@@ -24,13 +24,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnetcor (Injected)</param>
-    public EntityViewModelBase(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector)
+    public EntityViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector)
       : base(navigationManager)
     {
-      Context = context;
+      Context = apiConnector.Context;
       ApiConnector = apiConnector;
     }
   }

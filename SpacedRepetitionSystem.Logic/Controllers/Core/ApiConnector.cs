@@ -1,4 +1,5 @@
-﻿using SpacedRepetitionSystem.Entities.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Utility.Notification;
 using System;
@@ -15,17 +16,24 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     readonly Dictionary<Type, object> controllers = new Dictionary<Type, object>();
 
     /// <summary>
+    /// DbContext
+    /// </summary>
+    public DbContext Context { get; set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="cardsController">CardsController (Injected)</param>
     /// <param name="decksController">DecksController (Injected)</param>
     /// <param name="cardTemplatesController">CardTemplatesController (Injected)</param>
     /// <param name="practiceHistoryEntryController">PracticeHistoryEntryController (Injected)</param>
-    public ApiConnector(EntityControllerBase<Card> cardsController, 
+    public ApiConnector(DbContext context, EntityControllerBase<Card> cardsController, 
       EntityControllerBase<Deck> decksController, 
       EntityControllerBase<CardTemplate> cardTemplatesController,
       EntityControllerBase<PracticeHistoryEntry> practiceHistoryEntryController)
     {
+      Context = context;
+      cardsController.Context = decksController.Context = cardTemplatesController.Context = practiceHistoryEntryController.Context = context;
       controllers.Add(typeof(Card), cardsController);
       controllers.Add(typeof(CardTemplate), cardTemplatesController);
       controllers.Add(typeof(Deck), decksController);

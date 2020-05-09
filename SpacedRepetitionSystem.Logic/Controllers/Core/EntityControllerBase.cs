@@ -19,17 +19,15 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     /// <summary>
     /// Context used to perform the actions
     /// </summary>
-    protected DbContext Context { get; private set; }
+    public DbContext Context { get; set; }
 
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">Context (injected)</param>
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
-    public EntityControllerBase(DbContext context, DeleteValidatorBase<TEntity> deleteValidator, CommitValidatorBase<TEntity> commitValidator) 
+    public EntityControllerBase(DeleteValidatorBase<TEntity> deleteValidator, CommitValidatorBase<TEntity> commitValidator) 
     { 
-      Context = context;
       this.deleteValidator = deleteValidator;
       this.commitValidator = commitValidator;
     }

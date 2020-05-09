@@ -10,7 +10,7 @@ using SpacedRepetitionSystem.Entities.Core;
 namespace SpacedRepetitionSystem.Entities.Migrations
 {
     [DbContext(typeof(SpacedRepetionSystemDBContext))]
-    [Migration("20200426201222_InitialCreate")]
+    [Migration("20200509135304_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,9 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<bool>("ShowInputForPractice")
+                        .HasColumnType("bit");
+
                     b.HasKey("CardTemplateId", "FieldName");
 
                     b.ToTable("CardFieldDefinitions","Cards");
@@ -122,26 +125,66 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                     b.ToTable("Decks","Cards");
                 });
 
-            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry", b =>
+            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeField", b =>
                 {
+                    b.Property<long>("DeckId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("CardId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("CardFieldDefinitionId")
+                    b.Property<string>("FieldName")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("DeckId", "CardId", "FieldName");
+
+                    b.HasIndex("CardId", "FieldName")
+                        .IsUnique();
+
+                    b.ToTable("PracticeFields","Cards");
+                });
+
+            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry", b =>
+                {
+                    b.Property<long>("PracticeHistoryEntryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("CardId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("CardTemplateId")
+                    b.Property<int>("CorrectCount")
+                        .HasColumnType("int");
+
+                    b.Property<long>("DeckId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("FieldName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("HardCount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("PracticeDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PracticeResult")
+                    b.Property<int>("WrongCount")
                         .HasColumnType("int");
 
-                    b.HasKey("CardId", "CardFieldDefinitionId");
+                    b.HasKey("PracticeHistoryEntryId");
 
-                    b.HasIndex("CardTemplateId");
+                    b.HasIndex("CardId")
+                        .IsUnique(false);
+
+                    b.HasIndex("DeckId");
+
+                    b.HasIndex("CardId", "FieldName")
+                        .IsUnique(false);
 
                     b.ToTable("PracticeHistoryEntries","Cards");
                 });
@@ -184,7 +227,7 @@ namespace SpacedRepetitionSystem.Entities.Migrations
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition", b =>
                 {
-                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", "CardDefinition")
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", "CardTemplate")
                         .WithMany("FieldDefinitions")
                         .HasForeignKey("CardTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -200,17 +243,46 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeField", b =>
+                {
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.Card", "Card")
+                        .WithMany("PracticeFields")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.Deck", "Deck")
+                        .WithMany("PracticeFields")
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardField", "Field")
+                        .WithOne()
+                        .HasForeignKey("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeField", "CardId", "FieldName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry", b =>
                 {
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.Card", "Card")
-                        .WithMany()
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne()
+                        .HasForeignKey("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry", "CardId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", "CardTemplate")
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.Deck", "Deck")
                         .WithMany()
-                        .HasForeignKey("CardTemplateId");
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardField", "Field")
+                        .WithOne()
+                        .HasForeignKey("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry", "CardId", "FieldName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

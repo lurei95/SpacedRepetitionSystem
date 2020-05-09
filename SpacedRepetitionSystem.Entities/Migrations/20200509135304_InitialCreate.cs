@@ -30,7 +30,8 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                 columns: table => new
                 {
                     FieldName = table.Column<string>(maxLength: 100, nullable: false),
-                    CardTemplateId = table.Column<long>(nullable: false)
+                    CardTemplateId = table.Column<long>(nullable: false),
+                    ShowInputForPractice = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,33 +134,76 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PracticeFields",
+                schema: "Cards",
+                columns: table => new
+                {
+                    DeckId = table.Column<long>(nullable: false),
+                    CardId = table.Column<long>(nullable: false),
+                    FieldName = table.Column<string>(nullable: false),
+                    DueDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PracticeFields", x => new { x.DeckId, x.CardId, x.FieldName });
+                    table.ForeignKey(
+                        name: "FK_PracticeFields_Cards_CardId",
+                        column: x => x.CardId,
+                        principalSchema: "Cards",
+                        principalTable: "Cards",
+                        principalColumn: "CardId");
+                    table.ForeignKey(
+                        name: "FK_PracticeFields_Decks_DeckId",
+                        column: x => x.DeckId,
+                        principalSchema: "Cards",
+                        principalTable: "Decks",
+                        principalColumn: "DeckId");
+                    table.ForeignKey(
+                        name: "FK_PracticeFields_CardFields_CardId_FieldName",
+                        columns: x => new { x.CardId, x.FieldName },
+                        principalSchema: "Cards",
+                        principalTable: "CardFields",
+                        principalColumns: new[] { "CardId", "FieldName" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PracticeHistoryEntries",
                 schema: "Cards",
                 columns: table => new
                 {
-                    CardId = table.Column<long>(nullable: false),
-                    CardFieldDefinitionId = table.Column<long>(nullable: false),
+                    PracticeHistoryEntryId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PracticeDate = table.Column<DateTime>(nullable: false),
-                    PracticeResult = table.Column<int>(nullable: false),
-                    CardTemplateId = table.Column<long>(nullable: true)
+                    WrongCount = table.Column<int>(nullable: false),
+                    HardCount = table.Column<int>(nullable: false),
+                    CorrectCount = table.Column<int>(nullable: false),
+                    CardId = table.Column<long>(nullable: false),
+                    DeckId = table.Column<long>(nullable: false),
+                    FieldName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PracticeHistoryEntries", x => new { x.CardId, x.CardFieldDefinitionId });
+                    table.PrimaryKey("PK_PracticeHistoryEntries", x => x.PracticeHistoryEntryId);
                     table.ForeignKey(
                         name: "FK_PracticeHistoryEntries_Cards_CardId",
                         column: x => x.CardId,
                         principalSchema: "Cards",
                         principalTable: "Cards",
-                        principalColumn: "CardId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "CardId");
                     table.ForeignKey(
-                        name: "FK_PracticeHistoryEntries_CardTemplates_CardTemplateId",
-                        column: x => x.CardTemplateId,
+                        name: "FK_PracticeHistoryEntries_Decks_DeckId",
+                        column: x => x.DeckId,
                         principalSchema: "Cards",
-                        principalTable: "CardTemplates",
-                        principalColumn: "CardTemplateId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalTable: "Decks",
+                        principalColumn: "DeckId");
+                    table.ForeignKey(
+                        name: "FK_PracticeHistoryEntries_CardFields_CardId_FieldName",
+                        columns: x => new { x.CardId, x.FieldName },
+                        principalSchema: "Cards",
+                        principalTable: "CardFields",
+                        principalColumns: new[] { "CardId", "FieldName" },
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -187,16 +231,37 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                 column: "DefaultCardTemplateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PracticeHistoryEntries_CardTemplateId",
+                name: "IX_PracticeFields_CardId_FieldName",
+                schema: "Cards",
+                table: "PracticeFields",
+                columns: new[] { "CardId", "FieldName" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PracticeHistoryEntries_CardId",
                 schema: "Cards",
                 table: "PracticeHistoryEntries",
-                column: "CardTemplateId");
+                column: "CardId",
+                unique: false);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PracticeHistoryEntries_DeckId",
+                schema: "Cards",
+                table: "PracticeHistoryEntries",
+                column: "DeckId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PracticeHistoryEntries_CardId_FieldName",
+                schema: "Cards",
+                table: "PracticeHistoryEntries",
+                columns: new[] { "CardId", "FieldName" },
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CardFields",
+                name: "PracticeFields",
                 schema: "Cards");
 
             migrationBuilder.DropTable(
@@ -204,11 +269,15 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                 schema: "Cards");
 
             migrationBuilder.DropTable(
-                name: "CardFieldDefinitions",
+                name: "CardFields",
                 schema: "Cards");
 
             migrationBuilder.DropTable(
                 name: "Cards",
+                schema: "Cards");
+
+            migrationBuilder.DropTable(
+                name: "CardFieldDefinitions",
                 schema: "Cards");
 
             migrationBuilder.DropTable(

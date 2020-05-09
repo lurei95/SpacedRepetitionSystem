@@ -17,12 +17,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">Context (injected)</param>
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
-    public DecksController(DbContext context, DeleteValidatorBase<Deck> deleteValidator,
+    public DecksController(DeleteValidatorBase<Deck> deleteValidator,
       CommitValidatorBase<Deck> commitValidator)
-      : base(context, deleteValidator, commitValidator) { }
+      : base(deleteValidator, commitValidator) { }
 
     ///<inheritdoc/>
     public override Deck Get(object id)

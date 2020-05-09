@@ -28,11 +28,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnector (Injected)</param>
-    public DeckSearchViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
-      : base(context, navigationManager, apiConnector)
+    public DeckSearchViewModel(NavigationManager navigationManager, IApiConnector apiConnector) 
+      : base(navigationManager, apiConnector)
     {
       PracticeDeckCommand = new Command()
       {

@@ -68,8 +68,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnector (Injected)</param>
-    public SearchViewModelBase(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
-      : base(context, navigationManager, apiConnector)
+    public SearchViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector) 
+      : base(navigationManager, apiConnector)
     {
       DeleteCommand = new Command()
       {

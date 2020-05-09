@@ -1,0 +1,40 @@
+﻿@using Blazorise.Charts;
+
+@typeparam TItem
+@inherits ChartComponentBase<TItem>
+
+@if (IsVisible)
+{
+  <LineChart @ref="chart" TItem="TItem" />
+}
+
+@code
+{
+  private LineChart<TItem> chart;
+
+  /// <summary>
+  /// The data
+  /// </summary>
+  [Parameter]
+  public Dictionary<string, List<TItem>> Values { get; set; }
+
+  ///<inheritdoc/>
+  public override async Task Redraw()
+  {
+    await chart.Clear();
+    await chart.AddLabel(Labels);
+    for (int i = 0; i < Values.Count; i++)
+    {
+      await chart.AddDataSet(new LineChartDataset<TItem>
+      {
+        Label = Values.ElementAt(i).Key,
+        Data = Values.ElementAt(i).Value,
+        BackgroundColor = BackgroundColors[i],
+        BorderWidth = 1,
+        BorderColor = BorderColors[i]
+      });
+    }
+
+    await chart.Update();
+  }
+}

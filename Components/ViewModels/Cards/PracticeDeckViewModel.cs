@@ -42,6 +42,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       }
     }
 
+    /// <summary>
+    /// The practice results
+    /// </summary>
     public Dictionary<long, CardPracticeResult> PracticeResults = new Dictionary<long, CardPracticeResult>();
 
     /// <summary>
@@ -193,12 +196,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnetcor (Injected)</param>
-    /// <param name="jsRuntime">JSRuntime (injected)</param>
-    public PracticeDeckViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector) 
-      : base(context, navigationManager, apiConnector)
+    public PracticeDeckViewModel(NavigationManager navigationManager, IApiConnector apiConnector) 
+      : base(navigationManager, apiConnector)
     {
       ShowSolutionCommand = new Command()
       {

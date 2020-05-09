@@ -95,13 +95,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnector (Injected)</param>
     /// <param name="changeValidator">change validator (Injected)</param>
-    public DeckEditViewModel(DbContext context, NavigationManager navigationManager, IApiConnector apiConnector,
+    public DeckEditViewModel(NavigationManager navigationManager, IApiConnector apiConnector,
       EntityChangeValidator<Deck> changeValidator)
-      : base(context, navigationManager, apiConnector, changeValidator)
+      : base(navigationManager, apiConnector, changeValidator)
     {
       EditCardCommand = new Command()
       {
