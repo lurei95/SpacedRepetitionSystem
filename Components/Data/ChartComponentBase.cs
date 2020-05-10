@@ -10,6 +10,8 @@ namespace SpacedRepetitionSystem.Components.Data
   /// <typeparam name="TItem"></typeparam>
   public abstract class ChartComponentBase<TItem> : ComponentBase
   {
+    bool isDrawing;
+
     /// <summary>
     /// Whether the chart is visible
     /// </summary>
@@ -50,7 +52,8 @@ namespace SpacedRepetitionSystem.Components.Data
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
       await base.OnAfterRenderAsync(firstRender);
-      await Redraw();
+      if (firstRender)
+        await Redraw();
     }
   }
 }

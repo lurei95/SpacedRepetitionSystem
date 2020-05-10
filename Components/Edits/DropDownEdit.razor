@@ -1,4 +1,4 @@
-﻿@inherits SpacedRepetitionSystem.Components.CustomComponentBase
+﻿@inherits EditBase
 
 <div class="row d-flex @Class" id="@Id" style="align-items: center; margin-left: 10px; margin-right: 10px; @Style">
   @if (Property != null && !string.IsNullOrEmpty(Property.ErrorText))
@@ -9,11 +9,11 @@
   }
 <div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
   <div class="input-group-prepend">
-    <span class="input-group-text fieldLabel bg-dark text-white">@Caption</span>
+    <span class="input-group-text bg-dark text-white" style="width: @(CaptionWidth)px;">@Caption</span>
   </div>
     @if (Property != null)
     {
-      <select disabled="@(!IsEnabled)" class="custom-select" id="inputGroupSelect01" @bind="Property.Value">
+      <select disabled="@(!IsEnabled)" class="custom-select" id="@(Id + "-input")" @bind="Property.Value">
         @for (int i = 0; i < SelectableValues.Count; i++)
         {
           <option selected="@(i == 0)" value="@SelectableValues[i]">@SelectableValues[i]</option>
@@ -22,7 +22,7 @@
     }
     else
     {
-      <select disabled="@(!IsEnabled)" class="custom-select" id="inputGroupSelect01" @bind="Value">
+      <select disabled="@(!IsEnabled)" class="custom-select" id="@(Id + "-input")" @bind="Value">
         @for (int i = 0; i < SelectableValues.Count; i++)
         {
           <option selected="@(i == 0)" value="@SelectableValues[i]">@SelectableValues[i]</option>
@@ -36,18 +36,6 @@
 {
   private string value;
   private IList<string> selectableValues = new List<string>();
-
-  /// <summary>
-  /// Determines whether the edit is enabled
-  /// </summary>
-  [Parameter]
-  public bool IsEnabled { get; set; } = true;
-
-  /// <summary>
-  /// Property proxy for binding
-  /// </summary>
-  [Parameter]
-  public PropertyProxy Property { get; set; }
 
   /// <summary>
   /// The Selected value of the dropdown
@@ -76,16 +64,10 @@
     set
     {
       selectableValues = value;
-      if (selectableValues != null && selectableValues.Count > 0)
+      if (selectableValues != null && selectableValues.Count > 0 && string.IsNullOrEmpty(Value))
         Value = selectableValues[0];
     }
   }
-
-  /// <summary>
-  /// Caption of the edit
-  /// </summary>
-  [Parameter]
-  public string Caption { get; set; }
 
   /// <summary>
   /// Value changed event

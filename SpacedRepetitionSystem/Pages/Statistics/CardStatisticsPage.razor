@@ -15,19 +15,19 @@
   <TabCard Title="@ViewModel?.Entity?.GetDisplayName()" IsLoading="@IsLoading" BodyClass="d-flex">
     <CardTabs>
       <CardTab Title="Overview">
-        <div class="d-flex flex-column flex-grow-1">
+        <div class="d-flex flex-column flex-grow-1" style="max-width: 100%">
           <h5 class="card-title">Settings</h5>
-          <DropDownEdit Caption="Data Source"></DropDownEdit>
-          <DropDownEdit Caption="Timespan"></DropDownEdit>
+          <DropDownEdit CaptionWidth="120" Caption="Data Source" SelectableValues="ViewModel.SelectableDisplayUnits" @bind-Value="ViewModel.SelectedDisplayUnit"></DropDownEdit>
+          <DropDownEdit CaptionWidth="120" Caption="Timespan" SelectableValues="ViewModel.SelectableDisplayPeriods" @bind-Value="ViewModel.SelectedDisplayPeriodText"></DropDownEdit>
           <h5 class="card-title">Data</h5>
-          <div class="d-flex">
-            <div class="d-flex flex-grow-1 chart-container summary-element flex-column justify-content-center align-items-center">
+          <div class="d-flex chart-container">
+            <div class="d-flex flex-grow-1 summary-element flex-column justify-content-center align-items-center">
               <h3 class="mb-4">Total</h3>
-              <CustomPieChart BackgroundColors="backgroundColors" TItem="int" Labels="chartLabels" BorderColors="borderColors" Values="ViewModel.ResultValues"></CustomPieChart>
+              <CustomPieChart @ref="@pieChart" BackgroundColors="backgroundColors" TItem="int" Labels="chartLabels" BorderColors="borderColors" Values="ViewModel.ResultValues"></CustomPieChart>
             </div>
-            <div class="d-flex flex-grow-1 chart-container summary-element flex-column justify-content-center align-items-center">
+            <div class="d-flex flex-grow-1 summary-element flex-column justify-content-center align-items-center">
               <h3 class="mb-4">Practice History</h3>
-              <CustomLineChart BackgroundColors="backgroundColors" TItem="int" Labels="ViewModel.LineChartLabels.ToArray()" BorderColors="borderColors" Values="ViewModel.LineChartData"></CustomLineChart>
+              <CustomLineChart @ref="@lineChart" BackgroundColors="backgroundColors" TItem="int" Labels="ViewModel.LineChartLabels.ToArray()" BorderColors="borderColors" Values="ViewModel.LineChartData"></CustomLineChart>
             </div>
           </div>
         </div>
@@ -71,8 +71,25 @@
 </ViewModelArea>
 
 <style>
-  .chart-container {
+  .summary-element {
     width: 50%;
+    max-width: 50%;
+    position: relative;
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+
+  @@media (max-width: 1200px) {
+    .summary-element {
+      width: 100%;
+      max-width: 100%;
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+
+    .chart-container {
+      flex-direction: column !important;
+    }
   }
 </style>
 
@@ -82,6 +99,9 @@
   private List<string> borderColors = new List<string>() { "#88d5d5", "#ffa854", "#ffa1b5" };
   private List<string> backgroundColors = new List<string>() { "#dbf2f2", "#ffecd9", "#ffe0e6" };
   private List<int> resultValues = new List<int>();
+  private CustomPieChart<int> pieChart;
+  private CustomLineChart<int> lineChart;
+  bool isDrawingCharts;
 
   /// <summary>
   /// Id of the card
@@ -94,4 +114,17 @@
   /// </summary>
   [Parameter]
   public long DeckId { get; set; }
+
+  ///<inheritdoc/>
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    await base.OnAfterRenderAsync(firstRender);
+    if (!isDrawingCharts)
+    {
+      isDrawingCharts = true;
+      await pieChart.Redraw();
+      await lineChart.Redraw();
+      isDrawingCharts = false;
+    }
+  }
 }

@@ -3,10 +3,7 @@
 @typeparam TItem
 @inherits ChartComponentBase<TItem>
 
-@if (IsVisible)
-{
-  <PieChart @ref="chart" TItem="TItem" />
-}
+<PieChart @ref="chart" TItem="TItem" />
 
 @code
 {

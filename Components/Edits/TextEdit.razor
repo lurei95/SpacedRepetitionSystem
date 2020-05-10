@@ -1,8 +1,4 @@
-﻿@using Microsoft.JSInterop;
-
-@inherits SpacedRepetitionSystem.Components.CustomComponentBase
-
-@inject IJSRuntime JSRuntime;
+﻿@inherits EditBase
 
 <div class="row d-flex flex-fill @Class" style="align-items: center; margin-left: 10px; margin-right: 10px; @Style" id="@Id">
   @if (Property != null && !string.IsNullOrEmpty(Property.ErrorText))
@@ -13,7 +9,7 @@
   }
   <div class="input-group mb-3 col flex-fill" style="width: unset; padding: 0px; margin-top: 10px; margin-bottom: 10px;">
     <div class="input-group-prepend">
-      <span class="input-group-text fieldLabel bg-dark text-white">@Caption</span>
+      <span class="input-group-text bg-dark text-white" style="width: @(CaptionWidth)px;">@Caption</span>
     </div>
     @if (Property != null)
     {
@@ -43,29 +39,6 @@
   [Parameter]
   public RenderFragment ChildContent { get; set; }
 
-  /// <summary>
-  /// Determines whether the edit is enabled
-  /// </summary>
-  [Parameter]
-  public bool IsEnabled { get; set; } = true;
-
-  /// <summary>
-  /// Property proxy for binding
-  /// </summary>
-  [Parameter]
-  public PropertyProxy Property { get; set; }
-
-  /// <summary>
-  /// Caption of the edit
-  /// </summary>
-  [Parameter]
-  public string Caption { get; set; }
-
-  /// <summary>
-  /// If the edit should be focued
-  /// </summary>
-  [Parameter]
-  public bool IsFocued { get; set; }
 
   /// <summary>
   /// Value of the text edit
@@ -112,13 +85,5 @@
   {
     if (e.Key == "Enter" && EnterAction != null)
       EnterAction.Invoke();
-  }
-
-  ///<inheritdoc/>
-  protected override async Task OnAfterRenderAsync(bool firstRender)
-  {
-    await base.OnAfterRenderAsync(firstRender);
-    if (IsFocued)
-      await JSRuntime.InvokeVoidAsync("utilities.focusElement", Id + "-input");
   }
 }

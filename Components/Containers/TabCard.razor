@@ -5,7 +5,7 @@
 <div class="card flex-grow-0 fullsizeCard @Class" style="@Style">
   <div class="card-header bg-dark">
     <div class="row">
-      <div class="col col-md-auto text-white">
+      <div class="col col-md-auto text-white title-col">
         @Title
       </div>
       <div class="col">
@@ -27,7 +27,7 @@
     </div>
   </div>
   <WaitSpinner Visible="@IsLoading">
-    <div class="card-body scrollable @BodyClass" style="@BodyStyle">
+    <div class="card-body scrollable @BodyClass" style="max-width: 100%; @BodyStyle">
       @if (SelectedTab != null)
       {
         @SelectedTab.ChildContent
@@ -48,6 +48,13 @@
 <CascadingValue Value=this>
   @CardTabs
 </CascadingValue>
+
+<style>
+  .title-col {
+    flex: 0 0 auto !important;
+    width: auto !important;
+  }
+</style>
 
 @code
 {
