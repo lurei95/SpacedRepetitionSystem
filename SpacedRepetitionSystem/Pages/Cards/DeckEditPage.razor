@@ -32,7 +32,7 @@
           <Columns>
             <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                             Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
-                            Caption="#" Sortable="true">
+                            Caption="#" Sortable="true" Width="120">
               <DisplayTemplate>
                 <a href="@("/Cards/" + @context.CardId)">@context.CardId</a>
               </DisplayTemplate>
@@ -51,7 +51,7 @@
                 @{
                     string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[0].FieldName;
                     if (!string.IsNullOrEmpty(value))
-                  @($"{value}")
+                      @($"{value}")
                 }
               </DisplayTemplate>
             </DataGridColumn>
@@ -62,7 +62,7 @@
                 @{
                     string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[1].FieldName;
                     if (!string.IsNullOrEmpty(value))
-                  @($"{value}")
+                      @($"{value}")
                 }
               </DisplayTemplate>
             </DataGridColumn>
@@ -76,7 +76,7 @@
                     {
                       string value = card.Fields.Count > 2 ? card.Fields[2].FieldName : String.Empty;
                       if (!string.IsNullOrEmpty(value))
-                  @($"{value}")
+                        @($"{value}")
                     }
                 }
               </DisplayTemplate>
@@ -105,7 +105,3 @@
     </CardFooter>
   </TabCard>
 </ViewModelArea>
-
-@code
-{
-}

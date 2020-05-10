@@ -24,10 +24,10 @@
             <DataGridColumn TItem="Deck"
                             Field="@nameof(Deck.Title)"
                             Caption="Title" Sortable="true" />
-            <DataGridColumn TItem="Deck"
+            <DataGridColumn TItem="Deck" Width="50" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(Deck.CardCount)"
                             Caption="Cards" Sortable="false" />
-            <DataGridColumn TItem="Deck"
+            <DataGridColumn TItem="Deck" Width="110" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(Deck.DueCardCount)"
                             Caption="Due Cards" Sortable="false" />
             <DataGridColumn TItem="Deck" Width="100"

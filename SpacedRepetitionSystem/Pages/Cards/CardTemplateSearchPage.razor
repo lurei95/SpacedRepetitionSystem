@@ -25,7 +25,7 @@
                     EditCommand="@ViewModel.EditCommand"
                     NewCommand="@ViewModel.NewCommand">
           <Columns>
-            <DataGridColumn TItem="CardTemplate"
+            <DataGridColumn TItem="CardTemplate" Width="120"
                             Field="@nameof(CardTemplate.CardTemplateId)"
                             Caption="#" Sortable="true">
               <DisplayTemplate>
@@ -35,7 +35,7 @@
             <DataGridColumn TItem="CardTemplate"
                             Field="@nameof(CardTemplate.Title)"
                             Caption="Title" Sortable="true" />
-            <DataGridColumn TItem="CardTemplate"
+            <DataGridColumn TItem="CardTemplate" Width="120" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(CardTemplate.FieldDefinitions)"
                             Caption="Field Count" Sortable="false">
               <DisplayTemplate>
