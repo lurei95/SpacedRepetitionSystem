@@ -31,11 +31,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     public override async Task<List<PracticeHistoryEntry>> Get(IDictionary<string, object> searchParameters)
     {
       IQueryable<PracticeHistoryEntry> results = Context.Set<PracticeHistoryEntry>();
-      if (searchParameters.ContainsKey(nameof(Card.DeckId)))
+      if (searchParameters != null && searchParameters.ContainsKey(nameof(Card.DeckId)))
         results = results.Where(entry => entry.DeckId == (long)searchParameters[nameof(Card.DeckId)]);
-      if (searchParameters.ContainsKey(nameof(Card.CardId)))
+      if (searchParameters != null && searchParameters.ContainsKey(nameof(Card.CardId)))
         results = results.Where(entry => entry.CardId == (long)searchParameters[nameof(Card.CardId)]);
-      if (searchParameters.ContainsKey(nameof(CardField.FieldName)))
+      if (searchParameters != null && searchParameters.ContainsKey(nameof(CardField.FieldName)))
         results = results.Where(entry => entry.FieldName == (searchParameters[nameof(CardField.FieldName)] as string));
       return await results.ToListAsync();
     }

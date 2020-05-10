@@ -1,0 +1,119 @@
+﻿@inherits CustomComponentBase
+
+<button type="button" id="@Id"
+        data-toggle="tooltip"
+        title="ToolTip"
+        @onclick="ButtonClicked"
+        class="btn @Class"
+        disabled="@IsEnabled"
+        style="@Style">
+  <span class="@IconString" style="@TextColorString"></span>
+</button>
+
+@code
+{
+  private string TextColorString
+  {
+    get
+    {
+      return Value
+        ? !string.IsNullOrEmpty(ActiveIconColor)
+          ? "color: " + ActiveIconColor + ";"
+          : !string.IsNullOrEmpty(NotActiveIconColor)
+            ? "color: " + NotActiveIconColor + ";"
+            : null
+        : !string.IsNullOrEmpty(NotActiveIconColor)
+          ? "color: " + NotActiveIconColor + ";"
+          : !string.IsNullOrEmpty(ActiveIconColor)
+            ? "color : " + ActiveIconColor + ";"
+            : null;
+    }
+  }
+
+  private string IconString
+  {
+    get
+    {
+      return Value
+        ? !string.IsNullOrEmpty(ActiveIcon)
+          ? ActiveIcon
+          : !string.IsNullOrEmpty(NotActiveIcon)
+            ? NotActiveIcon
+            : null
+        : !string.IsNullOrEmpty(NotActiveIcon)
+          ? NotActiveIcon
+          : !string.IsNullOrEmpty(ActiveIcon)
+            ? ActiveIcon
+            : null;
+    }
+  }
+
+  private bool value;
+
+  /// <summary>
+  /// The value
+  /// </summary>
+  [Parameter]
+  public bool Value
+  {
+    get => value;
+    set
+    {
+      if (this.value != value)
+      {
+        this.value = value;
+        ToggleAction?.Invoke(value, ActionParameter);
+      }
+    }
+  }
+
+  /// <summary>
+  /// Parameter for the toggle action
+  /// </summary>
+  [Parameter]
+  public object ActionParameter { get; set; }
+
+  /// <summary>
+  /// The icon for when the toggle is active
+  /// </summary>
+  [Parameter]
+  public string ActiveIcon { get; set; }
+
+  /// <summary>
+  /// The icon for when the toggle is not active
+  /// </summary>
+  [Parameter]
+  public string NotActiveIcon { get; set; }
+
+  /// <summary>
+  /// The tooltip
+  /// </summary>
+  [Parameter]
+  public string ToolTip { get; set; }
+
+  /// <summary>
+  /// Whether the button is enabled
+  /// </summary>
+  [Parameter]
+  public bool IsEnabled { get; set; }
+
+  /// <summary>
+  /// The Color of the text
+  /// </summary>
+  [Parameter]
+  public string ActiveIconColor { get; set; }
+  /// <summary>
+  /// The Color of the text
+  /// </summary>
+  [Parameter]
+  public string NotActiveIconColor { get; set; }
+
+  /// <summary>
+  /// Action excecuted on toggle
+  /// </summary>
+  [Parameter]
+  public Action<bool, object> ToggleAction { get; set; }
+
+
+  private void ButtonClicked() { Value = !Value; }
+}

@@ -21,6 +21,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     /// </summary>
     public string Title { get; set; }
 
+    /// <summary>
+    /// Whether the deck is pinned to be shon in the home page
+    /// </summary>
+    public bool IsPinned { get; set; }
+
     #region References
 
     /// <summary>

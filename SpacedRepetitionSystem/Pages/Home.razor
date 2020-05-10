@@ -1,0 +1,78 @@
+﻿@page "/"
+@page "/Home"
+
+@using SpacedRepetitionSystem.Components.ViewModels;
+@using SpacedRepetitionSystem.Components.Interaction;
+@using Blazorise.DataGrid;
+@using SpacedRepetitionSystem.Entities.Entities.Cards;
+@using SpacedRepetitionSystem.Components.Containers;
+
+@inherits PageBase<HomeViewModel>
+
+<ViewModelArea ViewModel="@ViewModel">
+  <TabCard Title="Home" IsLoading="@IsLoading" BodyClass="d-flex justify-content-between">
+    <ChildContent>
+      <div class="d-flex flex-column custom-col">
+        <h5 class="card-title mb-4">Pinned Decks</h5>
+        <SearchGrid TItem="Deck"
+                    Items="@ViewModel.PinnedDecks"
+                    WaitSpinnerVisible="false"
+                    SelectionEnabled="false"
+                    PageSize="12"
+                    ShowPager="false">
+          <Columns>
+            <DataGridColumn TItem="Deck"
+                            Field="@nameof(Deck.Title)"
+                            Caption="Title" Sortable="true" />
+            <DataGridColumn TItem="Deck"
+                            Field="@nameof(Deck.CardCount)"
+                            Caption="Cards" Sortable="false" />
+            <DataGridColumn TItem="Deck"
+                            Field="@nameof(Deck.DueCardCount)"
+                            Caption="Due Cards" Sortable="false" />
+            <DataGridColumn TItem="Deck" Width="100"
+                            Field="@nameof(Deck.DeckId)"
+                            Caption="" Sortable="false">
+              <DisplayTemplate>
+                @{
+                  <Button CommandParameter="context.DeckId" Class="grid-edit-button column-button" Command="ViewModel.PracticeDeckCommand"></Button>
+                }
+              </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn TItem="Deck" Width="130"
+                            Field="@nameof(Deck.DeckId)"
+                            Caption="" Sortable="false">
+              <DisplayTemplate>
+                @{
+                  <Button CommandParameter="(context as Deck).DeckId" Class="grid-new-button column-button" Command="ViewModel.AddCardsCommand"></Button>
+                }
+              </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn TItem="Deck" Width="100"
+                            Field="@nameof(Deck.DeckId)"
+                            Caption="" Sortable="false">
+              <DisplayTemplate>
+                @{
+                  <Button CommandParameter="context" Class="grid-edit-button column-button" Command="ViewModel.ShowStatisticsCommand"></Button>
+                }
+              </DisplayTemplate>
+            </DataGridColumn>
+          </Columns>
+        </SearchGrid>
+      </div>
+      <div class="d-flex flex-column custom-col">
+        <h5 class="card-title mb-4">Problem Cards</h5>
+      </div>
+    </ChildContent>
+  </TabCard>
+</ViewModelArea>
+
+<style>
+  .custom-col {
+    width: 45%;
+  }
+</style>
+
+@code
+{
+}

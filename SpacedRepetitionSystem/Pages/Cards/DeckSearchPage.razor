@@ -40,7 +40,19 @@
                             Caption="Cards" Sortable="false" />
             <DataGridColumn TItem="Deck"
                             Field="@nameof(Deck.DueCardCount)"
-                            Caption="Cards" Sortable="false" />
+                            Caption="Due Cards" Sortable="false" />
+            <DataGridColumn TItem="Deck"
+                            Field="@nameof(Deck.IsPinned)"
+                            Caption="" Width="30" Sortable="false">
+              <DisplayTemplate>
+                @{
+                  <div class="d-flex align-content-center">
+                    <ToggleButton ActiveIcon="fas fa-thumbtack" Value="@context.IsPinned" ActionParameter="@context" ToggleAction="(value, param) => ViewModel.TogglePinned(value, param as Deck)" 
+                                  ActiveIconColor="#5DB761" NotActiveIconColor="#505c69" Style="padding: 0px; margin: -2px; font-size: 1.3em; transform: rotate(25deg);"/>
+                  </div>
+                }
+              </DisplayTemplate>
+            </DataGridColumn>
             <DataGridColumn TItem="Deck" Width="100"
                             Field="@nameof(Deck.DeckId)"
                             Caption="" Sortable="false">
@@ -56,6 +68,15 @@
               <DisplayTemplate>
                 @{
                   <Button CommandParameter="(context as Deck).DeckId" Class="grid-new-button column-button" Command="ViewModel.AddCardsCommand"></Button>
+                }
+              </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn TItem="Deck" Width="100"
+                            Field="@nameof(Deck.DeckId)"
+                            Caption="" Sortable="false">
+              <DisplayTemplate>
+                @{
+                  <Button CommandParameter="context" Class="grid-edit-button column-button" Command="ViewModel.ShowStatisticsCommand"></Button>
                 }
               </DisplayTemplate>
             </DataGridColumn>

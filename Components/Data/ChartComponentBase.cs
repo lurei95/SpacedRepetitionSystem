@@ -10,8 +10,6 @@ namespace SpacedRepetitionSystem.Components.Data
   /// <typeparam name="TItem"></typeparam>
   public abstract class ChartComponentBase<TItem> : ComponentBase
   {
-    bool isDrawing;
-
     /// <summary>
     /// Whether the chart is visible
     /// </summary>

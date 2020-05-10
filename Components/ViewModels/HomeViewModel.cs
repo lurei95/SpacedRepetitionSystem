@@ -2,18 +2,17 @@
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
-using SpacedRepetitionSystem.Utility.Dialogs;
-using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Cards
+namespace SpacedRepetitionSystem.Components.ViewModels
 {
-  /// <summary>
-  /// SearchViewModel for <see cref="Deck"/>
-  /// </summary>
-  public sealed class DeckSearchViewModel : SearchViewModelBase<Deck>
+  public sealed class HomeViewModel : PageViewModelBase
   {
+    private readonly IApiConnector apiConnector;
+
+    public List<Deck> PinnedDecks { get; } = new List<Deck>();
+
     /// <summary>
     /// Command for practicing the deck
     /// </summary>
@@ -29,14 +28,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// </summary>
     public Command ShowStatisticsCommand { get; private set; }
 
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    /// <param name="navigationManager">NavigationManager (Injected)</param>
-    /// <param name="apiConnector">ApiConnector (Injected)</param>
-    public DeckSearchViewModel(NavigationManager navigationManager, IApiConnector apiConnector) 
-      : base(navigationManager, apiConnector)
-    {
+    public HomeViewModel(NavigationManager navigationManager, IApiConnector apiConnector) : base(navigationManager)
+    { 
+      this.apiConnector = apiConnector;
+
       PracticeDeckCommand = new Command()
       {
         ExecuteAction = (param) => PracticeDeck((long)param),
@@ -58,33 +53,17 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       };
     }
 
-    /// <summary>
-    /// Toggles <see cref="Deck.IsPinned"/> for the deck
-    /// </summary>
-    /// <param name="value">the new value</param>
-    /// <param name="deck">the deck</param>
-    public void TogglePinned(bool value, Deck deck)
-    {
-      deck.IsPinned = value;
-      ApiConnector.Put(deck);
-    }
-
     ///<inheritdoc/>
-    protected override void DeleteEntity(Deck entity)
+    public override async Task InitializeAsync()
     {
-      ModalDialogManager.ShowDialog(Messages.DeleteDeckDialogTitle, 
-        Messages.DeleteDeckDialogText.FormatWith(entity.Title), DialogButtons.YesNo, (result) =>
-      {
-        if (result == DialogResult.Yes)
-          base.DeleteEntity(entity);
-      });
+      await base.InitializeAsync();
+      Dictionary<string, object> parameters = new Dictionary<string, object>
+      { { nameof(Deck.IsPinned), true } };
+      PinnedDecks.AddRange(await apiConnector.Get<Deck>(parameters));
     }
-
-    ///<inheritdoc/>
-    protected override async Task<List<Deck>> SearchCore() => await ApiConnector.Get<Deck>(null);
 
     private void ShowStatistics(Deck deck)
-    { NavigationManager.NavigateTo("/Decks/" + deck.DeckId + "/Statistics/"); }
+    { NavigationManager.NavigateTo($"/Decks/{deck.DeckId}/Statistics/"); }
 
     private void AddCards(long deckId)
     { NavigationManager.NavigateTo($"/Decks/{deckId}/Cards/New"); }

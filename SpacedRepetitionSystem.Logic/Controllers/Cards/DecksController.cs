@@ -36,8 +36,12 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     public override async Task<List<Deck>> Get(IDictionary<string, object> searchParameters)
     {
       List<Deck> result = new List<Deck>();
-      List<Tuple<Deck, int, int>> tuples = await Context.Set<Deck>()
-        .Select(deck => new Tuple<Deck, int, int>(deck, deck.Cards.Count(), 
+      IQueryable<Deck> query = Context.Set<Deck>();
+      if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.IsPinned)))
+        query = query.Where(deck => deck.IsPinned == (bool)searchParameters[nameof(Deck.IsPinned)]);
+
+      List<Tuple<Deck, int, int>> tuples = await query.Select(
+          deck => new Tuple<Deck, int, int>(deck, deck.Cards.Count(), 
           deck.PracticeFields.Count(field => field.DueDate <= DateTime.Today)))
         .ToListAsync();
       foreach (Tuple<Deck, int, int> tuple in tuples)

@@ -39,7 +39,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         .Include(card => card.Fields)
         .Include(card => card.Deck)
         .Include(card => card.CardTemplate);
-      if (searchParameters.ContainsKey(nameof(Deck.DeckId)))
+      if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.DeckId)))
         query = query.Where(card => card.DeckId == (long)searchParameters[nameof(Deck.DeckId)]);
       return await query.ToListAsync();
     }

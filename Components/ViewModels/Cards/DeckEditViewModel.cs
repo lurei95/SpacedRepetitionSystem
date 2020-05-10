@@ -93,6 +93,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public Command NewCardCommand { get; private set; }
 
     /// <summary>
+    /// Command for showing the practice statistics
+    /// </summary>
+    public Command ShowStatisticsCommand { get; private set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
@@ -118,6 +123,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       {
         CommandText = Messages.New,
         ExecuteAction = (param) => NewCard()
+      };
+
+      ShowStatisticsCommand = new Command()
+      {
+        CommandText = Messages.PracticeStatistics,
+        ExecuteAction = (param) => NavigationManager.NavigateTo(NavigationManager.Uri + "/Statistics/")
       };
     }
 

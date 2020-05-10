@@ -25,27 +25,11 @@
   }
 </ViewModelArea>
 
-<style>
-  .iconButton:hover {
-    filter: brightness(80%);
-  }
-
-  .iconButton {
-    font-size: 1rem;
-    background-color: transparent !important;
-    border-color: transparent !important;
-    padding: 0px;
-    line-height: unset;
-    margin-left: 10px;
-    margin-right: 5px;
-  }
-</style>
-
 @code
 {
   private Command command;
 
-  private string ClassString => (IsIconButton ? "iconButton" : " ") + (string.IsNullOrEmpty(Class) ? "" : " ") + Class;
+  private string ClassString => (IsIconButton ? "icon-button" : " ") + (string.IsNullOrEmpty(Class) ? "" : " ") + Class;
 
   private string TextColorString => (!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null);
 

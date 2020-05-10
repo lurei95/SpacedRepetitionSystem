@@ -1,4 +1,4 @@
-﻿@page "/Decks/{DeckId:long}/Cards/{CardId:long}/Statistics/"
+﻿@page "/Decks/{DeckId:long}/Statistics/"
 
 @using SpacedRepetitionSystem.Components.ViewModels.Statistics;
 @using SpacedRepetitionSystem.Entities.Entities.Cards;
@@ -9,7 +9,7 @@
 @using SpacedRepetitionSystem.Components.Edits;
 @using SpacedRepetitionSystem.Components.Containers;
 
-@inherits PageBase<CardStatisticsViewModel>
+@inherits PageBase<DeckStatisticsViewModel>
 
 <ViewModelArea ViewModel="ViewModel">
   <TabCard Title="@ViewModel?.Entity?.GetDisplayName()" IsLoading="@IsLoading" BodyClass="d-flex">
@@ -104,16 +104,10 @@
   bool isDrawingCharts;
 
   /// <summary>
-  /// Id of the card
-  /// </summary>
-  [Parameter]
-  public long CardId { set => ViewModel.LoadEntity(value); }
-
-  /// <summary>
   /// Id of the deck
   /// </summary>
   [Parameter]
-  public long DeckId { get; set; }
+  public long DeckId { set => ViewModel.LoadEntity(value); }
 
   ///<inheritdoc/>
   protected override async Task OnAfterRenderAsync(bool firstRender)

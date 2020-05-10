@@ -21,6 +21,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .IsRequired()
         .ValueGeneratedOnAdd();
 
+      builder.Property(deck => deck.IsPinned)
+        .IsRequired();
+
       builder.Property(deck => deck.Title)
         .IsRequired()
         .HasMaxLength(100);

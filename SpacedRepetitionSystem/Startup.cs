@@ -18,6 +18,7 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using SpacedRepetitionSystem.Components.ViewModels.Statistics;
+using SpacedRepetitionSystem.Components.ViewModels;
 
 namespace SpacedRepetitionSystem
 {
@@ -44,6 +45,7 @@ namespace SpacedRepetitionSystem
         ServiceLifetime.Transient);
       services.AddTransient<DbContext, SpacedRepetionSystemDBContext>();
 
+      services.AddTransient<HomeViewModel>();
       services.AddTransient<CardEditViewModel>();
       services.AddTransient<CardTemplateEditViewModel>();
       services.AddTransient<DeckEditViewModel>();
@@ -52,6 +54,7 @@ namespace SpacedRepetitionSystem
       services.AddTransient<DeckSearchViewModel>();
       services.AddTransient<PracticeDeckViewModel>();
       services.AddTransient<CardStatisticsViewModel>();
+      services.AddTransient<DeckStatisticsViewModel>();
 
       services.AddTransient<EntityControllerBase<Entities.Entities.Cards.Card>, CardsController>();
       services.AddTransient<EntityControllerBase<Deck>, DecksController>();
