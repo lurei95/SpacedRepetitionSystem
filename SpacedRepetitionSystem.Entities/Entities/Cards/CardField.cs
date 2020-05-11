@@ -1,4 +1,6 @@
-﻿namespace SpacedRepetitionSystem.Entities.Entities.Cards
+﻿using System;
+
+namespace SpacedRepetitionSystem.Entities.Entities.Cards
 {
   /// <summary>
   /// A Field of a card
@@ -12,6 +14,21 @@
     /// Value of the field
     /// </summary>
     public string Value { get; set; }
+
+    /// <summary>
+    /// The next due date for practicing the field
+    /// </summary>
+    public DateTime DueDate { get; set; } = DateTime.Today;
+
+    /// <summary>
+    /// Level of proficiency
+    /// </summary>
+    public int ProficiencyLevel { get; set; } = 1;
+
+    /// <summary>
+    /// Returns whether the practice field is due
+    /// </summary>
+    public bool IsDue => DueDate <= DateTime.Today;
 
     #region References
 

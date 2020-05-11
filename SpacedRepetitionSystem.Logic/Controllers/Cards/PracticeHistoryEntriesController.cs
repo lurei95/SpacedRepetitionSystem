@@ -14,6 +14,16 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
   /// </summary>
   public sealed class PracticeHistoryEntriesController : EntityControllerBase<PracticeHistoryEntry>
   {
+    private static Dictionary<int, int> ProficiencyDueDaysLookup { get; } = new Dictionary<int, int>()
+    {
+      { 1, 1 },
+      { 2, 2 },
+      { 3, 7 },
+      { 4, 14 },
+      { 5, 30 },
+      { 6, 90 }
+    };
+
     /// <summary>
     /// Search parameter for the top 10 problem words
     /// </summary>
@@ -72,9 +82,25 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         existingEntry.CorrectCount += entity.CorrectCount;
         existingEntry.HardCount += entity.HardCount;
         existingEntry.WrongCount += entity.WrongCount;
+        UpdatePracticeInformation(existingEntry);
       }
       else
+      {
+        UpdatePracticeInformation(entity);
         Context.Add(entity);
+      }
+    }
+
+    private void UpdatePracticeInformation(PracticeHistoryEntry entry)
+    {
+      CardField field = Context.Set<CardField>().Find(entry.CardId, entry.FieldName);
+      if (entry.WrongCount > 0)
+        field.ProficiencyLevel = 1;
+      else if (entry.HardCount > 0 && field.ProficiencyLevel != 1)
+        field.ProficiencyLevel--;
+      else if (entry.CorrectCount > 0 && field.ProficiencyLevel != 6)
+        field.ProficiencyLevel++;
+      field.DueDate = DateTime.Today.AddDays(ProficiencyDueDaysLookup[field.ProficiencyLevel]);
     }
 
     ///<inheritdoc/>

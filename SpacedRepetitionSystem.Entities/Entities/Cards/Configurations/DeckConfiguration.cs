@@ -39,11 +39,6 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .WithMany()
         .HasForeignKey(deck => deck.DefaultCardTemplateId)
         .OnDelete(DeleteBehavior.Restrict);
-
-      builder.HasMany(deck => deck.PracticeFields)
-        .WithOne(field => field.Deck)
-        .HasForeignKey(field => field.DeckId)
-        .OnDelete(DeleteBehavior.NoAction);
     }
   }
 }

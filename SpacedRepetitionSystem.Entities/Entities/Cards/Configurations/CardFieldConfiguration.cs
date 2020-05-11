@@ -23,6 +23,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.Property(field => field.CardTemplateId)
         .IsRequired();
 
+      builder.Property(field => field.DueDate)
+        .IsRequired();
+      builder.Property(field => field.ProficiencyLevel)
+        .IsRequired();
+
       builder.Property(field => field.Value);
 
       builder.HasOne(field => field.CardFieldDefinition)

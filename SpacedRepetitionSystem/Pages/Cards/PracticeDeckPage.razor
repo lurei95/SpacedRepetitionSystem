@@ -81,7 +81,7 @@
                 <div style="font-size: 3rem">@(ViewModel.CurrentFieldName + ": ?")</div>
               </div>
             }
-            @if (!ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
+            @if (!ViewModel.IsShowingSolution && ViewModel?.Current?.CardFieldDefinition?.ShowInputForPractice == true)
             {
               <div class="d-flex justify-content-center">
                 <TextEdit Caption="Answer" @bind-Value="ViewModel.InputText" ButtonAction="ViewModel.OnInputFinished" EnterAction="ViewModel.OnInputFinished" Id="answerEdit" IsFocued="true">
@@ -100,17 +100,17 @@
           {
             <Button Command="ViewModel.CloseSummaryCommand" Id="closeSummaryButton" Class="btn-lg ml-1 mr-1 btn-secondary" IsFocued="true"></Button>
           }
-          else if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
+          else if (ViewModel.IsShowingSolution && ViewModel?.Current?.CardFieldDefinition?.ShowInputForPractice == false)
           {
             <Button Command="ViewModel.DoesNotKnowResultCommand" Class="btn-lg ml-1 mr-1 btn-secondary"></Button>
             <Button Command="ViewModel.DifficultResultCommand" Class="btn-lg ml-1 mr-1 btn-secondary"></Button>
             <Button Command="ViewModel.EasyResultCommand" Class="btn-lg ml-1 mr-1 btn-secondary"></Button>
           }
-          else if (ViewModel.IsShowingSolution && ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == true)
+          else if (ViewModel.IsShowingSolution && ViewModel?.Current?.CardFieldDefinition?.ShowInputForPractice == true)
           {
             <Button Command="ViewModel.NextCommand" Id="nextButton" Class="btn-lg ml-1 mr-1 btn-secondary" IsFocued="true"></Button>
           }
-          else if (ViewModel?.Current?.Field?.CardFieldDefinition?.ShowInputForPractice == false)
+          else if (ViewModel?.Current?.CardFieldDefinition?.ShowInputForPractice == false)
           {
             <Button Command="ViewModel.ShowSolutionCommand" Id="showSolutionButton" Class="btn-lg ml-1 mr-1 btn-secondary" IsFocued="true"></Button>
           }
@@ -143,7 +143,6 @@
       flex-direction: column !important;
     }
   }
-}
 </style>
 
 @code

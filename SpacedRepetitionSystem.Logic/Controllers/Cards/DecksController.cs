@@ -42,7 +42,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
 
       List<Tuple<Deck, int, int>> tuples = await query.Select(
           deck => new Tuple<Deck, int, int>(deck, deck.Cards.Count(), 
-          deck.PracticeFields.Count(field => field.DueDate <= DateTime.Today)))
+          deck.Cards.SelectMany(card => card.Fields).Count(field => field.DueDate <= DateTime.Today)))
         .ToListAsync();
       foreach (Tuple<Deck, int, int> tuple in tuples)
       {

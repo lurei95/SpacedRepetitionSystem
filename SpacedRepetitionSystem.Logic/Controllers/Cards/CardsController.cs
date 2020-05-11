@@ -43,40 +43,5 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         query = query.Where(card => card.DeckId == (long)searchParameters[nameof(Deck.DeckId)]);
       return await query.ToListAsync();
     }
-
-    ///<inheritdoc/>
-    protected override void PutCore(Card entity)
-    {
-      CreatePracticeFields(entity);
-      base.PutCore(entity);
-    }
-
-    ///<inheritdoc/>
-    protected override void PostCore(Card entity)
-    {
-      CreatePracticeFields(entity);
-      base.PostCore(entity);
-    }
-
-    private void CreatePracticeFields(Card card)
-    {
-      foreach (CardField field in card.Fields)
-      {
-        bool practiceFieldExists = Context.Set<PracticeField>()
-          .Any(practiceField => practiceField.CardId == card.CardId
-            && practiceField.DeckId == card.DeckId
-            && practiceField.FieldName == field.FieldName);
-        if (!practiceFieldExists)
-        {
-          PracticeField practiceField = new PracticeField()
-          {
-            DeckId = card.DeckId,
-            FieldName = field.FieldName,
-            DueDate = DateTime.Today
-          };
-          card.PracticeFields.Add(practiceField);
-        }
-      }
-    }
   }
 }
