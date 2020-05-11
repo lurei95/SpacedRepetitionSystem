@@ -15,6 +15,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
   public sealed class PracticeHistoryEntriesController : EntityControllerBase<PracticeHistoryEntry>
   {
     /// <summary>
+    /// Search parameter for the top 10 problem words
+    /// </summary>
+    public static readonly string ProblemWords = nameof(ProblemWords);
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="commitValidator">CommitValidator (injected)</param>
@@ -31,6 +36,21 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     public override async Task<List<PracticeHistoryEntry>> Get(IDictionary<string, object> searchParameters)
     {
       IQueryable<PracticeHistoryEntry> results = Context.Set<PracticeHistoryEntry>();
+
+      if (searchParameters.ContainsKey(ProblemWords))
+      {
+        results = results.GroupBy(entry => new { entry.DeckId, entry.CardId }, (x, y) => new PracticeHistoryEntry()
+        {
+          CorrectCount = y.Sum(z => z.CorrectCount),
+          HardCount = y.Sum(z => z.HardCount),
+          WrongCount = y.Sum(z => z.WrongCount),
+          CardId = x.CardId,
+          DeckId = x.DeckId
+        })
+          .OrderBy(entry => (entry.CorrectCount == 0 && entry.WrongCount == 0) ? 1 : (double)entry.CorrectCount / (entry.WrongCount + entry.CorrectCount))
+          .Take(10);
+      }
+
       if (searchParameters != null && searchParameters.ContainsKey(nameof(Card.DeckId)))
         results = results.Where(entry => entry.DeckId == (long)searchParameters[nameof(Card.DeckId)]);
       if (searchParameters != null && searchParameters.ContainsKey(nameof(Card.CardId)))
@@ -44,7 +64,6 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     protected override void PostCore(PracticeHistoryEntry entity)
     {
       PracticeHistoryEntry existingEntry = Context.Set<PracticeHistoryEntry>()
-        .AsNoTracking()
         .Where(entry => entry.PracticeDate.Date == entity.PracticeDate.Date
           && entry.DeckId == entity.DeckId && entry.CardId == entity.CardId
           && entry.FieldName == entity.FieldName).FirstOrDefault();

@@ -1,5 +1,6 @@
 ﻿@page "/"
-@page "/Home"
+@page "/Home/"
+
 
 @using SpacedRepetitionSystem.Components.ViewModels;
 @using SpacedRepetitionSystem.Components.Interaction;
@@ -10,15 +11,42 @@
 @inherits PageBase<HomeViewModel>
 
 <ViewModelArea ViewModel="@ViewModel">
-  <TabCard Title="Home" IsLoading="@IsLoading" BodyClass="d-flex justify-content-between">
+  <TabCard Title="Home" IsLoading="@IsLoading" BodyClass="d-flex justify-content-around chart-container">
     <ChildContent>
-      <div class="d-flex flex-column custom-col">
+      <div class="d-flex flex-column custom-col mt-4">
+        <h5 class="card-title mb-4">Actions</h5>
+        <div class="mb-4 d-flex flex-column">
+          <div class="row ml-4 mr-4 mb-3 d-flex justify-content-center align-items-center">
+            <label style="width: 100px; margin: 0px;">Decks:</label>
+            <div class="d-flex flex-column flex-fill ml-2">
+              <Button Class="grid-edit-button" Command="ViewModel.NewDeckCommand"></Button>
+            </div>
+            <div class="d-flex flex-column flex-fill ml-2">
+              <Button Class="grid-edit-button" Command="ViewModel.SearchDecksCommand"></Button>
+            </div>
+          </div>
+          <div class="row ml-4 mr-4 mb-3 d-flex justify-content-center align-items-center">
+            <label style="width: 100px; margin: 0px;">Cards:</label>
+            <div class="d-flex flex-column flex-fill ml-2">
+              <Button Class="grid-edit-button" Command="ViewModel.SearchCardsCommand"></Button>
+            </div>
+          </div>
+          <div class="row ml-4 mr-4 mb-3 d-flex justify-content-center align-items-center">
+            <label style="width: 100px; margin: 0px;">Templates:</label>
+            <div class="d-flex flex-column flex-fill ml-2">
+              <Button Class="grid-edit-button" Command="ViewModel.NewTemplateCommand"></Button>
+            </div>
+            <div class="d-flex flex-column flex-fill ml-2">
+              <Button Class="grid-edit-button" Command="ViewModel.SearchTemplatesCommand"></Button>
+            </div>
+          </div>
+        </div>
         <h5 class="card-title mb-4">Pinned Decks</h5>
         <SearchGrid TItem="Deck"
                     Items="@ViewModel.PinnedDecks"
                     WaitSpinnerVisible="false"
                     SelectionEnabled="false"
-                    PageSize="12"
+                    PageSize="8"
                     ShowPager="false">
           <Columns>
             <DataGridColumn TItem="Deck"
@@ -60,8 +88,47 @@
           </Columns>
         </SearchGrid>
       </div>
-      <div class="d-flex flex-column custom-col">
+      <div class="d-flex flex-column custom-col mt-4">
         <h5 class="card-title mb-4">Problem Cards</h5>
+        <SearchGrid TItem="PracticeHistoryEntry"
+                    Items="@ViewModel.ProblemWords"
+                    WaitSpinnerVisible="false"
+                    SelectionEnabled="false"
+                    PageSize="10"
+                    ShowPager="false">
+          <Columns>
+            <DataGridColumn TItem="PracticeHistoryEntry" Width="120"
+                            Field="@nameof(PracticeHistoryEntry.CardId)"
+                            Caption="#" Sortable="false ">
+              <DisplayTemplate>
+                <a href="@("/Cards/" + @context.CardId)">@context.CardId</a>
+              </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn TItem="PracticeHistoryEntry"
+                            Field="@nameof(PracticeHistoryEntry.DeckId)"
+                            Caption="Deck" Sortable="false">
+              <DisplayTemplate>
+                <a href="@("/Decks/" + @context.DeckId)">@ViewModel.ProblemWordDecks[context.DeckId].Title</a>
+              </DisplayTemplate>
+            </DataGridColumn>
+            <DataGridColumn TItem="PracticeHistoryEntry" Width="50" TextAlignment="@Blazorise.TextAlignment.Center"
+                            Field="@nameof(PracticeHistoryEntry.CorrectCount)"
+                            Caption="Correct" Sortable="false" CellClass="@((item) => "right")" />
+            <DataGridColumn TItem="PracticeHistoryEntry" Width="50" TextAlignment="@Blazorise.TextAlignment.Center"
+                            Field="@nameof(PracticeHistoryEntry.HardCount)"
+                            Caption="Hard" Sortable="false" CellClass="@((item) => "hard")" />
+            <DataGridColumn TItem="PracticeHistoryEntry" Width="50" TextAlignment="@Blazorise.TextAlignment.Center"
+                            Field="@nameof(PracticeHistoryEntry.WrongCount)"
+                            Caption="Wrong" Sortable="false" CellClass="@((item) => "wrong")" />
+            <DataGridColumn TItem="PracticeHistoryEntry" Width="100" TextAlignment="@Blazorise.TextAlignment.Center"
+                            Field="@nameof(PracticeHistoryEntry.DeckId)" CellClass="@((item) => GetPercentageClass(item))"
+                            Caption="Rate" Sortable="false">
+              <DisplayTemplate>
+                @(CalculateRate(context).ToString("P"))
+              </DisplayTemplate>
+            </DataGridColumn>
+          </Columns>
+        </SearchGrid>
       </div>
     </ChildContent>
   </TabCard>
@@ -71,8 +138,35 @@
   .custom-col {
     width: 45%;
   }
+
+  @@media (max-width: 1200px) {
+    .custom-col {
+      width: 100%;
+    }
+
+    .chart-container {
+      flex-direction: column !important;
+      display: unset !important;
+    }
+  }
 </style>
 
 @code
 {
+  private double CalculateRate(PracticeHistoryEntry entry)
+  {
+    if (entry.CorrectCount == 0 && entry.WrongCount == 0)
+      return 1.0;
+    return ((double)entry.CorrectCount) / (entry.CorrectCount + entry.WrongCount);
+  }
+
+  private string GetPercentageClass(PracticeHistoryEntry entry)
+  {
+    double rate = CalculateRate(entry);
+    if (rate >= 0.75)
+      return "right";
+    else if (rate >= 0.50)
+      return "hard";
+    return "wrong";
+  }
 }

@@ -214,6 +214,24 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Deck.
+        /// </summary>
+        internal static string NewDeck {
+            get {
+                return ResourceManager.GetString("NewDeck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Template.
+        /// </summary>
+        internal static string NewTemplate {
+            get {
+                return ResourceManager.GetString("NewTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         internal static string Next {
@@ -282,6 +300,33 @@ namespace SpacedRepetitionSystem.Components {
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Cards.
+        /// </summary>
+        internal static string SearchCards {
+            get {
+                return ResourceManager.GetString("SearchCards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Decks.
+        /// </summary>
+        internal static string SearchDecks {
+            get {
+                return ResourceManager.GetString("SearchDecks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Templates.
+        /// </summary>
+        internal static string SearchTemplates {
+            get {
+                return ResourceManager.GetString("SearchTemplates", resourceCulture);
             }
         }
         
