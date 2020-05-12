@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Cards.Configurations;
+using SpacedRepetitionSystem.Entities.Entities.Users;
 
 namespace SpacedRepetitionSystem.Entities.Core
 {
@@ -30,6 +31,11 @@ namespace SpacedRepetitionSystem.Entities.Core
     public DbSet<PracticeHistoryEntry> PracticeHistoryEntries { get; set; }
 
     /// <summary>
+    /// User
+    /// </summary>
+    public DbSet<User> Users { get; set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="options">The options</param>
@@ -45,6 +51,7 @@ namespace SpacedRepetitionSystem.Entities.Core
       modelBuilder.ApplyConfiguration(new CardFieldConfiguration());
       modelBuilder.ApplyConfiguration(new CardFieldDefinitionConfiguration());
       modelBuilder.ApplyConfiguration(new PracticeHistoryEntryConfiguration());
+      modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
   }
 }

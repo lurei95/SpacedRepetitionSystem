@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities;
+using SpacedRepetitionSystem.Entities.Entities.Users;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,5 +47,13 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     /// </summary>
     /// <param name="entity">The new entity</param>
     bool Post<TEntity>(TEntity entity) where TEntity : IEntity;
+
+    /// <summary>
+    /// Tries to log in
+    /// </summary>
+    /// <param name="email">email of the user</param>
+    /// <param name="password">password of the user</param>
+    /// <returns>The user if successful null otherwise</returns>
+    public User Login(string email, string password);
   }
 }

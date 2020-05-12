@@ -58,6 +58,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// </summary>
     public Command SearchCardsCommand { get; private set; }
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="navigationManager">NavigationManager (Injected)</param>
+    /// <param name="apiConnector">ApiConnetcor (Injected)</param>
     public HomeViewModel(NavigationManager navigationManager, IApiConnector apiConnector) : base(navigationManager)
     { 
       this.apiConnector = apiConnector;

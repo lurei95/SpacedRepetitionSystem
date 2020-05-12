@@ -19,6 +19,11 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using SpacedRepetitionSystem.Components.ViewModels.Statistics;
 using SpacedRepetitionSystem.Components.ViewModels;
+using Microsoft.AspNetCore.Components.Authorization;
+using SpacedRepetitionSystem.Components.ViewModels.Identity;
+using Blazored.LocalStorage;
+using SpacedRepetitionSystem.Logic.Controllers.Identity;
+using SpacedRepetitionSystem.Entities.Entities.Users;
 
 namespace SpacedRepetitionSystem
 {
@@ -40,11 +45,19 @@ namespace SpacedRepetitionSystem
         .AddBootstrapProviders()
         .AddFontAwesomeIcons();
 
+      // EF Core
       services.AddDbContext<SpacedRepetionSystemDBContext>(
         options => options.UseSqlServer(Configuration.GetConnectionString("Default")), 
         ServiceLifetime.Transient);
       services.AddTransient<DbContext, SpacedRepetionSystemDBContext>();
 
+      //Authentication
+      services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+
+      //Storage
+      services.AddBlazoredLocalStorage();
+
+      //ViewModels
       services.AddTransient<HomeViewModel>();
       services.AddTransient<CardEditViewModel>();
       services.AddTransient<CardTemplateEditViewModel>();
@@ -55,13 +68,18 @@ namespace SpacedRepetitionSystem
       services.AddTransient<PracticeDeckViewModel>();
       services.AddTransient<CardStatisticsViewModel>();
       services.AddTransient<DeckStatisticsViewModel>();
+      services.AddTransient<SignupViewModel>();
+      services.AddTransient<LoginViewModel>();
 
+      //Controllers
       services.AddTransient<EntityControllerBase<Entities.Entities.Cards.Card>, CardsController>();
       services.AddTransient<EntityControllerBase<Deck>, DecksController>();
       services.AddTransient<EntityControllerBase<PracticeHistoryEntry>, PracticeHistoryEntriesController>();
       services.AddTransient<EntityControllerBase<CardTemplate>, CardTemplatesController>();
+      services.AddTransient<EntityControllerBase<User>, UsersController>();
       services.AddTransient<IApiConnector, ApiConnector>();
 
+      //Validators
       services.AddScoped(typeof(CommitValidatorBase<>), typeof(CommitValidatorBase<>));
       services.AddScoped(typeof(DeleteValidatorBase<>), typeof(DeleteValidatorBase<>));
       services.AddValidator<CommitValidatorBase<Entities.Entities.Cards.Card>, CardCommitValidator>();
@@ -89,9 +107,12 @@ namespace SpacedRepetitionSystem
       app.UseStaticFiles();
 
       app.UseRouting();
+      app.UseAuthentication();
+      app.UseAuthentication();
 
       app.UseEndpoints(endpoints =>
       {
+        endpoints.MapControllers();
         endpoints.MapBlazorHub();
         endpoints.MapFallbackToPage("/_Host");
       });

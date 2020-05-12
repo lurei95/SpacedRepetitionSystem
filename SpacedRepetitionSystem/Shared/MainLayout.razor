@@ -1,90 +1,38 @@
 ﻿@inherits LayoutComponentBase
 @using SpacedRepetitionSystem.Components.Modals;
-@using SpacedRepetitionSystem.Components.Navigation;
 
-<ModalDialog/>
-
-<div class="main d-flex flex-column">
-  <div class="top-row bg-dark d-flex" style="padding-left: unset !important; border: 0px; z-index: 1;">
-    <div class="dropdown menu-button">
-      <button class="menu-button btn" style="background: #1d2024!important;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="-10,0">
-        <span class="oi oi-menu menu-button-icon text-white"></span>
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <div class="dropdown-header">Main</div>
-        <a class="dropdown-item" href="/">Home</a>
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-header">Decks</div>
-        <a class="dropdown-item" href="/Decks/New">Add Deck</a>
-        <a class="dropdown-item" href="/Decks">Search Decks</a>
-        <div class="dropdown-divider"></div>
-        <div class="dropdown-header">Cards</div>
-        <a class="dropdown-item" href="/Cards">Search Cards</a>
-        <a class="dropdown-item" href="/Templates/New">Add Template</a>
-        <a class="dropdown-item" href="/Templates">Search Templates</a>
-      </div>
-    </div>
-    <div class="px-3 bg-dark title" style="    height: 100%;
-    width: 250px;
-    padding: 1rem;
-    background: #1d2024 !important;">
-      <div class="media d-flex align-items-center">
-        <div class="media-body text-white" style="padding-left: 1rem">
-          <h5 class="m-0">Repetition System</h5>
+<AuthorizeView>
+  <Authorized>
+    <div class="main d-flex flex-column">
+      <TopBar IsLoggedIn="true"></TopBar>
+      <div class="row d-flex flex-row flex-grow-1" style="padding: unset !important; margin: unset !important;">
+        <div class="sidebar flex-colum d-flex" style="padding-left: unset !important; height: unset !important">
+          <NavMenu />
+        </div>
+        <div class="col content px-4 mb-4 flex-grow-1 d-flex flex-column main-layout">
+          @Body
         </div>
       </div>
     </div>
-    <div class="flex-fill pl-2" style="padding-top:15px;">
-      <BreadCrumb></BreadCrumb>
+  </Authorized>
+  <NotAuthorized>
+    <div class="main d-flex flex-column">
+      <TopBar IsLoggedIn="false"></TopBar>
+      <div class="row d-flex flex-row flex-grow-1" style="padding: unset !important; margin: unset !important;">
+      </div>
     </div>
-    <div class="pr-2">
-      <a class="text-white" href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-    </div>
-  </div>
-  <div class="row d-flex flex-row flex-grow-1" style="padding: unset !important; margin: unset !important;">
-    <div class="sidebar flex-colum d-flex" style="padding-left: unset !important; height: unset !important">
-      <NavMenu />
-    </div>
-    <div class="col content px-4 mb-4 flex-grow-1 d-flex flex-column main-layout">
-      @Body
-    </div>
-  </div>
-</div>
+  </NotAuthorized>
+</AuthorizeView>
+<ModalDialog/>
 
 <style>
-  .menu-button {
-    height: 100%;
-  }
-
   .main-layout {
     max-height: calc(100vh - 100px);
     max-width: calc(100vw - 250px);
   }
 
-  .top-row {
-    padding-right: 1.5rem !important
-  }
-
-  .menu-button-icon {
-    font-size: 1.25rem;
-    padding-top: 0.25em;
-    padding-left: 0.15em;
-    padding-right: 0.15em;
-  }
-
-  .dropdown-menu {
-    margin-top: 0px;
-    margin-left: -5px;
-  }
-
-  @@media (min-width: 1200px) {
-    .menu-button {
-      display: none !important;
-    }
-  }
-
   @@media (max-width: 1200px) {
-    .sidebar, .title {
+    .sidebar {
       display: none !important;
     }
 

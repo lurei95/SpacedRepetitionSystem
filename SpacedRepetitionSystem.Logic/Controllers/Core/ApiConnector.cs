@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Entities.Entities.Users;
+using SpacedRepetitionSystem.Logic.Controllers.Identity;
+using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.Utility.Notification;
 using System;
 using System.Collections.Generic;
@@ -30,14 +33,17 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     public ApiConnector(DbContext context, EntityControllerBase<Card> cardsController, 
       EntityControllerBase<Deck> decksController, 
       EntityControllerBase<CardTemplate> cardTemplatesController,
-      EntityControllerBase<PracticeHistoryEntry> practiceHistoryEntryController)
+      EntityControllerBase<PracticeHistoryEntry> practiceHistoryEntryController,
+      EntityControllerBase<User> userController)
     {
       Context = context;
-      cardsController.Context = decksController.Context = cardTemplatesController.Context = practiceHistoryEntryController.Context = context;
+      cardsController.Context = userController.Context = decksController.Context 
+        = cardTemplatesController.Context = practiceHistoryEntryController.Context = context;
       controllers.Add(typeof(Card), cardsController);
       controllers.Add(typeof(CardTemplate), cardTemplatesController);
       controllers.Add(typeof(Deck), decksController);
       controllers.Add(typeof(PracticeHistoryEntry), practiceHistoryEntryController);
+      controllers.Add(typeof(User), userController);
     }
 
     ///<inheritdoc/>
@@ -85,6 +91,13 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
       catch (NotifyException ex)
       { NotificationMessageProvider.ShowErrorMessage(ex.Message); }
       return false;
+    }
+
+    ///<inheritdoc/>
+    public User Login(string email, string password)
+    {
+      password = password.Encrypt();
+      return (controllers[typeof(User)] as UsersController).Login(email, password);
     }
   }
 }

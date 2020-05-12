@@ -25,6 +25,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <returns></returns>
     public virtual async Task InitializeAsync() { }
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="navigationManager">NavigationManager (Injected)</param>
     public PageViewModelBase(NavigationManager navigationManager)
     {
       NavigationManager = navigationManager;
