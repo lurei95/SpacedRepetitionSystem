@@ -51,9 +51,16 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     /// <summary>
     /// Tries to log in
     /// </summary>
-    /// <param name="email">email of the user</param>
+    /// <param name="userId">email of the user</param>
     /// <param name="password">password of the user</param>
     /// <returns>The user if successful null otherwise</returns>
-    public User Login(string email, string password);
+    public Task<User> Login(string userId, string password);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    public Task<User> GetUserByAccessTokenAsync(string token);
   }
 }

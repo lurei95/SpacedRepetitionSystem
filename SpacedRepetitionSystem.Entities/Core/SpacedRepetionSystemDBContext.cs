@@ -2,6 +2,8 @@
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Cards.Configurations;
 using SpacedRepetitionSystem.Entities.Entities.Users;
+using SpacedRepetitionSystem.Entities.Entities.Users.Configurations;
+using SpacedRepetitionSystem.Logic.Controllers.Identity;
 
 namespace SpacedRepetitionSystem.Entities.Core
 {
@@ -36,6 +38,11 @@ namespace SpacedRepetitionSystem.Entities.Core
     public DbSet<User> Users { get; set; }
 
     /// <summary>
+    /// User
+    /// </summary>
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="options">The options</param>
@@ -52,6 +59,7 @@ namespace SpacedRepetitionSystem.Entities.Core
       modelBuilder.ApplyConfiguration(new CardFieldDefinitionConfiguration());
       modelBuilder.ApplyConfiguration(new PracticeHistoryEntryConfiguration());
       modelBuilder.ApplyConfiguration(new UserConfiguration());
+      modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
     }
   }
 }

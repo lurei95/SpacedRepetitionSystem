@@ -14,8 +14,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
   {
     private readonly AuthenticationStateProvider authenticationStateProvider;
     private readonly IApiConnector apiConnector;
-
     private ClaimsPrincipal claimsPrincipal;
+
+    /// <summary>
+    /// Whether the ViewModel is currently logging in
+    /// </summary>
+    public bool IsLoggingIn { get; set; }
 
     /// <summary>
     /// The Login Message
@@ -51,14 +55,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
       claimsPrincipal = (await AuthenticationStateTask).User;
 
       if (claimsPrincipal.Identity.IsAuthenticated)
-      {
-        NavigationManager.NavigateTo("/index");
-      }
-      {
-        User.EmailAddress = "philip.cramer@gmail.com";
-        User.Password = "philip.cramer";
-      }
-
+        NavigationManager.NavigateTo("/");
     }
 
     /// <summary>
@@ -67,8 +64,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     /// <returns>Task with result</returns>
     public async Task<bool> TryLogIn()
     {
-
-      User returnedUser = apiConnector.Login(User.EmailAddress, User.Password);
+      IsLoggingIn = true;
+      User returnedUser = await apiConnector.Login(User.UserId, User.Password);
       if (returnedUser != null)
       {
         await (authenticationStateProvider as CustomAuthenticationStateProvider).MarkUserAsAuthenticated(returnedUser);
@@ -77,7 +74,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
       else
         LoginMesssage = "Invalid username or password";
 
-      return await Task.FromResult(true);
+      IsLoggingIn = false;
+      return true;
     }
   }
 }

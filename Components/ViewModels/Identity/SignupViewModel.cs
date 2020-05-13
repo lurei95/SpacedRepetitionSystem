@@ -15,6 +15,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     private readonly IApiConnector apiConnector;
 
     /// <summary>
+    /// Whether the ViewModel is currently logging in
+    /// </summary>
+    public bool IsSigningUp { get; set; }
+
+    /// <summary>
     /// The Login Message
     /// </summary>
     public string LoginMesssage { get; set; }
@@ -23,6 +28,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     /// The user
     /// </summary>
     public User User { get; set; }
+
+    /// <summary>
+    /// The Confirm password
+    /// </summary>
+    public string ConfirmPassword { get; set; }
 
     /// <summary>
     /// Constructor
@@ -44,6 +54,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     /// <returns>Task with result</returns>
     public async Task<bool> RegisterUser()
     {
+      IsSigningUp = true;
       if (apiConnector.Post(User))
       {
         await (authenticationStateProvider as CustomAuthenticationStateProvider).MarkUserAsAuthenticated(User);
@@ -51,7 +62,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
       }
       else
         LoginMesssage = "Invalid username or password";
-      return await Task.FromResult(true);
+      IsSigningUp = false;
+      return true;
     }
   }
 }

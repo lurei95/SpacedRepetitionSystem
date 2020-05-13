@@ -1,4 +1,7 @@
-﻿namespace SpacedRepetitionSystem.Entities.Entities.Users
+﻿using SpacedRepetitionSystem.Logic.Controllers.Identity;
+using System.Collections.Generic;
+
+namespace SpacedRepetitionSystem.Entities.Entities.Users
 {
   /// <summary>
   /// A user of the app
@@ -11,23 +14,21 @@
     /// <summary>
     /// Id of the user
     /// </summary>
-    public int UserId { get; set; }
-
-    /// <summary>
-    /// E-mail address
-    /// </summary>
-    public string EmailAddress { get; set; }
+    public string UserId { get; set; }
 
     /// <summary>
     /// Password
     /// </summary>
     public string Password { get; set; }
-
-    public string ConfirmPassword { get; set; }
     public string AccessToken { get; set; }
     public string RefreshToken { get; set; }
 
     ///<inheritdoc/>
     public string GetDisplayName() => null;
+
+    /// <summary>
+    /// Refresh tokens
+    /// </summary>
+    public List<RefreshToken> RefreshTokens { get; } = new List<RefreshToken>();
   }
 }

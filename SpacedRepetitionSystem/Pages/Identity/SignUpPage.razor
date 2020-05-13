@@ -1,44 +1,56 @@
 ﻿@using SpacedRepetitionSystem.Components.ViewModels.Identity;
 @using SpacedRepetitionSystem.Components.ViewModels;
-                                                    
+
 @page "/Signup"
 
 @inherits PageBase<SignupViewModel>
 
   <ViewModelArea ViewModel="ViewModel">
-    <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.RegisterUser">
-      <div>
-        <br /><br /><br /><br /><br />
-      </div>
-      <div>
-        <h3 style="font-weight:bold; color:purple">Book Stores Register</h3>
-      </div>
-      <div>
-        <br />
-      </div>
-      <div class="col-12 row">
-        <input class="form-control col-12" @bind="ViewModel.User.EmailAddress" placeholder="email address" />
-      </div>
-      <br />
-      <div class="col-12 row">
-        <input type="password" class="form-control col-12" @bind="ViewModel.User.Password" placeholder="password" />
-      </div>
-      <br />
-      <div class="col-12 row">
-        <input type="password" class="form-control col-12" @bind="ViewModel.User.ConfirmPassword" placeholder="confirm password" />
-      </div>
-      <br />
-      <div class="col-12 row">
-        <span class="col-12"></span>
-        <input type="submit" class="form-control col-6 btn btn-primary" value="Sign up" />
-        <a href="/" class="col-6">Already an user?</a>
-      </div>
-      <br />
-      <div class="col-12 row" style="text-align:left; font-weight:bold">
-        <span class="col-12">@ViewModel.LoginMesssage</span>
-      </div>
-    </EditForm>
+    <SpacedRepetitionSystem.Components.Interaction.WaitSpinner Visible="ViewModel.IsSigningUp">
+    <div class="d-flex flex-column flex-grow-1 justify-content-center align-items-center">
+      <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.RegisterUser">
+        <div class="login-container">
+          <div>
+            <h3 style="font-weight:bold; color:#343a40">Repetition System Register</h3>
+          </div>
+          <div>
+            <br />
+          </div>
+          <div class="col-12 row">
+            <input class="form-control col-12" @bind="ViewModel.User.UserId" placeholder="email address" />
+          </div>
+          <br />
+          <div class="col-12 row">
+            <input type="password" class="form-control col-12" @bind="ViewModel.User.Password" placeholder="password"/>
+          </div>
+          <br />
+          <div class="col-12 row">
+            <input type="password" class="form-control col-12" @bind="ViewModel.ConfirmPassword" placeholder="confirm password"/>
+          </div>
+          <br />
+          <div class="col-12 row" style="text-align:left; font-weight:bold">
+            <span class="col-12 wrong">@ViewModel.LoginMesssage</span>
+          </div>
+          <br />
+          <div class="col-12 row d-flex align-items-center">
+            <span class="col-12"></span>
+            <input type="submit" class="form-control col-6 btn btn-primary" value="Sign up" />
+            <a href="/Login" class="col-6">Already an user?</a>
+          </div>
+        </div>
+      </EditForm>
+    </div>
+    </SpacedRepetitionSystem.Components.Interaction.WaitSpinner>
   </ViewModelArea>
 
-@code 
+<style>
+  .login-container {
+    width: 600px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding: 2.5rem;
+  }
+</style>
+
+@code
 { }

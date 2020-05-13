@@ -4,38 +4,49 @@
 @using SpacedRepetitionSystem.Components.ViewModels;
 
 @inherits PageBase<LoginViewModel>
-@inject Blazored.LocalStorage.ILocalStorageService localStorageService
 
 <ViewModelArea ViewModel="ViewModel">
-  <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.TryLogIn">
-    <div>
-      <br /><br /><br /><br /><br />
+  <SpacedRepetitionSystem.Components.Interaction.WaitSpinner Visible="ViewModel.IsLoggingIn">
+    <div class="d-flex flex-column flex-grow-1 justify-content-center align-items-center">
+      <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.TryLogIn">
+        <div class="login-container">
+          <div>
+            <h3 style="font-weight:bold; color:#343a40">Repetition System</h3>
+          </div>
+          <div>
+            <br />
+          </div>
+          <div class="col-12 row">
+            <input class="form-control col-12" @bind="ViewModel.User.UserId" placeholder="email address" />
+          </div>
+          <br />
+          <div class="col-12 row">
+            <input type="password" class="form-control col-12" @bind="ViewModel.User.Password" placeholder="password" />
+          </div>
+          <br />
+          <div class="col-12 row" style="text-align:left; font-weight:bold">
+            <span class="col-12 wrong">@ViewModel.LoginMesssage</span>
+          </div>
+          <br />
+          <div class="col-12 row d-flex align-items-center">
+            <span class="col-12"></span>
+            <input type="submit" class="form-control col-6 btn btn-primary" value="Login" />
+            <a href="/Signup" class="col-3">Sign up</a>
+          </div>
+        </div>
+      </EditForm>
     </div>
-    <div>
-      <h3 style="font-weight:bold; color:purple">Book Stores Login</h3>
-    </div>
-    <div>
-      <br />
-    </div>
-    <div class="col-12 row">
-      <input class="form-control col-12" @bind="ViewModel.User.EmailAddress" placeholder="email address" />
-    </div>
-    <br />
-    <div class="col-12 row">
-      <input type="password" class="form-control col-12" @bind="ViewModel.User.Password" placeholder="password" />
-    </div>
-    <br />
-    <div class="col-12 row">
-      <span class="col-12"></span>
-      <input type="submit" class="form-control col-6 btn btn-primary" value="Login" />
-      <a href="/signup" class="col-3">Sign up</a>
-    </div>
-    <br />
-    <div class="col-12 row" style="text-align:left; font-weight:bold">
-      <span class="col-12">@ViewModel.LoginMesssage</span>
-    </div>
-  </EditForm>
+  </SpacedRepetitionSystem.Components.Interaction.WaitSpinner>
 </ViewModelArea>
+
+<style>
+  .login-container {
+    width: 600px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    padding: 2.5rem;
+  }
+</style>
 
 @code
 {
@@ -44,4 +55,7 @@
   /// </summary>
   [CascadingParameter]
   public Task<AuthenticationState> AuthenticationStateTask { set => ViewModel.AuthenticationStateTask = value; }
+
+  protected async override Task OnInitializedAsync()
+  { await ViewModel.InitializeAsync(); }
 }

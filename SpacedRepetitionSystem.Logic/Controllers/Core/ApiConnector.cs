@@ -94,10 +94,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     }
 
     ///<inheritdoc/>
-    public User Login(string email, string password)
-    {
-      password = password.Encrypt();
-      return (controllers[typeof(User)] as UsersController).Login(email, password);
-    }
+    public async Task<User> Login(string userId, string password)
+    { return await (controllers[typeof(User)] as UsersController).Login(userId, password); }
+
+    ///<inheritdoc/>
+    public async Task<User> GetUserByAccessTokenAsync(string token)
+    { return await (controllers[typeof(User)] as UsersController).GetUserByAccessToken(token); }
   }
 }

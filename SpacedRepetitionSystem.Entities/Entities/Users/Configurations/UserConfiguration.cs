@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SpacedRepetitionSystem.Entities.Entities.Users;
 
-namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
+namespace SpacedRepetitionSystem.Entities.Entities.Users.Configurations
 {
   /// <summary>
   /// Configuration für <see cref="User"/>
@@ -12,14 +12,10 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     ///<inheritdoc/>
     public void Configure(EntityTypeBuilder<User> builder)
     {
-      builder.ToTable("User", "User");
+      builder.ToTable("Users", "Users");
       builder.HasKey(user => user.UserId);
 
       builder.Property(user => user.UserId)
-        .IsRequired()
-        .ValueGeneratedOnAdd();
-
-      builder.Property(user => user.EmailAddress)
         .IsRequired()
         .HasMaxLength(256);
 
