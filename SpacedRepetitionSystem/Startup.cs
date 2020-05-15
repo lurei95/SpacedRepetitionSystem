@@ -84,6 +84,7 @@ namespace SpacedRepetitionSystem
       services.AddScoped(typeof(DeleteValidatorBase<>), typeof(DeleteValidatorBase<>));
       services.AddValidator<CommitValidatorBase<Entities.Entities.Cards.Card>, CardCommitValidator>();
       services.AddValidator<CommitValidatorBase<Deck>, DeckCommitValidator>();
+      services.AddValidator<CommitValidatorBase<User>, UserCommitValidator>();
       services.AddValidator<CommitValidatorBase<CardTemplate>, CardTemplateCommitValidator>();
       services.AddValidator<DeleteValidatorBase<CardTemplate>, CardTemplateDeleteValidator>();
       services.AddCardTemplatePropertyValidator();

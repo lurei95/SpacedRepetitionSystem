@@ -122,5 +122,14 @@ namespace SpacedRepetitionSystem.Entities {
                 return ResourceManager.GetString("PropertyRequired", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A user with the same email already exists..
+        /// </summary>
+        public static string UserAlreadyExists {
+            get {
+                return ResourceManager.GetString("UserAlreadyExists", resourceCulture);
+            }
+        }
     }
 }

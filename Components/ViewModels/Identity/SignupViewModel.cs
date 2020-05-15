@@ -47,7 +47,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
         NavigationManager.NavigateTo("/");
       }
       else
-        ErrorMessage = ErrorMessage;
+        ErrorMessage = Errors.UserAlreadyExists;
     }
 
     ///<inheritdoc/>

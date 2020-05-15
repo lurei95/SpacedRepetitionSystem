@@ -138,4 +138,7 @@
   <data name="PropertyRequired" xml:space="preserve">
     <value>{0} cannot be empty.</value>
   </data>
+  <data name="UserAlreadyExists" xml:space="preserve">
+    <value>A user with the same email already exists.</value>
+  </data>
 </root>
