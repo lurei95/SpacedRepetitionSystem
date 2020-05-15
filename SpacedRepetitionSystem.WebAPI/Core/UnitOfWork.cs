@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Logic.Controllers.Core
+namespace SpacedRepetitionSystem.WebAPI.Core
 {
   /// <summary>
   /// Class Representing a unit of work

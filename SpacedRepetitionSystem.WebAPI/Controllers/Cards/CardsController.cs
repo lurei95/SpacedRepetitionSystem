@@ -1,17 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
-using System;
+using SpacedRepetitionSystem.WebAPI.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Logic.Controllers.Cards
+namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
 {
   /// <summary>
   /// Controller for <see cref="Card"/>
   /// </summary>
+  [Route("[controller]")]
+  [ApiController]
   public sealed class CardsController : EntityControllerBase<Card>
   {
     /// <summary>
@@ -19,21 +21,29 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     /// </summary>
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
-    public CardsController(DeleteValidatorBase<Card> deleteValidator, CommitValidatorBase<Card> commitValidator) 
-      : base(deleteValidator, commitValidator) { }
+    /// <param name="context">DBContext (injected)</param>
+    public CardsController(DeleteValidatorBase<Card> deleteValidator, CommitValidatorBase<Card> commitValidator, DbContext context)
+      : base(deleteValidator, commitValidator, context) { }
+
 
     ///<inheritdoc/>
-    public override Card Get(object id)
+    [HttpGet("{id}")]
+    public async override Task<ActionResult<Card>> GetAsync(object id)
     {
-      return Context.Set<Card>()
+      Card card = await Context.Set<Card>()
         .Include(card => card.Fields)
         .Include(card => card.Deck)
         .Include(card => card.CardTemplate)
-        .FirstOrDefault(card => card.CardId == (long)id);
+        .FirstOrDefaultAsync(card => card.CardId == (long)id);
+      if (card == null)
+        return NotFound();
+
+      return card;
     }
 
     ///<inheritdoc/>
-    public override async Task<List<Card>> Get(IDictionary<string, object> searchParameters)
+    [HttpGet]
+    public override async Task<ActionResult<List<Card>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       IQueryable<Card> query = Context.Set<Card>()
         .Include(card => card.Fields)
