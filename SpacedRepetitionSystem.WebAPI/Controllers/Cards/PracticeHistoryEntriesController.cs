@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.WebAPI.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
   /// <summary>
   /// Controller for <see cref="PracticeHistoryEntry"/>
   /// </summary>
+  [Route("[controller]")]
+  [ApiController]
   public sealed class PracticeHistoryEntriesController : EntityControllerBase<PracticeHistoryEntry>
   {
     private static Dictionary<int, int> ProficiencyDueDaysLookup { get; } = new Dictionary<int, int>()
@@ -34,16 +37,21 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     /// </summary>
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
-    public PracticeHistoryEntriesController(DeleteValidatorBase<PracticeHistoryEntry> deleteValidator,
-      CommitValidatorBase<PracticeHistoryEntry> commitValidator)
-      : base(deleteValidator, commitValidator) { }
+    /// <param name="context">DBContext (injected)</param>
+    public PracticeHistoryEntriesController(DeleteValidatorBase<PracticeHistoryEntry> deleteValidator, CommitValidatorBase<PracticeHistoryEntry> commitValidator, DbContext context)
+      : base(deleteValidator, commitValidator, context) { }
 
     ///<inheritdoc/>
-    public override PracticeHistoryEntry Get(object id)
-    { return Context.Set<PracticeHistoryEntry>().Find(id); }
+    public override async Task<ActionResult<PracticeHistoryEntry>> GetAsync(object id)
+    { 
+      PracticeHistoryEntry entry = await Context.Set<PracticeHistoryEntry>().FindAsync(id);
+      if (entry == null)
+        return NotFound();
+      return entry;
+    }
 
     ///<inheritdoc/>
-    public override async Task<List<PracticeHistoryEntry>> Get(IDictionary<string, object> searchParameters)
+    public override async Task<ActionResult<List<PracticeHistoryEntry>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       IQueryable<PracticeHistoryEntry> results = Context.Set<PracticeHistoryEntry>();
 
@@ -71,29 +79,34 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     }
 
     ///<inheritdoc/>
-    protected override void PostCore(PracticeHistoryEntry entity)
+    protected override async Task<IActionResult> PostCoreAsync(PracticeHistoryEntry entity)
     {
-      PracticeHistoryEntry existingEntry = Context.Set<PracticeHistoryEntry>()
-        .Where(entry => entry.PracticeDate.Date == entity.PracticeDate.Date
-          && entry.DeckId == entity.DeckId && entry.CardId == entity.CardId
-          && entry.FieldName == entity.FieldName).FirstOrDefault();
+      if (entity == null)
+        return BadRequest();
+
+      PracticeHistoryEntry existingEntry = await Context.Set<PracticeHistoryEntry>()
+      .Where(entry => entry.PracticeDate.Date == entity.PracticeDate.Date
+        && entry.DeckId == entity.DeckId && entry.CardId == entity.CardId
+        && entry.FieldName == entity.FieldName).FirstOrDefaultAsync();
+
       if (existingEntry != null)
       {
         existingEntry.CorrectCount += entity.CorrectCount;
         existingEntry.HardCount += entity.HardCount;
         existingEntry.WrongCount += entity.WrongCount;
-        UpdatePracticeInformation(existingEntry);
+        await UpdatePracticeInformationAsync(existingEntry);
       }
       else
       {
-        UpdatePracticeInformation(entity);
+        await UpdatePracticeInformationAsync(entity);
         Context.Add(entity);
       }
+      return NoContent();
     }
 
-    private void UpdatePracticeInformation(PracticeHistoryEntry entry)
+    private async Task UpdatePracticeInformationAsync(PracticeHistoryEntry entry)
     {
-      CardField field = Context.Set<CardField>().Find(entry.CardId, entry.FieldName);
+      CardField field = await Context.Set<CardField>().FindAsync(entry.CardId, entry.FieldName);
       if (entry.WrongCount > 0)
         field.ProficiencyLevel = 1;
       else if (entry.HardCount > 0 && field.ProficiencyLevel != 1)
@@ -104,11 +117,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     }
 
     ///<inheritdoc/>
-    protected override void DeleteCore(PracticeHistoryEntry entity)
+    protected override async Task<IActionResult> DeleteCoreAsync(PracticeHistoryEntry entity)
     { throw new NotSupportedException(); }
 
     ///<inheritdoc/>
-    protected override void PutCore(PracticeHistoryEntry entity)
+    protected override async Task<IActionResult> PutCoreAsync(PracticeHistoryEntry entity)
     { throw new NotSupportedException(); }
   }
 }

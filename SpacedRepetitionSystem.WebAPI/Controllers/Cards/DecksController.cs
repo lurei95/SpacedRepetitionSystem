@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.WebAPI.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
   /// <summary>
   /// Controller for <see cref="Deck"/>
   /// </summary>
+  [Route("[controller]")]
+  [ApiController]
   public sealed class DecksController : EntityControllerBase<Deck>
   {
     /// <summary>
@@ -19,21 +22,24 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     /// </summary>
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
-    public DecksController(DeleteValidatorBase<Deck> deleteValidator,
-      CommitValidatorBase<Deck> commitValidator)
-      : base(deleteValidator, commitValidator) { }
+    /// <param name="context">DBContext (injected)</param>
+    public DecksController(DeleteValidatorBase<Deck> deleteValidator, CommitValidatorBase<Deck> commitValidator, DbContext context)
+      : base(deleteValidator, commitValidator, context) { }
 
     ///<inheritdoc/>
-    public override Deck Get(object id)
+    public override async Task<ActionResult<Deck>> GetAsync(object id)
     {
-      return Context.Set<Deck>()
+      Deck deck = await Context.Set<Deck>()
         .Include(deck => deck.Cards)
         .ThenInclude(card => card.Fields)
-        .FirstOrDefault(card => card.DeckId == (long)id);
+        .FirstOrDefaultAsync(card => card.DeckId == (long)id);
+      if (deck == null)
+        return NotFound();
+      return deck;
     }
 
     ///<inheritdoc/>
-    public override async Task<List<Deck>> Get(IDictionary<string, object> searchParameters)
+    public override async Task<ActionResult<List<Deck>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       List<Deck> result = new List<Deck>();
       IQueryable<Deck> query = Context.Set<Deck>();
