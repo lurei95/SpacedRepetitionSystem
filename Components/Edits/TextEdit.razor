@@ -13,11 +13,11 @@
     </div>
     @if (Property != null)
     {
-      <input autocomplete="off" id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Property.Value" @bind:event="oninput" @onkeydown="KeyDown" />
+      <input placeholder="@Placeholder" autocomplete="off" id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Property.Value" @bind:event="oninput" @onkeydown="KeyDown" />
     }
     else
     {
-      <input autocomplete="off" id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Value" @bind:event="oninput" @onkeydown="KeyDown" />
+      <input placeholder="@Placeholder" autocomplete="off" id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Value" @bind:event="oninput" @onkeydown="KeyDown" />
     }
     <div class="input-group-append">
       @ChildContent
@@ -56,6 +56,12 @@
       }
     }
   }
+
+  /// <summary>
+  /// The Placeholder text
+  /// </summary>
+  [Parameter]
+  public string Placeholder { get; set; }
 
   /// <summary>
   /// Text of the button

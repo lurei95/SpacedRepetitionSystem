@@ -129,6 +129,12 @@
   <data name="DeckTitleNotUnique" xml:space="preserve">
     <value>A deck with the title "{0}" already exists.</value>
   </data>
+  <data name="InvalidUserNameOrPassword" xml:space="preserve">
+    <value>Invalid username or password.</value>
+  </data>
+  <data name="PasswordDoesNotEqualConfirm" xml:space="preserve">
+    <value>The password does equal the confirmed password.</value>
+  </data>
   <data name="PropertyRequired" xml:space="preserve">
     <value>{0} cannot be empty.</value>
   </data>

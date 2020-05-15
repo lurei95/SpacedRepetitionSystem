@@ -88,6 +88,24 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email Address.
+        /// </summary>
+        public static string EMailAddress {
+            get {
+                return ResourceManager.GetString("EMailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string Title {

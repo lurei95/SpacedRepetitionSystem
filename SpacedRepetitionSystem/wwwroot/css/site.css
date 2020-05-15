@@ -1,5 +1,29 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.error-border {
+  border-color: #dc3545;
+}
+
+.error-border::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #dc3545;
+  opacity: 1; /* Firefox */
+}
+
+.error-border:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #dc3545;
+}
+
+.error-border::-ms-input-placeholder { /* Microsoft Edge */
+  color: #dc3545;
+}
+
+.login-container {
+  width: 600px;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  padding: 2.5rem;
+}
+
 .icon-button:hover {
   filter: brightness(80%);
 }

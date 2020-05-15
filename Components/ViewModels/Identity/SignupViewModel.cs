@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Users;
+using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System.Threading.Tasks;
 
@@ -9,60 +11,59 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
   /// <summary>
   /// ViewModel for a signup page
   /// </summary>
-  public sealed class SignupViewModel : PageViewModelBase
+  public sealed class SignupViewModel : IdentityViewModelBase
   {
-    private readonly AuthenticationStateProvider authenticationStateProvider;
-    private readonly IApiConnector apiConnector;
-
-    /// <summary>
-    /// Whether the ViewModel is currently logging in
-    /// </summary>
-    public bool IsSigningUp { get; set; }
-
-    /// <summary>
-    /// The Login Message
-    /// </summary>
-    public string LoginMesssage { get; set; }
-
-    /// <summary>
-    /// The user
-    /// </summary>
-    public User User { get; set; }
-
     /// <summary>
     /// The Confirm password
     /// </summary>
     public string ConfirmPassword { get; set; }
 
     /// <summary>
+    /// Whether confirm password is invalid
+    /// </summary>
+    public bool HasConfirmPasswordError { get; set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="authenticationStateProvider">AuthenticationStateProvider (Injected)</param>
+    /// <param name="apiConnector">API Connector (Injected)</param>
+    /// <param name="changeValidator">EntityChangeValdiator (Injected)</param>
 
     public SignupViewModel(NavigationManager navigationManager, AuthenticationStateProvider authenticationStateProvider, 
-      IApiConnector apiConnector) : base(navigationManager)
-    { 
-      User = new User();
-      this.authenticationStateProvider = authenticationStateProvider;
-      this.apiConnector = apiConnector;
-    }
+      IApiConnector apiConnector, EntityChangeValidator<User> changeValidator) 
+      : base(navigationManager, authenticationStateProvider, apiConnector, changeValidator)
+    { }
 
     /// <summary>
-    /// Tries to log in
+    /// Tries to sign up
     /// </summary>
-    /// <returns>Task with result</returns>
-    public async Task<bool> RegisterUser()
+    protected override async Task SubmitAsyncCore()
     {
-      IsSigningUp = true;
-      if (apiConnector.Post(User))
+      if (ApiConnector.Post(User))
       {
-        await (authenticationStateProvider as CustomAuthenticationStateProvider).MarkUserAsAuthenticated(User);
+        await AuthenticationStateProvider.MarkUserAsAuthenticated(User);
         NavigationManager.NavigateTo("/");
       }
       else
-        LoginMesssage = "Invalid username or password";
-      IsSigningUp = false;
+        ErrorMessage = ErrorMessage;
+    }
+
+    ///<inheritdoc/>
+    protected override bool ValidateUser()
+    {
+      HasConfirmPasswordError = false;
+      bool result = base.ValidateUser();
+      if (!result)
+        return false;
+
+      if (User.Password != ConfirmPassword)
+      {
+        ErrorMessage = Errors.PasswordDoesNotEqualConfirm;
+        HasPasswordError = HasConfirmPasswordError = true;
+        return false;
+      }
       return true;
     }
   }

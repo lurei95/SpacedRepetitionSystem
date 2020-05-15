@@ -97,6 +97,24 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid username or password..
+        /// </summary>
+        public static string InvalidUserNameOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidUserNameOrPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password does equal the confirmed password..
+        /// </summary>
+        public static string PasswordDoesNotEqualConfirm {
+            get {
+                return ResourceManager.GetString("PasswordDoesNotEqualConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} cannot be empty..
         /// </summary>
         public static string PropertyRequired {

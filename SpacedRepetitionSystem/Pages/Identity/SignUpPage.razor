@@ -6,9 +6,9 @@
 @inherits PageBase<SignupViewModel>
 
   <ViewModelArea ViewModel="ViewModel">
-    <SpacedRepetitionSystem.Components.Interaction.WaitSpinner Visible="ViewModel.IsSigningUp">
+    <SpacedRepetitionSystem.Components.Interaction.WaitSpinner Visible="ViewModel.IsBusy">
     <div class="d-flex flex-column flex-grow-1 justify-content-center align-items-center">
-      <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.RegisterUser">
+      <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.SubmitAsync">
         <div class="login-container">
           <div>
             <h3 style="font-weight:bold; color:#343a40">Repetition System Register</h3>
@@ -17,19 +17,19 @@
             <br />
           </div>
           <div class="col-12 row">
-            <input class="form-control col-12" @bind="ViewModel.User.UserId" placeholder="email address" />
+            <input class="form-control col-12 @(ViewModel.HasEmailError ? "error-border" : null)" @bind="ViewModel.User.UserId" placeholder="email address" />
           </div>
           <br />
           <div class="col-12 row">
-            <input type="password" class="form-control col-12" @bind="ViewModel.User.Password" placeholder="password"/>
+            <input type="password" class="form-control col-12 @(ViewModel.HasPasswordError ? "error-border" : null)" @bind="ViewModel.User.Password" placeholder="password"/>
           </div>
           <br />
           <div class="col-12 row">
-            <input type="password" class="form-control col-12" @bind="ViewModel.ConfirmPassword" placeholder="confirm password"/>
+            <input type="password" class="form-control col-12 @(ViewModel.HasConfirmPasswordError ? "error-border" : null)" @bind="ViewModel.ConfirmPassword" placeholder="confirm password"/>
           </div>
           <br />
           <div class="col-12 row" style="text-align:left; font-weight:bold">
-            <span class="col-12 wrong">@ViewModel.LoginMesssage</span>
+            <span class="col-12 wrong">@ViewModel.ErrorMessage</span>
           </div>
           <br />
           <div class="col-12 row d-flex align-items-center">
@@ -44,12 +44,6 @@
   </ViewModelArea>
 
 <style>
-  .login-container {
-    width: 600px;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    padding: 2.5rem;
-  }
 </style>
 
 @code

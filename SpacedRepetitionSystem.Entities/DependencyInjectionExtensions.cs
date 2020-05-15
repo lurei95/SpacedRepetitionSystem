@@ -4,6 +4,8 @@ using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Decks;
 using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
+using SpacedRepetitionSystem.Entities.Entities.Users;
+using SpacedRepetitionSystem.Entities.Validation.Users;
 
 namespace SpacedRepetitionSystem.Entities
 {
@@ -57,6 +59,18 @@ namespace SpacedRepetitionSystem.Entities
       EntityChangeValidator<CardTemplate> validator = new CardTemplateChangeValidator(fieldDefinitionChangeValidator);
       validator.Register(nameof(CardTemplate.Title), new CardTemplateTitleValidator());
       services.AddSingleton(typeof(EntityChangeValidator<CardTemplate>), validator);
+    }
+
+    /// <summary>
+    /// Adds the Property validator for <see cref="User"/>
+    /// </summary>
+    /// <param name="services">Service-collection</param>
+    public static void AddUserPropertyValidator(this IServiceCollection services)
+    {
+      EntityChangeValidator<User> validator = new EntityChangeValidator<User>();
+      validator.Register(nameof(User.UserId), new UserUserIdValidator());
+      validator.Register(nameof(User.Password), new UserPasswordValidator());
+      services.AddSingleton(typeof(EntityChangeValidator<User>), validator);
     }
   }
 }
