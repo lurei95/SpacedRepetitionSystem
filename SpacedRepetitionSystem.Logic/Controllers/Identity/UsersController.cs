@@ -42,14 +42,14 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
     /// <summary>
     /// Returns user or null if no user exists
     /// </summary>
-    /// <param name="userId">email of the user</param>
+    /// <param name="email">email of the user</param>
     /// <param name="password">password of the user</param>
     /// <returns>User or null</returns>
-    public async Task<User> Login(string userId, string password)
+    public async Task<User> Login(string email, string password)
     {
       password = password.Encrypt();
       User user = await Context.Set<User>()
-        .Where(user => user.UserId == userId && user.Password == password)
+        .Where(user => user.Email == email && user.Password == password)
         .FirstOrDefaultAsync();
 
       if(user != null)
@@ -57,7 +57,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
         RefreshToken refreshToken = GenerateRefreshToken();
         user.RefreshTokens.Add(refreshToken);
         await Context.SaveChangesAsync();
-        user.AccessToken = GenerateAccessToken(user.UserId);
+        user.AccessToken = GenerateAccessToken(user.Email);
         user.RefreshToken = refreshToken.Token;
       }     
       return user;
@@ -72,7 +72,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
         RefreshToken refreshToken = GenerateRefreshToken();
         entity.RefreshTokens.Add(refreshToken);
         entity.RefreshToken = refreshToken.Token;
-        entity.AccessToken = GenerateAccessToken(entity.UserId);
+        entity.AccessToken = GenerateAccessToken(entity.Email);
       }
     }
 
@@ -104,11 +104,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
     {
       RefreshToken refreshTokenUser = Context.Set<RefreshToken>()
         .Where(rt => rt.Token == refreshToken)
-        .OrderByDescending(rt => rt.ExpiryDate)
+        .OrderByDescending(rt => rt.ExpirationDate)
         .FirstOrDefault();
 
       if (refreshTokenUser != null && refreshTokenUser.UserId == user.UserId
-        && refreshTokenUser.ExpiryDate > DateTime.UtcNow)
+        && refreshTokenUser.ExpirationDate > DateTime.UtcNow)
         return true;
       return false;
     }
@@ -134,7 +134,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
         {
           string userId = principle.FindFirst(ClaimTypes.Name)?.Value;
           return await Context.Set<User>()
-            .Where(u => u.UserId == userId).FirstOrDefaultAsync();
+            .Where(u => u.Email == userId).FirstOrDefaultAsync();
         }
       }
       catch (Exception)
@@ -154,7 +154,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
         rng.GetBytes(randomNumber);
         refreshToken.Token = Convert.ToBase64String(randomNumber);
       }
-      refreshToken.ExpiryDate = DateTime.UtcNow.AddMonths(6);
+      refreshToken.ExpirationDate = DateTime.UtcNow.AddMonths(6);
 
       return refreshToken;
     }

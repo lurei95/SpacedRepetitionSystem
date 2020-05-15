@@ -5,18 +5,18 @@ using SpacedRepetitionSystem.Utility.Extensions;
 namespace SpacedRepetitionSystem.Entities.Validation.Users
 {
   /// <summary>
-  /// Validator for <see cref="User.Password"/>
+  /// Validator for <see cref="User.Email"/>
   /// </summary>
-  public sealed class UserPasswordValidator : PropertyValidatorBase<User, string>
+  public sealed class UserEmailValidator : PropertyValidatorBase<User, string>
   {
     ///<inheritdoc/>
-    public override string PropertyName => nameof(User.Password);
+    public override string PropertyName => nameof(User.Email);
 
     ///<inheritdoc/>
     public override string Validate(User entity, string newValue)
     {
       if (string.IsNullOrEmpty(newValue))
-        return Errors.PropertyRequired.FormatWith(PropertyNames.Password);
+        return Errors.PropertyRequired.FormatWith(PropertyNames.EMailAddress);
       return null;
     }
   }

@@ -51,10 +51,10 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     /// <summary>
     /// Tries to log in
     /// </summary>
-    /// <param name="userId">email of the user</param>
+    /// <param name="email">email of the user</param>
     /// <param name="password">password of the user</param>
     /// <returns>The user if successful null otherwise</returns>
-    public Task<User> Login(string userId, string password);
+    public Task<User> Login(string email, string password);
 
     /// <summary>
     /// 

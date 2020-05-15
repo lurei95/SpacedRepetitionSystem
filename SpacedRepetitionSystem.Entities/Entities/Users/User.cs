@@ -12,9 +12,14 @@ namespace SpacedRepetitionSystem.Entities.Entities.Users
     public object Id => UserId;
 
     /// <summary>
-    /// Id of the user
+    /// UserId
     /// </summary>
-    public string UserId { get; set; }
+    public long UserId { get; set; }
+
+    /// <summary>
+    /// Email of the user
+    /// </summary>
+    public string Email { get; set; }
 
     /// <summary>
     /// Password

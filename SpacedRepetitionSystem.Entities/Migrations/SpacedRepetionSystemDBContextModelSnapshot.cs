@@ -172,15 +172,18 @@ namespace SpacedRepetitionSystem.Entities.Migrations
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Users.User", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                    b.Property<long>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AccessToken")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ConfirmPassword")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -201,7 +204,7 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("ExpiryDate")
+                    b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Token")
@@ -210,10 +213,8 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                         .HasMaxLength(200)
                         .IsUnicode(false);
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("TokenId");
 

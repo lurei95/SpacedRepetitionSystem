@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SpacedRepetitionSystem.Entities.Entities.Users;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Users.Configurations
 {
@@ -16,6 +15,10 @@ namespace SpacedRepetitionSystem.Entities.Entities.Users.Configurations
       builder.HasKey(user => user.UserId);
 
       builder.Property(user => user.UserId)
+        .IsRequired()
+        .ValueGeneratedOnAdd();
+
+      builder.Property(user => user.Email)
         .IsRequired()
         .HasMaxLength(256);
 

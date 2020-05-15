@@ -52,9 +52,10 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                 schema: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(maxLength: 256, nullable: false),
+                    UserId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(maxLength: 256, nullable: false),
                     Password = table.Column<string>(nullable: false),
-                    ConfirmPassword = table.Column<string>(nullable: true),
                     AccessToken = table.Column<string>(nullable: true),
                     RefreshToken = table.Column<string>(nullable: true)
                 },
@@ -114,9 +115,9 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                 {
                     TokenId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(maxLength: 256, nullable: false),
+                    UserId = table.Column<long>(nullable: false),
                     Token = table.Column<string>(unicode: false, maxLength: 200, nullable: false),
-                    ExpiryDate = table.Column<DateTime>(nullable: false)
+                    ExpirationDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

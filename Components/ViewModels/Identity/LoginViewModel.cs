@@ -49,7 +49,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     protected override async Task SubmitAsyncCore()
     {
 ;
-      User returnedUser = await ApiConnector.Login(User.UserId, User.Password);
+      User returnedUser = await ApiConnector.Login(User.Email, User.Password);
       if (returnedUser != null)
       {
         await AuthenticationStateProvider.MarkUserAsAuthenticated(returnedUser);

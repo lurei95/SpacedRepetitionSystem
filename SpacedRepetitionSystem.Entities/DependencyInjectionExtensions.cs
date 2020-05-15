@@ -68,7 +68,7 @@ namespace SpacedRepetitionSystem.Entities
     public static void AddUserPropertyValidator(this IServiceCollection services)
     {
       EntityChangeValidator<User> validator = new EntityChangeValidator<User>();
-      validator.Register(nameof(User.UserId), new UserUserIdValidator());
+      validator.Register(nameof(User.Email), new UserEmailValidator());
       validator.Register(nameof(User.Password), new UserPasswordValidator());
       services.AddSingleton(typeof(EntityChangeValidator<User>), validator);
     }

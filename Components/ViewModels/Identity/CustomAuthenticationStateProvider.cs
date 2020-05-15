@@ -83,8 +83,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     private ClaimsIdentity GetClaimsIdentity(User user)
     {
       ClaimsIdentity claimsIdentity = new ClaimsIdentity();
-      if (user.UserId != null)
-        claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.UserId) }, "apiauth_type");
+      if (user?.Email != null)
+        claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Email) }, "apiauth_type");
       return claimsIdentity;
     }
   }

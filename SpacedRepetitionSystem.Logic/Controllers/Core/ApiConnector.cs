@@ -94,8 +94,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Core
     }
 
     ///<inheritdoc/>
-    public async Task<User> Login(string userId, string password)
-    { return await (controllers[typeof(User)] as UsersController).Login(userId, password); }
+    public async Task<User> Login(string email, string password)
+    { return await (controllers[typeof(User)] as UsersController).Login(email, password); }
 
     ///<inheritdoc/>
     public async Task<User> GetUserByAccessTokenAsync(string token)
