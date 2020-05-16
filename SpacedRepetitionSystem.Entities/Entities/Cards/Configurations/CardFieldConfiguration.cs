@@ -44,9 +44,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .HasForeignKey(field => field.CardTemplateId)
         .OnDelete(DeleteBehavior.Restrict);
 
-      builder.HasOne<User>()
+      builder.HasOne(field => field.User)
         .WithMany()
-        .HasForeignKey(card => card.UserId)
+        .HasForeignKey(field => field.UserId)
         .OnDelete(DeleteBehavior.NoAction);
     }
   }

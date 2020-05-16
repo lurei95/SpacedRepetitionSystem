@@ -28,9 +28,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.Property(definition => definition.CardTemplateId)
         .IsRequired();
 
-      builder.HasOne<User>()
+      builder.HasOne(definition => definition.User)
         .WithMany()
-        .HasForeignKey(card => card.UserId)
+        .HasForeignKey(definition => definition.UserId)
         .OnDelete(DeleteBehavior.NoAction);
     }
   }

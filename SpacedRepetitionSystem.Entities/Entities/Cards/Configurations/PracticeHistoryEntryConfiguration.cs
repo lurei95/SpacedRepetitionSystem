@@ -35,6 +35,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.Property(entry => entry.WrongCount)
         .IsRequired();
 
+      builder.HasOne(entry => entry.User)
+        .WithMany()
+        .HasForeignKey(entry => entry.UserId)
+        .OnDelete(DeleteBehavior.Cascade);
+
       builder.HasIndex(entry => entry.DeckId).IsUnique(false);
       builder.HasIndex(entry => entry.CardId).IsUnique(false);
     }

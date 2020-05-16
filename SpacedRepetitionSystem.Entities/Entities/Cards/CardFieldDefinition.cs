@@ -1,4 +1,6 @@
-﻿namespace SpacedRepetitionSystem.Entities.Entities.Cards
+﻿using SpacedRepetitionSystem.Entities.Entities.Security;
+
+namespace SpacedRepetitionSystem.Entities.Entities.Cards
 {
   /// <summary>
   /// Definition of a field of a card
@@ -24,6 +26,11 @@
     /// Id of the user
     /// </summary>
     public long UserId { get; set; }
+
+    /// <summary>
+    /// User
+    /// </summary>
+    public User User { get; set; }
 
     /// <summary>
     /// Id of the card template the field definition belongs to

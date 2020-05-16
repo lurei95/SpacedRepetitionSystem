@@ -1,4 +1,5 @@
-﻿using SpacedRepetitionSystem.Utility.Extensions;
+﻿using SpacedRepetitionSystem.Entities.Entities.Security;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -28,6 +29,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     /// Id of the user
     /// </summary>
     public long UserId { get; set; }
+
+    /// <summary>
+    /// User
+    /// </summary>
+    public User User { get; set; }
 
     /// <summary>
     /// Id of the template of the card

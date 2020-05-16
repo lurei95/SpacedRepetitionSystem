@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using SpacedRepetitionSystem.Entities.Entities.Security;
+using SpacedRepetitionSystem.Entities.Entities.Cards;
 
 namespace SpacedRepetitionSystem.Logic.Controllers.Security
 {
@@ -83,10 +84,13 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
       if (entity != null)
       {
         entity.Password = entity.Password.Encrypt();
+
         RefreshToken refreshToken = GenerateRefreshToken();
         entity.RefreshTokens.Add(refreshToken);
         entity.RefreshToken = refreshToken.Token;
         entity.AccessToken = GenerateAccessToken(entity.Email);
+
+        CreateInitialDataForNewUser(entity);
       }
       return result;
     }
@@ -191,6 +195,37 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
       };
       SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
       return tokenHandler.WriteToken(token);
+    }
+
+    private void CreateInitialDataForNewUser(User user)
+    {
+      CardTemplate template = new CardTemplate()
+      {
+        Title = "Default",
+        User = user
+      };
+      template.FieldDefinitions.Add(new CardFieldDefinition()
+      {
+        CardTemplate = template,
+        FieldName = "Front",
+        User = user
+      });
+      template.FieldDefinitions.Add(new CardFieldDefinition()
+      {
+        CardTemplate = template,
+        FieldName = "Back",
+        User = user
+      });
+      Context.Add(template);
+
+      Deck deck = new Deck()
+      {
+        Title = "Default",
+        DefaultCardTemplate = template,
+        IsPinned = true,
+        User = user
+      };
+      Context.Add(deck);
     }
   }
 }
