@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.WebAPI.Core;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SpacedRepetitionSystem.Logic.Controllers.Identity
 {
@@ -21,7 +23,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
   /// </summary>
   public sealed class UsersController : EntityControllerBase<User>
   {
-    private static readonly string secretKey = "thisisasecretkeyanddontsharewithanyone";
+    private readonly JWTSettings jwtSettings;
 
     /// <summary>
     /// Constructor
@@ -29,10 +31,12 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
     /// <param name="context">DBContext (injected)</param>
-    public UsersController(DeleteValidatorBase<User> deleteValidator, CommitValidatorBase<User> commitValidator, DbContext context)
-      : base(deleteValidator, commitValidator, context) { }
+    public UsersController(DeleteValidatorBase<User> deleteValidator, CommitValidatorBase<User> commitValidator, DbContext context, IOptions<JWTSettings> jwtSettings)
+      : base(deleteValidator, commitValidator, context) 
+    { this.jwtSettings = jwtSettings.Value;  }
 
     ///<inheritdoc/>
+    [Authorize]
     [HttpGet("{id}")]
     public override async Task<ActionResult<User>> GetAsync(object id)
     {
@@ -73,7 +77,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
     }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PostCoreAsync(User entity)
+    protected override async Task<IActionResult> PostCoreAsync([FromBody] User entity)
     {
       IActionResult result = await base.PostCoreAsync(entity);
       if (entity != null)
@@ -107,7 +111,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
     /// </summary>
     /// <param name="accessToken">The access token</param>
     /// <returns></returns>
-    public async Task<User> GetUserByAccessToken(string accessToken)
+    public async Task<User> GetUserByAccessToken([FromBody] string accessToken)
     {
       User user = await GetUserFromAccessToken(accessToken);
       if (user != null)
@@ -133,7 +137,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
       try
       {
         JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-        byte[] key = Encoding.ASCII.GetBytes(secretKey);
+        byte[] key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
 
         TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
         {
@@ -177,10 +181,10 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
     private string GenerateAccessToken(string userId)
     {
       JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-      byte[] key = Encoding.ASCII.GetBytes(secretKey);
+      byte[] key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);
       SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
       {
-        Subject = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, userId) }),
+        Subject = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, Convert.ToString(userId)) }),
         Expires = DateTime.UtcNow.AddDays(1),
         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
           SecurityAlgorithms.HmacSha256Signature)

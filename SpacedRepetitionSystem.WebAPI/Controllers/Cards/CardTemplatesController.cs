@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.WebAPI.Core;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
@@ -11,6 +13,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
   /// <summary>
   /// Controller for <see cref="CardTemplate"/>
   /// </summary>
+  [Authorize]
   [Route("[controller]")]
   [ApiController]
   public sealed class CardTemplatesController : EntityControllerBase<CardTemplate>
@@ -30,7 +33,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     {
       CardTemplate template = await Context.Set<CardTemplate>()
         .Include(definition => definition.FieldDefinitions)
-        .FirstOrDefaultAsync(card => card.CardTemplateId == (long)id);
+        .FirstOrDefaultAsync(template1 => template1.UserId == GetUserId() && template1.CardTemplateId == (long)id);
       if (template == null)
         return NotFound();
       return template;
@@ -41,7 +44,8 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     public override async Task<ActionResult<List<CardTemplate>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       return await Context.Set<CardTemplate>()
-        .Include(definition => definition.FieldDefinitions)
+        .Include(template => template.FieldDefinitions)
+        .Where(template => template.UserId == GetUserId())
         .ToListAsync();
     }
   }

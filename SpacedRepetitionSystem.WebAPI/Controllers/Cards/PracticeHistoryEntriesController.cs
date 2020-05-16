@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
@@ -13,6 +14,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
   /// <summary>
   /// Controller for <see cref="PracticeHistoryEntry"/>
   /// </summary>
+  [Authorize]
   [Route("[controller]")]
   [ApiController]
   public sealed class PracticeHistoryEntriesController : EntityControllerBase<PracticeHistoryEntry>
@@ -44,8 +46,9 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     ///<inheritdoc/>
     [HttpGet("{id}")]
     public override async Task<ActionResult<PracticeHistoryEntry>> GetAsync(object id)
-    { 
-      PracticeHistoryEntry entry = await Context.Set<PracticeHistoryEntry>().FindAsync(id);
+    {
+      PracticeHistoryEntry entry = await Context.Set<PracticeHistoryEntry>()
+        .FirstOrDefaultAsync(entry1 => entry1.UserId == GetUserId() && entry1.PracticeHistoryEntryId == (long)id);
       if (entry == null)
         return NotFound();
       return entry;
@@ -55,7 +58,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     [HttpGet]
     public override async Task<ActionResult<List<PracticeHistoryEntry>>> GetAsync(IDictionary<string, object> searchParameters)
     {
-      IQueryable<PracticeHistoryEntry> results = Context.Set<PracticeHistoryEntry>();
+      IQueryable<PracticeHistoryEntry> results = Context.Set<PracticeHistoryEntry>()
+        .Where(entry => entry.UserId == GetUserId());
 
       if (searchParameters.ContainsKey(ProblemWords))
       {

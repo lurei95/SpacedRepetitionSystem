@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SpacedRepetitionSystem.Entities.Entities.Users;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 {
@@ -12,7 +13,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     public void Configure(EntityTypeBuilder<Deck> builder)
     {
       builder.ToTable("Decks", "Cards");
-      builder.HasKey(deck => deck.DeckId);
+      builder.HasKey(deck => new { deck.UserId, deck.DeckId });
 
       builder.Ignore(deck => deck.CardCount);
       builder.Ignore(deck => deck.DueCardCount);
@@ -20,6 +21,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.Property(deck => deck.DeckId)
         .IsRequired()
         .ValueGeneratedOnAdd();
+
+      builder.Property(deck => deck.UserId)
+        .IsRequired();
 
       builder.Property(deck => deck.IsPinned)
         .IsRequired();
@@ -39,6 +43,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .WithMany()
         .HasForeignKey(deck => deck.DefaultCardTemplateId)
         .OnDelete(DeleteBehavior.Restrict);
+
+      builder.HasOne<User>()
+        .WithMany()
+        .HasForeignKey(card => card.UserId)
+        .OnDelete(DeleteBehavior.Cascade);
     }
   }
 }

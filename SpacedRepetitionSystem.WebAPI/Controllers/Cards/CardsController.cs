@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
@@ -12,6 +13,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
   /// <summary>
   /// Controller for <see cref="Card"/>
   /// </summary>
+  [Authorize]
   [Route("[controller]")]
   [ApiController]
   public sealed class CardsController : EntityControllerBase<Card>
@@ -34,7 +36,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         .Include(card => card.Fields)
         .Include(card => card.Deck)
         .Include(card => card.CardTemplate)
-        .FirstOrDefaultAsync(card => card.CardId == (long)id);
+        .FirstOrDefaultAsync(card => card.UserId == GetUserId() && card.CardId == (long)id);
       if (card == null)
         return NotFound();
 
@@ -48,7 +50,8 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
       IQueryable<Card> query = Context.Set<Card>()
         .Include(card => card.Fields)
         .Include(card => card.Deck)
-        .Include(card => card.CardTemplate);
+        .Include(card => card.CardTemplate)
+        .Where(card => card.UserId == GetUserId());
       if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.DeckId)))
         query = query.Where(card => card.DeckId == (long)searchParameters[nameof(Deck.DeckId)]);
       return await query.ToListAsync();

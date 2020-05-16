@@ -5,7 +5,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// <summary>
   /// Entry of a practice history
   /// </summary>
-  public sealed class PracticeHistoryEntry : IEntity
+  public sealed class PracticeHistoryEntry : IUserSpecificEntity
   {
     /// <summary>
     /// Id of the history entry
@@ -36,6 +36,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public int CorrectCount { get; set; }
 
     #region References
+
+    /// <summary>
+    /// Id of the user
+    /// </summary>
+    public long UserId { get; set; }
 
     /// <summary>
     /// Id of the card

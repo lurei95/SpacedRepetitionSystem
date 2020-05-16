@@ -140,8 +140,16 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     {
       if (entity == null)
         return await Task.FromResult(BadRequest());
+      if (entity is IUserSpecificEntity userSpecificEntity)
+        userSpecificEntity.UserId = GetUserId();
       Context.Add(entity);
       return await Task.FromResult(NoContent());
     }
+
+    /// <summary>
+    /// Returns the id of the user authenticated by the jwt
+    /// </summary>
+    /// <returns></returns>
+    protected long GetUserId() => long.Parse(User.Identity.Name);
   }
 }

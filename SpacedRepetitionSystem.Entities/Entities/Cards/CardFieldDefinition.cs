@@ -3,7 +3,7 @@
   /// <summary>
   /// Definition of a field of a card
   /// </summary>
-  public sealed class CardFieldDefinition : IEntity
+  public sealed class CardFieldDefinition : IUserSpecificEntity
   {
     ///<inheritdoc/>
     public object Id => new { CardTemplateId, FieldName };
@@ -19,6 +19,11 @@
     public bool ShowInputForPractice { get; set; } = false;
 
     #region References
+
+    /// <summary>
+    /// Id of the user
+    /// </summary>
+    public long UserId { get; set; }
 
     /// <summary>
     /// Id of the card template the field definition belongs to

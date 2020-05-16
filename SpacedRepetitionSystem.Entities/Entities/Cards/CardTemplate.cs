@@ -6,7 +6,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// <summary>
   /// Template for cards
   /// </summary>
-  public sealed class CardTemplate : IEntity
+  public sealed class CardTemplate : IUserSpecificEntity
   {
     ///<inheritdoc/>
     public object Id => CardTemplateId;
@@ -27,6 +27,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public string Title { get; set; }
 
     #region References
+
+    /// <summary>
+    /// Id of the user
+    /// </summary>
+    public long UserId { get; set; }
 
     /// <summary>
     /// The field definitions of the template

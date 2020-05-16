@@ -7,7 +7,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// <summary>
   /// A card
   /// </summary>
-  public sealed class Card : IEntity
+  public sealed class Card : IUserSpecificEntity
   {
     ///<inheritdoc/>
     public object Id => CardId;
@@ -23,6 +23,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public string Tags { get; set; } = string.Empty;
 
     #region References
+
+    /// <summary>
+    /// Id of the user
+    /// </summary>
+    public long UserId { get; set; }
 
     /// <summary>
     /// Id of the template of the card

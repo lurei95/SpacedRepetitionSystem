@@ -6,7 +6,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// <summary>
   /// A Set of cards for practicing purpose
   /// </summary>
-  public sealed class Deck : IEntity
+  public sealed class Deck : IUserSpecificEntity
   {
     ///<inheritdoc/>
     public object Id => DeckId;
@@ -27,6 +27,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public bool IsPinned { get; set; }
 
     #region References
+
+    /// <summary>
+    /// Id of the user
+    /// </summary>
+    public long UserId { get; set; }
 
     /// <summary>
     /// The cards in the deck

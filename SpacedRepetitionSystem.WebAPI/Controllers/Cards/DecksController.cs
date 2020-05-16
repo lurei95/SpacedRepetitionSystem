@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
@@ -13,6 +14,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
   /// <summary>
   /// Controller for <see cref="Deck"/>
   /// </summary>
+  [Authorize]
   [Route("[controller]")]
   [ApiController]
   public sealed class DecksController : EntityControllerBase<Deck>
@@ -33,7 +35,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
       Deck deck = await Context.Set<Deck>()
         .Include(deck => deck.Cards)
         .ThenInclude(card => card.Fields)
-        .FirstOrDefaultAsync(card => card.DeckId == (long)id);
+        .FirstOrDefaultAsync(deck1 => deck1.UserId == GetUserId() && deck1.DeckId == (long)id);
       if (deck == null)
         return NotFound();
       return deck;
@@ -44,7 +46,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     public override async Task<ActionResult<List<Deck>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       List<Deck> result = new List<Deck>();
-      IQueryable<Deck> query = Context.Set<Deck>();
+      IQueryable<Deck> query = Context.Set<Deck>()
+        .Where(deck => deck.UserId == GetUserId());
       if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.IsPinned)))
         query = query.Where(deck => deck.IsPinned == (bool)searchParameters[nameof(Deck.IsPinned)]);
 
