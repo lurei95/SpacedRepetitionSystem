@@ -16,13 +16,14 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security.Configurations
 
       builder.Property(user => user.UserId)
         .IsRequired();
-
       builder.Property(user => user.Email)
         .IsRequired()
         .HasMaxLength(256);
-
       builder.Property(user => user.Password)
         .IsRequired();
+
+      builder.Ignore(user => user.AccessToken);
+      builder.Ignore(user => user.RefreshToken);
     }
   }
 }

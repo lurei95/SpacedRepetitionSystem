@@ -153,7 +153,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
         {
           string userId = principle.FindFirst(ClaimTypes.Name)?.Value;
           return await Context.Set<User>()
-            .Where(u => u.Email == userId).FirstOrDefaultAsync();
+            .Where(user => user.UserId == Guid.Parse(userId))
+            .FirstOrDefaultAsync();
         }
       }
       catch (Exception)
