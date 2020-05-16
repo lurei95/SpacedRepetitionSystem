@@ -1,4 +1,6 @@
-﻿namespace SpacedRepetitionSystem.Entities.Entities
+﻿using System;
+
+namespace SpacedRepetitionSystem.Entities.Entities
 {
   /// <summary>
   /// Interafce for a user specific entity
@@ -8,6 +10,6 @@
     /// <summary>
     /// Id of the user
     /// </summary>
-    public long UserId { get; set; }
+    public Guid UserId { get; set; }
   }
 }

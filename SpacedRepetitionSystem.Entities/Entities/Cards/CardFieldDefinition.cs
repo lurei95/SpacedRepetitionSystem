@@ -1,4 +1,5 @@
 ﻿using SpacedRepetitionSystem.Entities.Entities.Security;
+using System;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Cards
 {
@@ -25,7 +26,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     /// <summary>
     /// Id of the user
     /// </summary>
-    public long UserId { get; set; }
+    public Guid UserId { get; set; }
 
     /// <summary>
     /// User

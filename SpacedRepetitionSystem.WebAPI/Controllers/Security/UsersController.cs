@@ -71,7 +71,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
         RefreshToken refreshToken = GenerateRefreshToken();
         user.RefreshTokens.Add(refreshToken);
         await Context.SaveChangesAsync();
-        user.AccessToken = GenerateAccessToken(user.Email);
+        user.AccessToken = GenerateAccessToken(user.UserId);
         user.RefreshToken = refreshToken.Token;
       }     
       return user;
@@ -88,27 +88,23 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
         RefreshToken refreshToken = GenerateRefreshToken();
         entity.RefreshTokens.Add(refreshToken);
         entity.RefreshToken = refreshToken.Token;
-        entity.AccessToken = GenerateAccessToken(entity.Email);
-
         CreateInitialDataForNewUser(entity);
+        entity.UserId = Guid.NewGuid();
+        entity.AccessToken = GenerateAccessToken(entity.UserId);
       }
       return result;
     }
 
-    //public async Task<User> RefreshToken([FromBody] RefreshRequest refreshRequest)
-    //{
-    //  User user = await GetUserFromAccessToken(refreshRequest.AccessToken);
-
-    //  if (user != null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
-    //  {
-    //    UserWithToken userWithToken = new UserWithToken(user);
-    //    userWithToken.AccessToken = GenerateAccessToken(user.UserId);
-
-    //    return userWithToken;
-    //  }
-
-    //  return null;
-    //}
+    public async Task<User> RefreshToken([FromBody] RefreshRequest refreshRequest)
+    {
+      User user = await GetUserFromAccessToken(refreshRequest.AccessToken);
+      if (user != null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+      {
+          user.AccessToken = GenerateAccessToken(user.UserId);
+          return user;
+      }
+      return null;
+    }
 
     /// <summary>
     /// Gets a user by its accesss token
@@ -182,7 +178,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
       return refreshToken;
     }
 
-    private string GenerateAccessToken(string userId)
+    private string GenerateAccessToken(Guid userId)
     {
       JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
       byte[] key = Encoding.ASCII.GetBytes(jwtSettings.SecretKey);

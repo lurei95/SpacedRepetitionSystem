@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Security
 {
@@ -13,7 +14,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security
     /// <summary>
     /// UserId
     /// </summary>
-    public long UserId { get; set; }
+    public Guid UserId { get; set; }
 
     /// <summary>
     /// Email of the user

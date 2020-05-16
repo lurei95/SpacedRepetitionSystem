@@ -15,8 +15,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security.Configurations
       builder.HasKey(user => user.UserId);
 
       builder.Property(user => user.UserId)
-        .IsRequired()
-        .ValueGeneratedOnAdd();
+        .IsRequired();
 
       builder.Property(user => user.Email)
         .IsRequired()

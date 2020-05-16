@@ -25,7 +25,8 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security.Configurations
 
       builder.HasOne(token => token.User)
           .WithMany(user => user.RefreshTokens)
-          .HasForeignKey(token => token.UserId);
+          .HasForeignKey(token => token.UserId)
+          .OnDelete(DeleteBehavior.Cascade);
     }
   }
 }

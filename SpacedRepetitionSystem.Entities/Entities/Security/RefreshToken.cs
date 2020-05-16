@@ -5,17 +5,20 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security
   /// <summary>
   /// Refresh token for a user
   /// </summary>
-  public sealed class RefreshToken
+  public sealed class RefreshToken : IUserSpecificEntity
   {
+    ///<inheritdoc/>
+    public object Id => TokenId;
+
     /// <summary>
     /// Id of the token
     /// </summary>
-    public int TokenId { get; set; }
+    public long TokenId { get; set; }
 
     /// <summary>
     /// The id of the user
     /// </summary>
-    public long UserId { get; set; }
+    public Guid UserId { get; set; }
 
     /// <summary>
     /// The token
@@ -31,5 +34,8 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security
     /// The user
     /// </summary>
     public User User { get; set; }
+
+    ///<inheritdoc/>
+    public string GetDisplayName() => null;
   }
 }

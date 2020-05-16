@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Notification;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -150,6 +151,6 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// Returns the id of the user authenticated by the jwt
     /// </summary>
     /// <returns></returns>
-    protected long GetUserId() => long.Parse(User.Identity.Name);
+    protected Guid GetUserId() => Guid.Parse(User.Identity.Name);
   }
 }
