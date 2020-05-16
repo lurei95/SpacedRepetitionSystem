@@ -42,6 +42,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
       : base(deleteValidator, commitValidator, context) { }
 
     ///<inheritdoc/>
+    [HttpGet("{id}")]
     public override async Task<ActionResult<PracticeHistoryEntry>> GetAsync(object id)
     { 
       PracticeHistoryEntry entry = await Context.Set<PracticeHistoryEntry>().FindAsync(id);
@@ -51,6 +52,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     }
 
     ///<inheritdoc/>
+    [HttpGet]
     public override async Task<ActionResult<List<PracticeHistoryEntry>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       IQueryable<PracticeHistoryEntry> results = Context.Set<PracticeHistoryEntry>();
@@ -117,11 +119,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> DeleteCoreAsync(PracticeHistoryEntry entity)
+    protected override Task<IActionResult> DeleteCoreAsync(PracticeHistoryEntry entity)
     { throw new NotSupportedException(); }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PutCoreAsync(PracticeHistoryEntry entity)
+    protected override Task<IActionResult> PutCoreAsync(PracticeHistoryEntry entity)
     { throw new NotSupportedException(); }
   }
 }

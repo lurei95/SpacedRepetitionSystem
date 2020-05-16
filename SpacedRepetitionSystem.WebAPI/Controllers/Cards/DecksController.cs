@@ -27,6 +27,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
       : base(deleteValidator, commitValidator, context) { }
 
     ///<inheritdoc/>
+    [HttpGet("{id}")]
     public override async Task<ActionResult<Deck>> GetAsync(object id)
     {
       Deck deck = await Context.Set<Deck>()
@@ -39,6 +40,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     }
 
     ///<inheritdoc/>
+    [HttpGet]
     public override async Task<ActionResult<List<Deck>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       List<Deck> result = new List<Deck>();

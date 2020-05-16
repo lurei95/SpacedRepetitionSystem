@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using SpacedRepetitionSystem.Entities.Core;
 
 namespace SpacedRepetitionSystem.WebAPI
@@ -32,6 +33,9 @@ namespace SpacedRepetitionSystem.WebAPI
         options => options.UseSqlServer(Configuration.GetConnectionString("Default")),
         ServiceLifetime.Transient);
       services.AddTransient<DbContext, SpacedRepetionSystemDBContext>();
+      services.AddMvc(option =>option.EnableEndpointRouting = false)
+        .SetCompatibilityVersion(CompatibilityVersion.Latest)
+        .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

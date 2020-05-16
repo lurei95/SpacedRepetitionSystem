@@ -112,9 +112,9 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     protected virtual async Task<IActionResult> PutCoreAsync(TEntity entity) 
     {
       if (entity == null)
-        return BadRequest();
+        return await Task.FromResult(BadRequest());
       Context.Entry(entity).State = EntityState.Modified;
-      return NoContent();
+      return await Task.FromResult(NoContent());
     }
 
     /// <summary>
@@ -139,9 +139,9 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     protected virtual async Task<IActionResult> PostCoreAsync(TEntity entity)
     {
       if (entity == null)
-        return BadRequest();
+        return await Task.FromResult(BadRequest());
       Context.Add(entity);
-      return NoContent();
+      return await Task.FromResult(NoContent());
     }
   }
 }

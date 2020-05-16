@@ -1,6 +1,5 @@
 ﻿using SpacedRepetitionSystem.Entities.Entities.Users;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.WebAPI.Core;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SpacedRepetitionSystem.Logic.Controllers.Identity
 {
@@ -27,24 +28,32 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
     /// </summary>
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
-    public UsersController(DeleteValidatorBase<User> deleteValidator,
-      CommitValidatorBase<User> commitValidator)
-      : base(deleteValidator, commitValidator) 
-    { }
+    /// <param name="context">DBContext (injected)</param>
+    public UsersController(DeleteValidatorBase<User> deleteValidator, CommitValidatorBase<User> commitValidator, DbContext context)
+      : base(deleteValidator, commitValidator, context) { }
 
     ///<inheritdoc/>
-    public override User Get(object id) => Context.Set<User>().Find(id);
+    [HttpGet("{id}")]
+    public override async Task<ActionResult<User>> GetAsync(object id)
+    {
+      User user = await Context.Set<User>().FindAsync(id);
+      if (user == null)
+        return NotFound();
+      return user;
+    }
 
     ///<inheritdoc/>
-    public override Task<List<User>> Get(IDictionary<string, object> searchParameters)
+    [HttpGet]
+    public override Task<ActionResult<List<User>>> GetAsync(IDictionary<string, object> searchParameters)
     { throw new NotSupportedException(); }
-   
+
     /// <summary>
     /// Returns user or null if no user exists
     /// </summary>
     /// <param name="email">email of the user</param>
     /// <param name="password">password of the user</param>
     /// <returns>User or null</returns>
+    [HttpPost("/Login")]
     public async Task<User> Login(string email, string password)
     {
       password = password.Encrypt();
@@ -63,9 +72,10 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
       return user;
     }
 
-    protected override void PostCore(User entity)
+    ///<inheritdoc/>
+    protected override async Task<IActionResult> PostCoreAsync(User entity)
     {
-      base.PostCore(entity);
+      IActionResult result = await base.PostCoreAsync(entity);
       if (entity != null)
       {
         entity.Password = entity.Password.Encrypt();
@@ -74,6 +84,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
         entity.RefreshToken = refreshToken.Token;
         entity.AccessToken = GenerateAccessToken(entity.Email);
       }
+      return result;
     }
 
     //public async Task<User> RefreshToken([FromBody] RefreshRequest refreshRequest)
@@ -91,7 +102,11 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Identity
     //  return null;
     //}
 
-
+    /// <summary>
+    /// Gets a user by its accesss token
+    /// </summary>
+    /// <param name="accessToken">The access token</param>
+    /// <returns></returns>
     public async Task<User> GetUserByAccessToken(string accessToken)
     {
       User user = await GetUserFromAccessToken(accessToken);

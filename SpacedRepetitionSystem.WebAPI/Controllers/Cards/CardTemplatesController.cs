@@ -25,6 +25,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
       : base(deleteValidator, commitValidator, context) { }
 
     ///<inheritdoc/>
+    [HttpGet("{id}")]
     public override async Task<ActionResult<CardTemplate>> GetAsync(object id)
     {
       CardTemplate template = await Context.Set<CardTemplate>()
@@ -36,6 +37,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     }
 
     ///<inheritdoc/>
+    [HttpGet]
     public override async Task<ActionResult<List<CardTemplate>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       return await Context.Set<CardTemplate>()
