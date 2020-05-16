@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SpacedRepetitionSystem.Logic.Controllers.Identity;
 
-namespace SpacedRepetitionSystem.Entities.Entities.Users.Configurations
+namespace SpacedRepetitionSystem.Entities.Entities.Security.Configurations
 {
   /// <summary>
   /// Configuration für <see cref="RefreshToken"/>
@@ -12,7 +11,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Users.Configurations
     ///<inheritdoc/>
     public void Configure(EntityTypeBuilder<RefreshToken> builder)
     {
-      builder.ToTable("RefreshTokens", "Users");
+      builder.ToTable("RefreshTokens", "Security");
       builder.HasKey(token => token.TokenId);
 
       builder.Property(token => token.TokenId).IsRequired();

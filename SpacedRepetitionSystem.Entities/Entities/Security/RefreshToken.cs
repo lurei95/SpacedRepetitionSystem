@@ -1,7 +1,6 @@
-﻿using SpacedRepetitionSystem.Entities.Entities.Users;
-using System;
+﻿using System;
 
-namespace SpacedRepetitionSystem.Logic.Controllers.Identity
+namespace SpacedRepetitionSystem.Entities.Entities.Security
 {
   /// <summary>
   /// Refresh token for a user

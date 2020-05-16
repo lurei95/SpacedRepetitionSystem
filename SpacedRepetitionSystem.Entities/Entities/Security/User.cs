@@ -1,7 +1,6 @@
-﻿using SpacedRepetitionSystem.Logic.Controllers.Identity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SpacedRepetitionSystem.Entities.Entities.Users
+namespace SpacedRepetitionSystem.Entities.Entities.Security
 {
   /// <summary>
   /// A user of the app
@@ -25,7 +24,15 @@ namespace SpacedRepetitionSystem.Entities.Entities.Users
     /// Password
     /// </summary>
     public string Password { get; set; }
+
+    /// <summary>
+    /// The access token
+    /// </summary>
     public string AccessToken { get; set; }
+
+    /// <summary>
+    /// The refresh token
+    /// </summary>
     public string RefreshToken { get; set; }
 
     ///<inheritdoc/>

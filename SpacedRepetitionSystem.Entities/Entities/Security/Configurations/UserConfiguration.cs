@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace SpacedRepetitionSystem.Entities.Entities.Users.Configurations
+namespace SpacedRepetitionSystem.Entities.Entities.Security.Configurations
 {
   /// <summary>
   /// Configuration für <see cref="User"/>
@@ -11,7 +11,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Users.Configurations
     ///<inheritdoc/>
     public void Configure(EntityTypeBuilder<User> builder)
     {
-      builder.ToTable("Users", "Users");
+      builder.ToTable("Users", "Security");
       builder.HasKey(user => user.UserId);
 
       builder.Property(user => user.UserId)

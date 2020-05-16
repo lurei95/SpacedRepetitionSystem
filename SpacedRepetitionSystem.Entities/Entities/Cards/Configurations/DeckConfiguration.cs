@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SpacedRepetitionSystem.Entities.Entities.Users;
+using SpacedRepetitionSystem.Entities.Entities.Security;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 {

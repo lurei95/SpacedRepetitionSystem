@@ -1,5 +1,4 @@
-﻿using SpacedRepetitionSystem.Entities.Entities.Users;
-using SpacedRepetitionSystem.Entities.Validation.Core;
+﻿using SpacedRepetitionSystem.Entities.Validation.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +14,9 @@ using SpacedRepetitionSystem.WebAPI.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
+using SpacedRepetitionSystem.Entities.Entities.Security;
 
-namespace SpacedRepetitionSystem.Logic.Controllers.Identity
+namespace SpacedRepetitionSystem.Logic.Controllers.Security
 {
   /// <summary>
   /// Controller for <see cref="User"/>
