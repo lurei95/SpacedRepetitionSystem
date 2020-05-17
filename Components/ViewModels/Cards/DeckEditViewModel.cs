@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.Utility.Notification;
@@ -37,7 +36,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           if (CardTemplateId.HasValue)
           {
             Entity.DefaultCardTemplateId = value.Value;
-            Entity.DefaultCardTemplate = ApiConnector.Get<CardTemplate>(value);
+            ChangeDefaultCardTemplate();
           }
           else
           {
@@ -116,7 +115,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       DeleteCardCommand = new Command()
       {
         CommandText = Messages.Delete,
-        ExecuteAction = (param) => DeleteCard(param as Card)
+        ExecuteAction = async (param) => await DeleteCard(param as Card)
       };
 
       NewCardCommand = new Command()
@@ -152,19 +151,19 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
       await base.InitializeAsync();
 
-      foreach (CardTemplate cardTemplate in await ApiConnector.Get<CardTemplate>(null))
+      foreach (CardTemplate cardTemplate in await ApiConnector.GetAsync<CardTemplate>(null))
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate.CardTemplateId);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
     }
 
     ///<inheritdoc/>
-    protected override void DeleteEntity()
+    protected override async Task DeleteEntity()
     {
       ModalDialogManager.ShowDialog(Messages.DeleteDeckDialogTitle, 
-        Messages.DeleteDeckDialogText.FormatWith(Entity.Title), DialogButtons.YesNo, (result) =>
+        Messages.DeleteDeckDialogText.FormatWith(Entity.Title), DialogButtons.YesNo, async (result) =>
       {
         if (result == DialogResult.Yes)
-          base.DeleteEntity();
+          await base.DeleteEntity();
       });
     }
 
@@ -175,11 +174,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       CardTemplateId = CardTemplate.DefaultCardTemplateId;
     }
 
-    private void DeleteCard(Card card)
+    private async Task DeleteCard(Card card)
     {
-      if (ApiConnector.Delete(card))
+      if (await ApiConnector.DeleteAsync(card))
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(card.GetDisplayName()));
     }
+
+    private async void ChangeDefaultCardTemplate()
+    { Entity.DefaultCardTemplate = await ApiConnector.GetAsync<CardTemplate>(CardTemplateId); }
 
     private void EditCard(Card card)
     { NavigationManager.NavigateTo(NavigationManager.Uri + "/Cards/" + card.Id); }

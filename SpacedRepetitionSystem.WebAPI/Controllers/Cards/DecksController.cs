@@ -35,6 +35,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
       Deck deck = await Context.Set<Deck>()
         .Include(deck => deck.Cards)
         .ThenInclude(card => card.Fields)
+        .ThenInclude(field => field.CardFieldDefinition)
         .FirstOrDefaultAsync(deck1 => deck1.UserId == GetUserId() && deck1.DeckId == (long)id);
       if (deck == null)
         return NotFound();

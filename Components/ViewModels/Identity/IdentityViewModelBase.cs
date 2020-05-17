@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using SpacedRepetitionSystem.Entities.Entities.Users;
+using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels.Identity

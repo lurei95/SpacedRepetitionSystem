@@ -36,12 +36,12 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 
       builder.HasOne(field => field.CardFieldDefinition)
         .WithMany()
-        .HasForeignKey(field => new { field.CardTemplateId, field.FieldName })
+        .HasForeignKey(field => new { field.UserId, field.CardTemplateId, field.FieldName })
         .OnDelete(DeleteBehavior.Restrict);
 
       builder.HasOne(field => field.CardTemplate)
         .WithMany()
-        .HasForeignKey(field => field.CardTemplateId)
+        .HasForeignKey(field => new { field.UserId, field.CardTemplateId })
         .OnDelete(DeleteBehavior.Restrict);
 
       builder.HasOne(field => field.User)

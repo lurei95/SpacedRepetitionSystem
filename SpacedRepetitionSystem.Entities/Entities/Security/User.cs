@@ -6,10 +6,13 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security
   /// <summary>
   /// A user of the app
   /// </summary>
-  public sealed class User : IEntity
+  public sealed class User : IRootEntity
   {
     ///<inheritdoc/>
     public object Id => UserId;
+
+    ///<inheritdoc/>
+    public string Route => "Users";
 
     /// <summary>
     /// UserId

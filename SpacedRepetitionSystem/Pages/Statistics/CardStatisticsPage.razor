@@ -107,7 +107,7 @@
   /// Id of the card
   /// </summary>
   [Parameter]
-  public long CardId { set => ViewModel.LoadEntity(value); }
+  public long CardId { set => ViewModel.LoadEntityAsync(value); }
 
   /// <summary>
   /// Id of the deck

@@ -10,7 +10,7 @@ using SpacedRepetitionSystem.Entities.Core;
 namespace SpacedRepetitionSystem.Entities.Migrations
 {
     [DbContext(typeof(SpacedRepetionSystemDBContext))]
-    [Migration("20200515171509_InitialCreate")]
+    [Migration("20200517102102_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,9 @@ namespace SpacedRepetitionSystem.Entities.Migrations
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.Card", b =>
                 {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long>("CardId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
@@ -39,17 +42,20 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.HasKey("CardId");
+                    b.HasKey("UserId", "CardId");
 
-                    b.HasIndex("CardTemplateId");
+                    b.HasIndex("UserId", "CardTemplateId");
 
-                    b.HasIndex("DeckId");
+                    b.HasIndex("UserId", "DeckId");
 
                     b.ToTable("Cards","Cards");
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.CardField", b =>
                 {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long>("CardId")
                         .HasColumnType("bigint");
 
@@ -68,15 +74,18 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CardId", "FieldName");
+                    b.HasKey("UserId", "CardId", "FieldName");
 
-                    b.HasIndex("CardTemplateId", "FieldName");
+                    b.HasIndex("UserId", "CardTemplateId", "FieldName");
 
                     b.ToTable("CardFields","Cards");
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition", b =>
                 {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long>("CardTemplateId")
                         .HasColumnType("bigint");
 
@@ -87,13 +96,16 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                     b.Property<bool>("ShowInputForPractice")
                         .HasColumnType("bit");
 
-                    b.HasKey("CardTemplateId", "FieldName");
+                    b.HasKey("UserId", "CardTemplateId", "FieldName");
 
                     b.ToTable("CardFieldDefinitions","Cards");
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", b =>
                 {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long>("CardTemplateId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
@@ -104,13 +116,16 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("CardTemplateId");
+                    b.HasKey("UserId", "CardTemplateId");
 
                     b.ToTable("CardTemplates","Cards");
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.Deck", b =>
                 {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long>("DeckId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
@@ -127,15 +142,18 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.HasKey("DeckId");
+                    b.HasKey("UserId", "DeckId");
 
-                    b.HasIndex("DefaultCardTemplateId");
+                    b.HasIndex("UserId", "DefaultCardTemplateId");
 
                     b.ToTable("Decks","Cards");
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry", b =>
                 {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<long>("PracticeHistoryEntryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
@@ -163,7 +181,7 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                     b.Property<int>("WrongCount")
                         .HasColumnType("int");
 
-                    b.HasKey("PracticeHistoryEntryId");
+                    b.HasKey("UserId", "PracticeHistoryEntryId");
 
                     b.HasIndex("CardId");
 
@@ -172,38 +190,11 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                     b.ToTable("PracticeHistoryEntries","Cards");
                 });
 
-            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Users.User", b =>
+            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken", b =>
                 {
-                    b.Property<long>("UserId")
+                    b.Property<long>("TokenId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccessToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users","Users");
-                });
-
-            modelBuilder.Entity("SpacedRepetitionSystem.Logic.Controllers.Identity.RefreshToken", b =>
-                {
-                    b.Property<int>("TokenId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("ExpirationDate")
@@ -215,73 +206,135 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                         .HasMaxLength(200)
                         .IsUnicode(false);
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("TokenId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens","Users");
+                    b.ToTable("RefreshTokens","Security");
+                });
+
+            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Security.User", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users","Security");
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.Card", b =>
                 {
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", "CardTemplate")
                         .WithMany()
-                        .HasForeignKey("CardTemplateId")
+                        .HasForeignKey("UserId", "CardTemplateId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.Deck", "Deck")
                         .WithMany("Cards")
-                        .HasForeignKey("DeckId")
+                        .HasForeignKey("UserId", "DeckId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.CardField", b =>
                 {
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.Card", "Card")
                         .WithMany("Fields")
-                        .HasForeignKey("CardId")
+                        .HasForeignKey("UserId", "CardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", "CardTemplate")
                         .WithMany()
-                        .HasForeignKey("CardTemplateId")
+                        .HasForeignKey("UserId", "CardTemplateId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition", "CardFieldDefinition")
                         .WithMany()
-                        .HasForeignKey("CardTemplateId", "FieldName")
+                        .HasForeignKey("UserId", "CardTemplateId", "FieldName")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition", b =>
                 {
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", "CardTemplate")
                         .WithMany("FieldDefinitions")
-                        .HasForeignKey("CardTemplateId")
+                        .HasForeignKey("UserId", "CardTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", b =>
+                {
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.Deck", b =>
                 {
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate", "DefaultCardTemplate")
                         .WithMany()
-                        .HasForeignKey("DefaultCardTemplateId")
+                        .HasForeignKey("UserId", "DefaultCardTemplateId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SpacedRepetitionSystem.Logic.Controllers.Identity.RefreshToken", b =>
+            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry", b =>
                 {
-                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Users.User", "User")
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Security.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken", b =>
+                {
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Security.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

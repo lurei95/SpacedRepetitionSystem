@@ -7,8 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Core;
 using SpacedRepetitionSystem.Components.ViewModels.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Cards;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
@@ -22,8 +20,8 @@ using SpacedRepetitionSystem.Components.ViewModels;
 using Microsoft.AspNetCore.Components.Authorization;
 using SpacedRepetitionSystem.Components.ViewModels.Identity;
 using Blazored.LocalStorage;
-using SpacedRepetitionSystem.Logic.Controllers.Identity;
-using SpacedRepetitionSystem.Entities.Entities.Users;
+using SpacedRepetitionSystem.Entities.Entities.Security;
+using SpacedRepetitionSystem.Components.Middleware;
 
 namespace SpacedRepetitionSystem
 {
@@ -45,11 +43,7 @@ namespace SpacedRepetitionSystem
         .AddBootstrapProviders()
         .AddFontAwesomeIcons();
 
-      // EF Core
-      services.AddDbContext<SpacedRepetionSystemDBContext>(
-        options => options.UseSqlServer(Configuration.GetConnectionString("Default")), 
-        ServiceLifetime.Transient);
-      services.AddTransient<DbContext, SpacedRepetionSystemDBContext>();
+      services.AddSingleton<IApiConnector, ApiConnector>();
 
       //Authentication
       services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
@@ -71,22 +65,9 @@ namespace SpacedRepetitionSystem
       services.AddTransient<SignupViewModel>();
       services.AddTransient<LoginViewModel>();
 
-      //Controllers
-      services.AddTransient<EntityControllerBase<Entities.Entities.Cards.Card>, CardsController>();
-      services.AddTransient<EntityControllerBase<Deck>, DecksController>();
-      services.AddTransient<EntityControllerBase<PracticeHistoryEntry>, PracticeHistoryEntriesController>();
-      services.AddTransient<EntityControllerBase<CardTemplate>, CardTemplatesController>();
-      services.AddTransient<EntityControllerBase<User>, UsersController>();
-      services.AddTransient<IApiConnector, ApiConnector>();
+      services.AddHttpClient("Default", client => client.BaseAddress = new System.Uri(Configuration.GetConnectionString("Default")));
 
       //Validators
-      services.AddScoped(typeof(CommitValidatorBase<>), typeof(CommitValidatorBase<>));
-      services.AddScoped(typeof(DeleteValidatorBase<>), typeof(DeleteValidatorBase<>));
-      services.AddValidator<CommitValidatorBase<Entities.Entities.Cards.Card>, CardCommitValidator>();
-      services.AddValidator<CommitValidatorBase<Deck>, DeckCommitValidator>();
-      services.AddValidator<CommitValidatorBase<User>, UserCommitValidator>();
-      services.AddValidator<CommitValidatorBase<CardTemplate>, CardTemplateCommitValidator>();
-      services.AddValidator<DeleteValidatorBase<CardTemplate>, CardTemplateDeleteValidator>();
       services.AddCardTemplatePropertyValidator();
       services.AddCardPropertyValidator();
       services.AddDecksPropertyValidator();

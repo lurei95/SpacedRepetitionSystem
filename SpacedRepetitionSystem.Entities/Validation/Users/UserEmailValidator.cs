@@ -1,4 +1,4 @@
-﻿using SpacedRepetitionSystem.Entities.Entities.Users;
+﻿using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
 

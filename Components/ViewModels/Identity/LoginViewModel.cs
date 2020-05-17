@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities;
-using SpacedRepetitionSystem.Entities.Entities.Users;
+using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -49,7 +49,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     protected override async Task SubmitAsyncCore()
     {
 ;
-      User returnedUser = await ApiConnector.Login(User.Email, User.Password);
+      User returnedUser = await ApiConnector.PostAsync<User>("Users/login", User);
       if (returnedUser != null)
       {
         await AuthenticationStateProvider.MarkUserAsAuthenticated(returnedUser);

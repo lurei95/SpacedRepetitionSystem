@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
@@ -24,16 +23,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     { }
 
     ///<inheritdoc/>
-    protected override async Task<List<CardTemplate>> SearchCore() => await ApiConnector.Get<CardTemplate>(null);
+    protected override async Task<List<CardTemplate>> SearchCore() => await ApiConnector.GetAsync <CardTemplate>(null);
 
     ///<inheritdoc/>
-    protected override void DeleteEntity(CardTemplate entity)
+    protected override async Task DeleteEntity(CardTemplate entity)
     {
       ModalDialogManager.ShowDialog(Messages.DeleteCardTemplateDialogTitle,
-        Messages.DeleteCardTemplateDialogText.FormatWith(entity.Title), DialogButtons.YesNo, (result) =>
+        Messages.DeleteCardTemplateDialogText.FormatWith(entity.Title), DialogButtons.YesNo, async (result) =>
       {
         if (result == DialogResult.Yes)
-          base.DeleteEntity(entity);
+          await base.DeleteEntity(entity);
       });
     }
   }

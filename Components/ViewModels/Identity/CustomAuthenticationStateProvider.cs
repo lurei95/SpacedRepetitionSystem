@@ -1,11 +1,11 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
-using SpacedRepetitionSystem.Entities.Entities.Users;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
+using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Entities.Entities.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace SpacedRepetitionSystem.Components.ViewModels.Identity
 {
@@ -23,12 +23,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     /// </summary>
     /// <param name="localStorageService">LocalStorageService (injected)</param>
     /// <param name="apiConnector">ApiConnector (injected)</param>
-    /// <param name="context">Context (Injected)</param>
-    public CustomAuthenticationStateProvider(ILocalStorageService localStorageService, IApiConnector apiConnector, DbContext context, NavigationManager navigationManager)
+    /// <param name="navigationManager">NavigationManager (injected)</param>
+    public CustomAuthenticationStateProvider(ILocalStorageService localStorageService, IApiConnector apiConnector, NavigationManager navigationManager)
     {
       this.navigationManager = navigationManager;
       this.apiConnector = apiConnector;
-      this.apiConnector.Context = context;
       this.localStorageService = localStorageService;
     }
 
@@ -38,7 +37,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
       ClaimsIdentity identity;
       if (accessToken != null && accessToken != string.Empty)
       {
-        User user = await apiConnector.GetUserByAccessTokenAsync(accessToken);
+        User user = await apiConnector.PostAsync<User>("Users/GetUserByAccessToken", accessToken);
         identity = GetClaimsIdentity(user);
       }
       else

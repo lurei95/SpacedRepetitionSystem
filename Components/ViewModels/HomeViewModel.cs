@@ -1,21 +1,34 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SpacedRepetitionSystem.Components.Commands;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Logic.Controllers.Cards;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
 {
+  /// <summary>
+  /// ViewModel for the home page
+  /// </summary>
   public sealed class HomeViewModel : PageViewModelBase
   {
     private readonly IApiConnector apiConnector;
 
+    private static readonly string ProblemWordsParameter = nameof(ProblemWords);
+
+    /// <summary>
+    /// List of pinned decks
+    /// </summary>
     public List<Deck> PinnedDecks { get; } = new List<Deck>();
 
+    /// <summary>
+    /// List of problem words
+    /// </summary>
     public List<PracticeHistoryEntry> ProblemWords { get; } = new List<PracticeHistoryEntry>();
 
+    /// <summary>
+    /// The decks of the problem words
+    /// </summary>
     public Dictionary<long, Deck> ProblemWordDecks { get; } = new Dictionary<long, Deck>();
 
     /// <summary>
@@ -125,14 +138,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       await base.InitializeAsync();
       Dictionary<string, object> parameters1 = new Dictionary<string, object>
       { { nameof(Deck.IsPinned), true } };
-      PinnedDecks.AddRange(await apiConnector.Get<Deck>(parameters1));
+      PinnedDecks.AddRange(await apiConnector.GetAsync<Deck>(parameters1));
 
-      Dictionary<string, object> parameters2 = new Dictionary<string, object>
-      { { PracticeHistoryEntriesController.ProblemWords, null } };
-      ProblemWords.AddRange(await apiConnector.Get<PracticeHistoryEntry>(parameters2));
+      Dictionary<string, object> parameters2 = new Dictionary<string, object>{ { ProblemWordsParameter, null } };
+      ProblemWords.AddRange(await apiConnector.GetAsync<PracticeHistoryEntry>(parameters2));
       foreach (PracticeHistoryEntry entry in ProblemWords)
         if (!ProblemWordDecks.ContainsKey(entry.DeckId))
-          ProblemWordDecks.Add(entry.DeckId, apiConnector.Get<Deck>(entry.DeckId));
+          ProblemWordDecks.Add(entry.DeckId, await apiConnector.GetAsync<Deck>(entry.DeckId));
     }
 
     private void ShowStatistics(Deck deck)

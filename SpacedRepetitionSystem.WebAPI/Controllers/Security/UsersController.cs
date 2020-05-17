@@ -13,7 +13,6 @@ using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.WebAPI.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authorization;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 
@@ -22,6 +21,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
   /// <summary>
   /// Controller for <see cref="User"/>
   /// </summary>
+  [Route("[controller]")]
+  [ApiController]
   public sealed class UsersController : EntityControllerBase<User>
   {
     private readonly JWTSettings jwtSettings;
@@ -37,7 +38,6 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     { this.jwtSettings = jwtSettings.Value;  }
 
     ///<inheritdoc/>
-    [Authorize]
     [HttpGet("{id}")]
     public override async Task<ActionResult<User>> GetAsync(object id)
     {
@@ -58,7 +58,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     /// <param name="email">email of the user</param>
     /// <param name="password">password of the user</param>
     /// <returns>User or null</returns>
-    [HttpPost("/Login")]
+    [HttpPost("Login")]
     public async Task<User> Login(string email, string password)
     {
       password = password.Encrypt();
@@ -77,8 +77,39 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
       return user;
     }
 
+    /// <summary>
+    /// Refreshes the jwt token for a user
+    /// </summary>
+    /// <param name="refreshRequest">Request containing the old jwt token and the refresh token</param>
+    /// <returns></returns>
+    [HttpPost("RefreshToken")]
+    public async Task<User> RefreshToken([FromBody] RefreshRequest refreshRequest)
+    {
+      User user = await GetUserFromAccessToken(refreshRequest.AccessToken);
+      if (user != null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+      {
+        user.AccessToken = GenerateAccessToken(user.UserId);
+        return user;
+      }
+      return null;
+    }
+
+    /// <summary>
+    /// Gets a user by its accesss token
+    /// </summary>
+    /// <param name="accessToken">The access token</param>
+    /// <returns></returns>
+    [HttpPost("GetUserByAccessToken")]
+    public async Task<User> GetUserByAccessToken([FromBody] string accessToken)
+    {
+      User user = await GetUserFromAccessToken(accessToken);
+      if (user != null)
+        return user;
+      return null;
+    }
+
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PostCoreAsync([FromBody] User entity)
+    protected override async Task<IActionResult> PostCoreAsync(User entity)
     {
       IActionResult result = await base.PostCoreAsync(entity);
       if (entity != null)
@@ -93,30 +124,6 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
         entity.AccessToken = GenerateAccessToken(entity.UserId);
       }
       return result;
-    }
-
-    public async Task<User> RefreshToken([FromBody] RefreshRequest refreshRequest)
-    {
-      User user = await GetUserFromAccessToken(refreshRequest.AccessToken);
-      if (user != null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
-      {
-          user.AccessToken = GenerateAccessToken(user.UserId);
-          return user;
-      }
-      return null;
-    }
-
-    /// <summary>
-    /// Gets a user by its accesss token
-    /// </summary>
-    /// <param name="accessToken">The access token</param>
-    /// <returns></returns>
-    public async Task<User> GetUserByAccessToken([FromBody] string accessToken)
-    {
-      User user = await GetUserFromAccessToken(accessToken);
-      if (user != null)
-        return user;
-      return null;
     }
 
     private bool ValidateRefreshToken(User user, string refreshToken)

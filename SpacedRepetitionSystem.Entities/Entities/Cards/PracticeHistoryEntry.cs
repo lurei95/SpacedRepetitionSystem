@@ -6,15 +6,18 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// <summary>
   /// Entry of a practice history
   /// </summary>
-  public sealed class PracticeHistoryEntry : IUserSpecificEntity
+  public sealed class PracticeHistoryEntry : IUserSpecificEntity, IRootEntity
   {
+    ///<inheritdoc/>
+    public object Id => PracticeHistoryEntryId;
+
+    ///<inheritdoc/>
+    public string Route => "PracticeHistoryEntries";
+
     /// <summary>
     /// Id of the history entry
     /// </summary>
     public long PracticeHistoryEntryId { get; set; }
-
-    ///<inheritdoc/>
-    public object Id => PracticeHistoryEntryId;
 
     /// <summary>
     /// Date when it was practiced

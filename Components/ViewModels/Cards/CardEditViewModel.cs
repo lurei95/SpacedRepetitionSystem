@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
@@ -38,13 +37,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
           if (DeckId.HasValue)
           {
             Entity.DeckId = DeckId.Value;
-            Entity.Deck = ApiConnector.Get<Deck>(DeckId);
-            if (IsNewEntity)
-            {
-              CardTemplateId = Entity.Deck.DefaultCardTemplateId;
-              Entity.CardTemplate = ApiConnector.Get<CardTemplate>(Entity.CardTemplateId);
-            }
-            OnPropertyChanged();
+            ChangeDeck();
           }
         }
       }
@@ -144,7 +137,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
       await base.InitializeAsync();
 
-      foreach (CardTemplate cardTemplate in await ApiConnector.Get<CardTemplate>(null))
+      foreach (CardTemplate cardTemplate in await ApiConnector.GetAsync<CardTemplate>(null))
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate.CardTemplateId);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
 
@@ -159,29 +152,40 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     }
 
     ///<inheritdoc/>
-    protected override bool SaveChanges()
+    protected override async Task<bool> SaveChanges()
     {
-      bool success = base.SaveChanges();
+      bool success = await base.SaveChanges();
       if (success && IsNewEntity)
         NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
       return success;
     }
 
     ///<inheritdoc/>
-    protected override void DeleteEntity()
+    protected override async Task DeleteEntity()
     {
       ModalDialogManager.ShowDialog(Messages.DeleteCardDialogTitle, 
-        Messages.DeleteCardDialogText.FormatWith(Entity.CardId), DialogButtons.YesNo, (result) =>
+        Messages.DeleteCardDialogText.FormatWith(Entity.CardId), DialogButtons.YesNo, async (result) =>
       {
         if (result == DialogResult.Yes)
-          base.DeleteEntity();
+          await base.DeleteEntity();
       });
     }
 
-    private void ChangeCardTemplate(long id)
+    private async void ChangeDeck()
+    {
+      Entity.Deck = await ApiConnector.GetAsync<Deck>(DeckId);
+      if (IsNewEntity)
+      {
+        CardTemplateId = Entity.Deck.DefaultCardTemplateId;
+        Entity.CardTemplate = await ApiConnector.GetAsync<CardTemplate>(Entity.CardTemplateId);
+      }
+      OnPropertyChanged();
+    }
+
+    private async Task ChangeCardTemplate(long id)
     {
       Entity.CardTemplateId = id;
-      Entity.CardTemplate = ApiConnector.Get<CardTemplate>(id);
+      Entity.CardTemplate = await ApiConnector.GetAsync<CardTemplate>(id);
       Entity.Fields.Clear();
       foreach (CardFieldDefinition fieldDefinition in Entity.CardTemplate.FieldDefinitions)
         Entity.Fields.Add(new CardField()

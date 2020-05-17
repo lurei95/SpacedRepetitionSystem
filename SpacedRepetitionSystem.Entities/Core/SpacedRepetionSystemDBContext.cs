@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Cards.Configurations;
-using SpacedRepetitionSystem.Entities.Entities.Users;
-using SpacedRepetitionSystem.Entities.Entities.Users.Configurations;
-using SpacedRepetitionSystem.Logic.Controllers.Identity;
+using SpacedRepetitionSystem.Entities.Entities.Security;
+using SpacedRepetitionSystem.Entities.Entities.Security.Configurations;
 
 namespace SpacedRepetitionSystem.Entities.Core
 {

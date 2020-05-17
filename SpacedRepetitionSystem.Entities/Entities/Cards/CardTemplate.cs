@@ -8,10 +8,13 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// <summary>
   /// Template for cards
   /// </summary>
-  public sealed class CardTemplate : IUserSpecificEntity
+  public sealed class CardTemplate : IUserSpecificEntity, IRootEntity
   {
     ///<inheritdoc/>
     public object Id => CardTemplateId;
+
+    ///<inheritdoc/>
+    public string Route => "CardTemplates";
 
     /// <summary>
     /// The id of the default template

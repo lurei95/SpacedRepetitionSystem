@@ -28,7 +28,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 
       builder.HasMany(template => template.FieldDefinitions)
         .WithOne(fieldDefinition => fieldDefinition.CardTemplate)
-        .HasForeignKey(fieldDefinition => fieldDefinition.CardTemplateId)
+        .HasForeignKey(fieldDefinition => new { fieldDefinition.UserId, fieldDefinition.CardTemplateId })
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.HasOne(template => template.User)

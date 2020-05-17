@@ -10,6 +10,6 @@ namespace SpacedRepetitionSystem.Pages
   /// <typeparam name="TViewModel">ViewModel-Type</typeparam>
   public abstract class SearchPageBase<TEntity, TViewModel> : PageBase<TViewModel>
     where TViewModel : SearchViewModelBase<TEntity>
-    where TEntity : class, IEntity
+    where TEntity : class, IRootEntity, new()
   { }
 }

@@ -8,10 +8,13 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   /// <summary>
   /// A Set of cards for practicing purpose
   /// </summary>
-  public sealed class Deck : IUserSpecificEntity
+  public sealed class Deck : IUserSpecificEntity, IRootEntity
   {
     ///<inheritdoc/>
     public object Id => DeckId;
+
+    ///<inheritdoc/>
+    public string Route => "Decks";
 
     /// <summary>
     /// Id of the deck

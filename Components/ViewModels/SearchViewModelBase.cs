@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Commands;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   /// </summary>
   /// <typeparam name="TEntity">The entity type</typeparam>
   public abstract class SearchViewModelBase<TEntity> : EntityViewModelBase<TEntity>
-    where TEntity : class, IEntity
+    where TEntity : class, IRootEntity, new()
   {
     private TEntity selectedEntity;
     private bool isSearching = false;
@@ -65,7 +64,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="context">DbContext (Injected)</param>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnector (Injected)</param>
     public SearchViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector) 
@@ -74,7 +72,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       DeleteCommand = new Command()
       {
         CommandText = Messages.Delete,
-        ExecuteAction = (param) => DeleteEntity(param as TEntity)
+        ExecuteAction = async (param) => await DeleteEntity(param as TEntity)
       };
 
       EditCommand = new Command()
@@ -109,9 +107,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Deletes the entity
     /// </summary>
     /// <param name="entity">The entity</param>
-    protected virtual void DeleteEntity(TEntity entity)
+    protected virtual async Task DeleteEntity(TEntity entity)
     {
-      if (ApiConnector.Delete(entity))
+      if (await ApiConnector.DeleteAsync(entity))
       {
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
         SearchResults.Remove(entity);

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
 {
@@ -11,11 +10,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   /// <typeparam name="TEntity">Entity-Type</typeparam>
   public abstract class EntityViewModelBase<TEntity> : PageViewModelBase where TEntity : IEntity
   {
-    /// <summary>
-    /// Context
-    /// </summary>
-    public DbContext Context { get; private set; }
-
     /// <summary>
     /// API-Connector to perform operations on entitites
     /// </summary>
@@ -28,9 +22,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <param name="apiConnector">ApiConnetcor (Injected)</param>
     public EntityViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector)
       : base(navigationManager)
-    {
-      Context = apiConnector.Context;
-      ApiConnector = apiConnector;
-    }
+    { ApiConnector = apiConnector; }
   }
 }

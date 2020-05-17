@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SpacedRepetitionSystem.Components.Commands;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
@@ -63,25 +63,26 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// </summary>
     /// <param name="value">the new value</param>
     /// <param name="deck">the deck</param>
-    public void TogglePinned(bool value, Deck deck)
+    public async void TogglePinned(bool value, Deck deck)
     {
       deck.IsPinned = value;
-      ApiConnector.Put(deck);
+      await ApiConnector.PutAsync(deck);
     }
 
     ///<inheritdoc/>
-    protected override void DeleteEntity(Deck entity)
+    protected override async Task DeleteEntity(Deck entity)
     {
       ModalDialogManager.ShowDialog(Messages.DeleteDeckDialogTitle, 
-        Messages.DeleteDeckDialogText.FormatWith(entity.Title), DialogButtons.YesNo, (result) =>
+        Messages.DeleteDeckDialogText.FormatWith(entity.Title), DialogButtons.YesNo, async (result) =>
       {
         if (result == DialogResult.Yes)
-          base.DeleteEntity(entity);
+          await base.DeleteEntity(entity);
       });
+      await Task.FromResult<object>(null);
     }
 
     ///<inheritdoc/>
-    protected override async Task<List<Deck>> SearchCore() => await ApiConnector.Get<Deck>(null);
+    protected override async Task<List<Deck>> SearchCore() => await ApiConnector.GetAsync<Deck>(null);
 
     private void ShowStatistics(Deck deck)
     { NavigationManager.NavigateTo("/Decks/" + deck.DeckId + "/Statistics/"); }

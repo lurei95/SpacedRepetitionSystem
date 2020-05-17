@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Commands;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
@@ -57,17 +56,17 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       Dictionary<string, object> parameters = new Dictionary<string, object>();
       if (DeckId.HasValue)
         parameters.Add(nameof(Deck.DeckId), DeckId);
-      return await ApiConnector.Get<Card>(parameters);
+      return await ApiConnector.GetAsync<Card>(parameters);
     }
 
     ///<inheritdoc/>
-    protected override void DeleteEntity(Card entity)
+    protected override async Task DeleteEntity(Card entity)
     {
       ModalDialogManager.ShowDialog(Messages.DeleteCardDialogTitle,
-        Messages.DeleteCardDialogText.FormatWith(entity.CardId), DialogButtons.YesNo, (result) =>
+        Messages.DeleteCardDialogText.FormatWith(entity.CardId), DialogButtons.YesNo, async (result) =>
       {
         if (result == DialogResult.Yes)
-          base.DeleteEntity(entity);
+          await base.DeleteEntity(entity);
       });
     }
 

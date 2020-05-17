@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore.Internal;
 using SpacedRepetitionSystem.Components.Commands;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -241,12 +241,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// Loads the Entity
     /// </summary>
     /// <param name="id">Id of the entity</param>
-    public void LoadEntity(object id) => Deck = ApiConnector.Get<Deck>(id);
+    public async Task LoadEntity(object id) => Deck = await ApiConnector.GetAsync<Deck>(id);
 
     ///<inheritdoc/>
     public override async Task InitializeAsync()
     {
-
       bool isActivePractice = Deck.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue);
       if (isActivePractice)
         PracticeFields = Deck.Cards.SelectMany(card => card.Fields).Where(field => field.IsDue).ToList();
@@ -257,25 +256,21 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       }
       PracticeFields.Shuffle();
       if (PracticeFields.Count > 0)
-      {
-        foreach (CardField field in PracticeFields)
-          await Context.Entry(field).Reference(field => field.CardFieldDefinition).LoadAsync();
         Current = PracticeFields[0];
-      }
     }
 
     /// <summary>
     /// The input has finished
     /// </summary>
-    public void OnInputFinished()
+    public async void OnInputFinished()
     {
       if (InputText == Solution)
-        ReportPracticeResult(PracticeResultKind.Easy);
+        await ReportPracticeResult(PracticeResultKind.Easy);
       else
-        ReportPracticeResult(PracticeResultKind.Failed);
+        await ReportPracticeResult(PracticeResultKind.Failed);
     }
 
-    private void ReportPracticeResult(PracticeResultKind result)
+    private async Task ReportPracticeResult(PracticeResultKind result)
     {
       AddResult(result);
       if (result == PracticeResultKind.Failed) // if failed insert at random position again 
@@ -294,7 +289,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         HardCount = result == PracticeResultKind.Hard ? 1 : 0,
         WrongCount = result == PracticeResultKind.Failed ? 1 : 0
       };
-      ApiConnector.Post(entry);
+      await ApiConnector.PostAsync(entry);
 
       if (Current.CardFieldDefinition.ShowInputForPractice)
         ShowSolution();

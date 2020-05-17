@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.Util
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.Components", "Components\SpacedRepetitionSystem.Components.csproj", "{22E2665C-A42F-4CEC-A880-579EC1860A99}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.Logic", "SpacedRepetitionSystem.Logic\SpacedRepetitionSystem.Logic.csproj", "{12311DEA-05DA-4038-842A-38F66020C59D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpacedRepetitionSystem.WebAPI", "SpacedRepetitionSystem.WebAPI\SpacedRepetitionSystem.WebAPI.csproj", "{731C044A-A0BE-4D42-8E87-48D2DCD7960A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.WebAPI", "SpacedRepetitionSystem.WebAPI\SpacedRepetitionSystem.WebAPI.csproj", "{731C044A-A0BE-4D42-8E87-48D2DCD7960A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{22E2665C-A42F-4CEC-A880-579EC1860A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22E2665C-A42F-4CEC-A880-579EC1860A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22E2665C-A42F-4CEC-A880-579EC1860A99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12311DEA-05DA-4038-842A-38F66020C59D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12311DEA-05DA-4038-842A-38F66020C59D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12311DEA-05DA-4038-842A-38F66020C59D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12311DEA-05DA-4038-842A-38F66020C59D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{731C044A-A0BE-4D42-8E87-48D2DCD7960A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{731C044A-A0BE-4D42-8E87-48D2DCD7960A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{731C044A-A0BE-4D42-8E87-48D2DCD7960A}.Release|Any CPU.ActiveCfg = Release|Any CPU

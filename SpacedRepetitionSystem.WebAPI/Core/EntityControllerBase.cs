@@ -54,7 +54,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// </summary>
     /// <param name="entity">The updated entity</param>
     [HttpPut]
-    public async Task<IActionResult> PutAsync(TEntity entity)
+    public async Task<IActionResult> PutAsync([FromBody] TEntity entity)
     {
       string error = commitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
@@ -73,7 +73,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// </summary>
     /// <param name="entity">The new entity</param>
     [HttpPost]
-    public async Task<IActionResult> PostAsync(TEntity entity)
+    public async Task<IActionResult> PostAsync([FromBody] TEntity entity)
     {
       string error = commitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
@@ -92,7 +92,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// </summary>
     /// <param name="entity">The entity to delete</param>
     [HttpDelete]
-    public async Task<IActionResult> DeleteAsync(TEntity entity)
+    public async Task<IActionResult> DeleteAsync([FromBody] TEntity entity)
     {
       string error = deleteValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))

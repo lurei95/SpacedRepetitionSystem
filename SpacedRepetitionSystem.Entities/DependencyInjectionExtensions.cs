@@ -4,8 +4,8 @@ using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Decks;
 using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
-using SpacedRepetitionSystem.Entities.Entities.Users;
 using SpacedRepetitionSystem.Entities.Validation.Users;
+using SpacedRepetitionSystem.Entities.Entities.Security;
 
 namespace SpacedRepetitionSystem.Entities
 {

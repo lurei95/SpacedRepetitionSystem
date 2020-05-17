@@ -1,14 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
+using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Logic.Controllers.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
 {
-  public abstract class StatisticsViewModelBase<TEntity> : EntityViewModelBase<TEntity> where TEntity : IEntity
+  /// <summary>
+  /// Baseclass for a ViewModel of a statistics Page
+  /// </summary>
+  /// <typeparam name="TEntity"></typeparam>
+  public abstract class StatisticsViewModelBase<TEntity> : EntityViewModelBase<TEntity> where TEntity : IRootEntity, new()
   {
     private string selectedDisplayUnit;
 
@@ -133,7 +138,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Loads the Entity
     /// </summary>
     /// <param name="id">Id of the entity</param>
-    public virtual void LoadEntity(object id) => Entity = ApiConnector.Get<TEntity>(id);
+    public virtual async Task LoadEntityAsync(object id) => Entity = await ApiConnector.GetAsync<TEntity>(id);
 
     /// <summary>
     /// Reacalculates the datapoint for the charts
