@@ -16,7 +16,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
   [Authorize]
   [Route("[controller]")]
   [ApiController]
-  public sealed class CardsController : EntityControllerBase<Card>
+  public sealed class CardsController : EntityControllerBase<Card, long>
   {
     /// <summary>
     /// Constructor
@@ -27,10 +27,9 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     public CardsController(DeleteValidatorBase<Card> deleteValidator, CommitValidatorBase<Card> commitValidator, DbContext context)
       : base(deleteValidator, commitValidator, context) { }
 
-
     ///<inheritdoc/>
     [HttpGet("{id}")]
-    public async override Task<ActionResult<Card>> GetAsync(object id)
+    public async override Task<ActionResult<Card>> GetAsync([FromRoute] long id)
     {
       Card card = await Context.Set<Card>()
         .Include(card => card.Fields)

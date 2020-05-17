@@ -16,7 +16,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
   [Authorize]
   [Route("[controller]")]
   [ApiController]
-  public sealed class CardTemplatesController : EntityControllerBase<CardTemplate>
+  public sealed class CardTemplatesController : EntityControllerBase<CardTemplate, long>
   {
     /// <summary>
     /// Constructor
@@ -29,7 +29,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
 
     ///<inheritdoc/>
     [HttpGet("{id}")]
-    public override async Task<ActionResult<CardTemplate>> GetAsync(object id)
+    public override async Task<ActionResult<CardTemplate>> GetAsync([FromRoute] long id)
     {
       CardTemplate template = await Context.Set<CardTemplate>()
         .Include(definition => definition.FieldDefinitions)

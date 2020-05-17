@@ -138,13 +138,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       await base.InitializeAsync();
       Dictionary<string, object> parameters1 = new Dictionary<string, object>
       { { nameof(Deck.IsPinned), true } };
-      PinnedDecks.AddRange(await apiConnector.GetAsync<Deck>(parameters1));
+      PinnedDecks.AddRange((await apiConnector.GetAsync<Deck>(parameters1)).Result);
 
       Dictionary<string, object> parameters2 = new Dictionary<string, object>{ { ProblemWordsParameter, null } };
-      ProblemWords.AddRange(await apiConnector.GetAsync<PracticeHistoryEntry>(parameters2));
+      ProblemWords.AddRange((await apiConnector.GetAsync<PracticeHistoryEntry>(parameters2)).Result);
       foreach (PracticeHistoryEntry entry in ProblemWords)
         if (!ProblemWordDecks.ContainsKey(entry.DeckId))
-          ProblemWordDecks.Add(entry.DeckId, await apiConnector.GetAsync<Deck>(entry.DeckId));
+          ProblemWordDecks.Add(entry.DeckId, (await apiConnector.GetAsync<Deck>(entry.DeckId)).Result);
     }
 
     private void ShowStatistics(Deck deck)

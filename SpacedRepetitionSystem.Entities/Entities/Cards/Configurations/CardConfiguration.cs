@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SpacedRepetitionSystem.Entities.Entities.Security;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 {
@@ -13,7 +12,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     public void Configure(EntityTypeBuilder<Card> builder)
     {
       builder.ToTable("Cards", "Cards");
-      builder.HasKey(card => new { card.UserId, card.CardId });
+      builder.HasKey(card => card.CardId);
 
       builder.Property(card => card.CardId)
         .IsRequired()
@@ -31,12 +30,12 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 
       builder.HasOne(card => card.CardTemplate)
         .WithMany()
-        .HasForeignKey(card => new { card.UserId, card.CardTemplateId })
+        .HasForeignKey(card => card.CardTemplateId)
         .OnDelete(DeleteBehavior.Restrict);
 
       builder.HasMany(card => card.Fields)
         .WithOne(field => field.Card)
-        .HasForeignKey(field => new { field.UserId, field.CardId })
+        .HasForeignKey(field => field.CardId)
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.HasOne(card => card.User)

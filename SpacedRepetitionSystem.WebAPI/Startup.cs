@@ -84,7 +84,7 @@ namespace SpacedRepetitionSystem.WebAPI
     {
       if (env.IsDevelopment())
         app.UseDeveloperExceptionPage();
-
+      app.UseMiddleware(typeof(ErrorHandlingMiddleware));
       app.UseHttpsRedirection();
 
       app.UseRouting();

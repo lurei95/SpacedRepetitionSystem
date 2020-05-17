@@ -23,7 +23,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     { }
 
     ///<inheritdoc/>
-    protected override async Task<List<CardTemplate>> SearchCore() => await ApiConnector.GetAsync <CardTemplate>(null);
+    protected override async Task<List<CardTemplate>> SearchCore()
+      => (await ApiConnector.GetAsync <CardTemplate>(new Dictionary<string, object>())).Result;
 
     ///<inheritdoc/>
     protected override async Task DeleteEntity(CardTemplate entity)

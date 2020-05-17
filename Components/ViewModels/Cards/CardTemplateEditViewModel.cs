@@ -67,6 +67,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     ///<inheritdoc/>
     public override async Task InitializeAsync()
     {
+      await base.InitializeAsync();
+
       TitleProperty = new PropertyProxy(
         () => Entity.Title,
         (value) => Entity.Title = value,
@@ -86,8 +88,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         RegisterPropertyProperty(proxy);
         FieldNameProperties.Add(proxy);
       }
-
-      await base.InitializeAsync();
     }
 
     ///<inheritdoc/>

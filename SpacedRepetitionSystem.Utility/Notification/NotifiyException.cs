@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace SpacedRepetitionSystem.Utility.Notification
 {
@@ -27,6 +28,15 @@ namespace SpacedRepetitionSystem.Utility.Notification
     /// <param name="message">Exception message</param>
     /// <param name="innerException">Inner exception</param>
     public NotifyException(string message, Exception innerException) : base(message, innerException)
+    { }
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="info">Serialization info</param>
+    /// <param name="context">Streaming context</param>
+    public NotifyException(SerializationInfo info, StreamingContext context) 
+      : this(info.GetString(nameof(Message)))
     { }
   }
 }

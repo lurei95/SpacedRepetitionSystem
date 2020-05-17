@@ -5,6 +5,9 @@ using System.Net.Http;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Net;
+using SpacedRepetitionSystem.Utility.Notification;
+using System;
 
 namespace SpacedRepetitionSystem.Components.Middleware
 {
@@ -28,49 +31,40 @@ namespace SpacedRepetitionSystem.Components.Middleware
     { this.httpClientFactory = httpClientFactory; }
 
     ///<inheritdoc/>
-    public async Task<TEntity> GetAsync<TEntity>(object id) where TEntity : IRootEntity, new()
+    public async Task<ApiReply<TEntity>> GetAsync<TEntity>(object id) where TEntity : IRootEntity, new()
     { return await CallApiCore<TEntity>(HttpMethod.Get, new TEntity().Route + "/" + id.ToString(), null); }
 
     ///<inheritdoc/>
-    public async Task<List<TEntity>> GetAsync<TEntity>(IDictionary<string, object> searchParameters) where TEntity : IRootEntity, new()
+    public async Task<ApiReply<List<TEntity>>> GetAsync<TEntity>(IDictionary<string, object> searchParameters) where TEntity : IRootEntity, new()
     { return await CallApiCore<List<TEntity>>(HttpMethod.Get, new TEntity().Route, searchParameters); }
 
     ///<inheritdoc/>
-    public async Task<bool> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
-    {
-      await CallApiCore(HttpMethod.Put, entity.Route, entity);
-      return true;
-    }
+    public async Task<ApiReply> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
+    { return await CallApiCore(HttpMethod.Put, entity.Route, entity); }
 
     ///<inheritdoc/>
-    public async Task<bool> DeleteAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
-    {
-      await CallApiCore(HttpMethod.Delete, entity.Route, entity);
-      return true;
-    }
+    public async Task<ApiReply> DeleteAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
+    { return await CallApiCore(HttpMethod.Delete, entity.Route, entity); }
 
     ///<inheritdoc/>
-    public async Task<bool> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
-    {
-      await CallApiCore(HttpMethod.Post, entity.Route, entity);
-      return true;
-    }
+    public async Task<ApiReply> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
+    { return await CallApiCore(HttpMethod.Post, entity.Route, entity); }
 
     ///<inheritdoc/>
-    public async Task<TReturn> PostAsync<TReturn>(string route, object value)
+    public async Task<ApiReply<TReturn>> PostAsync<TReturn>(string route, object value)
     { return await CallApiCore<TReturn>(HttpMethod.Post, route, value); }
 
     ///<inheritdoc/>
-    public async Task PostAsync(string route, object value)
-    { await CallApiCore(HttpMethod.Post, route, value);  }
+    public async Task<ApiReply> PostAsync(string route, object value)
+    { return await CallApiCore(HttpMethod.Post, route, value);  }
 
-    private async Task CallApiCore(HttpMethod method, string route, object value)
+    private async Task<ApiReply> CallApiCore(HttpMethod method, string route, object value)
     {
       HttpResponseMessage response = await SendMessageAsync(method, route, value);
-      await HandleResponse(response);
+      return await HandleResponse(response);
     }
 
-    private async Task<TReturnValue> CallApiCore<TReturnValue>(HttpMethod method, string route, object value)
+    private async Task<ApiReply<TReturnValue>> CallApiCore<TReturnValue>(HttpMethod method, string route, object value)
     {
       HttpResponseMessage response = await SendMessageAsync(method, route, value);
       return await HandleResponse<TReturnValue>(response);
@@ -89,7 +83,7 @@ namespace SpacedRepetitionSystem.Components.Middleware
         request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
       }
       else
-        request = new HttpRequestMessage();
+        request = new HttpRequestMessage(method, route);
 
       if (!string.IsNullOrEmpty(CurrentUser?.AccessToken))
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", CurrentUser.AccessToken);
@@ -97,15 +91,60 @@ namespace SpacedRepetitionSystem.Components.Middleware
       return await client.SendAsync(request);
     }
 
-    private async Task HandleResponse(HttpResponseMessage response)
+    private async Task<ApiReply> HandleResponse(HttpResponseMessage response)
     {
-
+      ApiReply reply = new ApiReply();
+      await HandleResponseCore(reply, response);
+      return reply;
     }
 
-    private async Task<TReturnValue> HandleResponse<TReturnValue>(HttpResponseMessage response)
+    private async Task<ApiReply<TReturnValue>> HandleResponse<TReturnValue>(HttpResponseMessage response)
+    {
+      ApiReply<TReturnValue> reply = new ApiReply<TReturnValue>();
+      await HandleResponseCore(reply, response);
+
+      if (reply.WasSuccessful)
+      {
+        string content = await response.Content.ReadAsStringAsync();
+        reply.Result = JsonConvert.DeserializeObject<TReturnValue>(content);
+      }
+
+      return reply;
+    }
+
+    private async Task HandleResponseCore(ApiReply reply, HttpResponseMessage response)
+    {
+      switch (response.StatusCode)
+      {
+        case HttpStatusCode.OK:
+        case HttpStatusCode.Created:
+        case HttpStatusCode.Accepted:
+          reply.WasSuccessful = true;
+          break;
+        case HttpStatusCode.NotFound:
+          reply.WasSuccessful = false;
+          break;
+        default:
+          reply.WasSuccessful = false;
+          await TryHandleErrorResponse(reply, response);
+          break;
+      }
+      reply.StatusCode = response.StatusCode;
+    }
+
+    private async Task TryHandleErrorResponse(ApiReply reply, HttpResponseMessage response)
     {
       string content = await response.Content.ReadAsStringAsync();
-      return JsonConvert.DeserializeObject<TReturnValue>(content);
+      object result = JsonConvert.DeserializeObject(content, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
+      if (result is NotifyException notifyException)
+        reply.ResultMessage = notifyException.Message;
+      else if (result is Exception exception)
+      {
+        if (exception.InnerException is NotifyException notifyException1)
+          reply.ResultMessage = notifyException1.Message;
+        else
+          throw exception;
+      }
     }
   }
 }

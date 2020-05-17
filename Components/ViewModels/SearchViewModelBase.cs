@@ -109,7 +109,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <param name="entity">The entity</param>
     protected virtual async Task DeleteEntity(TEntity entity)
     {
-      if (await ApiConnector.DeleteAsync(entity))
+      if ((await ApiConnector.DeleteAsync(entity)).WasSuccessful)
       {
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
         SearchResults.Remove(entity);

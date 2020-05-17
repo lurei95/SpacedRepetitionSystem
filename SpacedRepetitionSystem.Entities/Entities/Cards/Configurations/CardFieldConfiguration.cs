@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SpacedRepetitionSystem.Entities.Entities.Security;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 {
@@ -13,41 +12,29 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     public void Configure(EntityTypeBuilder<CardField> builder)
     {
       builder.ToTable("CardFields", "Cards");
-      builder.HasKey(field => new { field.UserId, field.CardId, field.FieldName });
+      builder.HasKey(field => new { field.CardId, field.FieldName });
 
       builder.Property(field => field.CardId)
         .IsRequired();
-
-      builder.Property(field => field.UserId)
-        .IsRequired();
-
       builder.Property(field => field.FieldName)
         .IsRequired();
-
       builder.Property(field => field.CardTemplateId)
         .IsRequired();
-
       builder.Property(field => field.DueDate)
         .IsRequired();
       builder.Property(field => field.ProficiencyLevel)
         .IsRequired();
-
       builder.Property(field => field.Value);
 
       builder.HasOne(field => field.CardFieldDefinition)
         .WithMany()
-        .HasForeignKey(field => new { field.UserId, field.CardTemplateId, field.FieldName })
+        .HasForeignKey(field => new { field.CardTemplateId, field.FieldName })
         .OnDelete(DeleteBehavior.Restrict);
 
       builder.HasOne(field => field.CardTemplate)
         .WithMany()
-        .HasForeignKey(field => new { field.UserId, field.CardTemplateId })
+        .HasForeignKey(field => field.CardTemplateId)
         .OnDelete(DeleteBehavior.Restrict);
-
-      builder.HasOne(field => field.User)
-        .WithMany()
-        .HasForeignKey(field => field.UserId)
-        .OnDelete(DeleteBehavior.NoAction);
     }
   }
 }

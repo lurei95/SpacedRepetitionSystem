@@ -4,6 +4,7 @@ using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Notification;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
   /// Base class for a controller for a specific entity
   /// </summary>
   /// <typeparam name="TEntity"></typeparam>
-  public abstract class EntityControllerBase<TEntity> : ControllerBase where TEntity : class, IEntity
+  public abstract class EntityControllerBase<TEntity, TKey> : ControllerBase where TEntity : class, IEntity
   {
     private readonly DeleteValidatorBase<TEntity> deleteValidator;
     private readonly CommitValidatorBase<TEntity> commitValidator;
@@ -40,7 +41,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// </summary>
     /// <param name="id">Id of the entity</param>
     /// <returns>The entity with the Id</returns>
-    public abstract Task<ActionResult<TEntity>> GetAsync(object id);
+    public abstract Task<ActionResult<TEntity>> GetAsync(TKey id);
 
     /// <summary>
     /// Returns a list of entities matching the filter
@@ -115,7 +116,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
       if (entity == null)
         return await Task.FromResult(BadRequest());
       Context.Entry(entity).State = EntityState.Modified;
-      return await Task.FromResult(NoContent());
+      return await Task.FromResult(Ok());
     }
 
     /// <summary>
@@ -126,11 +127,16 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     {
       if (entity == null)
         return BadRequest();
-      TEntity entity1 = await Context.FindAsync<TEntity>(entity.Id);
+      TEntity entity1;
+      if (entity is IUserSpecificEntity userSpecificEntity)
+        entity1 = await Context.Set<TEntity>()
+          .FirstOrDefaultAsync(x => x.Id == entity.Id && (x as IUserSpecificEntity).UserId == GetUserId());
+      else
+        entity1 = await Context.FindAsync<TEntity>(entity.Id);
       if (entity1 == null)
         return NotFound();
       Context.Remove(entity1);
-      return NoContent();
+      return Ok();
     }
 
     /// <summary>
@@ -144,7 +150,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
       if (entity is IUserSpecificEntity userSpecificEntity)
         userSpecificEntity.UserId = GetUserId();
       Context.Add(entity);
-      return await Task.FromResult(NoContent());
+      return await Task.FromResult(Ok());
     }
 
     /// <summary>

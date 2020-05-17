@@ -17,6 +17,6 @@ namespace SpacedRepetitionSystem.Pages
     /// Id of the entity to edit
     /// </summary>
     [Parameter]
-    public object Id { set => ViewModel.LoadOrCreateEntity(value); }
+    public object Id { set => ViewModel.Id = value; }
   }
 }

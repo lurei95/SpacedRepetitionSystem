@@ -138,7 +138,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Loads the Entity
     /// </summary>
     /// <param name="id">Id of the entity</param>
-    public virtual async Task LoadEntityAsync(object id) => Entity = await ApiConnector.GetAsync<TEntity>(id);
+    public virtual async Task LoadEntityAsync(object id) => Entity = (await ApiConnector.GetAsync<TEntity>(id)).Result;
 
     /// <summary>
     /// Reacalculates the datapoint for the charts

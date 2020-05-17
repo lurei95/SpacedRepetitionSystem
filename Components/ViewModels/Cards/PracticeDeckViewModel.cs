@@ -241,7 +241,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// Loads the Entity
     /// </summary>
     /// <param name="id">Id of the entity</param>
-    public async Task LoadEntity(object id) => Deck = await ApiConnector.GetAsync<Deck>(id);
+    public async Task LoadEntity(object id) => Deck = (await ApiConnector.GetAsync<Deck>(id)).Result;
 
     ///<inheritdoc/>
     public override async Task InitializeAsync()

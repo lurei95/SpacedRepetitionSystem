@@ -17,7 +17,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
   [Authorize]
   [Route("[controller]")]
   [ApiController]
-  public sealed class PracticeHistoryEntriesController : EntityControllerBase<PracticeHistoryEntry>
+  public sealed class PracticeHistoryEntriesController : EntityControllerBase<PracticeHistoryEntry, long>
   {
     private static Dictionary<int, int> ProficiencyDueDaysLookup { get; } = new Dictionary<int, int>()
     {
@@ -45,7 +45,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
 
     ///<inheritdoc/>
     [HttpGet("{id}")]
-    public override async Task<ActionResult<PracticeHistoryEntry>> GetAsync(object id)
+    public override async Task<ActionResult<PracticeHistoryEntry>> GetAsync([FromRoute] long id)
     {
       PracticeHistoryEntry entry = await Context.Set<PracticeHistoryEntry>()
         .FirstOrDefaultAsync(entry1 => entry1.UserId == GetUserId() && entry1.PracticeHistoryEntryId == (long)id);

@@ -31,18 +31,22 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
       this.localStorageService = localStorageService;
     }
 
+    ///<inheritdoc/>
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
       string accessToken = await localStorageService.GetItemAsync<string>("accessToken");
       ClaimsIdentity identity;
       if (accessToken != null && accessToken != string.Empty)
       {
-        User user = await apiConnector.PostAsync<User>("Users/GetUserByAccessToken", accessToken);
+        User user = (await apiConnector.PostAsync<User>("Users/GetUserByAccessToken", accessToken)).Result;
+        user.AccessToken = accessToken;
+        apiConnector.CurrentUser = user;
         identity = GetClaimsIdentity(user);
       }
       else
       {
         identity = new ClaimsIdentity();
+        apiConnector.CurrentUser = null;
         navigationManager.NavigateTo("/Login");
       }
 
@@ -62,6 +66,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
       ClaimsIdentity identity = GetClaimsIdentity(user);
       ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
       NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
+      apiConnector.CurrentUser = user;
       navigationManager.NavigateTo("/");
     }
 
@@ -75,8 +80,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
       await localStorageService.RemoveItemAsync("accessToken");
       ClaimsIdentity identity = new ClaimsIdentity();
       ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-      NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(principal)));
+      apiConnector.CurrentUser = null;
       navigationManager.NavigateTo("/Login");
+      NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(principal)));
     }
 
     private ClaimsIdentity GetClaimsIdentity(User user)

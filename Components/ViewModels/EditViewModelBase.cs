@@ -19,6 +19,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     private readonly EntityChangeValidator<TEntity> changeValidator;
 
     /// <summary>
+    /// The Id of the entity
+    /// </summary>
+    public object Id { get; set; }
+
+    /// <summary>
     /// Whether the entity is new
     /// </summary>
     protected bool IsNewEntity { get; set; }
@@ -52,29 +57,35 @@ namespace SpacedRepetitionSystem.Components.ViewModels
 
       SaveChangesCommand = new Command() {
         CommandText = Messages.Save,
-        ExecuteAction = (param) => SaveChanges() 
+        ExecuteAction = async (param) => await SaveChanges() 
       };
 
       DeleteCommand = new Command()
       {
         CommandText = Messages.Delete,
-        ExecuteAction = (param) => DeleteEntity()
+        ExecuteAction = async (param) => await DeleteEntity()
       };
+    }
+
+    ///<inheritdoc>/>
+    public override async Task InitializeAsync()
+    {
+      await LoadOrCreateEntity();
+      await base.InitializeAsync();
     }
 
     /// <summary>
     /// Loads the entity or creates a new one
     /// </summary>
-    /// <param name="id">Id of rthe entity</param>
-    public virtual async Task LoadOrCreateEntity(object id)
+    protected virtual async Task LoadOrCreateEntity()
     {
-      if (id == null)
+      if (Id == null)
       {
         CreateNewEntity();
         IsNewEntity = true;
       }
       else
-        await LoadEntity(id);
+        await LoadEntity(Id);
       DeleteCommand.IsEnabled = !IsNewEntity;
     }
 
@@ -87,7 +98,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Loads the Entity
     /// </summary>
     /// <param name="id">Id of the entity</param>
-    protected virtual async Task LoadEntity(object id) => Entity = await ApiConnector.GetAsync<TEntity>(id);
+    protected virtual async Task LoadEntity(object id) => Entity = (await ApiConnector.GetAsync<TEntity>(id)).Result;
 
     /// <summary>
     /// Saves the changes
@@ -96,9 +107,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     {
       bool result;
       if (IsNewEntity)
-        result = await ApiConnector.PostAsync(Entity);
+        result = (await ApiConnector.PostAsync(Entity)).WasSuccessful;
       else
-        result = await ApiConnector.PutAsync(Entity);
+        result = (await ApiConnector.PutAsync(Entity)).WasSuccessful;
       if (result)
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(Entity.GetDisplayName()));
       return result;
@@ -109,7 +120,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// </summary>
     protected virtual async Task DeleteEntity()
     {
-      bool result = await ApiConnector.DeleteAsync(Entity);
+      bool result = (await ApiConnector.DeleteAsync(Entity)).WasSuccessful;
       if (result)
       {
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(Entity.GetDisplayName()));

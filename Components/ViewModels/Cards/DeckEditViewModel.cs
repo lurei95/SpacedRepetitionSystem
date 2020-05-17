@@ -19,30 +19,19 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
   /// </summary>
   public sealed class DeckEditViewModel : EditViewModelBase<Deck>
   {
-    private readonly Dictionary<string, long> availableCardTemplates = new Dictionary<string, long>();
-    private long? cardTemplateId;
+    private readonly Dictionary<string, CardTemplate> availableCardTemplates = new Dictionary<string, CardTemplate>();
 
     /// <summary>
     /// Id of the definition of the card
     /// </summary>
-    public long? CardTemplateId
+    public long CardTemplateId
     {
-      get => cardTemplateId;
+      get => Entity.DefaultCardTemplateId;
       set
       {
-        if (cardTemplateId != value)
+        if (CardTemplateId != value)
         {
-          cardTemplateId = value;
-          if (CardTemplateId.HasValue)
-          {
-            Entity.DefaultCardTemplateId = value.Value;
-            ChangeDefaultCardTemplate();
-          }
-          else
-          {
-            Entity.DefaultCardTemplateId = default;
-            Entity.DefaultCardTemplate = null;
-          }
+          Entity.DefaultCardTemplateId = value;
           OnPropertyChanged();
         }
       }
@@ -63,11 +52,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// </summary>
     public string CardTemplateTitle
     {
-      get => Entity?.DefaultCardTemplate?.Title;
+      get => availableCardTemplates.Values.SingleOrDefault(template => template.CardTemplateId == CardTemplateId)?.Title;
       set
       {
         if (CardTemplateTitle != value)
-          CardTemplateId = availableCardTemplates[value];
+          CardTemplateId = availableCardTemplates[value].CardTemplateId;
       }
     }
 
@@ -134,6 +123,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     ///<inheritdoc/>
     public override async Task InitializeAsync()
     {
+      foreach (CardTemplate cardTemplate in (await ApiConnector.GetAsync<CardTemplate>(new Dictionary<string, object>())).Result)
+        availableCardTemplates.Add(cardTemplate.Title, cardTemplate);
+
+      await base.InitializeAsync();
+
       CardTemplateTitleProperty = new PropertyProxy(
         () => CardTemplateTitle,
         (value) => CardTemplateTitle = value,
@@ -148,11 +142,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         Entity
       );
       RegisterPropertyProperty(TitleProperty);
-
-      await base.InitializeAsync();
-
-      foreach (CardTemplate cardTemplate in await ApiConnector.GetAsync<CardTemplate>(null))
-        availableCardTemplates.Add(cardTemplate.Title, cardTemplate.CardTemplateId);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
     }
 
@@ -176,12 +165,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
     private async Task DeleteCard(Card card)
     {
-      if (await ApiConnector.DeleteAsync(card))
+      if ((await ApiConnector.DeleteAsync(card)).WasSuccessful)
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(card.GetDisplayName()));
     }
-
-    private async void ChangeDefaultCardTemplate()
-    { Entity.DefaultCardTemplate = await ApiConnector.GetAsync<CardTemplate>(CardTemplateId); }
 
     private void EditCard(Card card)
     { NavigationManager.NavigateTo(NavigationManager.Uri + "/Cards/" + card.Id); }

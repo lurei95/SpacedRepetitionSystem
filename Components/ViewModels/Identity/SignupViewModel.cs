@@ -41,13 +41,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     /// </summary>
     protected override async Task SubmitAsyncCore()
     {
-      if (await ApiConnector.PostAsync(User))
+      ApiReply<User> reply = await ApiConnector.PostAsync<User>("Users/Signup", User);
+      if (reply.WasSuccessful)
       {
-        await AuthenticationStateProvider.MarkUserAsAuthenticated(User);
+        await AuthenticationStateProvider.MarkUserAsAuthenticated(reply.Result);
         NavigationManager.NavigateTo("/");
       }
       else
-        ErrorMessage = Errors.UserAlreadyExists;
+        ErrorMessage = reply.ResultMessage;
     }
 
     ///<inheritdoc/>

@@ -48,11 +48,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     /// <returns>Task with result</returns>
     protected override async Task SubmitAsyncCore()
     {
-;
-      User returnedUser = await ApiConnector.PostAsync<User>("Users/login", User);
-      if (returnedUser != null)
+      ApiReply<User> reply = await ApiConnector.PostAsync<User>("Users/login", User);
+      if (reply.WasSuccessful)
       {
-        await AuthenticationStateProvider.MarkUserAsAuthenticated(returnedUser);
+        await AuthenticationStateProvider.MarkUserAsAuthenticated(reply.Result);
         NavigationManager.NavigateTo("/");
       }
       else

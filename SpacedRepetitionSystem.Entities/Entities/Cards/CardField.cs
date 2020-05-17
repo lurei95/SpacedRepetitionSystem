@@ -1,12 +1,11 @@
-﻿using SpacedRepetitionSystem.Entities.Entities.Security;
-using System;
+﻿using System;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Cards
 {
   /// <summary>
   /// A Field of a card
   /// </summary>
-  public sealed class CardField : IUserSpecificEntity
+  public sealed class CardField : IEntity
   {
     ///<inheritdoc/>
     public object Id => new { CardId, FieldName };
@@ -32,16 +31,6 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public bool IsDue => DueDate <= DateTime.Today;
 
     #region References
-
-    /// <summary>
-    /// Id of the user
-    /// </summary>
-    public Guid UserId { get; set; }
-
-    /// <summary>
-    /// User
-    /// </summary>
-    public User User { get; set; }
 
     /// <summary>
     /// Id of the card the field belongs to

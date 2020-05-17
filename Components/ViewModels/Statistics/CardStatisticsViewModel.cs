@@ -40,7 +40,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Statistics
       await base.InitializeAsync();
       Dictionary<string, object> parameters = new Dictionary<string, object>()
       { { nameof(Card.CardId), Entity.CardId } };
-      List<PracticeHistoryEntry> entries = await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters);
+      List<PracticeHistoryEntry> entries = (await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters)).Result;
       PracticeHistoryEntries.AddRange(entries);
       SelectableDisplayUnits.Add(nameof(Card));
       SelectableDisplayUnits.AddRange(Entity.Fields.Select(field => field.FieldName));

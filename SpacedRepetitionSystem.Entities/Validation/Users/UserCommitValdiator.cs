@@ -20,7 +20,7 @@ namespace SpacedRepetitionSystem.Entities.Validation.Cards
     ///<inheritdoc/>
     public override string Validate(User entity)
     {
-      if (Context.Set<User>().AsNoTracking().Any(user => user.UserId == entity.UserId))
+      if (Context.Set<User>().AsNoTracking().Any(user => user.Email == entity.Email))
         return Errors.UserAlreadyExists;
       return null;
     }

@@ -39,7 +39,7 @@ public sealed class DeckStatisticsViewModel : StatisticsViewModelBase<Deck>
     await base.InitializeAsync();
     Dictionary<string, object> parameters = new Dictionary<string, object>()
     { { nameof(Card.DeckId), Entity.DeckId } };
-    List<PracticeHistoryEntry> entries = await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters);
+    List<PracticeHistoryEntry> entries = (await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters)).Result;
     PracticeHistoryEntries.AddRange(entries);
     SelectableDisplayUnits.Add(nameof(Deck));
     //SelectableDisplayUnits.AddRange(Entity.C.Select(field => field.FieldName));

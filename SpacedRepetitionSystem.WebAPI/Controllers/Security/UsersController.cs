@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SpacedRepetitionSystem.Logic.Controllers.Security
 {
@@ -23,7 +24,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
   /// </summary>
   [Route("[controller]")]
   [ApiController]
-  public sealed class UsersController : EntityControllerBase<User>
+  public sealed class UsersController : EntityControllerBase<User, Guid>
   {
     private readonly JWTSettings jwtSettings;
 
@@ -38,8 +39,9 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     { this.jwtSettings = jwtSettings.Value;  }
 
     ///<inheritdoc/>
+    [Authorize]
     [HttpGet("{id}")]
-    public override async Task<ActionResult<User>> GetAsync(object id)
+    public override async Task<ActionResult<User>> GetAsync([FromRoute] Guid id)
     {
       User user = await Context.Set<User>().FindAsync(id);
       if (user == null)
@@ -59,21 +61,50 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     /// <param name="password">password of the user</param>
     /// <returns>User or null</returns>
     [HttpPost("Login")]
-    public async Task<User> Login(string email, string password)
+    public async Task<ActionResult<User>> Login([FromBody] User user)
     {
-      password = password.Encrypt();
-      User user = await Context.Set<User>()
-        .Where(user => user.Email == email && user.Password == password)
+      if (user == null)
+        return BadRequest();
+
+      string password = user.Password.Encrypt();
+      User user1 = await Context.Set<User>()
+        .Where(user2 => user2.Email == user.Email && user2.Password == password)
         .FirstOrDefaultAsync();
 
-      if(user != null)
+      if (user1 != null)
       {
         RefreshToken refreshToken = GenerateRefreshToken();
-        user.RefreshTokens.Add(refreshToken);
+        user1.RefreshTokens.Add(refreshToken);
+        user1.AccessToken = GenerateAccessToken(user1.UserId);
+        user1.RefreshToken = refreshToken.Token;
         await Context.SaveChangesAsync();
-        user.AccessToken = GenerateAccessToken(user.UserId);
-        user.RefreshToken = refreshToken.Token;
-      }     
+      }
+    
+      return user1;
+    }
+
+    /// <summary>
+    /// Returns user or null if no user exists
+    /// </summary>
+    /// <param name="email">email of the user</param>
+    /// <param name="password">password of the user</param>
+    /// <returns>User or null</returns>
+    [HttpPost("Signup")]
+    public async Task<ActionResult<User>> Signup([FromBody] User user)
+    {
+      if (user == null)
+        return BadRequest();
+
+      Context.Add(user);
+      user.Password = user.Password.Encrypt();
+      RefreshToken refreshToken = GenerateRefreshToken();
+      user.RefreshTokens.Add(refreshToken);
+      user.RefreshToken = refreshToken.Token;
+      CreateInitialDataForNewUser(user);
+      user.UserId = Guid.NewGuid();
+      user.AccessToken = GenerateAccessToken(user.UserId);
+      await Context.SaveChangesAsync();
+
       return user;
     }
 
@@ -112,17 +143,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     protected override async Task<IActionResult> PostCoreAsync(User entity)
     {
       IActionResult result = await base.PostCoreAsync(entity);
-      if (entity != null)
-      {
-        entity.Password = entity.Password.Encrypt();
 
-        RefreshToken refreshToken = GenerateRefreshToken();
-        entity.RefreshTokens.Add(refreshToken);
-        entity.RefreshToken = refreshToken.Token;
-        CreateInitialDataForNewUser(entity);
-        entity.UserId = Guid.NewGuid();
-        entity.AccessToken = GenerateAccessToken(entity.UserId);
-      }
       return result;
     }
 
@@ -211,14 +232,12 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
       template.FieldDefinitions.Add(new CardFieldDefinition()
       {
         CardTemplate = template,
-        FieldName = "Front",
-        User = user
+        FieldName = "Front"
       });
       template.FieldDefinitions.Add(new CardFieldDefinition()
       {
         CardTemplate = template,
-        FieldName = "Back",
-        User = user
+        FieldName = "Back"
       });
       Context.Add(template);
 

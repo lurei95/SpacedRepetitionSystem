@@ -1,12 +1,9 @@
-﻿using SpacedRepetitionSystem.Entities.Entities.Security;
-using System;
-
-namespace SpacedRepetitionSystem.Entities.Entities.Cards
+﻿namespace SpacedRepetitionSystem.Entities.Entities.Cards
 {
   /// <summary>
   /// Definition of a field of a card
   /// </summary>
-  public sealed class CardFieldDefinition : IUserSpecificEntity
+  public sealed class CardFieldDefinition : IEntity
   {
     ///<inheritdoc/>
     public object Id => new { CardTemplateId, FieldName };
@@ -22,16 +19,6 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public bool ShowInputForPractice { get; set; } = false;
 
     #region References
-
-    /// <summary>
-    /// Id of the user
-    /// </summary>
-    public Guid UserId { get; set; }
-
-    /// <summary>
-    /// User
-    /// </summary>
-    public User User { get; set; }
 
     /// <summary>
     /// Id of the card template the field definition belongs to

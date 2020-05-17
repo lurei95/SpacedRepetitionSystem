@@ -13,7 +13,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     {
       builder.ToTable("PracticeHistoryEntries", "Cards");
 
-      builder.HasKey(entry => new { entry.UserId, entry.PracticeHistoryEntryId });
+      builder.HasKey(entry => entry.PracticeHistoryEntryId);
 
       builder.Property(field => field.UserId)
         .IsRequired();

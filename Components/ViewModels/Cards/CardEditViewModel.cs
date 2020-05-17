@@ -19,14 +19,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
   /// </summary>
   public sealed class CardEditViewModel : EditViewModelBase<Card>
   {
-    private readonly Dictionary<string, long> availableCardTemplates = new Dictionary<string, long>();
-    private long? deckId;
-    private long? cardTemplateId;
+    private readonly Dictionary<string, CardTemplate> availableCardTemplates = new Dictionary<string, CardTemplate>();
+    private long deckId;
+    private long cardTemplateId;
 
     /// <summary>
     /// Id of the deck the card belongs to
     /// </summary>
-    public long? DeckId 
+    public long DeckId 
     {
       get => deckId;
       set
@@ -34,9 +34,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         if (deckId != value)
         {
           deckId = value;
-          if (DeckId.HasValue)
+          if (Entity != null)
           {
-            Entity.DeckId = DeckId.Value;
+            Entity.DeckId = value;
             ChangeDeck();
           }
         }
@@ -46,7 +46,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <summary>
     /// Id of the definition of the card
     /// </summary>
-    public long? CardTemplateId
+    public long CardTemplateId
     {
       get => cardTemplateId;
       set
@@ -54,14 +54,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         if (cardTemplateId != value)
         {
           cardTemplateId = value;
-          if (CardTemplateId.HasValue)
-            ChangeCardTemplate(CardTemplateId.Value);
-          else
-          {
-            Entity.CardTemplateId = default;
-            Entity.CardTemplate = null;
-            Entity.Fields.Clear();
-          }
+          Entity.CardTemplateId = value;
+          CardTemplate template = availableCardTemplates.Values.Single(template => template.CardTemplateId == value);
+          Entity.Fields.Clear();
+          foreach (CardFieldDefinition fieldDefinition in template.FieldDefinitions)
+            Entity.Fields.Add(new CardField()
+            {
+              CardId = Entity.CardId,
+              CardTemplateId = value,
+              FieldName = fieldDefinition.FieldName
+            });
           OnPropertyChanged();
         }
       }
@@ -78,11 +80,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// </summary>
     public string CardTemplateTitle
     {
-      get => Entity?.CardTemplate?.Title;
+      get => availableCardTemplates.Values.SingleOrDefault(template => template.CardTemplateId == CardTemplateId)?.Title;
       set
       {
         if (CardTemplateTitle != value)
-          CardTemplateId = availableCardTemplates[value];
+          CardTemplateId = availableCardTemplates[value].CardTemplateId;
       }
     }
 
@@ -127,20 +129,23 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     ///<inheritdoc/>
     public override async Task InitializeAsync() 
     {
+      foreach (CardTemplate cardTemplate in (await ApiConnector.GetAsync<CardTemplate>(new Dictionary<string, object>())).Result)
+        availableCardTemplates.Add(cardTemplate.Title, cardTemplate);
+
+      await base.InitializeAsync();
+      CardTemplateId = Entity.CardTemplateId;
+      Entity.DeckId = deckId;
+      ChangeDeck();
+
       CardTemplateTitleProperty = new PropertyProxy(
-        () => CardTemplateTitle,
-        (value) => CardTemplateTitle = value,
+       () => CardTemplateTitle,
+       (value) => CardTemplateTitle = value,
         nameof(CardTemplateTitle),
         Entity
       );
       RegisterPropertyProperty(CardTemplateTitleProperty);
 
-      await base.InitializeAsync();
-
-      foreach (CardTemplate cardTemplate in await ApiConnector.GetAsync<CardTemplate>(null))
-        availableCardTemplates.Add(cardTemplate.Title, cardTemplate.CardTemplateId);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
-
       ShowStatisticsCommand.IsEnabled = !IsNewEntity;
     }
 
@@ -173,27 +178,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
     private async void ChangeDeck()
     {
-      Entity.Deck = await ApiConnector.GetAsync<Deck>(DeckId);
+      Deck deck = (await ApiConnector.GetAsync<Deck>(DeckId)).Result;
       if (IsNewEntity)
-      {
-        CardTemplateId = Entity.Deck.DefaultCardTemplateId;
-        Entity.CardTemplate = await ApiConnector.GetAsync<CardTemplate>(Entity.CardTemplateId);
-      }
+        CardTemplateId = deck.DefaultCardTemplateId;
       OnPropertyChanged();
-    }
-
-    private async Task ChangeCardTemplate(long id)
-    {
-      Entity.CardTemplateId = id;
-      Entity.CardTemplate = await ApiConnector.GetAsync<CardTemplate>(id);
-      Entity.Fields.Clear();
-      foreach (CardFieldDefinition fieldDefinition in Entity.CardTemplate.FieldDefinitions)
-        Entity.Fields.Add(new CardField()
-        {
-          CardId = Entity.CardId,
-          CardTemplateId = id,
-          FieldName = fieldDefinition.FieldName
-        });
     }
 
     private string ValidateCardTemplateTitle(string value)

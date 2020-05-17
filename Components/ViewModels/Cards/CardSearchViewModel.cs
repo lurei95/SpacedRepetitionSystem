@@ -56,7 +56,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       Dictionary<string, object> parameters = new Dictionary<string, object>();
       if (DeckId.HasValue)
         parameters.Add(nameof(Deck.DeckId), DeckId);
-      return await ApiConnector.GetAsync<Card>(parameters);
+      return (await ApiConnector.GetAsync<Card>(parameters)).Result;
     }
 
     ///<inheritdoc/>

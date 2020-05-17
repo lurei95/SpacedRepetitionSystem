@@ -17,7 +17,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
   [Authorize]
   [Route("[controller]")]
   [ApiController]
-  public sealed class DecksController : EntityControllerBase<Deck>
+  public sealed class DecksController : EntityControllerBase<Deck, long>
   {
     /// <summary>
     /// Constructor
@@ -30,7 +30,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
 
     ///<inheritdoc/>
     [HttpGet("{id}")]
-    public override async Task<ActionResult<Deck>> GetAsync(object id)
+    public override async Task<ActionResult<Deck>> GetAsync([FromRoute] long id)
     {
       Deck deck = await Context.Set<Deck>()
         .Include(deck => deck.Cards)

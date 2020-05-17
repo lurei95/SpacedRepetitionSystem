@@ -82,7 +82,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<List<Deck>> SearchCore() => await ApiConnector.GetAsync<Deck>(null);
+    protected override async Task<List<Deck>> SearchCore() 
+      => (await ApiConnector.GetAsync<Deck>(new Dictionary<string, object>())).Result;
 
     private void ShowStatistics(Deck deck)
     { NavigationManager.NavigateTo("/Decks/" + deck.DeckId + "/Statistics/"); }
