@@ -47,9 +47,8 @@ namespace SpacedRepetitionSystem.WebAPI
       //EF Core
       services.AddControllers();
       services.AddDbContext<SpacedRepetionSystemDBContext>(
-        options => options.UseSqlServer(Configuration.GetConnectionString("Default")),
-        ServiceLifetime.Transient);
-      services.AddTransient<DbContext, SpacedRepetionSystemDBContext>();
+        options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+      services.AddScoped<DbContext, SpacedRepetionSystemDBContext>();
 
       services.AddMvc(option =>option.EnableEndpointRouting = false)
         .SetCompatibilityVersion(CompatibilityVersion.Latest)

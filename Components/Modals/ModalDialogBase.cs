@@ -74,7 +74,7 @@ namespace SpacedRepetitionSystem.Components.Modals
 		/// </summary>
 		public ModalDialogBase() { ModalDialogManager.Initialize(this); }
 
-		///<inheritdoc>
+		///<inheritdoc/>
 		public void ShowModal(string title, string text, DialogButtons buttons, Action<DialogResult> callback)
 		{
 			Callback = callback;

@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpacedRepetitionSystem.Utility</name>
+    </assembly>
+    <members>
+        <member name="T:SpacedRepetitionSystem.Utility.Dialogs.DialogButton">
+            <summary>
+            Enum for the Button of the dialog
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogButton.None">
+            <summary>
+            No0 dialog button
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogButton.Button1">
+            <summary>
+            The first button
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogButton.Button2">
+            <summary>
+            The second button
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogButton.Button3">
+            <summary>
+            The third button
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Dialogs.DialogButtons">
+            <summary>
+            Enum for which buttons the dialog should have
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogButtons.YesNo">
+            <summary>
+            Buttons "Yes" and "No"
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogButtons.OkayCancel">
+            <summary>
+            Buttons "Okay" and "Cancel"
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogButtons.YesNoCancel">
+            <summary>
+            Buttons "Yes", "No" and "Cancel"
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogButtons.Okay">
+            <summary>
+            Button "Okay"
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Dialogs.DialogResult">
+            <summary>
+            Enum for the result of a dialog
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogResult.Yes">
+            <summary>
+            Button "Yes" pressed
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogResult.No">
+            <summary>
+            Button "No" pressed
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogResult.Okay">
+            <summary>
+            Button "Okay" pressed
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Dialogs.DialogResult.Cancel">
+            <summary>
+            Button "Cancel" pressed
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Dialogs.IDialogProvider">
+            <summary>
+            Interface for a class that providers the possibleity to display a modal dialog
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Dialogs.IDialogProvider.ShowModal(System.String,System.String,SpacedRepetitionSystem.Utility.Dialogs.DialogButtons,System.Action{SpacedRepetitionSystem.Utility.Dialogs.DialogResult})">
+            <summary>
+            Shows the dialog as a modal
+            </summary>
+            <param name="title">Title of the dialog</param>
+            <param name="text">Text of the dialog</param>
+            <param name="buttons"> buttons of the dialog</param>
+            <param name="callback">Callback when the dialog is closed</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Dialogs.ModalDialogManager">
+            <summary>
+            Manager class for showing modal dialogs
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Dialogs.ModalDialogManager.Initialize(SpacedRepetitionSystem.Utility.Dialogs.IDialogProvider)">
+            <summary>
+            Initializes the manager class with a dialog provider
+            </summary>
+            <param name="provider">The dialog provider</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Dialogs.ModalDialogManager.ShowDialog(System.String,System.String,SpacedRepetitionSystem.Utility.Dialogs.DialogButtons,System.Action{SpacedRepetitionSystem.Utility.Dialogs.DialogResult})">
+            <summary>
+            Displays a modal dialog
+            </summary>
+            <param name="title">Title of the dialog</param>
+            <param name="text">Text of the dialog</param>
+            <param name="buttons">Buttons of the dialog</param>
+            <param name="callback">Callback for when diialog is closed</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Extensions.CollectionExtensions">
+            <summary>
+            Contains extension methods for <see cref="T:System.Collections.Generic.ICollection`1"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Extensions.CollectionExtensions.Shuffle``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Shuffles a list
+            </summary>
+            <typeparam name="T">Generic parameter</typeparam>
+            <param name="list">The list to shuffle</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Extensions.StringExtensions">
+            <summary>
+            Class containing exrtension methods for string
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Extensions.StringExtensions.FormatWith(System.String,System.Object[])">
+            <summary>
+            Returns a formated string
+            </summary>
+            <param name="text">The string to format</param>
+            <param name="parameters">The parameters with which the string should be formated</param>
+            <returns>The formated string</returns>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Extensions.StringExtensions.Encrypt(System.String)">
+            <summary>
+            Encrypts a string
+            </summary>
+            <param name="text">the text to encrypt</param>
+            <returns>The encrypted text</returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Notification.INotificationProvider">
+            <summary>
+            Interface for a component that provides the possiblity to display notification messages
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.INotificationProvider.NotifyMessage(SpacedRepetitionSystem.Utility.Notification.NotificationKind,System.String)">
+            <summary>
+            Shows the notification message
+            </summary>
+            <param name="notificationKind">Kind of the notification message</param>
+            <param name="message">The notification message</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.INotificationProvider.ResetNotification">
+            <summary>
+            Resets the notification message
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Notification.NotificationKind">
+            <summary>
+            The kind of notification
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Notification.NotificationKind.SuccessNotification">
+            <summary>
+            Notification for a success message
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Notification.NotificationKind.InformationNotification">
+            <summary>
+            Notification for an information message
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Notification.NotificationKind.WarningNotification">
+            <summary>
+            Notification for a warning message
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Utility.Notification.NotificationKind.ErrorNotification">
+            <summary>
+            Notification for an error message
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider">
+            <summary>
+            Utility class for showing notification messages
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider.Initialize(SpacedRepetitionSystem.Utility.Notification.INotificationProvider)">
+            <summary>
+            Initializes the notification message provider
+            </summary>
+            <param name="provider">The comnponent for showing the message</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider.ShowSuccessMessage(System.String)">
+            <summary>
+            Shows a success message
+            </summary>
+            <param name="message">The message</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider.ShowInformationMessage(System.String)">
+            <summary>
+            Shows a information message
+            </summary>
+            <param name="message">The message</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider.ShowWarningMessage(System.String)">
+            <summary>
+            Shows a warning message
+            </summary>
+            <param name="message">The message</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider.ShowErrorMessage(System.String)">
+            <summary>
+            Shows a error message
+            </summary>
+            <param name="message">The message</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Utility.Notification.NotifyException">
+            <summary>
+            A exception which can be notified via <see cref="T:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotifyException.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotifyException.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">Exception message</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotifyException.#ctor(System.String,System.Exception)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="message">Exception message</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotifyException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="info">Serialization info</param>
+            <param name="context">Streaming context</param>
+        </member>
+    </members>
+</doc>

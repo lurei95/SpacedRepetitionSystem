@@ -43,6 +43,36 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     }
 
     ///<inheritdoc/>
+    protected override async Task<IActionResult> PutCoreAsync(Card entity)
+    {
+      Card existing = await Context.Set<Card>()
+        .Include(card => card.Fields)
+        .FirstOrDefaultAsync(card => card.CardId == entity.CardId);
+      if (existing == null)
+        return NotFound();
+      existing.CardTemplateId = entity.CardTemplateId;
+      existing.Tags = entity.Tags;
+
+      foreach (CardField field in existing.Fields)
+      {
+        CardField field1 = entity.Fields.SingleOrDefault(x => x.FieldName == field.FieldName);
+        if (field1 != null)
+        {
+          field.CardTemplateId = field1.CardTemplateId;
+          field.DueDate = field1.DueDate;
+          field.Value = field1.Value;
+          field.ProficiencyLevel = field1.ProficiencyLevel;
+        }
+        else
+          Context.Entry(field).State = EntityState.Deleted;
+      }
+
+      foreach (CardField field in entity.Fields.Where(x => !existing.Fields.Any(y => y.FieldName == x.FieldName)))
+        existing.Fields.Add(field);
+      return Ok();
+    }
+
+    ///<inheritdoc/>
     [HttpGet]
     public override async Task<ActionResult<List<Card>>> GetAsync(IDictionary<string, object> searchParameters)
     {

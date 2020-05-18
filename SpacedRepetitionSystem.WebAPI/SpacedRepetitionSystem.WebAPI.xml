@@ -1,0 +1,388 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpacedRepetitionSystem.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController">
+            <summary>
+            Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.Card},SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.Card},Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="commitValidator">CommitValidator (injected)</param>
+            <param name="deleteValidator">DeleteValidator (injected)</param>
+            <param name="context">DBContext (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.GetAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController">
+            <summary>
+            Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate},SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate},Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="commitValidator">CommitValidator (injected)</param>
+            <param name="deleteValidator">DeleteValidator (injected)</param>
+            <param name="context">DBContext (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController.GetAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2">
+            <summary>
+            Base class for a controller for a specific entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TKey">Type of the primary key</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.Context">
+            <summary>
+            Context used to perform the actions
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase{`0},SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase{`0},Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="commitValidator">CommitValidator (injected)</param>
+            <param name="deleteValidator">DeleteValidator (injected)</param>
+            <param name="context">DBContext (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.GetAsync(`1)">
+            <summary>
+            Returns the entity with the Id
+            </summary>
+            <param name="id">Id of the entity</param>
+            <returns>The entity with the Id</returns>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a list of entities matching the filter
+            </summary>
+            <param name="searchParameters">A dictionary containing the search parameters</param>
+            <returns>A list of entities matching the filter</returns>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.PutAsync(`0)">
+            <summary>
+            Updates an existing entity
+            </summary>
+            <param name="entity">The updated entity</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.PostAsync(`0)">
+            <summary>
+            Creates a new entity
+            </summary>
+            <param name="entity">The new entity</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.DeleteAsync(`0)">
+            <summary>
+            Deletes an existing entity
+            </summary>
+            <param name="entity">The entity to delete</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.PutCoreAsync(`0)">
+            <summary>
+            Updates an existing entity
+            </summary>
+            <param name="entity">The updated entity</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.DeleteCoreAsync(`0)">
+            <summary>
+            Deletes an existing entity
+            </summary>
+            <param name="entity">The entity to delete</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.PostCoreAsync(`0)">
+            <summary>
+            Creates a new entity
+            </summary>
+            <param name="entity">The new entity</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.GetUserId">
+            <summary>
+            Returns the id of the user authenticated by the jwt
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Core.ErrorHandlingMiddleware">
+            <summary>
+            Middleware for handlingf exceptions occuring in the controllers
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.ErrorHandlingMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="next">Request Delegate</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.ErrorHandlingMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Invoke
+            </summary>
+            <param name="context">Context</param>
+            <returns></returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Core.JWTSettings">
+            <summary>
+            Settings for the json web token
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.JWTSettings.SecretKey">
+            <summary>
+            The secret key
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext">
+            <summary>
+            The Database Context for this app
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.Cards">
+            <summary>
+            Cards
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.Decks">
+            <summary>
+            decks
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.CardTemplates">
+            <summary>
+            CardTemplates
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.PracticeHistoryEntries">
+            <summary>
+            PracticeHistoryEntries
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.Users">
+            <summary>
+            User
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.RefreshTokens">
+            <summary>
+            User
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="options">The options</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Core.UnitOfWork">
+            <summary>
+            Class Representing a unit of work
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.UnitOfWork.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">The context used to perform the action</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.UnitOfWork.Execute(System.Action)">
+            <summary>
+            Executes the action as a unit of work
+            </summary>
+            <param name="action">the action to be executed as a unit of work</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Core.UnitOfWork.ExecuteAsync(System.Action)">
+            <summary>
+            Executes the action async as a unit of work
+            </summary>
+            <param name="action">the action to be executed as a unit of work</param>
+            <returns>Task</returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Migrations.InitialCreate">
+            <summary>
+            Initial create
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            Migration up
+            </summary>
+            <param name="migrationBuilder">migration builder</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <summary>
+            Migration down
+            </summary>
+            <param name="migrationBuilder">migration builder</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Program">
+            <summary>
+            Pragram
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Program.Main(System.String[])">
+            <summary>
+            Main
+            </summary>
+            <param name="args">arguuemnts</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Creates the hots builder
+            </summary>
+            <param name="args">arguments</param>
+            <returns></returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Startup">
+            <summary>
+            Startup
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Startup.Configuration">
+            <summary>
+            The configuration
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="configuration">Configuration</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures DI
+            </summary>
+            <param name="services">Service collection</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Confiugures the HTTP pipeline
+            </summary>
+            <param name="app">app builder</param>
+            <param name="env">Host environment</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Logic.Controllers.Cards.DecksController">
+            <summary>
+            Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.DecksController.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.Deck},SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.Deck},Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="commitValidator">CommitValidator (injected)</param>
+            <param name="deleteValidator">DeleteValidator (injected)</param>
+            <param name="context">DBContext (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.DecksController.GetAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.DecksController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController">
+            <summary>
+            Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry"/>
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.ProblemWords">
+            <summary>
+            Search parameter for the top 10 problem words
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry},SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry},Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="commitValidator">CommitValidator (injected)</param>
+            <param name="deleteValidator">DeleteValidator (injected)</param>
+            <param name="context">DBContext (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.GetAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.PostCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.DeleteCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController">
+            <summary>
+            Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Security.User"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase{SpacedRepetitionSystem.Entities.Entities.Security.User},SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase{SpacedRepetitionSystem.Entities.Entities.Security.User},Microsoft.EntityFrameworkCore.DbContext,Microsoft.Extensions.Options.IOptions{SpacedRepetitionSystem.WebAPI.Core.JWTSettings})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="commitValidator">CommitValidator (injected)</param>
+            <param name="deleteValidator">DeleteValidator (injected)</param>
+            <param name="context">DBContext (injected)</param>
+            <param name="jwtSettings">The jwt settings</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.GetAsync(System.Guid)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.Login(SpacedRepetitionSystem.Entities.Entities.Security.User)">
+            <summary>
+            Returns user or null if no user exists
+            </summary>
+            <param name="user">The user</param>
+            <returns>User or null</returns>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.Signup(SpacedRepetitionSystem.Entities.Entities.Security.User)">
+            <summary>
+            Returns user or null if no user exists
+            </summary>
+            <param name="user">The user</param>
+            <returns>User or null</returns>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.RefreshToken(SpacedRepetitionSystem.Entities.Entities.Security.RefreshRequest)">
+            <summary>
+            Refreshes the jwt token for a user
+            </summary>
+            <param name="refreshRequest">Request containing the old jwt token and the refresh token</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.GetUserByAccessToken(System.String)">
+            <summary>
+            Gets a user by its accesss token
+            </summary>
+            <param name="accessToken">The access token</param>
+            <returns></returns>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.PostCoreAsync(SpacedRepetitionSystem.Entities.Entities.Security.User)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

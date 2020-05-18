@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpacedRepetitionSystem</name>
+    </assembly>
+    <members>
+        <member name="T:SpacedRepetitionSystem.Messages">
+            <summary>
+            A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Messages.resourceManager">
+            <summary>
+            The resource manager.
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Messages.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpacedRepetitionSystem.Messages"/> class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Messages.CultureInfo">
+            <summary>
+            Gets or sets the culture to use for lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Messages.ResourceManager">
+            <summary>
+            Gets the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Pages.EditPageBase`2">
+            <summary>
+            Baseclass for all EditPages
+            </summary>
+            <typeparam name="TEntity">Entity-Type</typeparam>
+            <typeparam name="TViewModel">ViewModel-Type</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.EditPageBase`2.Id">
+            <summary>
+            Id of the entity to edit
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Pages.PageBase`1">
+            <summary>
+            Baseclass for all pages
+            </summary>
+            <typeparam name="TViewModel">ViewModel-Type</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.PageBase`1.ViewModel">
+            <summary>
+            The ViewModel
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.PageBase`1.IsLoading">
+            <summary>
+            Whether the page is currenty still loading data
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Pages.PageBase`1.OnAfterRenderAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Pages.SearchPageBase`2">
+            <summary>
+            Baseclass for all SearchPages
+            </summary>
+            <typeparam name="TEntity">Entity-Type</typeparam>
+            <typeparam name="TViewModel">ViewModel-Type</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.Cards.CardEditPage.DeckId">
+            <summary>
+            Id of the deck
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Pages.Cards.CardEditPage.OnParametersSet">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.Cards.CardSearchPage.DeckId">
+            <summary>
+            Id of the deck
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Pages.Cards.CardSearchPage.OnInitializedAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Pages.Cards.CardTemplateSearchPage.OnInitializedAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Pages.Cards.DeckSearchPage.OnInitializedAsync">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.Cards.PracticeDeckPage.Id">
+            <summary>
+            Id of the Deck
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Pages.Cards.PracticeDeckPage.OnParametersSet">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.Identity.LoginPage.AuthenticationStateTask">
+            <summary>
+            The athentication state task
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.Statistics.CardStatisticsPage.CardId">
+            <summary>
+            Id of the card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.Statistics.CardStatisticsPage.DeckId">
+            <summary>
+            Id of the deck
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Pages.Statistics.CardStatisticsPage.OnAfterRenderAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Pages.Statistics.DeckStatisticsPage.DeckId">
+            <summary>
+            Id of the deck
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Pages.Statistics.DeckStatisticsPage.OnAfterRenderAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Program">
+            <summary>
+            Program
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Program.Main(System.String[])">
+            <summary>
+            Main
+            </summary>
+            <param name="args">Arguments</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Creates the host builder
+            </summary>
+            <param name="args">args</param>
+            <returns></returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Startup">
+            <summary>
+            Startup class
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Startup.Configuration">
+            <summary>
+            The configuration
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="configuration">Configuration</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Configures DI
+            </summary>
+            <param name="services">Service collection</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Confiugures the HTTP pipeline
+            </summary>
+            <param name="app">app builder</param>
+            <param name="env">Host environment</param>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Shared.TopBar.IsLoggedIn">
+            <summary>
+            Whether the user is logged in
+            </summary>
+        </member>
+    </members>
+</doc>

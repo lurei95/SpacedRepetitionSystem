@@ -1,0 +1,992 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpacedRepetitionSystem.Entities</name>
+    </assembly>
+    <members>
+        <member name="T:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions">
+            <summary>
+            Class containing extensions for DI
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddValidator``2(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds a valdiation service
+            </summary>
+            <typeparam name="TValidator">Base type</typeparam>
+            <typeparam name="TImplementation">Implementation</typeparam>
+            <param name="services">service collection</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddCardPropertyValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds the Property validator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
+            </summary>
+            <param name="services">Service-collection</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddDecksPropertyValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds the Property validator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck"/>
+            </summary>
+            <param name="services">Service-collection</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddCardTemplatePropertyValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds the Property validator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
+            </summary>
+            <param name="services">Service-collection</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddUserPropertyValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds the Property validator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Security.User"/>
+            </summary>
+            <param name="services">Service-collection</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card">
+            <summary>
+            A card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.Route">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId">
+            <summary>
+            Id of the card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.Tags">
+            <summary>
+            The tags the card is amrked with
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.UserId">
+            <summary>
+            Id of the user
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.User">
+            <summary>
+            User
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardTemplateId">
+            <summary>
+            Id of the template of the card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardTemplate">
+            <summary>
+            The template of the card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.DeckId">
+            <summary>
+            Id of the deck the card belongs to
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.Deck">
+            <summary>
+            The deck card belongs to
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.Fields">
+            <summary>
+            The fields of the card
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.Card.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardField">
+            <summary>
+            A Field of a card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.Value">
+            <summary>
+            Value of the field
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.DueDate">
+            <summary>
+            The next due date for practicing the field
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.ProficiencyLevel">
+            <summary>
+            Level of proficiency
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.IsDue">
+            <summary>
+            Returns whether the practice field is due
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.CardId">
+            <summary>
+            Id of the card the field belongs to
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.Card">
+            <summary>
+            The card the field belongs to
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.CardTemplateId">
+            <summary>
+            Id of the template of the card the field belongs to
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.CardTemplate">
+            <summary>
+            The template of the card the field belongs to
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.FieldName">
+            <summary>
+            Name of the field
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.CardFieldDefinition">
+            <summary>
+            The field definition of the field
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition">
+            <summary>
+            Definition of a field of a card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.FieldName">
+            <summary>
+            Name of the field
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.ShowInputForPractice">
+            <summary>
+            Whether the input should be used for praticing purpose
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.CardTemplateId">
+            <summary>
+            Id of the card template the field definition belongs to
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.CardTemplate">
+            <summary>
+            The card template the field definition belongs to
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate">
+            <summary>
+            Template for cards
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.Route">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.DefaultCardTemplateId">
+            <summary>
+            The id of the default template
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.CardTemplateId">
+            <summary>
+            The Id of the template
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.Title">
+            <summary>
+            Title of the template
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.UserId">
+            <summary>
+            Id of the user
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.User">
+            <summary>
+            User
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.FieldDefinitions">
+            <summary>
+            The field definitions of the template
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardConfiguration">
+            <summary>
+            Configuration für <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{SpacedRepetitionSystem.Entities.Entities.Cards.Card})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardFieldConfiguration">
+            <summary>
+            Configuration für <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardField"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardFieldConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{SpacedRepetitionSystem.Entities.Entities.Cards.CardField})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardFieldDefinitionConfiguration">
+            <summary>
+            Configuration für <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardFieldDefinitionConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardTemplateConfiguration">
+            <summary>
+            Configuration für <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardTemplateConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.DeckConfiguration">
+            <summary>
+            Configuration für <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.DeckConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{SpacedRepetitionSystem.Entities.Entities.Cards.Deck})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.PracticeHistoryEntryConfiguration">
+            <summary>
+            Configuration for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.PracticeHistoryEntryConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck">
+            <summary>
+            A Set of cards for practicing purpose
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.Route">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.DeckId">
+            <summary>
+            Id of the deck
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.Title">
+            <summary>
+            Title the deck
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.IsPinned">
+            <summary>
+            Whether the deck is pinned to be shon in the home page
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.UserId">
+            <summary>
+            Id of the user
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.User">
+            <summary>
+            User
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.Cards">
+            <summary>
+            The cards in the deck
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.CardCount">
+            <summary>
+            Count of the Cards in the deck
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.DueCardCount">
+            <summary>
+            Count of the Cards in the deck that are due
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.DefaultCardTemplateId">
+            <summary>
+            Id of the default card template for the deck
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.DefaultCardTemplate">
+            <summary>
+            The default card template for the deck
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry">
+            <summary>
+            Entry of a practice history
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.Route">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.PracticeHistoryEntryId">
+            <summary>
+            Id of the history entry
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.PracticeDate">
+            <summary>
+            Date when it was practiced
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.WrongCount">
+            <summary>
+            Wrong count
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.HardCount">
+            <summary>
+            Hard count
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.CorrectCount">
+            <summary>
+            Correct count
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.UserId">
+            <summary>
+            Id of the user
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.User">
+            <summary>
+            User
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.CardId">
+            <summary>
+            Id of the card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.DeckId">
+            <summary>
+            Id of the deck the card belongs to
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.FieldName">
+            <summary>
+            Name of the field
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeResultKind">
+            <summary>
+            Result of the practice
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeResultKind.Easy">
+            <summary>
+            Card was easy to remember
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeResultKind.Hard">
+            <summary>
+            Card was hard to remember
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeResultKind.Failed">
+            <summary>
+            Failed to remember the card/wrong input
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.IEntity">
+            <summary>
+            Interface for an entity
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.IEntity.GetDisplayName">
+            <summary>
+            Returns the display name of the entity
+            </summary>
+            <returns>The display name of the entity</returns>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.IEntity.Id">
+            <summary>
+            ID of the entity
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.IRootEntity">
+            <summary>
+            Interface for a root entity
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.IRootEntity.Route">
+            <summary>
+            Route for the entity
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.IUserSpecificEntity">
+            <summary>
+            Interafce for a user specific entity
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.IUserSpecificEntity.UserId">
+            <summary>
+            Id of the user
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Security.Configurations.RefreshTokenConfiguration">
+            <summary>
+            Configuration für <see cref="T:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Security.Configurations.RefreshTokenConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Security.Configurations.UserConfiguration">
+            <summary>
+            Configuration für <see cref="T:SpacedRepetitionSystem.Entities.Entities.Security.User"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Security.Configurations.UserConfiguration.Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder{SpacedRepetitionSystem.Entities.Entities.Security.User})">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Security.RefreshRequest">
+            <summary>
+            Request for refreshing the jwt of a user
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.RefreshRequest.AccessToken">
+            <summary>
+            The access token
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.RefreshRequest.RefreshToken">
+            <summary>
+            The refresh token
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken">
+            <summary>
+            Refresh token for a user
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken.TokenId">
+            <summary>
+            Id of the token
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken.UserId">
+            <summary>
+            The id of the user
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken.Token">
+            <summary>
+            The token
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken.ExpirationDate">
+            <summary>
+            Expiration date for the token
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken.User">
+            <summary>
+            The user
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Security.RefreshToken.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Entities.Security.User">
+            <summary>
+            A user of the app
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.Id">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.Route">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.UserId">
+            <summary>
+            UserId
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.Email">
+            <summary>
+            Email of the user
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.Password">
+            <summary>
+            Password
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.AccessToken">
+            <summary>
+            The access token
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.RefreshToken">
+            <summary>
+            The refresh token
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Security.User.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.RefreshTokens">
+            <summary>
+            Refresh tokens
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.EntityNames">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.Card">
+            <summary>
+              Looks up a localized string similar to Card - &quot;{0}&quot;.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.CardTemplate">
+            <summary>
+              Looks up a localized string similar to Card Template - &quot;{0}&quot;.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.Deck">
+            <summary>
+              Looks up a localized string similar to Deck - &quot;{0}&quot;.
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Errors">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.CardRequiresFieldWithValue">
+            <summary>
+              Looks up a localized string similar to At least one of the fields requires a value..
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.CardTemplateInUse">
+            <summary>
+              Looks up a localized string similar to The template &quot;{0}&quot; cannot be deleted because it is currently still in use..
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.CardTemplateTitleNotUnique">
+            <summary>
+              Looks up a localized string similar to A template with the title &quot;{0}&quot; already exists..
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.DeckTitleNotUnique">
+            <summary>
+              Looks up a localized string similar to A deck with the title &quot;{0}&quot; already exists..
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.InvalidUserNameOrPassword">
+            <summary>
+              Looks up a localized string similar to Invalid username or password..
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.PasswordDoesNotEqualConfirm">
+            <summary>
+              Looks up a localized string similar to The password does equal the confirmed password..
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.PropertyRequired">
+            <summary>
+              Looks up a localized string similar to {0} cannot be empty..
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.UserAlreadyExists">
+            <summary>
+              Looks up a localized string similar to A user with the same email already exists..
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.PropertyNames">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.CardTemplate">
+            <summary>
+              Looks up a localized string similar to Template.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.Deck">
+            <summary>
+              Looks up a localized string similar to Deck.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.DefaultCardTemplate">
+            <summary>
+              Looks up a localized string similar to Default Template.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.EMailAddress">
+            <summary>
+              Looks up a localized string similar to Email Address.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.Password">
+            <summary>
+              Looks up a localized string similar to Password.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.Title">
+            <summary>
+              Looks up a localized string similar to Title.
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardCardTemplateIdValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardTemplateId"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Cards.CardCardTemplateIdValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardCardTemplateIdValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card,System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardCommitValidator">
+            <summary>
+            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">Context (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardDeckIdValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.DeckId"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Cards.CardDeckIdValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardDeckIdValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card,System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator">
+            <summary>
+            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Security.User"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">Context (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Security.User)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardFieldDefinitionFieldNameValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.FieldName"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardFieldDefinitionFieldNameValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardFieldDefinitionFieldNameValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateChangeValidator">
+            <summary>
+            Validator that validates the change of <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateChangeValidator.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="fieldDefinitionChangeValidator">FieldDefinitionChangeValidator (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateChangeValidator.Validate``1(System.String,System.Object,``0)">
+            <summary>
+            Validates the new value of the property
+            </summary>
+            <typeparam name="TProperty">Proeprty-Type</typeparam>
+            <param name="propertyName">Name of the property</param>
+            <param name="entity">The entity</param>
+            <param name="newValue">The new value of the property</param>
+            <returns>Error message or null</returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateCommitValidator">
+            <summary>
+            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">Context (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateDeleteValidator">
+            <summary>
+            DeleteValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateDeleteValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">Context (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateDeleteValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateTitleValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.Title"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateTitleValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateTitleValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase`1">
+            <summary>
+            Validator for validating the saving of an entity
+            </summary>
+            <typeparam name="TEntity">Entity type</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase`1.Context">
+            <summary>
+            Context
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase`1.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">Context (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase`1.Validate(`0)">
+            <summary>
+            Validates the saving of the entity
+            </summary>
+            <param name="entity">The entity</param>
+            <returns>Error message or null</returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase`1">
+            <summary>
+            Class for validating the deletion of an entity
+            </summary>
+            <typeparam name="TEntity">Entity-Type</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase`1.Context">
+            <summary>
+            Context
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase`1.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">Context (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase`1.Validate(`0)">
+            <summary>
+            Validates the deletion
+            </summary>
+            <param name="entity">The entity to delete</param>
+            <returns>Error message or null</returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator`1">
+            <summary>
+            Validator that validates the change of a proeprty of an entity
+            </summary>
+            <typeparam name="TEntity">Entity-Type</typeparam>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator`1.Register(System.String,SpacedRepetitionSystem.Entities.Validation.Core.IPropertyValidator)">
+            <summary>
+            Registers a property validator
+            </summary>
+            <param name="propertyName">name of the property</param>
+            <param name="validator">The validator</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator`1.Validate``1(System.String,System.Object,``0)">
+            <summary>
+            Validates the new value of the property
+            </summary>
+            <typeparam name="TProperty">Proeprty-Type</typeparam>
+            <param name="propertyName">Name of the property</param>
+            <param name="entity">The entity</param>
+            <param name="newValue">The new value of the property</param>
+            <returns>Error message or null</returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Core.IPropertyValidator">
+            <summary>
+            Interface for a property validator
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Core.IPropertyValidator.PropertyName">
+            <summary>
+            Name of the property
+            </summary>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Core.PropertyValidatorBase`2">
+            <summary>
+            Baseclass for a validator that validates the chnage of a property value 
+            </summary>
+            <typeparam name="TEntity">Entity-type</typeparam>
+            <typeparam name="TProperty">Property-Type</typeparam>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:SpacedRepetitionSystem.Entities.Validation.Core.PropertyValidatorBase`2.PropertyName" -->
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.PropertyValidatorBase`2.Validate(`0,`1)">
+            <summary>
+            Validates the property change
+            </summary>
+            <param name="entity">The entity</param>
+            <param name="newValue">New value of the property</param>
+            <returns></returns>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Decks.DeckCommitValidator">
+            <summary>
+            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Decks.DeckCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">Context (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Decks.DeckCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Deck)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Decks.DeckDefaultCardTemplateIdValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.DefaultCardTemplateId"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Decks.DeckDefaultCardTemplateIdValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Decks.DeckDefaultCardTemplateIdValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Deck,System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Decks.DeckTitleValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.Title"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Decks.DeckTitleValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Decks.DeckTitleValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Deck,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Users.UserEmailValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Security.User.Email"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Users.UserEmailValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Users.UserEmailValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Security.User,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Users.UserPasswordValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Security.User.Password"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Users.UserPasswordValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Users.UserPasswordValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Security.User,System.String)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

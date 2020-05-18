@@ -61,9 +61,8 @@ namespace SpacedRepetitionSystem.WebAPI.Core
       string error = commitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
-        UnitOfWork unitOfWork = new UnitOfWork(Context);
-        IActionResult result = null;
-        await unitOfWork.ExecuteAsync(async () => result = await PutCoreAsync(entity));
+        IActionResult result = result = await PutCoreAsync(entity);
+        await Context.SaveChangesAsync();
         return result;
       }
       else
@@ -80,9 +79,8 @@ namespace SpacedRepetitionSystem.WebAPI.Core
       string error = commitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
-        UnitOfWork unitOfWork = new UnitOfWork(Context);
-        IActionResult result = null;
-        await unitOfWork.ExecuteAsync(async () => result = await PostCoreAsync(entity));
+        IActionResult result = await PostCoreAsync(entity);
+        await Context.SaveChangesAsync();
         return result;
       }
       else
@@ -99,9 +97,8 @@ namespace SpacedRepetitionSystem.WebAPI.Core
       string error = deleteValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
-        UnitOfWork unitOfWork = new UnitOfWork(Context);
-        IActionResult result = null;
-        await unitOfWork.ExecuteAsync(async () => result = await DeleteCoreAsync(entity));
+        IActionResult result = await DeleteCoreAsync(entity);
+        await Context.SaveChangesAsync();
         return result;
       }
       else
@@ -129,11 +126,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
       if (entity == null)
         return BadRequest();
       TEntity entity1;
-      if (entity is IUserSpecificEntity userSpecificEntity)
-        entity1 = await Context.Set<TEntity>()
-          .FirstOrDefaultAsync(x => x.Id == entity.Id && (x as IUserSpecificEntity).UserId == GetUserId());
-      else
-        entity1 = await Context.FindAsync<TEntity>(entity.Id);
+      entity1 = await Context.FindAsync<TEntity>(entity.Id);
       if (entity1 == null)
         return NotFound();
       Context.Remove(entity1);

@@ -133,9 +133,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate);
 
       await base.InitializeAsync();
-      CardTemplateId = Entity.CardTemplateId;
-      Entity.DeckId = deckId;
-      ChangeDeck();
+      cardTemplateId = Entity.CardTemplateId;
+      if (IsNewEntity)
+      {
+        Entity.DeckId = deckId;
+        ChangeDeck();
+      }
 
       CardTemplateTitleProperty = new PropertyProxy(
        () => CardTemplateTitle,
