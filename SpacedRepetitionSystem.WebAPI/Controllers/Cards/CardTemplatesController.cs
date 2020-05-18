@@ -33,9 +33,12 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     {
       CardTemplate template = await Context.Set<CardTemplate>()
         .Include(definition => definition.FieldDefinitions)
-        .FirstOrDefaultAsync(template1 => template1.UserId == GetUserId() && template1.CardTemplateId == (long)id);
+        .FirstOrDefaultAsync(template1 => template1.CardTemplateId == id);
+
       if (template == null)
         return NotFound();
+      if (template.UserId != GetUserId())
+        return Unauthorized();
       return template;
     }
 
