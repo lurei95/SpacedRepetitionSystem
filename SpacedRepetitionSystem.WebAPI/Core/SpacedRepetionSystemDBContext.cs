@@ -4,7 +4,7 @@ using SpacedRepetitionSystem.Entities.Entities.Cards.Configurations;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Entities.Security.Configurations;
 
-namespace SpacedRepetitionSystem.Entities.Core
+namespace SpacedRepetitionSystem.WebAPI.Core
 {
   /// <summary>
   /// The Database Context for this app

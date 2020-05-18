@@ -17,7 +17,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
   public sealed class CardTemplateEditViewModel : EditViewModelBase<CardTemplate>
   {
     /// <summary>
-    /// Property for <see cref="Entity.Title"/>
+    /// Property for <see cref="CardTemplate.Title"/>
     /// </summary>
     public PropertyProxy TitleProperty { get; private set; }
 

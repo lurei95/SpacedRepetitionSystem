@@ -123,6 +123,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// </summary>
     public string DisplayedFieldValue => DisplayedCardField?.Value;
 
+    /// <summary>
+    /// The displayed card field
+    /// </summary>
     public CardField DisplayedCardField
     {
       get => displayedCardField;

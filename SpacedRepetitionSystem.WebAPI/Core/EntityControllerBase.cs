@@ -4,7 +4,6 @@ using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Notification;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,6 +13,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
   /// Base class for a controller for a specific entity
   /// </summary>
   /// <typeparam name="TEntity"></typeparam>
+  /// <typeparam name="TKey">Type of the primary key</typeparam>
   public abstract class EntityControllerBase<TEntity, TKey> : ControllerBase where TEntity : class, IEntity
   {
     private readonly DeleteValidatorBase<TEntity> deleteValidator;
@@ -29,6 +29,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// </summary>
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
+    /// <param name="context">DBContext (injected)</param>
     public EntityControllerBase(DeleteValidatorBase<TEntity> deleteValidator, CommitValidatorBase<TEntity> commitValidator, DbContext context) 
     { 
       this.deleteValidator = deleteValidator;

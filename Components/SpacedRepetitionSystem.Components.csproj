@@ -5,6 +5,10 @@
     <RazorLangVersion>3.0</RazorLangVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Anwender\source\repos\SpacedRepetitionSystem\Components\SpacedRepetitionSystem.Components.xml</DocumentationFile>
+  </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="2.1.5" />

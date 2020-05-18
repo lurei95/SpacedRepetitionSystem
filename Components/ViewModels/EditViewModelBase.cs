@@ -67,7 +67,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       };
     }
 
-    ///<inheritdoc>/>
+    ///<inheritdoc/>
     public override async Task InitializeAsync()
     {
       await LoadOrCreateEntity();

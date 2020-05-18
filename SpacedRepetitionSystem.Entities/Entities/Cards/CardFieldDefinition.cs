@@ -32,7 +32,7 @@
 
     #endregion
 
-    ///<inheritdoc>/>
+    ///<inheritdoc/>
     public string GetDisplayName() => null;
   }
 }

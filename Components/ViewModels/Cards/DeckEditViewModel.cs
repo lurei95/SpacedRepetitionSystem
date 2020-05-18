@@ -43,7 +43,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     public PropertyProxy CardTemplateTitleProperty { get; private set; }
 
     /// <summary>
-    /// Property for <see cref="Entity.Title"/>
+    /// Property for <see cref="Deck.Title"/>
     /// </summary>
     public PropertyProxy TitleProperty { get; private set; }
 

@@ -92,6 +92,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       }
     }
 
+    /// <summary>
+    /// The displayed time period
+    /// </summary>
     public DisplayPeriod SelectedDisplayPeriod { get; set; } = DisplayPeriod.Month;
 
     #endregion
@@ -108,6 +111,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       { Wrong, new List<int>() },
     };
 
+    /// <summary>
+    /// Labels for the line chart
+    /// </summary>
     public List<string> LineChartLabels { get; } = new List<string>();
 
     #endregion

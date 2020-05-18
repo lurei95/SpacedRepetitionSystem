@@ -34,6 +34,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
     /// <param name="context">DBContext (injected)</param>
+    /// <param name="jwtSettings">The jwt settings</param>
     public UsersController(DeleteValidatorBase<User> deleteValidator, CommitValidatorBase<User> commitValidator, DbContext context, IOptions<JWTSettings> jwtSettings)
       : base(deleteValidator, commitValidator, context) 
     { this.jwtSettings = jwtSettings.Value;  }
@@ -57,8 +58,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     /// <summary>
     /// Returns user or null if no user exists
     /// </summary>
-    /// <param name="email">email of the user</param>
-    /// <param name="password">password of the user</param>
+    /// <param name="user">The user</param>
     /// <returns>User or null</returns>
     [HttpPost("Login")]
     public async Task<ActionResult<User>> Login([FromBody] User user)
@@ -86,8 +86,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     /// <summary>
     /// Returns user or null if no user exists
     /// </summary>
-    /// <param name="email">email of the user</param>
-    /// <param name="password">password of the user</param>
+    /// <param name="user">The user</param>
     /// <returns>User or null</returns>
     [HttpPost("Signup")]
     public async Task<ActionResult<User>> Signup([FromBody] User user)

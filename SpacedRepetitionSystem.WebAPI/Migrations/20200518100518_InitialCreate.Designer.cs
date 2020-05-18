@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SpacedRepetitionSystem.Entities.Core;
+using SpacedRepetitionSystem.WebAPI.Core;
 
-namespace SpacedRepetitionSystem.Entities.Migrations
+namespace SpacedRepetitionSystem.WebAPI.Migrations
 {
     [DbContext(typeof(SpacedRepetionSystemDBContext))]
-    partial class SpacedRepetionSystemDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200518100518_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

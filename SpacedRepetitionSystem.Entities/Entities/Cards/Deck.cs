@@ -70,7 +70,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
 
     #endregion
 
-    ///<inheritdoc>/>
+    ///<inheritdoc/>
     public string GetDisplayName() => EntityNames.Deck.FormatWith(Title); 
   }
 }

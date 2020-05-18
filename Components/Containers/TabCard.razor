@@ -129,9 +129,9 @@
   public List<CardTab> Tabs { get; } = new List<CardTab>();
 
   /// <summary>
-  /// Links the child column with this datagrid.
+  /// Links the child tabs with this card
   /// </summary>
-  /// <param name="column">Column to link with this datagrid.</param>
+  /// <param name="tab">Tab to link with this card</param>
   internal void Hook(CardTab tab)
   {
     Tabs.Add(tab);

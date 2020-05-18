@@ -59,6 +59,7 @@ namespace SpacedRepetitionSystem.Components.Middleware
     /// Performs a post request to the specified route with value as content
     /// </summary>
     /// <param name="route">The route to post to</param>
+    /// <param name="value">The value to be sent</param>
     Task<ApiReply> PostAsync(string route, object value);
   }
 }

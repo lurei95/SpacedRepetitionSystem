@@ -11,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using SpacedRepetitionSystem.Entities;
-using SpacedRepetitionSystem.Entities.Core;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
@@ -22,16 +21,27 @@ using SpacedRepetitionSystem.WebAPI.Core;
 
 namespace SpacedRepetitionSystem.WebAPI
 {
+  /// <summary>
+  /// Startup
+  /// </summary>
   public class Startup
   {
-    public Startup(IConfiguration configuration)
-    {
-      Configuration = configuration;
-    }
-
+    /// <summary>
+    /// The configuration
+    /// </summary>
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="configuration">Configuration</param>
+    public Startup(IConfiguration configuration)
+    { Configuration = configuration; }
+
+    /// <summary>
+    /// Configures DI
+    /// </summary>
+    /// <param name="services">Service collection</param>
     public void ConfigureServices(IServiceCollection services)
     {
       //EF Core
@@ -79,7 +89,11 @@ namespace SpacedRepetitionSystem.WebAPI
       services.AddValidator<DeleteValidatorBase<CardTemplate>, CardTemplateDeleteValidator>();
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    /// <summary>
+    /// Confiugures the HTTP pipeline
+    /// </summary>
+    /// <param name="app">app builder</param>
+    /// <param name="env">Host environment</param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())

@@ -1,10 +1,17 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SpacedRepetitionSystem.Entities.Migrations
+namespace SpacedRepetitionSystem.WebAPI.Migrations
 {
+  /// <summary>
+  /// Initial create
+  /// </summary>
     public partial class InitialCreate : Migration
     {
+        /// <summary>
+        /// Migration up
+        /// </summary>
+        /// <param name="migrationBuilder">migration builder</param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
@@ -293,7 +300,11 @@ namespace SpacedRepetitionSystem.Entities.Migrations
                 table: "RefreshTokens",
                 column: "UserId");
         }
-
+        
+        /// <summary>
+        /// Migration down
+        /// </summary>
+        /// <param name="migrationBuilder">migration builder</param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
