@@ -6,6 +6,7 @@ using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
+using SpacedRepetitionSystem.Entities.Validation.Decks;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
 using System;
@@ -16,21 +17,19 @@ using System.Threading.Tasks;
 namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
 {
   /// <summary>
-  /// Testclass for <see cref="CardsController"/>
+  /// Testclass for <see cref="DecksController"/>
   /// </summary>
   [TestClass]
-  public sealed class CardsControllerTests : EntityFrameWorkTestCore
+  public sealed class DecksControllerTests : EntityFrameWorkTestCore
   {
     private static User otherUser;
     private static User user;
     private static CardTemplate template;
     private static CardFieldDefinition fieldDefinition1;
-    private static CardFieldDefinition fieldDefinition2;
     private static Deck deck;
+    private static Deck otherUserDeck;
     private static Card card;
-    private static Card otherUserCard;
     private static CardField field1;
-    private static CardField field2;
     private static ControllerContext controllerContext;
 
     /// <summary>
@@ -66,13 +65,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         CardTemplateId = template.CardTemplateId,
         FieldName = "Front"
       };
-      fieldDefinition2 = new CardFieldDefinition()
-      {
-        CardTemplateId = template.CardTemplateId,
-        FieldName = "Back"
-      };
       template.FieldDefinitions.Add(fieldDefinition1);
-      template.FieldDefinitions.Add(fieldDefinition2);
 
       deck = new Deck()
       {
@@ -81,17 +74,18 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         DefaultCardTemplateId = template.CardTemplateId,
         UserId = user.UserId
       };
+      otherUserDeck = new Deck()
+      {
+        DeckId = 2,
+        Title = "Test",
+        DefaultCardTemplateId = template.CardTemplateId,
+        UserId = otherUser.UserId
+      };
       card = new Card()
       {
         CardId = 1,
         CardTemplateId = template.CardTemplateId,
         UserId = user.UserId,
-      };
-      otherUserCard = new Card()
-      {
-        CardId = 2,
-        CardTemplateId = template.CardTemplateId,
-        UserId = otherUser.UserId,
       };
       field1 = new CardField()
       {
@@ -100,17 +94,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Front",
         Value = "Field1"
       };
-      field2 = new CardField()
-      {
-        CardId = card.CardId,
-        CardTemplateId = template.CardTemplateId,
-        FieldName = "Back",
-        Value = "Field2"
-      };
       card.Fields.Add(field1);
-      card.Fields.Add(field2);
       deck.Cards.Add(card);
-      deck.Cards.Add(otherUserCard);
 
       var identity = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, Convert.ToString(user.UserId)) }, "TestAuthType");
       var claimsPrincipal = new ClaimsPrincipal(identity);
@@ -128,87 +113,77 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         context.Add(otherUser);
         context.Add(user);
         context.Add(template);
+
         context.Add(deck);
+        context.Add(otherUserDeck);
       });
     }
 
     /// <summary>
-    /// Tests <see cref="CardsController.GetAsync(long)"/>
+    /// Tests <see cref="DecksController.GetAsync(long)"/>
     /// </summary>
     /// <returns></returns>
     [TestMethod]
-    public async Task GetCardByIdTest()
+    public async Task GetDeckByIdTest()
     {
       using DbContext context = CreateContext();
-      CardsController controller = new CardsController(new DeleteValidatorBase<Card>(context),
-        new CardCommitValidator(context), context)
+      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
+        new DeckCommitValidator(context), context)
       { ControllerContext = controllerContext };
 
-      //get card successfully
-      ActionResult<Card> result = await controller.GetAsync(1);
+      //get deck successfully
+      ActionResult<Deck> result = await controller.GetAsync(1);
       Assert.IsNotNull(result.Value);
-      Assert.AreEqual(deck.DeckId, result.Value.Deck.DeckId);
-      Assert.AreEqual(template.CardTemplateId, result.Value.CardTemplate.CardTemplateId);
-      Assert.AreEqual(field1.FieldName, result.Value.Fields[0].FieldName);
-      Assert.AreEqual(field2.FieldName, result.Value.Fields[1].FieldName);
+      Assert.AreEqual(1, result.Value.Cards.Count);
+      Assert.AreEqual(card.CardId, result.Value.Cards[0].CardId);
+      Assert.AreEqual(1, result.Value.Cards[0].Fields.Count);
+      Assert.AreEqual(fieldDefinition1.FieldName, result.Value.Cards[0].Fields[0].CardFieldDefinition.FieldName);
 
-      //Card of other user -> unauthorized
+      //Deck of other user -> unauthorized
       result = await controller.GetAsync(2);
       Assert.IsTrue(result.Result is UnauthorizedResult);
 
-      //Card does not exist -> not found
+      //Deck does not exist -> not found
       result = await controller.GetAsync(3);
       Assert.IsTrue(result.Result is NotFoundResult);
     }
 
     /// <summary>
-    /// Tests <see cref="CardsController.GetAsync(IDictionary{string, object})/>
+    /// Tests <see cref="DecksController.GetAsync(IDictionary{string, object})/>
     /// </summary>
     /// <returns></returns>
     [TestMethod]
-    public async Task GetCardsTest()
+    public async Task GetDecksTest()
     {
       using DbContext context = CreateContext();
-      CardsController controller = new CardsController(new DeleteValidatorBase<Card>(context),
-        new CardCommitValidator(context), context)
+      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
+        new DeckCommitValidator(context), context)
       { ControllerContext = controllerContext };
       Dictionary<string, object> parameters = new Dictionary<string, object>();
       
-      //Get all cards of user
-      ActionResult<List<Card>> result = await controller.GetAsync(parameters);
+      //Get all decks of user
+      ActionResult<List<Deck>> result = await controller.GetAsync(parameters);
       Assert.AreEqual(1, result.Value.Count);
-      Assert.AreEqual(card.CardId, result.Value[0].CardId);
-      Assert.AreEqual(deck.DeckId, result.Value[0].Deck.DeckId);
-      Assert.AreEqual(template.CardTemplateId, result.Value[0].CardTemplate.CardTemplateId);
-      Assert.AreEqual(field1.FieldName, result.Value[0].Fields[0].FieldName);
-      Assert.AreEqual(field2.FieldName, result.Value[0].Fields[1].FieldName);
+      Assert.AreEqual(deck.DeckId, result.Value[0].DeckId);
+      Assert.AreEqual(1, result.Value[0].CardCount);
+      Assert.AreEqual(1, result.Value[0].DueCardCount);
 
-      //Get all cards of deck
-      parameters.Add(nameof(Deck.DeckId), deck.DeckId);
-      result = await controller.GetAsync(parameters);
-      Assert.AreEqual(1, result.Value.Count);
-      Assert.AreEqual(card.CardId, result.Value[0].CardId);
-      Assert.AreEqual(deck.DeckId, result.Value[0].Deck.DeckId);
-      Assert.AreEqual(template.CardTemplateId, result.Value[0].CardTemplate.CardTemplateId);
-      Assert.AreEqual(field1.FieldName, result.Value[0].Fields[0].FieldName);
-      Assert.AreEqual(field2.FieldName, result.Value[0].Fields[1].FieldName);
-
-      //Get all cards of not existing deck
-      parameters[nameof(Deck.DeckId)] = (long)2;
+      //Get all pinned decks
+      parameters.Add(nameof(Deck.IsPinned), true);
       result = await controller.GetAsync(parameters);
       Assert.AreEqual(0, result.Value.Count);
     }
 
     /// <summary>
-    /// Tests <see cref="CardsController.PostAsync(Card entity)/>
+    /// Tests <see cref="DecksController.PostAsync(Deck entity)/>
     /// </summary>
     /// <returns></returns>
     [TestMethod]
-    public async Task PostCardTest()
+    public async Task PostDeckTest()
     {
       using DbContext context = CreateContext();
-      CardsController controller = new CardsController(new DeleteValidatorBase<Card>(context),
-        new CardCommitValidator(context), context)
+      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
+        new DeckCommitValidator(context), context)
       { ControllerContext = controllerContext };
 
       //null as parameter -> bad request
@@ -216,25 +191,23 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result is BadRequestResult);
 
       //Create new valid entity
-      Card card1 = new Card()
+      Deck deck1 = new Deck()
       {
-        CardId = 3,
-        DeckId = deck.DeckId,
-        CardTemplateId = template.CardTemplateId
+        DeckId = 3,
+        Title = "test123",
+        DefaultCardTemplateId = template.CardTemplateId
       };
-      card1.Fields.Add(new CardField() { FieldName = "test1", Value = "test1" });
-      card1.Fields.Add(new CardField() { FieldName = "test2", Value = "test2" });
-      result = await controller.PostAsync(card1);
+      result = await controller.PostAsync(deck1);
       Assert.IsTrue(result is OkResult);
-      card1 = context.Find<Card>((long)3);
-      Assert.IsNotNull(card1);
-      Assert.AreEqual(user.UserId, card1.UserId);
+      deck1 = context.Find<Deck>((long)3);
+      Assert.IsNotNull(deck1);
+      Assert.AreEqual(user.UserId, deck1.UserId);
 
-      //Invalid card is validated
+      //Invalid deck is validated
       bool wasThrown = false;
       try
       {
-        result = await controller.PostAsync(new Card());
+        result = await controller.PostAsync(new Deck());
       }
       catch (NotifyException)
       {
@@ -244,84 +217,70 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     }
 
     /// <summary>
-    /// Tests <see cref="CardsController.DeleteAsync(Card entity)/>
+    /// Tests <see cref="DecksController.DeleteAsync(Deck entity)/>
     /// </summary>
     /// <returns></returns>
     [TestMethod]
-    public async Task DeleteCardTest()
+    public async Task DeleteDeckTest()
     {
       using DbContext context = CreateContext();
-      CardsController controller = new CardsController(new DeleteValidatorBase<Card>(context),
-        new CardCommitValidator(context), context)
+      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
+        new DeckCommitValidator(context), context)
       { ControllerContext = controllerContext };
 
       //null as parameter -> bad request
       IActionResult result = await controller.DeleteAsync(null);
       Assert.IsTrue(result is BadRequestResult);
 
-      //card does not exist -> not found
-      result = await controller.DeleteAsync(new Card());
+      //deck does not exist -> not found
+      result = await controller.DeleteAsync(new Deck());
       Assert.IsTrue(result is NotFoundResult);
 
       //delete exitsting entity
-      result = await controller.DeleteAsync(card);
+      result = await controller.DeleteAsync(deck);
       Assert.IsTrue(result is OkResult);
-      Card card1 = context.Find<Card>((long)1);
-      Assert.IsNull(card1);
+      Deck deck1 = context.Find<Deck>((long)1);
+      Assert.IsNull(deck1);
     }
 
     /// <summary>
-    /// Tests <see cref="CardsController.PutAsync(Card entity)/>
+    /// Tests <see cref="DecksController.PutAsync(Deck entity)/>
     /// </summary>
     /// <returns></returns>
     [TestMethod]
     public async Task PutCardTest()
     {
       using DbContext context = CreateContext();
-      CardsController controller = new CardsController(new DeleteValidatorBase<Card>(context),
-        new CardCommitValidator(context), context)
+      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
+        new DeckCommitValidator(context), context)
       { ControllerContext = controllerContext };
 
       //null as parameter -> bad request
       IActionResult result = await controller.PutAsync(null);
       Assert.IsTrue(result is BadRequestResult);
 
-      //card does not exist in db -> not found
-      Card newCard = new Card()
+      //deck does not exist in db -> not found
+      Deck newDeck = new Deck()
       {
-        CardId = 5,
-        DeckId = deck.DeckId,
-        CardTemplateId = template.CardTemplateId
+        DeckId = 5,
+        Title = "dfsdf",
+        DefaultCardTemplateId = template.CardTemplateId
       };
-      newCard.Fields.Add(new CardField() { FieldName = "test1", Value = "test1" });
-      newCard.Fields.Add(new CardField() { FieldName = "test2", Value = "test2" });
-      result = await controller.PutAsync(newCard);
+      result = await controller.PutAsync(newDeck);
       Assert.IsTrue(result is NotFoundResult);
 
       //Save changed entity
-      card.Tags = "test";
-      card.Fields.Remove(field2);
-      CardField newField = new CardField()
-      {
-        CardId = card.CardId,
-        CardTemplateId = template.CardTemplateId,
-        FieldName = "NewField",
-        Value = "test"
-      };
-      card.Fields.Add(newField);
-      result = await controller.PutAsync(card);
+      deck.Title = "New Title";
+      result = await controller.PutAsync(deck);
       Assert.IsTrue(result is OkResult);
-      Card card1 = context.Find<Card>(card.CardId);
-      Assert.AreEqual("test", card1.Tags);
-      Assert.AreEqual(2, card1.Fields.Count);
-      Assert.AreEqual(field1.FieldName, card1.Fields[0].FieldName);
-      Assert.AreEqual(newField.FieldName, card1.Fields[1].FieldName);
+      Deck card1 = context.Find<Deck>(deck.DeckId);
+      Assert.AreEqual("New Title", card1.Title);
 
-      //Invalid card is validated
+      //Invalid deck is validated
       bool wasThrown = false;
       try
       {
-        result = await controller.PostAsync(new Card());
+        result = await controller.PostAsync(new Deck());
       }
       catch (NotifyException)
       {

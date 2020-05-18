@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Logic.Controllers.Cards
+namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
 {
   /// <summary>
   /// Controller for <see cref="Deck"/>
@@ -36,9 +36,12 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         .Include(deck => deck.Cards)
         .ThenInclude(card => card.Fields)
         .ThenInclude(field => field.CardFieldDefinition)
-        .FirstOrDefaultAsync(deck1 => deck1.UserId == GetUserId() && deck1.DeckId == (long)id);
+        .FirstOrDefaultAsync(deck1 => deck1.DeckId == id);
+
       if (deck == null)
         return NotFound();
+      if (deck.UserId != GetUserId())
+        return Unauthorized();
       return deck;
     }
 
@@ -46,21 +49,24 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     [HttpGet]
     public override async Task<ActionResult<List<Deck>>> GetAsync(IDictionary<string, object> searchParameters)
     {
-      List<Deck> result = new List<Deck>();
       IQueryable<Deck> query = Context.Set<Deck>()
         .Where(deck => deck.UserId == GetUserId());
+
       if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.IsPinned)))
         query = query.Where(deck => deck.IsPinned == (bool)searchParameters[nameof(Deck.IsPinned)]);
 
-      List<Tuple<Deck, int, int>> tuples = await query.Select(
-          deck => new Tuple<Deck, int, int>(deck, deck.Cards.Count(), 
-          deck.Cards.SelectMany(card => card.Fields).Count(field => field.DueDate <= DateTime.Today)))
-        .ToListAsync();
-      foreach (Tuple<Deck, int, int> tuple in tuples)
+      List<Deck> result = await query.ToListAsync();
+      foreach (Deck deck in query)
       {
-        tuple.Item1.CardCount = tuple.Item2;
-        tuple.Item1.DueCardCount = tuple.Item3;
-        result.Add(tuple.Item1);
+        deck.CardCount = Context.Set<Card>()
+          .AsNoTracking()
+          .Where(card => card.DeckId == deck.DeckId)
+          .Count();
+        deck.DueCardCount = Context.Set<Card>()
+          .AsNoTracking()
+          .Where(card => card.DeckId == deck.DeckId)
+          .SelectMany(card => card.Fields)
+          .Count(field => field.DueDate <= DateTime.Today);
       }
       return result;
     }

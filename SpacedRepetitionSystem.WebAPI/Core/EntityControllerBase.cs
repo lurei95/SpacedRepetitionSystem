@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Internal;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Notification;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.WebAPI.Core
@@ -118,10 +121,11 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// <param name="entity">The updated entity</param>
     protected virtual async Task<IActionResult> PutCoreAsync(TEntity entity) 
     {
-      EntityEntry<TEntity> entry = Context.Entry(entity);
-      if (entry == null)
+      TEntity exisiting = await Context.FindAsync<TEntity>(entity.Id);
+      if (exisiting == null)
         return NotFound();
-      entry.State = EntityState.Modified;
+      Context.Entry(exisiting).State = EntityState.Detached;
+      Context.Entry(entity).State = EntityState.Modified;
       return await Task.FromResult(Ok());
     }
 
