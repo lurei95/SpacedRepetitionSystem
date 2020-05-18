@@ -107,6 +107,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         if (result == DialogResult.Yes)
           await base.DeleteEntity();
       });
+      await Task.FromResult<object>(null);
     }
 
     private void RemoveFieldDefiniton(int index)

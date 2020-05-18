@@ -154,6 +154,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         if (result == DialogResult.Yes)
           await base.DeleteEntity();
       });
+      await Task.FromResult<object>(null);
     }
 
     ///<inheritdoc/>
@@ -165,8 +166,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
 
     private async Task DeleteCard(Card card)
     {
-      if ((await ApiConnector.DeleteAsync(card)).WasSuccessful)
+      ApiReply reply = await ApiConnector.DeleteAsync(card);
+      if (reply.WasSuccessful)
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(card.GetDisplayName()));
+      else
+        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
     }
 
     private void EditCard(Card card)

@@ -49,7 +49,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
         action.Invoke();
         await context.SaveChangesAsync();
       }
-      catch (Exception ex)
+      catch (Exception)
       {
         RerollContext();
         throw;

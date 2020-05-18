@@ -4,6 +4,7 @@ using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -209,19 +210,19 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
       DifficultResultCommand = new Command()
       {
         CommandText = Messages.Difficult,
-        ExecuteAction = (param) => ReportPracticeResult(PracticeResultKind.Hard)
+        ExecuteAction = async (param) => await ReportPracticeResult(PracticeResultKind.Hard)
       };
 
       EasyResultCommand = new Command()
       {
         CommandText = Messages.Easy,
-        ExecuteAction = (param) => ReportPracticeResult(PracticeResultKind.Easy)
+        ExecuteAction = async (param) => await ReportPracticeResult(PracticeResultKind.Easy)
       };
 
       DoesNotKnowResultCommand = new Command()
       {
         CommandText = Messages.DoesNotKnow,
-        ExecuteAction = (param) => ReportPracticeResult(PracticeResultKind.Failed)
+        ExecuteAction = async (param) => await ReportPracticeResult(PracticeResultKind.Failed)
       };
 
       NextCommand = new Command()
@@ -246,6 +247,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     ///<inheritdoc/>
     public override async Task InitializeAsync()
     {
+      await base.InitializeAsync();
+
       bool isActivePractice = Deck.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue);
       if (isActivePractice)
         PracticeFields = Deck.Cards.SelectMany(card => card.Fields).Where(field => field.IsDue).ToList();
@@ -289,7 +292,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         HardCount = result == PracticeResultKind.Hard ? 1 : 0,
         WrongCount = result == PracticeResultKind.Failed ? 1 : 0
       };
-      await ApiConnector.PostAsync(entry);
+     
+      ApiReply reply = await ApiConnector.PostAsync(entry);
+      if (!reply.WasSuccessful)
+        throw new NotifyException(reply.ResultMessage);
 
       if (Current.CardFieldDefinition.ShowInputForPractice)
         ShowSolution();

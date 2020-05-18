@@ -68,6 +68,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
         if (result == DialogResult.Yes)
           await base.DeleteEntity(entity);
       });
+      await Task.FromResult<object>(null);
     }
 
     ///<inheritdoc/>

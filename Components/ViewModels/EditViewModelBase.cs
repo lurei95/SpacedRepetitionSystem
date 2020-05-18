@@ -105,14 +105,18 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// </summary>
     protected virtual async Task<bool> SaveChanges()
     {
-      bool result;
+      ApiReply reply;
       if (IsNewEntity)
-        result = (await ApiConnector.PostAsync(Entity)).WasSuccessful;
+        reply = await ApiConnector.PostAsync(Entity);
       else
-        result = (await ApiConnector.PutAsync(Entity)).WasSuccessful;
-      if (result)
+        reply = await ApiConnector.PutAsync(Entity);
+
+      if (reply.WasSuccessful)
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(Entity.GetDisplayName()));
-      return result;
+      else
+        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
+
+      return reply.WasSuccessful;
     }
 
     /// <summary>
@@ -120,12 +124,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// </summary>
     protected virtual async Task DeleteEntity()
     {
-      bool result = (await ApiConnector.DeleteAsync(Entity)).WasSuccessful;
-      if (result)
+      ApiReply reply = await ApiConnector.DeleteAsync(Entity);
+      if (reply.WasSuccessful)
       {
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(Entity.GetDisplayName()));
         NavigationManager.NavigateTo("/Home");
       }
+      else
+        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
     }
 
     /// <summary>
