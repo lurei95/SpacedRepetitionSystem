@@ -921,7 +921,9 @@
             <typeparam name="TEntity">Entity-type</typeparam>
             <typeparam name="TProperty">Property-Type</typeparam>
         </member>
-        <!-- Badly formed XML comment ignored for member "P:SpacedRepetitionSystem.Entities.Validation.Core.PropertyValidatorBase`2.PropertyName" -->
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Core.PropertyValidatorBase`2.PropertyName">
+            <inheritdoc/>
+        </member>
         <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.PropertyValidatorBase`2.Validate(`0,`1)">
             <summary>
             Validates the property change

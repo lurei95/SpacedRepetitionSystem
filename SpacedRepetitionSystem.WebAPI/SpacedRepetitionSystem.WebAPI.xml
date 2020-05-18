@@ -42,6 +42,9 @@
         <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController.GetAsync(System.Int64)">
             <inheritdoc/>
         </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate)">
+            <inheritdoc/>
+        </member>
         <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
             <inheritdoc/>
         </member>

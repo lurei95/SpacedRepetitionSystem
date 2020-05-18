@@ -9,7 +9,7 @@ namespace SpacedRepetitionSystem.Entities.Validation.Core
   /// <typeparam name="TProperty">Property-Type</typeparam>
   public abstract class PropertyValidatorBase<TEntity, TProperty> : IPropertyValidator where TEntity : IEntity
   {
-    ///<inheritdoc>
+    ///<inheritdoc/>
     public abstract string PropertyName { get; }
 
     /// <summary>

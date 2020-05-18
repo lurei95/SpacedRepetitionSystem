@@ -201,6 +201,7 @@
             <param name="getter">getter</param>
             <param name="setter">setter</param>
             <param name="propertyName">Name of the property</param>
+            <param name="entity">The entity</param>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.Edits.PropertyProxy.SetError(System.String)">
             <summary>
@@ -637,7 +638,9 @@
             Constructor
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SpacedRepetitionSystem.Components.Modals.ModalDialogBase.ShowModal(System.String,System.String,SpacedRepetitionSystem.Utility.Dialogs.DialogButtons,System.Action{SpacedRepetitionSystem.Utility.Dialogs.DialogResult})" -->
+        <member name="M:SpacedRepetitionSystem.Components.Modals.ModalDialogBase.ShowModal(System.String,System.String,SpacedRepetitionSystem.Utility.Dialogs.DialogButtons,System.Action{SpacedRepetitionSystem.Utility.Dialogs.DialogResult})">
+            <inheritdoc/>
+        </member>
         <member name="M:SpacedRepetitionSystem.Components.Modals.ModalDialogBase.CloseModal(SpacedRepetitionSystem.Utility.Dialogs.DialogButton)">
             <summary>
             Closes the dialog an executed the callback action
@@ -1678,7 +1681,9 @@
             The ViewModel
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SpacedRepetitionSystem.Components.ViewModels.ViewModelArea.OnInitialized" -->
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.ViewModelArea.OnInitialized">
+            <inheritdoc/>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Containers.CardTab.Title">
             <summary>
             Title of the tab
@@ -1907,8 +1912,12 @@
         <member name="M:SpacedRepetitionSystem.Components.Notification.NotificationBar.NotifyMessage(SpacedRepetitionSystem.Utility.Notification.NotificationKind,System.String)">
             <inheritdoc/>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SpacedRepetitionSystem.Components.Notification.NotificationBar.ResetNotification" -->
-        <!-- Badly formed XML comment ignored for member "M:SpacedRepetitionSystem.Components.Notification.NotificationBar.OnInitialized" -->
+        <member name="M:SpacedRepetitionSystem.Components.Notification.NotificationBar.ResetNotification">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Notification.NotificationBar.OnInitialized">
+            <inheritdoc/>
+        </member>
         <member name="T:DeckStatisticsViewModel">
             <summary>
             ViewModel for displaying the practice statistics of a card

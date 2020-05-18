@@ -40,6 +40,35 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     }
 
     ///<inheritdoc/>
+    protected override async Task<IActionResult> PutCoreAsync(CardTemplate entity)
+    {
+      CardTemplate existing = await Context.Set<CardTemplate>()
+        .Include(template => template.FieldDefinitions)
+        .FirstOrDefaultAsync(template => template.CardTemplateId == entity.CardTemplateId);
+      if (existing == null)
+        return NotFound();
+      existing.Title = entity.Title;
+
+      foreach (CardFieldDefinition field in existing.FieldDefinitions)
+      {
+        CardFieldDefinition field1 = entity.FieldDefinitions.SingleOrDefault(x => x.FieldName == field.FieldName);
+        if (field1 != null) // Update exisiting
+          field1.ShowInputForPractice = field.ShowInputForPractice;
+        else // Remove old
+          Context.Entry(field).State = EntityState.Deleted;
+      }
+
+      //Add new
+      foreach (CardFieldDefinition field in entity.FieldDefinitions.Where(x => !existing.FieldDefinitions.Any(y => y.FieldName == x.FieldName)))
+      {
+        existing.FieldDefinitions.Add(field);
+        foreach (Card card in Context.Set<Card>().Where(card => card.CardTemplateId == existing.CardTemplateId))
+          card.Fields.Add(new CardField() { CardTemplateId = existing.CardTemplateId, FieldName = field.FieldName, CardId = card.CardId });
+      }
+      return Ok();
+    }
+
+    ///<inheritdoc/>
     [HttpGet]
     public override async Task<ActionResult<List<CardTemplate>>> GetAsync(IDictionary<string, object> searchParameters)
     {

@@ -79,6 +79,7 @@ namespace SpacedRepetitionSystem.Components.Edits
     /// <param name="getter">getter</param>
     /// <param name="setter">setter</param>
     /// <param name="propertyName">Name of the property</param>
+    /// <param name="entity">The entity</param>
     public PropertyProxy(Func<string> getter, Action<string> setter, string propertyName, object entity)
     {
       PropertyName = propertyName ?? throw new ArgumentNullException(nameof(propertyName));
