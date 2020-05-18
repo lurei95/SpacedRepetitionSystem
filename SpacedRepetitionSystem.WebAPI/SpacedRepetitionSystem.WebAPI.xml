@@ -67,6 +67,39 @@
         <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.DecksController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
             <inheritdoc/>
         </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Controllers.Cards.PracticeHistoryEntriesController">
+            <summary>
+            Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry"/>
+            </summary>
+        </member>
+        <member name="F:SpacedRepetitionSystem.WebAPI.Controllers.Cards.PracticeHistoryEntriesController.ProblemWords">
+            <summary>
+            Search parameter for the top 10 problem words
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.PracticeHistoryEntriesController.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry},SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry},Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="commitValidator">CommitValidator (injected)</param>
+            <param name="deleteValidator">DeleteValidator (injected)</param>
+            <param name="context">DBContext (injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.PracticeHistoryEntriesController.GetAsync(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.PracticeHistoryEntriesController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.PracticeHistoryEntriesController.PostCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.PracticeHistoryEntriesController.DeleteCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.PracticeHistoryEntriesController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
+            <inheritdoc/>
+        </member>
         <member name="T:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2">
             <summary>
             Base class for a controller for a specific entity
@@ -302,39 +335,6 @@
             </summary>
             <param name="app">app builder</param>
             <param name="env">Host environment</param>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController">
-            <summary>
-            Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry"/>
-            </summary>
-        </member>
-        <member name="F:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.ProblemWords">
-            <summary>
-            Search parameter for the top 10 problem words
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry},SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase{SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry},Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="commitValidator">CommitValidator (injected)</param>
-            <param name="deleteValidator">DeleteValidator (injected)</param>
-            <param name="context">DBContext (injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.GetAsync(System.Int64)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.PostCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.DeleteCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Cards.PracticeHistoryEntriesController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry)">
-            <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController">
             <summary>

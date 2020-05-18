@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Logic.Controllers.Cards
+namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
 {
   /// <summary>
   /// Controller for <see cref="PracticeHistoryEntry"/>
@@ -40,7 +40,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     /// <param name="commitValidator">CommitValidator (injected)</param>
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
     /// <param name="context">DBContext (injected)</param>
-    public PracticeHistoryEntriesController(DeleteValidatorBase<PracticeHistoryEntry> deleteValidator, CommitValidatorBase<PracticeHistoryEntry> commitValidator, DbContext context)
+    public PracticeHistoryEntriesController(DeleteValidatorBase<PracticeHistoryEntry> deleteValidator, 
+      CommitValidatorBase<PracticeHistoryEntry> commitValidator, DbContext context)
       : base(deleteValidator, commitValidator, context) { }
 
     ///<inheritdoc/>
@@ -48,9 +49,12 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
     public override async Task<ActionResult<PracticeHistoryEntry>> GetAsync([FromRoute] long id)
     {
       PracticeHistoryEntry entry = await Context.Set<PracticeHistoryEntry>()
-        .FirstOrDefaultAsync(entry1 => entry1.UserId == GetUserId() && entry1.PracticeHistoryEntryId == (long)id);
+        .FirstOrDefaultAsync(entry1 => entry1.PracticeHistoryEntryId == id);
+
       if (entry == null)
         return NotFound();
+      if (entry.UserId != GetUserId())
+        return Unauthorized();
       return entry;
     }
 
@@ -107,7 +111,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         await UpdatePracticeInformationAsync(entity);
         Context.Add(entity);
       }
-      return NoContent();
+      return Ok();
     }
 
     private async Task UpdatePracticeInformationAsync(PracticeHistoryEntry entry)
@@ -119,7 +123,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Cards
         field.ProficiencyLevel--;
       else if (entry.CorrectCount > 0 && field.ProficiencyLevel != 6)
         field.ProficiencyLevel++;
-      field.DueDate = DateTime.Today.AddDays(ProficiencyDueDaysLookup[field.ProficiencyLevel]);
+      field.DueDate = entry.PracticeDate.AddDays(ProficiencyDueDaysLookup[field.ProficiencyLevel]);
     }
 
     ///<inheritdoc/>
