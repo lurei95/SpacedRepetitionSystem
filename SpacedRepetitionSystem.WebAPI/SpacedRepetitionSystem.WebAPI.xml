@@ -20,10 +20,10 @@
         <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.GetAsync(System.Int64)">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.GetAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
             <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController">

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Notification;
@@ -58,10 +59,12 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     [HttpPut]
     public async Task<IActionResult> PutAsync([FromBody] TEntity entity)
     {
+      if (entity == null)
+        return await Task.FromResult(BadRequest());
       string error = commitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
-        IActionResult result = result = await PutCoreAsync(entity);
+        IActionResult result = await PutCoreAsync(entity);
         await Context.SaveChangesAsync();
         return result;
       }
@@ -76,6 +79,8 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] TEntity entity)
     {
+      if (entity == null)
+        return await Task.FromResult(BadRequest());
       string error = commitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
@@ -94,6 +99,8 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     [HttpDelete]
     public async Task<IActionResult> DeleteAsync([FromBody] TEntity entity)
     {
+      if (entity == null)
+        return BadRequest();
       string error = deleteValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
@@ -111,9 +118,10 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// <param name="entity">The updated entity</param>
     protected virtual async Task<IActionResult> PutCoreAsync(TEntity entity) 
     {
-      if (entity == null)
-        return await Task.FromResult(BadRequest());
-      Context.Entry(entity).State = EntityState.Modified;
+      EntityEntry<TEntity> entry = Context.Entry(entity);
+      if (entry == null)
+        return NotFound();
+      entry.State = EntityState.Modified;
       return await Task.FromResult(Ok());
     }
 
@@ -123,10 +131,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// <param name="entity">The entity to delete</param>
     protected virtual async Task<IActionResult> DeleteCoreAsync(TEntity entity)
     {
-      if (entity == null)
-        return BadRequest();
-      TEntity entity1;
-      entity1 = await Context.FindAsync<TEntity>(entity.Id);
+      TEntity entity1 = await Context.FindAsync<TEntity>(entity.Id);
       if (entity1 == null)
         return NotFound();
       Context.Remove(entity1);
@@ -139,8 +144,6 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// <param name="entity">The new entity</param>
     protected virtual async Task<IActionResult> PostCoreAsync(TEntity entity)
     {
-      if (entity == null)
-        return await Task.FromResult(BadRequest());
       if (entity is IUserSpecificEntity userSpecificEntity)
         userSpecificEntity.UserId = GetUserId();
       Context.Add(entity);

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.Comp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.WebAPI", "SpacedRepetitionSystem.WebAPI\SpacedRepetitionSystem.WebAPI.csproj", "{731C044A-A0BE-4D42-8E87-48D2DCD7960A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpacedRepetitionSystem.WebApi.Tests", "SpacedRepetitionSystem.WebApi.Tests\SpacedRepetitionSystem.WebApi.Tests.csproj", "{39B7BECF-5BB4-4DD4-95CB-2865C5B29305}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{731C044A-A0BE-4D42-8E87-48D2DCD7960A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{731C044A-A0BE-4D42-8E87-48D2DCD7960A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{731C044A-A0BE-4D42-8E87-48D2DCD7960A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39B7BECF-5BB4-4DD4-95CB-2865C5B29305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B7BECF-5BB4-4DD4-95CB-2865C5B29305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B7BECF-5BB4-4DD4-95CB-2865C5B29305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39B7BECF-5BB4-4DD4-95CB-2865C5B29305}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

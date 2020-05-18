@@ -35,11 +35,27 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         .Include(card => card.Fields)
         .Include(card => card.Deck)
         .Include(card => card.CardTemplate)
-        .FirstOrDefaultAsync(card => card.UserId == GetUserId() && card.CardId == (long)id);
+        .FirstOrDefaultAsync(card => card.CardId == id);
+
       if (card == null)
         return NotFound();
-
+      if (card.UserId != GetUserId())
+        return Unauthorized();
       return card;
+    }
+
+    ///<inheritdoc/>
+    [HttpGet]
+    public override async Task<ActionResult<List<Card>>> GetAsync(IDictionary<string, object> searchParameters)
+    {
+      IQueryable<Card> query = Context.Set<Card>()
+        .Include(card => card.Fields)
+        .Include(card => card.Deck)
+        .Include(card => card.CardTemplate)
+        .Where(card => card.UserId == GetUserId());
+      if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.DeckId)))
+        query = query.Where(card => card.DeckId == (long)searchParameters[nameof(Deck.DeckId)]);
+      return await query.ToListAsync();
     }
 
     ///<inheritdoc/>
@@ -70,20 +86,6 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
       foreach (CardField field in entity.Fields.Where(x => !existing.Fields.Any(y => y.FieldName == x.FieldName)))
         existing.Fields.Add(field);
       return Ok();
-    }
-
-    ///<inheritdoc/>
-    [HttpGet]
-    public override async Task<ActionResult<List<Card>>> GetAsync(IDictionary<string, object> searchParameters)
-    {
-      IQueryable<Card> query = Context.Set<Card>()
-        .Include(card => card.Fields)
-        .Include(card => card.Deck)
-        .Include(card => card.CardTemplate)
-        .Where(card => card.UserId == GetUserId());
-      if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.DeckId)))
-        query = query.Where(card => card.DeckId == (long)searchParameters[nameof(Deck.DeckId)]);
-      return await query.ToListAsync();
     }
   }
 }
