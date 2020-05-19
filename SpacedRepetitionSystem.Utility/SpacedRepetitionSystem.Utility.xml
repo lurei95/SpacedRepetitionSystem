@@ -192,11 +192,12 @@
             Utility class for showing notification messages
             </summary>
         </member>
-        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider.Initialize(SpacedRepetitionSystem.Utility.Notification.INotificationProvider)">
+        <member name="M:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider.Initialize(SpacedRepetitionSystem.Utility.Notification.INotificationProvider,System.Int32)">
             <summary>
             Initializes the notification message provider
             </summary>
             <param name="provider">The comnponent for showing the message</param>
+            <param name="duration">Duration of the messages</param>
         </member>
         <member name="M:SpacedRepetitionSystem.Utility.Notification.NotificationMessageProvider.ShowSuccessMessage(System.String)">
             <summary>

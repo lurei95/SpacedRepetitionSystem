@@ -9,14 +9,16 @@ namespace SpacedRepetitionSystem.Utility.Notification
   public static class NotificationMessageProvider
   {
     private static INotificationProvider notificationProvider;
-    private static readonly Timer timer = new Timer() { Interval = 5000 };
+    private static readonly Timer timer = new Timer();
 
     /// <summary>
     /// Initializes the notification message provider
     /// </summary>
     /// <param name="provider">The comnponent for showing the message</param>
-    public static void Initialize(INotificationProvider provider)
+    /// <param name="duration">Duration of the messages</param>
+    public static void Initialize(INotificationProvider provider, int duration)
     {
+      timer.Interval = duration;
       if (notificationProvider != null)
         timer.Elapsed -= Timer_Elapsed;
       notificationProvider = provider ?? throw new ArgumentNullException(nameof(provider));
