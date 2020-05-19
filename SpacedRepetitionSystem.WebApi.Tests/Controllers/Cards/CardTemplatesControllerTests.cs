@@ -96,9 +96,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task GetTemplateByIdTest()
     {
       using DbContext context = CreateContext();
-      CardTemplatesController controller = new CardTemplatesController(new CardTemplateDeleteValidator(context),
-        new CardTemplateCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      CardTemplatesController controller = CreateController(context);
 
       //get template successfully
       ActionResult<CardTemplate> result = await controller.GetAsync(1);
@@ -122,9 +120,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task GetCardTemplatesTest()
     {
       using DbContext context = CreateContext();
-      CardTemplatesController controller = new CardTemplatesController(new CardTemplateDeleteValidator(context),
-        new CardTemplateCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      CardTemplatesController controller = CreateController(context);
       Dictionary<string, object> parameters = new Dictionary<string, object>();
       
       //Get all templates of user
@@ -141,9 +137,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task PostCardTemplateTest()
     {
       using DbContext context = CreateContext();
-      CardTemplatesController controller = new CardTemplatesController(new CardTemplateDeleteValidator(context),
-        new CardTemplateCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      CardTemplatesController controller = CreateController(context);
 
       //null as parameter -> bad request
       IActionResult result = await controller.PostAsync(null);
@@ -179,12 +173,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     /// </summary>
     /// <returns></returns>
     [TestMethod]
-    public async Task DeleteDeckTest()
+    public async Task DeleteCardTemplateTest()
     {
       using DbContext context = CreateContext();
-      CardTemplatesController controller = new CardTemplatesController(new CardTemplateDeleteValidator(context),
-        new CardTemplateCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      CardTemplatesController controller = CreateController(context);
 
       //null as parameter -> bad request
       IActionResult result = await controller.DeleteAsync(null);
@@ -206,12 +198,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     /// </summary>
     /// <returns></returns>
     [TestMethod]
-    public async Task PutCardTest()
+    public async Task PutCardTemplateTest()
     {
       using DbContext context = CreateContext();
-      CardTemplatesController controller = new CardTemplatesController(new CardTemplateDeleteValidator(context),
-        new CardTemplateCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      CardTemplatesController controller = CreateController(context);
 
       //null as parameter -> bad request
       IActionResult result = await controller.PutAsync(null);
@@ -253,6 +243,13 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         wasThrown = true;
       }
       Assert.IsTrue(wasThrown);
+    }
+
+    private CardTemplatesController CreateController(DbContext context)
+    {
+      return new CardTemplatesController(new CardTemplateDeleteValidator(context),
+        new CardTemplateCommitValidator(context), context)
+      { ControllerContext = controllerContext };
     }
   }
 }

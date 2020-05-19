@@ -107,6 +107,16 @@
             <typeparam name="TEntity"></typeparam>
             <typeparam name="TKey">Type of the primary key</typeparam>
         </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.DeleteValidator">
+            <summary>
+            DeleteValdiator
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.CommitValidator">
+            <summary>
+            CommitValidator
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.Context">
             <summary>
             Context used to perform the actions
@@ -385,6 +395,12 @@
             <returns></returns>
         </member>
         <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.PostCoreAsync(SpacedRepetitionSystem.Entities.Entities.Security.User)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.DeleteCoreAsync(SpacedRepetitionSystem.Entities.Entities.Security.User)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Security.User)">
             <inheritdoc/>
         </member>
     </members>

@@ -112,7 +112,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         context.Add(otherUser);
         context.Add(user);
         context.Add(template);
-
         context.Add(deck);
         context.Add(otherUserDeck);
       });
@@ -126,9 +125,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task GetDeckByIdTest()
     {
       using DbContext context = CreateContext();
-      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
-        new DeckCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      DecksController controller = CreateController(context);
 
       //get deck successfully
       ActionResult<Deck> result = await controller.GetAsync(1);
@@ -155,9 +152,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task GetDecksTest()
     {
       using DbContext context = CreateContext();
-      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
-        new DeckCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      DecksController controller = CreateController(context);
       Dictionary<string, object> parameters = new Dictionary<string, object>();
       
       //Get all decks of user
@@ -181,9 +176,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task PostDeckTest()
     {
       using DbContext context = CreateContext();
-      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
-        new DeckCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      DecksController controller = CreateController(context);
 
       //null as parameter -> bad request
       IActionResult result = await controller.PostAsync(null);
@@ -223,9 +216,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task DeleteDeckTest()
     {
       using DbContext context = CreateContext();
-      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
-        new DeckCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      DecksController controller = CreateController(context);
 
       //null as parameter -> bad request
       IActionResult result = await controller.DeleteAsync(null);
@@ -247,12 +238,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     /// </summary>
     /// <returns></returns>
     [TestMethod]
-    public async Task PutCardTest()
+    public async Task PutDeckTest()
     {
       using DbContext context = CreateContext();
-      DecksController controller = new DecksController(new DeleteValidatorBase<Deck>(context),
-        new DeckCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      DecksController controller = CreateController(context);
 
       //null as parameter -> bad request
       IActionResult result = await controller.PutAsync(null);
@@ -286,6 +275,13 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         wasThrown = true;
       }
       Assert.IsTrue(wasThrown);
+    }
+
+    private DecksController CreateController(DbContext context)
+    {
+      return new DecksController(new DeleteValidatorBase<Deck>(context),
+        new DeckCommitValidator(context), context)
+      { ControllerContext = controllerContext };
     }
   }
 }

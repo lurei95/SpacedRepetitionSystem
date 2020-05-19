@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using Microsoft.AspNetCore.Authorization;
+using SpacedRepetitionSystem.Utility.Notification;
 
 namespace SpacedRepetitionSystem.Logic.Controllers.Security
 {
@@ -71,15 +72,14 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
         .Where(user2 => user2.Email == user.Email && user2.Password == password)
         .FirstOrDefaultAsync();
 
-      if (user1 != null)
-      {
-        RefreshToken refreshToken = GenerateRefreshToken();
-        user1.RefreshTokens.Add(refreshToken);
-        user1.AccessToken = GenerateAccessToken(user1.UserId);
-        user1.RefreshToken = refreshToken.Token;
-        await Context.SaveChangesAsync();
-      }
-    
+      if (user1 == null)
+        return NotFound();
+
+      RefreshToken refreshToken = GenerateRefreshToken();
+      user1.RefreshTokens.Add(refreshToken);
+      user1.AccessToken = GenerateAccessToken(user1.UserId);
+      user1.RefreshToken = refreshToken.Token;
+      await Context.SaveChangesAsync();
       return user1;
     }
 
@@ -93,6 +93,10 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     {
       if (user == null)
         return BadRequest();
+
+      string error = CommitValidator.Validate(user);
+      if (!string.IsNullOrEmpty(error))
+        throw new NotifyException(error);
 
       Context.Add(user);
       user.Password = user.Password.Encrypt();
@@ -113,15 +117,21 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     /// <param name="refreshRequest">Request containing the old jwt token and the refresh token</param>
     /// <returns></returns>
     [HttpPost("RefreshToken")]
-    public async Task<User> RefreshToken([FromBody] RefreshRequest refreshRequest)
+    public async Task<ActionResult<User>> RefreshToken([FromBody] RefreshRequest refreshRequest)
     {
+      if (refreshRequest == null)
+        return BadRequest();
       User user = await GetUserFromAccessToken(refreshRequest.AccessToken);
-      if (user != null && ValidateRefreshToken(user, refreshRequest.RefreshToken))
+      if (user == null)
+        return NotFound();
+
+      if (ValidateRefreshToken(user, refreshRequest.RefreshToken))
       {
         user.AccessToken = GenerateAccessToken(user.UserId);
         return user;
       }
-      return null;
+      else
+        return Unauthorized();
     }
 
     /// <summary>
@@ -139,12 +149,16 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PostCoreAsync(User entity)
-    {
-      IActionResult result = await base.PostCoreAsync(entity);
+    protected override Task<IActionResult> PostCoreAsync(User entity)
+    { throw new NotSupportedException(); }
 
-      return result;
-    }
+    ///<inheritdoc/>
+    protected override Task<IActionResult> DeleteCoreAsync(User entity)
+    { throw new NotSupportedException(); }
+
+    ///<inheritdoc/>
+    protected override Task<IActionResult> PutCoreAsync(User entity)
+    { throw new NotSupportedException(); }
 
     private bool ValidateRefreshToken(User user, string refreshToken)
     {

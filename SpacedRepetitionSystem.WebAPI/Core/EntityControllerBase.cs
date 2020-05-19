@@ -20,8 +20,15 @@ namespace SpacedRepetitionSystem.WebAPI.Core
   /// <typeparam name="TKey">Type of the primary key</typeparam>
   public abstract class EntityControllerBase<TEntity, TKey> : ControllerBase where TEntity : class, IEntity
   {
-    private readonly DeleteValidatorBase<TEntity> deleteValidator;
-    private readonly CommitValidatorBase<TEntity> commitValidator;
+    /// <summary>
+    /// DeleteValdiator
+    /// </summary>
+    protected DeleteValidatorBase<TEntity> DeleteValidator { get; private set; }
+
+    /// <summary>
+    /// CommitValidator
+    /// </summary>
+    protected CommitValidatorBase<TEntity> CommitValidator { get; private set; }
 
     /// <summary>
     /// Context used to perform the actions
@@ -36,9 +43,9 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// <param name="context">DBContext (injected)</param>
     public EntityControllerBase(DeleteValidatorBase<TEntity> deleteValidator, CommitValidatorBase<TEntity> commitValidator, DbContext context) 
     { 
-      this.deleteValidator = deleteValidator;
+      DeleteValidator = deleteValidator;
+      CommitValidator = commitValidator;
       Context = context;
-      this.commitValidator = commitValidator;
     }
 
     /// <summary>
@@ -64,7 +71,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     {
       if (entity == null)
         return await Task.FromResult(BadRequest());
-      string error = commitValidator.Validate(entity);
+      string error = CommitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
         IActionResult result = await PutCoreAsync(entity);
@@ -84,7 +91,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     {
       if (entity == null)
         return await Task.FromResult(BadRequest());
-      string error = commitValidator.Validate(entity);
+      string error = CommitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
         IActionResult result = await PostCoreAsync(entity);
@@ -104,7 +111,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     {
       if (entity == null)
         return BadRequest();
-      string error = deleteValidator.Validate(entity);
+      string error = DeleteValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
         IActionResult result = await DeleteCoreAsync(entity);

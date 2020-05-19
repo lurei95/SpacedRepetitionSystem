@@ -129,11 +129,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task GetEntryByIdTest()
     {
       using DbContext context = CreateContext();
-      PracticeHistoryEntriesController controller = new PracticeHistoryEntriesController(
-        new DeleteValidatorBase<PracticeHistoryEntry>(context),
-        new CommitValidatorBase<PracticeHistoryEntry>(context), 
-        context)
-      { ControllerContext = controllerContext };
+      PracticeHistoryEntriesController controller = CreateController(context);
 
       //get entry successfully
       ActionResult<PracticeHistoryEntry> result = await controller.GetAsync(1);
@@ -156,11 +152,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task GetEntriesTest()
     {
       using DbContext context = CreateContext();
-      PracticeHistoryEntriesController controller = new PracticeHistoryEntriesController(
-        new DeleteValidatorBase<PracticeHistoryEntry>(context),
-        new CommitValidatorBase<PracticeHistoryEntry>(context),
-        context)
-      { ControllerContext = controllerContext };
+      PracticeHistoryEntriesController controller = CreateController(context);
       Dictionary<string, object> parameters = new Dictionary<string, object>();
       
       //Get all entries of user
@@ -203,11 +195,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task PostEntryTest()
     {
       using DbContext context = CreateContext();
-      PracticeHistoryEntriesController controller = new PracticeHistoryEntriesController(
-        new DeleteValidatorBase<PracticeHistoryEntry>(context),
-        new CommitValidatorBase<PracticeHistoryEntry>(context),
-        context)
-      { ControllerContext = controllerContext };
+      PracticeHistoryEntriesController controller = CreateController(context);
 
       //null as parameter -> bad request
       IActionResult result = await controller.PostAsync(null);
@@ -285,21 +273,14 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task DeleteEntryNotSupportedTest()
     {
       using DbContext context = CreateContext();
-      PracticeHistoryEntriesController controller = new PracticeHistoryEntriesController(
-        new DeleteValidatorBase<PracticeHistoryEntry>(context),
-        new CommitValidatorBase<PracticeHistoryEntry>(context),
-        context)
-      { ControllerContext = controllerContext };
+      PracticeHistoryEntriesController controller = CreateController(context);
 
       bool wasThrown = false;
       try
       {
         IActionResult result = await controller.DeleteAsync(entry1);
       }
-      catch (NotSupportedException)
-      {
-        wasThrown = true;
-      }
+      catch (NotSupportedException) { wasThrown = true; }
       Assert.IsTrue(wasThrown);
     }
 
@@ -311,22 +292,22 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public async Task PutEntryNotSupportedTest()
     {
       using DbContext context = CreateContext();
-      PracticeHistoryEntriesController controller = new PracticeHistoryEntriesController(
-        new DeleteValidatorBase<PracticeHistoryEntry>(context),
-        new CommitValidatorBase<PracticeHistoryEntry>(context),
-        context)
-      { ControllerContext = controllerContext };
+      PracticeHistoryEntriesController controller = CreateController(context);
 
       bool wasThrown = false;
       try
       {
         IActionResult result = await controller.PutAsync(entry1);
       }
-      catch (NotSupportedException)
-      {
-        wasThrown = true;
-      }
+      catch (NotSupportedException) { wasThrown = true; }
       Assert.IsTrue(wasThrown);
+    }
+
+    private PracticeHistoryEntriesController CreateController(DbContext context)
+    {
+      return new PracticeHistoryEntriesController(new DeleteValidatorBase<PracticeHistoryEntry>(context),
+        new CommitValidatorBase<PracticeHistoryEntry>(context), context)
+      { ControllerContext = controllerContext };
     }
   }
 }
