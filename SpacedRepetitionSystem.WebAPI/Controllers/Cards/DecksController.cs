@@ -56,7 +56,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         query = query.Where(deck => deck.IsPinned == (bool)searchParameters[nameof(Deck.IsPinned)]);
 
       List<Deck> result = await query.ToListAsync();
-      foreach (Deck deck in query)
+      foreach (Deck deck in result)
       {
         deck.CardCount = Context.Set<Card>()
           .AsNoTracking()

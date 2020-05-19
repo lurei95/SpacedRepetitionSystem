@@ -35,20 +35,28 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
       string accessToken = await localStorageService.GetItemAsync<string>("accessToken");
-      ClaimsIdentity identity;
-      if (accessToken != null && accessToken != string.Empty)
+      string refreshToken = await localStorageService.GetItemAsync<string>("refreshToken");
+      ClaimsIdentity identity = new ClaimsIdentity();
+      apiConnector.CurrentUser = null;
+
+      if (!string.IsNullOrEmpty(accessToken) && !string.IsNullOrEmpty(refreshToken))
       {
-        User user = (await apiConnector.PostAsync<User>("Users/GetUserByAccessToken", accessToken)).Result;
-        user.AccessToken = accessToken;
-        apiConnector.CurrentUser = user;
-        identity = GetClaimsIdentity(user);
+        ApiReply<User> reply = await apiConnector.PostAsync<User>("Users/GetUserByAccessToken", accessToken);
+
+        if (reply.WasSuccessful)
+        {
+          User user = reply.Result;
+          user.AccessToken = accessToken;
+          user.RefreshToken = refreshToken;
+          apiConnector.CurrentUser = reply.Result;
+          identity = GetClaimsIdentity(reply.Result);
+        }
+        else
+          apiConnector.CurrentUser = null;
       }
-      else
-      {
-        identity = new ClaimsIdentity();
-        apiConnector.CurrentUser = null;
+
+      if (apiConnector.CurrentUser == null)
         navigationManager.NavigateTo("/Login");
-      }
 
       ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
       return await Task.FromResult(new AuthenticationState(claimsPrincipal));

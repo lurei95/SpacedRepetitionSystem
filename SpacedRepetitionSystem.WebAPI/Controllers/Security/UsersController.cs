@@ -140,12 +140,14 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     /// <param name="accessToken">The access token</param>
     /// <returns></returns>
     [HttpPost("GetUserByAccessToken")]
-    public async Task<User> GetUserByAccessToken([FromBody] string accessToken)
+    public async Task<ActionResult<User>> GetUserByAccessToken([FromBody] string accessToken)
     {
+      if (string.IsNullOrEmpty(accessToken))
+        return BadRequest();
       User user = await GetUserFromAccessToken(accessToken);
-      if (user != null)
-        return user;
-      return null;
+      if (user == null)
+        return NotFound();
+      return user;   
     }
 
     ///<inheritdoc/>
@@ -185,6 +187,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
           ValidateIssuerSigningKey = true,
           IssuerSigningKey = new SymmetricSecurityKey(key),
           ValidateIssuer = false,
+          ValidateLifetime = false,
           ValidateAudience = false
         };
 

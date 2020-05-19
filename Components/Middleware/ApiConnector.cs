@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Net;
 using SpacedRepetitionSystem.Utility.Notification;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace SpacedRepetitionSystem.Components.Middleware
 {
@@ -32,31 +33,43 @@ namespace SpacedRepetitionSystem.Components.Middleware
 
     ///<inheritdoc/>
     public async Task<ApiReply<TEntity>> GetAsync<TEntity>(object id) where TEntity : IRootEntity, new()
-    { return await CallApiCore<TEntity>(HttpMethod.Get, new TEntity().Route + "/" + id.ToString(), null); }
+    { return await CallApi<TEntity>(HttpMethod.Get, new TEntity().Route + "/" + id.ToString(), null); }
 
     ///<inheritdoc/>
     public async Task<ApiReply<List<TEntity>>> GetAsync<TEntity>(IDictionary<string, object> searchParameters) where TEntity : IRootEntity, new()
-    { return await CallApiCore<List<TEntity>>(HttpMethod.Get, new TEntity().Route, searchParameters); }
+    { return await CallApi<List<TEntity>>(HttpMethod.Get, new TEntity().Route, searchParameters); }
 
     ///<inheritdoc/>
     public async Task<ApiReply> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
-    { return await CallApiCore(HttpMethod.Put, entity.Route, entity); }
+    { return await CallApi(HttpMethod.Put, entity.Route, entity); }
 
     ///<inheritdoc/>
     public async Task<ApiReply> DeleteAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
-    { return await CallApiCore(HttpMethod.Delete, entity.Route, entity); }
+    { return await CallApi(HttpMethod.Delete, entity.Route, entity); }
 
     ///<inheritdoc/>
     public async Task<ApiReply> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
-    { return await CallApiCore(HttpMethod.Post, entity.Route, entity); }
+    { return await CallApi(HttpMethod.Post, entity.Route, entity); }
 
     ///<inheritdoc/>
     public async Task<ApiReply<TReturn>> PostAsync<TReturn>(string route, object value)
-    { return await CallApiCore<TReturn>(HttpMethod.Post, route, value); }
+    { return await CallApi<TReturn>(HttpMethod.Post, route, value); }
 
     ///<inheritdoc/>
     public async Task<ApiReply> PostAsync(string route, object value)
-    { return await CallApiCore(HttpMethod.Post, route, value);  }
+    { return await CallApi(HttpMethod.Post, route, value); }
+
+    private async Task<ApiReply> CallApi(HttpMethod method, string route, object value)
+    {
+      await TryRefreshAccessToken();
+      return await CallApiCore(method, route, value);
+    }
+
+    private async Task<ApiReply<TReturnValue>> CallApi<TReturnValue>(HttpMethod method, string route, object value)
+    {
+      await TryRefreshAccessToken();
+      return await CallApiCore<TReturnValue>(method, route, value);
+    }
 
     private async Task<ApiReply> CallApiCore(HttpMethod method, string route, object value)
     {
@@ -144,6 +157,28 @@ namespace SpacedRepetitionSystem.Components.Middleware
           reply.ResultMessage = notifyException1.Message;
         else
           throw exception;
+      }
+    }
+
+    private bool TestAccessTokenValid()
+    {
+      JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+      JwtSecurityToken decodedToken = tokenHandler.ReadJwtToken(CurrentUser.AccessToken);
+      return decodedToken.ValidFrom < DateTime.Now && decodedToken.ValidTo > DateTime.Now;
+    }
+
+    private async Task TryRefreshAccessToken()
+    {
+      if (CurrentUser != null && !TestAccessTokenValid())
+      {
+        RefreshRequest request = new RefreshRequest()
+        {
+          AccessToken = CurrentUser.AccessToken,
+          RefreshToken = CurrentUser.RefreshToken
+        };
+        ApiReply<User> reply = await CallApiCore<User>(HttpMethod.Post, "Users/RefreshToken", request);
+        if (reply.WasSuccessful)
+          CurrentUser = reply.Result;
       }
     }
   }

@@ -260,7 +260,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       ActionResult<User> result = await controller.RefreshToken(null);
       Assert.IsTrue(result.Result is BadRequestResult);
 
-      //null as parameter -> BadRequest
+      //User does not exist -> NotFound
       string otherUserToken = GenerateAccessToken(Guid.NewGuid());
       result = await controller.RefreshToken(new RefreshRequest() { AccessToken = otherUserToken });
       Assert.IsTrue(result.Result is NotFoundResult);
@@ -274,6 +274,31 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       result = await controller.RefreshToken(new RefreshRequest() { AccessToken = token, RefreshToken = validRefreshToken.Token });
       Assert.IsNotNull(result.Value);
       Assert.IsNotNull(result.Value.AccessToken);
+    }
+
+    /// <summary>
+    /// Tests <see cref="UsersController.GetUserByAccessToken(string)"/>
+    /// </summary>
+    [TestMethod]
+    public async Task GetUserByAccessTokenTest()
+    {
+      using DbContext context = CreateContext();
+      UsersController controller = CreateController(context);
+
+      //null as parameter -> BadRequest
+      ActionResult<User> result = await controller.GetUserByAccessToken(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
+
+      //User does not exist -> NotFound
+      string otherUserToken = GenerateAccessToken(Guid.NewGuid());
+      result = await controller.GetUserByAccessToken(otherUserToken);
+      Assert.IsTrue(result.Result is NotFoundResult);
+
+      //User exists -> returns correct user
+      string token = GenerateAccessToken(user.UserId);
+      result = await controller.GetUserByAccessToken(token);
+      Assert.IsNotNull(result.Value);
+      Assert.AreEqual(user.UserId, result.Value.UserId);
     }
 
     private string GenerateAccessToken(Guid userId)
