@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
-using SpacedRepetitionSystem.Entities.Validation.Cards;
-using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
+using SpacedRepetitionSystem.WebAPI.Validation.Cards;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
@@ -19,10 +17,9 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
   /// Testclass for <see cref="CardsController"/>
   /// </summary>
   [TestClass]
-  public sealed class CardsControllerTests : EntityFrameWorkTestCore
+  public sealed class CardsControllerTests : ControllerTestBase
   {
     private static User otherUser;
-    private static User user;
     private static CardTemplate template;
     private static CardFieldDefinition fieldDefinition1;
     private static CardFieldDefinition fieldDefinition2;
@@ -31,7 +28,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     private static Card otherUserCard;
     private static CardField field1;
     private static CardField field2;
-    private static ControllerContext controllerContext;
 
     /// <summary>
     /// Creates the test data when the class is initialized
@@ -42,12 +38,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public static void ClassInitialize(TestContext context)
 #pragma warning restore IDE0060 // Remove unused parameter
     {
-      user = new User()
-      {
-        UserId = Guid.NewGuid(),
-        Email = "test@test.com",
-        Password = "test"
-      };
       otherUser = new User()
       {
         UserId = Guid.NewGuid(),
@@ -57,7 +47,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
 
       template = new CardTemplate()
       {
-        UserId = user.UserId,
+        UserId = User.UserId,
         CardTemplateId = 1,
         Title = "Default"
       };
@@ -79,13 +69,13 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         DeckId = 1,
         Title = "Default",
         DefaultCardTemplateId = template.CardTemplateId,
-        UserId = user.UserId
+        UserId = User.UserId
       };
       card = new Card()
       {
         CardId = 1,
         CardTemplateId = template.CardTemplateId,
-        UserId = user.UserId,
+        UserId = User.UserId,
       };
       otherUserCard = new Card()
       {
@@ -111,11 +101,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       card.Fields.Add(field2);
       deck.Cards.Add(card);
       deck.Cards.Add(otherUserCard);
-
-      var identity = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, Convert.ToString(user.UserId)) }, "TestAuthType");
-      var claimsPrincipal = new ClaimsPrincipal(identity);
-      controllerContext = new ControllerContext
-      { HttpContext = new DefaultHttpContext { User = claimsPrincipal } };
     }
 
     ///<inheritdoc/>
@@ -126,7 +111,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CreateData(context =>
       {
         context.Add(otherUser);
-        context.Add(user);
+        context.Add(User);
         context.Add(template);
         context.Add(deck);
       });
@@ -222,7 +207,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result is OkResult);
       card1 = context.Find<Card>((long)3);
       Assert.IsNotNull(card1);
-      Assert.AreEqual(user.UserId, card1.UserId);
+      Assert.AreEqual(User.UserId, card1.UserId);
 
       //Invalid card is validated
       bool wasThrown = false;
@@ -324,7 +309,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     {
       return new CardsController(new DeleteValidatorBase<Card>(context),
         new CardCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      { ControllerContext = ControllerContext };
     }
   }
 }

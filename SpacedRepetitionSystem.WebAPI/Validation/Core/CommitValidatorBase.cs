@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities;
 
-namespace SpacedRepetitionSystem.Entities.Validation.Core
+namespace SpacedRepetitionSystem.WebAPI.Validation.Core
 {
   /// <summary>
   /// Validator for validating the saving of an entity

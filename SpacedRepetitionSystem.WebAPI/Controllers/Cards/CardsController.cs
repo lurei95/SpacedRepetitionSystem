@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.WebAPI.Core;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
-using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
+using SpacedRepetitionSystem.WebAPI.Validation.CardTemplates;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
@@ -18,14 +16,12 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
   /// Testclass for <see cref="CardTemplatesController"/>
   /// </summary>
   [TestClass]
-  public sealed class CardTemplatesControllerTests : EntityFrameWorkTestCore
+  public sealed class CardTemplatesControllerTests : ControllerTestBase
   {
     private static User otherUser;
-    private static User user;
     private static CardTemplate template;
     private static CardTemplate otherUserTemplate;
     private static CardFieldDefinition fieldDefinition1;
-    private static ControllerContext controllerContext;
 
     /// <summary>
     /// Creates the test data when the class is initialized
@@ -36,22 +32,15 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public static void ClassInitialize(TestContext context)
 #pragma warning restore IDE0060 // Remove unused parameter
     {
-      user = new User()
-      {
-        UserId = Guid.NewGuid(),
-        Email = "test@test.com",
-        Password = "test"
-      };
       otherUser = new User()
       {
         UserId = Guid.NewGuid(),
         Email = "test1@test1.com",
         Password = "test1"
       };
-
       template = new CardTemplate()
       {
-        UserId = user.UserId,
+        UserId = User.UserId,
         CardTemplateId = 1,
         Title = "Default"
       };
@@ -67,11 +56,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Front"
       };
       template.FieldDefinitions.Add(fieldDefinition1);
-
-      var identity = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, Convert.ToString(user.UserId)) }, "TestAuthType");
-      var claimsPrincipal = new ClaimsPrincipal(identity);
-      controllerContext = new ControllerContext
-      { HttpContext = new DefaultHttpContext { User = claimsPrincipal } };
     }
 
     ///<inheritdoc/>
@@ -82,7 +66,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CreateData(context =>
       {
         context.Add(otherUser);
-        context.Add(user);
         context.Add(template);
         context.Add(otherUserTemplate);
       });
@@ -153,7 +136,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result is OkResult);
       cardTemplate1 = context.Find<CardTemplate>((long)3);
       Assert.IsNotNull(cardTemplate1);
-      Assert.AreEqual(user.UserId, cardTemplate1.UserId);
+      Assert.AreEqual(User.UserId, cardTemplate1.UserId);
 
       //Invalid template is validated
       bool wasThrown = false;
@@ -249,7 +232,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     {
       return new CardTemplatesController(new CardTemplateDeleteValidator(context),
         new CardTemplateCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      { ControllerContext = ControllerContext };
     }
   }
 }

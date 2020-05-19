@@ -2,10 +2,12 @@
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
+using SpacedRepetitionSystem.Entities.Validation.Decks;
+using SpacedRepetitionSystem.Entities;
 
-namespace SpacedRepetitionSystem.Entities.Validation.Decks
+namespace SpacedRepetitionSystem.WebAPI.Validation.Decks
 {
   /// <summary>
   /// CommitValidator for <see cref="Deck"/>

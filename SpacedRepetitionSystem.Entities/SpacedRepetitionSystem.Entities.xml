@@ -723,20 +723,6 @@
         <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardCardTemplateIdValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card,System.Int64)">
             <inheritdoc/>
         </member>
-        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardCommitValidator">
-            <summary>
-            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="context">Context (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
-            <inheritdoc/>
-        </member>
         <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardDeckIdValidator">
             <summary>
             Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.DeckId"/>
@@ -746,20 +732,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardDeckIdValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card,System.Int64)">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator">
-            <summary>
-            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Security.User"/>
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="context">Context (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Security.User)">
             <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardFieldDefinitionFieldNameValidator">
@@ -794,34 +766,6 @@
             <param name="newValue">The new value of the property</param>
             <returns>Error message or null</returns>
         </member>
-        <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateCommitValidator">
-            <summary>
-            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="context">Context (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate)">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateDeleteValidator">
-            <summary>
-            DeleteValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateDeleteValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="context">Context (injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateDeleteValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate)">
-            <inheritdoc/>
-        </member>
         <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateTitleValidator">
             <summary>
             Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.Title"/>
@@ -832,54 +776,6 @@
         </member>
         <member name="M:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardTemplateTitleValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate,System.String)">
             <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase`1">
-            <summary>
-            Validator for validating the saving of an entity
-            </summary>
-            <typeparam name="TEntity">Entity type</typeparam>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase`1.Context">
-            <summary>
-            Context
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase`1.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="context">Context (injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.CommitValidatorBase`1.Validate(`0)">
-            <summary>
-            Validates the saving of the entity
-            </summary>
-            <param name="entity">The entity</param>
-            <returns>Error message or null</returns>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase`1">
-            <summary>
-            Class for validating the deletion of an entity
-            </summary>
-            <typeparam name="TEntity">Entity-Type</typeparam>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase`1.Context">
-            <summary>
-            Context
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase`1.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="context">Context (injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Core.DeleteValidatorBase`1.Validate(`0)">
-            <summary>
-            Validates the deletion
-            </summary>
-            <param name="entity">The entity to delete</param>
-            <returns>Error message or null</returns>
         </member>
         <member name="T:SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator`1">
             <summary>
@@ -931,20 +827,6 @@
             <param name="entity">The entity</param>
             <param name="newValue">New value of the property</param>
             <returns></returns>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Entities.Validation.Decks.DeckCommitValidator">
-            <summary>
-            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck"/>
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Decks.DeckCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="context">Context (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Decks.DeckCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Deck)">
-            <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Entities.Validation.Decks.DeckDefaultCardTemplateIdValidator">
             <summary>

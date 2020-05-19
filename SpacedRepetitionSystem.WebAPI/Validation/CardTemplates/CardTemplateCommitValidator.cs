@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Entities.Validation.Core;
+using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
 using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using System.Linq;
 
-namespace SpacedRepetitionSystem.Entities.Validation.CardTemplates
+namespace SpacedRepetitionSystem.WebAPI.Validation.CardTemplates
 {
   /// <summary>
   /// CommitValidator for <see cref="CardTemplate"/>

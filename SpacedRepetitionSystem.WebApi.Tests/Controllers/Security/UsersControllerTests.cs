@@ -6,11 +6,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
-using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Logic.Controllers.Security;
 using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.WebAPI.Core;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,12 +26,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
   /// Testclass for <see cref="UsersController"/>
   /// </summary>
   [TestClass]
-  public sealed class UsersControllerTests : EntityFrameWorkTestCore
+  public sealed class UsersControllerTests : ControllerTestBase
   {
-    private static User user;
     private static RefreshToken invalidRefreshToken;
     private static RefreshToken validRefreshToken;
-    private static ControllerContext controllerContext;
     private static readonly string secretKey = "thisisasecretkeyanddontsharewithanyone";
 
     /// <summary>
@@ -43,21 +41,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public static void ClassInitialize(TestContext context)
 #pragma warning restore IDE0060 // Remove unused parameter
     {
-      user = new User()
-      {
-        UserId = Guid.NewGuid(),
-        Email = "test@test.com",
-        Password = "test".Encrypt()
-      };
       validRefreshToken = GenerateRefreshToken(DateTime.Today.AddDays(1));
       invalidRefreshToken = GenerateRefreshToken(DateTime.Today.AddDays(-1));
-      user.RefreshTokens.Add(validRefreshToken);
-      user.RefreshTokens.Add(invalidRefreshToken);
-
-      var identity = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, Convert.ToString(user.UserId)) }, "TestAuthType");
-      var claimsPrincipal = new ClaimsPrincipal(identity);
-      controllerContext = new ControllerContext
-      { HttpContext = new DefaultHttpContext { User = claimsPrincipal } };
+      User.RefreshTokens.Add(validRefreshToken);
+      User.RefreshTokens.Add(invalidRefreshToken);
     }
 
     ///<inheritdoc/>
@@ -65,10 +52,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public override void TestInitialize()
     {
       base.TestInitialize();
-      CreateData(context =>
-      {
-        context.Add(user);
-      });
+      CreateData(context => { context.Add(User); });
     }
 
     /// <summary>
@@ -82,9 +66,9 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       UsersController controller = CreateController(context);
 
       //get user successfully
-      ActionResult<User> result = await controller.GetAsync(user.UserId);
+      ActionResult<User> result = await controller.GetAsync(User.UserId);
       Assert.IsNotNull(result.Value);
-      Assert.AreEqual(user.Email, result.Value.Email);
+      Assert.AreEqual(User.Email, result.Value.Email);
 
       //User does not exist -> not found
       result = await controller.GetAsync(Guid.NewGuid());
@@ -210,7 +194,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsFalse(string.IsNullOrEmpty(result.Value.RefreshToken));
       Assert.IsFalse(string.IsNullOrEmpty(result.Value.AccessToken));
       bool refreshTokenWasCreated = context.Set<RefreshToken>()
-        .Any(token => token.UserId == user.UserId && token.Token == result.Value.RefreshToken);
+        .Any(token => token.UserId == User.UserId && token.Token == result.Value.RefreshToken);
       Assert.IsTrue(refreshTokenWasCreated);
     }
 
@@ -266,7 +250,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result.Result is NotFoundResult);
 
       //Refresh token invalid -> Unauthorized
-      string token = GenerateAccessToken(user.UserId);
+      string token = GenerateAccessToken(User.UserId);
       result = await controller.RefreshToken(new RefreshRequest() { AccessToken = token,  RefreshToken = invalidRefreshToken.Token });
       Assert.IsTrue(result.Result is UnauthorizedResult);
 
@@ -295,10 +279,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result.Result is NotFoundResult);
 
       //User exists -> returns correct user
-      string token = GenerateAccessToken(user.UserId);
+      string token = GenerateAccessToken(User.UserId);
       result = await controller.GetUserByAccessToken(token);
       Assert.IsNotNull(result.Value);
-      Assert.AreEqual(user.UserId, result.Value.UserId);
+      Assert.AreEqual(User.UserId, result.Value.UserId);
     }
 
     private string GenerateAccessToken(Guid userId)
@@ -336,7 +320,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       IOptions<JWTSettings> jwtSettings = Options.Create(settings);
       return new UsersController(new DeleteValidatorBase<User>(context),
         new UserCommitValidator(context), context, jwtSettings)
-      { ControllerContext = controllerContext };
+      { ControllerContext = ControllerContext };
     }
   }
 }

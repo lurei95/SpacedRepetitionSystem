@@ -1,5 +1,4 @@
-﻿using SpacedRepetitionSystem.Entities.Validation.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +16,7 @@ using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using Microsoft.AspNetCore.Authorization;
 using SpacedRepetitionSystem.Utility.Notification;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 
 namespace SpacedRepetitionSystem.Logic.Controllers.Security
 {
@@ -36,7 +36,8 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
     /// <param name="context">DBContext (injected)</param>
     /// <param name="jwtSettings">The jwt settings</param>
-    public UsersController(DeleteValidatorBase<User> deleteValidator, CommitValidatorBase<User> commitValidator, DbContext context, IOptions<JWTSettings> jwtSettings)
+    public UsersController(DeleteValidatorBase<User> deleteValidator, CommitValidatorBase<User> commitValidator, 
+      DbContext context, IOptions<JWTSettings> jwtSettings)
       : base(deleteValidator, commitValidator, context) 
     { this.jwtSettings = jwtSettings.Value;  }
 

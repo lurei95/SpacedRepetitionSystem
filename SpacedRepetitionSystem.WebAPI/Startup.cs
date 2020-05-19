@@ -14,10 +14,11 @@ using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Cards;
-using SpacedRepetitionSystem.Entities.Validation.CardTemplates;
-using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Entities.Validation.Decks;
 using SpacedRepetitionSystem.WebAPI.Core;
+using SpacedRepetitionSystem.WebAPI.Validation.Cards;
+using SpacedRepetitionSystem.WebAPI.Validation.CardTemplates;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
+using SpacedRepetitionSystem.WebAPI.Validation.Decks;
 
 namespace SpacedRepetitionSystem.WebAPI
 {

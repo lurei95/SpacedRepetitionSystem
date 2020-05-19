@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.WebAPI.Core;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +25,8 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     /// <param name="deleteValidator">DeleteValidator (injected)</param>
     /// <param name="context">DBContext (injected)</param>
     public CardTemplatesController(DeleteValidatorBase<CardTemplate> deleteValidator, CommitValidatorBase<CardTemplate> commitValidator, DbContext context)
-      : base(deleteValidator, commitValidator, context) { }
+      : base(deleteValidator, commitValidator, context)
+    { }
 
     ///<inheritdoc/>
     [HttpGet("{id}")]

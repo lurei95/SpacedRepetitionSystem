@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
-using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Entities.Validation.Decks;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
+using SpacedRepetitionSystem.WebAPI.Validation.Decks;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -19,17 +19,15 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
   /// Testclass for <see cref="DecksController"/>
   /// </summary>
   [TestClass]
-  public sealed class DecksControllerTests : EntityFrameWorkTestCore
+  public sealed class DecksControllerTests : ControllerTestBase
   {
     private static User otherUser;
-    private static User user;
     private static CardTemplate template;
     private static CardFieldDefinition fieldDefinition1;
     private static Deck deck;
     private static Deck otherUserDeck;
     private static Card card;
     private static CardField field1;
-    private static ControllerContext controllerContext;
 
     /// <summary>
     /// Creates the test data when the class is initialized
@@ -40,22 +38,15 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public static void ClassInitialize(TestContext context)
 #pragma warning restore IDE0060 // Remove unused parameter
     {
-      user = new User()
-      {
-        UserId = Guid.NewGuid(),
-        Email = "test@test.com",
-        Password = "test"
-      };
       otherUser = new User()
       {
         UserId = Guid.NewGuid(),
         Email = "test1@test1.com",
         Password = "test1"
       };
-
       template = new CardTemplate()
       {
-        UserId = user.UserId,
+        UserId = User.UserId,
         CardTemplateId = 1,
         Title = "Default"
       };
@@ -65,13 +56,12 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Front"
       };
       template.FieldDefinitions.Add(fieldDefinition1);
-
       deck = new Deck()
       {
         DeckId = 1,
         Title = "Default",
         DefaultCardTemplateId = template.CardTemplateId,
-        UserId = user.UserId
+        UserId = User.UserId
       };
       otherUserDeck = new Deck()
       {
@@ -84,7 +74,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         CardId = 1,
         CardTemplateId = template.CardTemplateId,
-        UserId = user.UserId,
+        UserId = User.UserId,
       };
       field1 = new CardField()
       {
@@ -95,11 +85,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       card.Fields.Add(field1);
       deck.Cards.Add(card);
-
-      var identity = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, Convert.ToString(user.UserId)) }, "TestAuthType");
-      var claimsPrincipal = new ClaimsPrincipal(identity);
-      controllerContext = new ControllerContext
-      { HttpContext = new DefaultHttpContext { User = claimsPrincipal } };
     }
 
     ///<inheritdoc/>
@@ -110,7 +95,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CreateData(context =>
       {
         context.Add(otherUser);
-        context.Add(user);
         context.Add(template);
         context.Add(deck);
         context.Add(otherUserDeck);
@@ -193,7 +177,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result is OkResult);
       deck1 = context.Find<Deck>((long)3);
       Assert.IsNotNull(deck1);
-      Assert.AreEqual(user.UserId, deck1.UserId);
+      Assert.AreEqual(User.UserId, deck1.UserId);
 
       //Invalid deck is validated
       bool wasThrown = false;
@@ -281,7 +265,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     {
       return new DecksController(new DeleteValidatorBase<Deck>(context),
         new DeckCommitValidator(context), context)
-      { ControllerContext = controllerContext };
+      { ControllerContext = ControllerContext };
     }
   }
 }

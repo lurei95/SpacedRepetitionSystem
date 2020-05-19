@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 
-namespace SpacedRepetitionSystem.Entities.Validation.CardTemplates
+namespace SpacedRepetitionSystem.WebAPI.Validation.CardTemplates
 {
   /// <summary>
   /// DeleteValidator for <see cref="CardTemplate"/>

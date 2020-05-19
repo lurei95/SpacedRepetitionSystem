@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using SpacedRepetitionSystem.Entities.Entities.Security;
-using SpacedRepetitionSystem.Entities.Validation.Core;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 
 namespace SpacedRepetitionSystem.Entities.Validation.Cards
 {

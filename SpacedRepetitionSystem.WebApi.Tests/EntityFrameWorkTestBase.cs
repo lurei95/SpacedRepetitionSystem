@@ -8,7 +8,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests
   /// <summary>
   /// baseclass for all tests using an ef core Context
   /// </summary>
-  public abstract class EntityFrameWorkTestCore
+  public abstract class EntityFrameWorkTestBase
   {
     private static DbContextOptions<SpacedRepetionSystemDBContext> contextOptions;
 
@@ -20,7 +20,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests
     /// <summary>
     /// Constructor
     /// </summary>
-    public EntityFrameWorkTestCore()
+    public EntityFrameWorkTestBase()
     {
       contextOptions = new DbContextOptionsBuilder<SpacedRepetionSystemDBContext>()
         .UseInMemoryDatabase(databaseName: "TestDatabase")

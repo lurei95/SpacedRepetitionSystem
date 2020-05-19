@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
-using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
+using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -17,16 +17,14 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
   /// Testclass for <see cref="PracticeHistoryEntriesController"/>
   /// </summary>
   [TestClass]
-  public sealed class PracticeHistoryEntriesControllerTests : EntityFrameWorkTestCore
+  public sealed class PracticeHistoryEntriesControllerTests : ControllerTestBase
   {
     private static User otherUser;
-    private static User user;
     private static CardField field;
     private static PracticeHistoryEntry entry1;
     private static PracticeHistoryEntry entry2;
     private static PracticeHistoryEntry entry3;
     private static PracticeHistoryEntry otherUserEntry;
-    private static ControllerContext controllerContext;
 
     /// <summary>
     /// Creates the test data when the class is initialized
@@ -37,12 +35,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     public static void ClassInitialize(TestContext context)
 #pragma warning restore IDE0060 // Remove unused parameter
     {
-      user = new User()
-      {
-        UserId = Guid.NewGuid(),
-        Email = "test@test.com",
-        Password = "test"
-      };
       otherUser = new User()
       {
         UserId = Guid.NewGuid(),
@@ -56,7 +48,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Field 1",
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 1,
-        UserId = user.UserId,
+        UserId = User.UserId,
         CorrectCount = 1,
         HardCount = 2,
         WrongCount = 3
@@ -68,7 +60,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Field 1",
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 2,
-        UserId = user.UserId
+        UserId = User.UserId
       };
       entry3 = new PracticeHistoryEntry()
       {
@@ -77,7 +69,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Field 3",
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 3,
-        UserId = user.UserId,
+        UserId = User.UserId,
         CorrectCount = 2,
         HardCount = 4,
         WrongCount = 6
@@ -97,11 +89,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Field 1",
         ProficiencyLevel = 3
       };
-
-      var identity = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, Convert.ToString(user.UserId)) }, "TestAuthType");
-      var claimsPrincipal = new ClaimsPrincipal(identity);
-      controllerContext = new ControllerContext
-      { HttpContext = new DefaultHttpContext { User = claimsPrincipal } };
     }
 
     ///<inheritdoc/>
@@ -112,7 +99,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CreateData(context =>
       {
         context.Add(otherUser);
-        context.Add(user);
         context.Add(field);
         context.Add(entry1);
         context.Add(entry2);
@@ -209,7 +195,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Field 1",
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 5,
-        UserId = user.UserId,
+        UserId = User.UserId,
         CorrectCount = 0,
         HardCount = 0,
         WrongCount = 1
@@ -232,7 +218,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Field 1",
         PracticeDate = DateTime.Today.AddDays(1),
         PracticeHistoryEntryId = 5,
-        UserId = user.UserId,
+        UserId = User.UserId,
         CorrectCount = 1,
         HardCount = 0,
         WrongCount = 0
@@ -253,7 +239,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Field 1",
         PracticeDate = DateTime.Today.AddDays(1),
         PracticeHistoryEntryId = 6,
-        UserId = user.UserId,
+        UserId = User.UserId,
         CorrectCount = 0,
         HardCount = 1,
         WrongCount = 0
@@ -307,7 +293,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     {
       return new PracticeHistoryEntriesController(new DeleteValidatorBase<PracticeHistoryEntry>(context),
         new CommitValidatorBase<PracticeHistoryEntry>(context), context)
-      { ControllerContext = controllerContext };
+      { ControllerContext = ControllerContext };
     }
   }
 }
