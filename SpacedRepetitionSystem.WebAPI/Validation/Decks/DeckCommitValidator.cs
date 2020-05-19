@@ -29,7 +29,7 @@ namespace SpacedRepetitionSystem.WebAPI.Validation.Decks
       error = new DeckTitleValidator().Validate(entity, entity.Title);
       if (!string.IsNullOrEmpty(error))
         return error;
-      if (Context.Set<Deck>().Any(deck => deck.DeckId != entity.DeckId && deck.Title == entity.Title))
+      if (Context.Set<Deck>().Any(deck => deck.DeckId != entity.DeckId && deck.Title == entity.Title && deck.UserId == entity.UserId))
         return Errors.DeckTitleNotUnique.FormatWith(entity.Title);
       return null;
     }

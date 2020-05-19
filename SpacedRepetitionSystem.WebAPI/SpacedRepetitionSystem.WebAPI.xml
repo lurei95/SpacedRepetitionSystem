@@ -336,6 +336,20 @@
         <member name="M:SpacedRepetitionSystem.WebAPI.Validation.Cards.CardCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
             <inheritdoc/>
         </member>
+        <member name="T:SpacedRepetitionSystem.WebAPI.Validation.Cards.UserCommitValidator">
+            <summary>
+            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Security.User"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Validation.Cards.UserCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="context">Context (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.WebAPI.Validation.Cards.UserCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Security.User)">
+            <inheritdoc/>
+        </member>
         <member name="T:SpacedRepetitionSystem.WebAPI.Validation.CardTemplates.CardTemplateCommitValidator">
             <summary>
             CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
@@ -481,20 +495,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.Logic.Controllers.Security.UsersController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Security.User)">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator">
-            <summary>
-            CommitValidator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Security.User"/>
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator.#ctor(Microsoft.EntityFrameworkCore.DbContext)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="context">Context (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.UserCommitValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Security.User)">
             <inheritdoc/>
         </member>
     </members>

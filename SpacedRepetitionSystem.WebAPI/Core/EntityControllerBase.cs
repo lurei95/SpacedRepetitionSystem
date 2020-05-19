@@ -87,6 +87,8 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     {
       if (entity == null)
         return await Task.FromResult(BadRequest());
+      if (entity is IUserSpecificEntity userSpecificEntity)
+        userSpecificEntity.UserId = GetUserId();
       string error = CommitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
@@ -151,8 +153,6 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// <param name="entity">The new entity</param>
     protected virtual async Task<IActionResult> PostCoreAsync(TEntity entity)
     {
-      if (entity is IUserSpecificEntity userSpecificEntity)
-        userSpecificEntity.UserId = GetUserId();
       Context.Add(entity);
       return await Task.FromResult(Ok());
     }

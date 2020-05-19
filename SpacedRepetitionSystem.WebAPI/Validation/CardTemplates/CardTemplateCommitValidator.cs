@@ -25,7 +25,9 @@ namespace SpacedRepetitionSystem.WebAPI.Validation.CardTemplates
       string error = new CardTemplateTitleValidator().Validate(entity, entity.Title);
       if (!string.IsNullOrEmpty(error))
         return error;
-      if (Context.Set<CardTemplate>().Any(template => template.CardTemplateId != entity.CardTemplateId && template.Title == entity.Title))
+      if (Context.Set<CardTemplate>().Any(template => template.CardTemplateId != entity.CardTemplateId 
+        && template.Title == entity.Title
+        && template.UserId == entity.UserId))
         return Errors.CardTemplateTitleNotUnique.FormatWith(entity.Title);
       return null;
     }

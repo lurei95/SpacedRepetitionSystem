@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.WebAPI.Validation.Core;
 
-namespace SpacedRepetitionSystem.Entities.Validation.Cards
+namespace SpacedRepetitionSystem.WebAPI.Validation.Cards
 {
   /// <summary>
   /// CommitValidator for <see cref="User"/>
