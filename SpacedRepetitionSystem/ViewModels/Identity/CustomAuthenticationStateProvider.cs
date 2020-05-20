@@ -1,13 +1,12 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Identity
+namespace SpacedRepetitionSystem.ViewModels.Identity
 {
   /// <summary>
   /// Custom implemenntatio of <see cref="AuthenticationStateProvider"/>

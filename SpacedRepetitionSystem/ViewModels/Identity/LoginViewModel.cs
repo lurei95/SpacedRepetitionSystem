@@ -4,24 +4,22 @@ using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Core;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Identity
+namespace SpacedRepetitionSystem.ViewModels.Identity
 {
   /// <summary>
-  /// ViewModel for a signup page
+  /// ViewModel for a login page
   /// </summary>
-  public sealed class SignupViewModel : IdentityViewModelBase
+  public sealed class LoginViewModel : IdentityViewModelBase
   {
-    /// <summary>
-    /// The Confirm password
-    /// </summary>
-    public string ConfirmPassword { get; set; }
+    private ClaimsPrincipal claimsPrincipal;
 
     /// <summary>
-    /// Whether confirm password is invalid
+    /// The authentication state task
     /// </summary>
-    public bool HasConfirmPasswordError { get; set; }
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
     /// <summary>
     /// Constructor
@@ -30,42 +28,34 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Identity
     /// <param name="authenticationStateProvider">AuthenticationStateProvider (Injected)</param>
     /// <param name="apiConnector">API Connector (Injected)</param>
     /// <param name="changeValidator">EntityChangeValdiator (Injected)</param>
-
-    public SignupViewModel(NavigationManager navigationManager, AuthenticationStateProvider authenticationStateProvider, 
+    public LoginViewModel(NavigationManager navigationManager, AuthenticationStateProvider authenticationStateProvider, 
       IApiConnector apiConnector, EntityChangeValidator<User> changeValidator) 
       : base(navigationManager, authenticationStateProvider, apiConnector, changeValidator)
     { }
 
+    ///<inheritdoc/>
+    public async override Task InitializeAsync()
+    {
+      User = new User();
+      claimsPrincipal = (await AuthenticationStateTask).User;
+      if (claimsPrincipal.Identity.IsAuthenticated)
+        NavigationManager.NavigateTo("/");
+    }
+
     /// <summary>
-    /// Tries to sign up
+    /// Tries to log in
     /// </summary>
+    /// <returns>Task with result</returns>
     protected override async Task SubmitAsyncCore()
     {
-      ApiReply<User> reply = await ApiConnector.PostAsync<User>("Users/Signup", User);
+      ApiReply<User> reply = await ApiConnector.PostAsync<User>("Users/login", User);
       if (reply.WasSuccessful)
       {
         await AuthenticationStateProvider.MarkUserAsAuthenticated(reply.Result);
         NavigationManager.NavigateTo("/");
       }
       else
-        ErrorMessage = reply.ResultMessage;
-    }
-
-    ///<inheritdoc/>
-    protected override bool ValidateUser()
-    {
-      HasConfirmPasswordError = false;
-      bool result = base.ValidateUser();
-      if (!result)
-        return false;
-
-      if (User.Password != ConfirmPassword)
-      {
-        ErrorMessage = Errors.PasswordDoesNotEqualConfirm;
-        HasPasswordError = HasConfirmPasswordError = true;
-        return false;
-      }
-      return true;
+        ErrorMessage = Errors.InvalidUserNameOrPassword;
     }
   }
 }

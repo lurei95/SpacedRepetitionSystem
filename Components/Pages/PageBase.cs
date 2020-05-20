@@ -2,7 +2,7 @@
 using SpacedRepetitionSystem.Components.ViewModels;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Pages
+namespace SpacedRepetitionSystem.Components.Pages
 {
   /// <summary>
   /// Baseclass for all pages

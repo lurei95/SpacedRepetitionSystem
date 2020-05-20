@@ -1,6 +1,6 @@
 ﻿@page "/Decks/{Id:long}/Practice/"
 
-@using SpacedRepetitionSystem.Components.ViewModels.Cards;
+@using SpacedRepetitionSystem.ViewModels.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
 @using SpacedRepetitionSystem.Components.Edits;
 @using SpacedRepetitionSystem.Components.ViewModels;
@@ -157,7 +157,7 @@
   /// Id of the Deck
   /// </summary>
   [Parameter]
-  public object Id { set => ViewModel.LoadEntity(value); }
+  public object Id { set => ViewModel.Id = value; }
 
   ///<inheritdoc/>
   protected override void OnParametersSet()

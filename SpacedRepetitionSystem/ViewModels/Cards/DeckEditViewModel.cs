@@ -2,6 +2,7 @@
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Cards
+namespace SpacedRepetitionSystem.ViewModels.Cards
 {
   /// <summary>
   /// EditViewModel for <see cref="Deck"/>
@@ -97,19 +98,19 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     {
       EditCardCommand = new Command()
       {
-        CommandText = Messages.Edit,
+        CommandText = Components.Messages.Edit,
         ExecuteAction = (param) => EditCard(param as Card)
       };
 
       DeleteCardCommand = new Command()
       {
-        CommandText = Messages.Delete,
+        CommandText = Components.Messages.Delete,
         ExecuteAction = async (param) => await DeleteCard(param as Card)
       };
 
       NewCardCommand = new Command()
       {
-        CommandText = Messages.New,
+        CommandText = Components.Messages.New,
         ExecuteAction = (param) => NewCard()
       };
 
@@ -168,7 +169,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     {
       ApiReply reply = await ApiConnector.DeleteAsync(card);
       if (reply.WasSuccessful)
-        NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(card.GetDisplayName()));
+        NotificationMessageProvider.ShowSuccessMessage(Components.Messages.EntityDeleted.FormatWith(card.GetDisplayName()));
       else
         NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
     }

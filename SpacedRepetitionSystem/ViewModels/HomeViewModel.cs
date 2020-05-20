@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels
+namespace SpacedRepetitionSystem.ViewModels
 {
   /// <summary>
   /// ViewModel for the home page

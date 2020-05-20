@@ -22,7 +22,7 @@ namespace SpacedRepetitionSystem.Components {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Messages {
+    public class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SpacedRepetitionSystem.Components {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SpacedRepetitionSystem.Components.Messages", typeof(Messages).Assembly);
@@ -51,7 +51,7 @@ namespace SpacedRepetitionSystem.Components {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,115 +63,25 @@ namespace SpacedRepetitionSystem.Components {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        internal static string Cancel {
+        public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
-        /// </summary>
-        internal static string Close {
-            get {
-                return ResourceManager.GetString("Close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
-        internal static string Delete {
+        public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure that you want to delete the card &quot;{0}&quot;?.
-        /// </summary>
-        internal static string DeleteCardDialogText {
-            get {
-                return ResourceManager.GetString("DeleteCardDialogText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete Card.
-        /// </summary>
-        internal static string DeleteCardDialogTitle {
-            get {
-                return ResourceManager.GetString("DeleteCardDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure that you want to delete the template &quot;{0}&quot;?.
-        /// </summary>
-        internal static string DeleteCardTemplateDialogText {
-            get {
-                return ResourceManager.GetString("DeleteCardTemplateDialogText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete Template.
-        /// </summary>
-        internal static string DeleteCardTemplateDialogTitle {
-            get {
-                return ResourceManager.GetString("DeleteCardTemplateDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Are you sure that you want to delete the deck &quot;{0}&quot; and all its containing cards?.
-        /// </summary>
-        internal static string DeleteDeckDialogText {
-            get {
-                return ResourceManager.GetString("DeleteDeckDialogText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete Deck.
-        /// </summary>
-        internal static string DeleteDeckDialogTitle {
-            get {
-                return ResourceManager.GetString("DeleteDeckDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hard.
-        /// </summary>
-        internal static string Difficult {
-            get {
-                return ResourceManager.GetString("Difficult", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Don&apos;t Know.
-        /// </summary>
-        internal static string DoesNotKnow {
-            get {
-                return ResourceManager.GetString("DoesNotKnow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Easy.
-        /// </summary>
-        internal static string Easy {
-            get {
-                return ResourceManager.GetString("Easy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
-        internal static string Edit {
+        public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
             }
@@ -180,7 +90,7 @@ namespace SpacedRepetitionSystem.Components {
         /// <summary>
         ///   Looks up a localized string similar to The {0} was deleted successfully..
         /// </summary>
-        internal static string EntityDeleted {
+        public static string EntityDeleted {
             get {
                 return ResourceManager.GetString("EntityDeleted", resourceCulture);
             }
@@ -189,7 +99,7 @@ namespace SpacedRepetitionSystem.Components {
         /// <summary>
         ///   Looks up a localized string similar to The {0} was saved successfully. .
         /// </summary>
-        internal static string EntitySaved {
+        public static string EntitySaved {
             get {
                 return ResourceManager.GetString("EntitySaved", resourceCulture);
             }
@@ -198,52 +108,16 @@ namespace SpacedRepetitionSystem.Components {
         /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
-        internal static string New {
+        public static string New {
             get {
                 return ResourceManager.GetString("New", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Card.
-        /// </summary>
-        internal static string NewCard {
-            get {
-                return ResourceManager.GetString("NewCard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Deck.
-        /// </summary>
-        internal static string NewDeck {
-            get {
-                return ResourceManager.GetString("NewDeck", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Template.
-        /// </summary>
-        internal static string NewTemplate {
-            get {
-                return ResourceManager.GetString("NewTemplate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Next.
-        /// </summary>
-        internal static string Next {
-            get {
-                return ResourceManager.GetString("Next", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
-        internal static string No {
+        public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
             }
@@ -252,97 +126,25 @@ namespace SpacedRepetitionSystem.Components {
         /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
-        internal static string Okay {
+        public static string Okay {
             get {
                 return ResourceManager.GetString("Okay", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Practice.
-        /// </summary>
-        internal static string Practice {
-            get {
-                return ResourceManager.GetString("Practice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Practice Summary.
-        /// </summary>
-        internal static string PracticePageSummaryTitle {
-            get {
-                return ResourceManager.GetString("PracticePageSummaryTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Practice {0}.
-        /// </summary>
-        internal static string PracticePageTitle {
-            get {
-                return ResourceManager.GetString("PracticePageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Statistics.
-        /// </summary>
-        internal static string PracticeStatistics {
-            get {
-                return ResourceManager.GetString("PracticeStatistics", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string Save {
+        public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Cards.
-        /// </summary>
-        internal static string SearchCards {
-            get {
-                return ResourceManager.GetString("SearchCards", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search Decks.
-        /// </summary>
-        internal static string SearchDecks {
-            get {
-                return ResourceManager.GetString("SearchDecks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search Templates.
-        /// </summary>
-        internal static string SearchTemplates {
-            get {
-                return ResourceManager.GetString("SearchTemplates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show.
-        /// </summary>
-        internal static string Show {
-            get {
-                return ResourceManager.GetString("Show", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
-        internal static string Yes {
+        public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
             }

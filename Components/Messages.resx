@@ -120,38 +120,8 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="Close" xml:space="preserve">
-    <value>Close</value>
-  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
-  </data>
-  <data name="DeleteCardDialogText" xml:space="preserve">
-    <value>Are you sure that you want to delete the card "{0}"?</value>
-  </data>
-  <data name="DeleteCardDialogTitle" xml:space="preserve">
-    <value>Delete Card</value>
-  </data>
-  <data name="DeleteCardTemplateDialogText" xml:space="preserve">
-    <value>Are you sure that you want to delete the template "{0}"?</value>
-  </data>
-  <data name="DeleteCardTemplateDialogTitle" xml:space="preserve">
-    <value>Delete Template</value>
-  </data>
-  <data name="DeleteDeckDialogText" xml:space="preserve">
-    <value>Are you sure that you want to delete the deck "{0}" and all its containing cards?</value>
-  </data>
-  <data name="DeleteDeckDialogTitle" xml:space="preserve">
-    <value>Delete Deck</value>
-  </data>
-  <data name="Difficult" xml:space="preserve">
-    <value>Hard</value>
-  </data>
-  <data name="DoesNotKnow" xml:space="preserve">
-    <value>Don't Know</value>
-  </data>
-  <data name="Easy" xml:space="preserve">
-    <value>Easy</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
@@ -165,50 +135,14 @@
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
-  <data name="NewCard" xml:space="preserve">
-    <value>New Card</value>
-  </data>
-  <data name="NewDeck" xml:space="preserve">
-    <value>New Deck</value>
-  </data>
-  <data name="NewTemplate" xml:space="preserve">
-    <value>New Template</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>Next</value>
-  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="Okay" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="Practice" xml:space="preserve">
-    <value>Practice</value>
-  </data>
-  <data name="PracticePageSummaryTitle" xml:space="preserve">
-    <value>Practice Summary</value>
-  </data>
-  <data name="PracticePageTitle" xml:space="preserve">
-    <value>Practice {0}</value>
-  </data>
-  <data name="PracticeStatistics" xml:space="preserve">
-    <value>Statistics</value>
-  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
-  </data>
-  <data name="SearchCards" xml:space="preserve">
-    <value>Search Cards</value>
-  </data>
-  <data name="SearchDecks" xml:space="preserve">
-    <value>Search Decks</value>
-  </data>
-  <data name="SearchTemplates" xml:space="preserve">
-    <value>Search Templates</value>
-  </data>
-  <data name="Show" xml:space="preserve">
-    <value>Show</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

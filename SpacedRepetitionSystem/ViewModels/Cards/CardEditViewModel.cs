@@ -2,6 +2,7 @@
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
@@ -12,7 +13,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Cards
+namespace SpacedRepetitionSystem.ViewModels.Cards
 {
   /// <summary>
   /// EditViewModel for a <see cref="Card"/>

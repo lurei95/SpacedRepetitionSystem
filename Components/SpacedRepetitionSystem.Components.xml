@@ -298,59 +298,9 @@
               Looks up a localized string similar to Cancel.
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.Close">
-            <summary>
-              Looks up a localized string similar to Close.
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.Delete">
             <summary>
               Looks up a localized string similar to Delete.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.DeleteCardDialogText">
-            <summary>
-              Looks up a localized string similar to Are you sure that you want to delete the card &quot;{0}&quot;?.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.DeleteCardDialogTitle">
-            <summary>
-              Looks up a localized string similar to Delete Card.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.DeleteCardTemplateDialogText">
-            <summary>
-              Looks up a localized string similar to Are you sure that you want to delete the template &quot;{0}&quot;?.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.DeleteCardTemplateDialogTitle">
-            <summary>
-              Looks up a localized string similar to Delete Template.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.DeleteDeckDialogText">
-            <summary>
-              Looks up a localized string similar to Are you sure that you want to delete the deck &quot;{0}&quot; and all its containing cards?.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.DeleteDeckDialogTitle">
-            <summary>
-              Looks up a localized string similar to Delete Deck.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.Difficult">
-            <summary>
-              Looks up a localized string similar to Hard.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.DoesNotKnow">
-            <summary>
-              Looks up a localized string similar to Don&apos;t Know.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.Easy">
-            <summary>
-              Looks up a localized string similar to Easy.
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.Edit">
@@ -373,26 +323,6 @@
               Looks up a localized string similar to New.
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.NewCard">
-            <summary>
-              Looks up a localized string similar to New Card.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.NewDeck">
-            <summary>
-              Looks up a localized string similar to New Deck.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.NewTemplate">
-            <summary>
-              Looks up a localized string similar to New Template.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.Next">
-            <summary>
-              Looks up a localized string similar to Next.
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.No">
             <summary>
               Looks up a localized string similar to No.
@@ -403,49 +333,9 @@
               Looks up a localized string similar to OK.
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.Practice">
-            <summary>
-              Looks up a localized string similar to Practice.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.PracticePageSummaryTitle">
-            <summary>
-              Looks up a localized string similar to Practice Summary.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.PracticePageTitle">
-            <summary>
-              Looks up a localized string similar to Practice {0}.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.PracticeStatistics">
-            <summary>
-              Looks up a localized string similar to Statistics.
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.Save">
             <summary>
               Looks up a localized string similar to Save.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.SearchCards">
-            <summary>
-              Looks up a localized string similar to Search Cards.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.SearchDecks">
-            <summary>
-              Looks up a localized string similar to Search Decks.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.SearchTemplates">
-            <summary>
-              Looks up a localized string similar to Search Templates.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.Messages.Show">
-            <summary>
-              Looks up a localized string similar to Show.
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.Yes">
@@ -647,443 +537,43 @@
             </summary>
             <param name="result">The result with which the dialog was closed</param>
         </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel">
+        <member name="T:SpacedRepetitionSystem.Components.Pages.EditPageBase`2">
             <summary>
-            EditViewModel for a <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
+            Baseclass for all EditPages
+            </summary>
+            <typeparam name="TEntity">Entity-Type</typeparam>
+            <typeparam name="TViewModel">ViewModel-Type</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Pages.EditPageBase`2.Id">
+            <summary>
+            Id of the entity to edit
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.DeckId">
+        <member name="T:SpacedRepetitionSystem.Components.Pages.PageBase`1">
             <summary>
-            Id of the deck the card belongs to
+            Baseclass for all pages
+            </summary>
+            <typeparam name="TViewModel">ViewModel-Type</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Pages.PageBase`1.ViewModel">
+            <summary>
+            The ViewModel
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.CardTemplateId">
+        <member name="P:SpacedRepetitionSystem.Components.Pages.PageBase`1.IsLoading">
             <summary>
-            Id of the definition of the card
+            Whether the page is currenty still loading data
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.CardTemplateTitleProperty">
-            <summary>
-            Property for <see cref="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.CardTemplateTitle"/>
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.CardTemplateTitle">
-            <summary>
-            Title of the card template
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.AvailableCardTemplates">
-            <summary>
-            The available card templates
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.Fields">
-            <summary>
-            The fields of the card
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.Tags">
-            <summary>
-            The tags assigned to the the card
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.ShowStatisticsCommand">
-            <summary>
-            Command for showing the practice statistics
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector,SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Cards.Card})">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnector (Injected)</param>
-            <param name="changeValidator">change validator (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.InitializeAsync">
+        <member name="M:SpacedRepetitionSystem.Components.Pages.PageBase`1.OnAfterRenderAsync(System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.CreateNewEntity">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.SaveChanges">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardEditViewModel.DeleteEntity">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel">
+        <member name="T:SpacedRepetitionSystem.Components.Pages.SearchPageBase`2">
             <summary>
-            SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
+            Baseclass for all SearchPages
             </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.DeckId">
-            <summary>
-            Id of the deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.SelectedEntity">
-            <inheritdoc/>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.ShowStatisticsCommand">
-            <summary>
-            Command for showing the practice statistics
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnector (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.SearchCore">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.DeleteEntity(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.NewEntity">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.EditEntity(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardSearchViewModel.ShowStatistics(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel">
-            <summary>
-            EditViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.TitleProperty">
-            <summary>
-            Property for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.Title"/>
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.FieldDefinitions">
-            <summary>
-            The fields definitions of the template
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.RemoveFieldDefinitionCommand">
-            <summary>
-            Command for removing a field definition
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.AddFieldDefinitionCommand">
-            <summary>
-            Command for adding a field definition
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.FieldNameProperties">
-            <summary>
-            FieldName Properties
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector,SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate})">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnector (Injected)</param>
-            <param name="changeValidator">change validator (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.InitializeAsync">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.CreateNewEntity">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateEditViewModel.DeleteEntity">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateSearchViewModel">
-            <summary>
-            SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateSearchViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnector (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateSearchViewModel.SearchCore">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.CardTemplateSearchViewModel.DeleteEntity(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate)">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel">
-            <summary>
-            EditViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck"/>
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.CardTemplateId">
-            <summary>
-            Id of the definition of the card
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.CardTemplateTitleProperty">
-            <summary>
-            Property for <see cref="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.CardTemplateTitle"/>
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.TitleProperty">
-            <summary>
-            Property for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.Title"/>
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.CardTemplateTitle">
-            <summary>
-            Title of the card template
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.AvailableCardTemplates">
-            <summary>
-            The available card templates
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.EditCardCommand">
-            <summary>
-            Command for editing a card from the deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.DeleteCardCommand">
-            <summary>
-            Command for deleting a card from the deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.NewCardCommand">
-            <summary>
-            Command for adding a new card to the deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.ShowStatisticsCommand">
-            <summary>
-            Command for showing the practice statistics
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector,SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Cards.Deck})">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnector (Injected)</param>
-            <param name="changeValidator">change validator (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.InitializeAsync">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.DeleteEntity">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckEditViewModel.CreateNewEntity">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckSearchViewModel">
-            <summary>
-            SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck"/>
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckSearchViewModel.PracticeDeckCommand">
-            <summary>
-            Command for practicing the deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckSearchViewModel.AddCardsCommand">
-            <summary>
-            Command for adding a new card to the deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckSearchViewModel.ShowStatisticsCommand">
-            <summary>
-            Command for showing the practice statistics
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckSearchViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnector (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckSearchViewModel.TogglePinned(System.Boolean,SpacedRepetitionSystem.Entities.Entities.Cards.Deck)">
-            <summary>
-            Toggles <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.IsPinned"/> for the deck
-            </summary>
-            <param name="value">the new value</param>
-            <param name="deck">the deck</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckSearchViewModel.DeleteEntity(SpacedRepetitionSystem.Entities.Entities.Cards.Deck)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.DeckSearchViewModel.SearchCore">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel">
-            <summary>
-            ViewModel for practicing a deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.IsShowingSolution">
-            <summary>
-            Whether the results should be shown 
-            </summary>
-        </member>
-        <member name="F:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.PracticeResults">
-            <summary>
-            The practice results
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.WasInputCorrect">
-            <summary>
-            Whether the input was correct
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.IsSummary">
-            <summary>
-            Whether the practice summary is shown 
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.Title">
-            <summary>
-            Title of the page
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.ValidationClass">
-            <summary>
-            Class for validation
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.InputText">
-            <summary>
-            Text of the Input
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.CurrentFieldName">
-            <summary>
-            Fieldname of the currently practiced field
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.Solution">
-            <summary>
-            The solution
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.DisplayedFieldName">
-            <summary>
-            Name of the displayed field
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.DisplayedFieldValue">
-            <summary>
-            Value of the displayed field
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.DisplayedCardField">
-            <summary>
-            The displayed card field
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.Current">
-            <summary>
-            The current Field
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.PracticeFields">
-            <summary>
-            The fields to practice
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.Deck">
-            <summary>
-            The deck to practice
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.DifficultResultCommand">
-            <summary>
-            Command for the result difficult
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.EasyResultCommand">
-            <summary>
-            Command for the result easy
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.DoesNotKnowResultCommand">
-            <summary>
-            Command for the result don't know
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.ShowSolutionCommand">
-            <summary>
-            Command to show the solution
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.NextCommand">
-            <summary>
-            Command for going to the next entry
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.CloseSummaryCommand">
-            <summary>
-            Command for closing the summary
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnetcor (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.LoadEntity(System.Object)">
-            <summary>
-            Loads the Entity
-            </summary>
-            <param name="id">Id of the entity</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.InitializeAsync">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeDeckViewModel.OnInputFinished">
-            <summary>
-            The input has finished
-            </summary>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeResult">
-            <summary>
-            Practice Result
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeResult.Correct">
-            <summary>
-            Correct count
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeResult.Difficult">
-            <summary>
-            Difficult count
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.PracticeResult.Wrong">
-            <summary>
-            Wrong count
-            </summary>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Cards.CardPracticeResult">
-            <summary>
-            Practice result for a card
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Cards.CardPracticeResult.FieldResults">
-            <summary>
-            Pratcice results of the fields of the card
-            </summary>
+            <typeparam name="TEntity">Entity-Type</typeparam>
+            <typeparam name="TViewModel">ViewModel-Type</typeparam>
         </member>
         <member name="T:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1">
             <summary>
@@ -1176,231 +666,6 @@
             </summary>
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnetcor (Injected)</param>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel">
-            <summary>
-            ViewModel for the home page
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.PinnedDecks">
-            <summary>
-            List of pinned decks
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.ProblemWords">
-            <summary>
-            List of problem words
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.ProblemWordDecks">
-            <summary>
-            The decks of the problem words
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.PracticeDeckCommand">
-            <summary>
-            Command for practicing the deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.AddCardsCommand">
-            <summary>
-            Command for adding a new card to the deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.ShowStatisticsCommand">
-            <summary>
-            Command for showing the practice statistics
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.NewDeckCommand">
-            <summary>
-            Command for creating a new deck
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.SearchDecksCommand">
-            <summary>
-            Command for searching decks
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.NewTemplateCommand">
-            <summary>
-            Command for adding a new template
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.SearchTemplatesCommand">
-            <summary>
-            Command for searching templates
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.SearchCardsCommand">
-            <summary>
-            Command for searching templates
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnetcor (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.HomeViewModel.InitializeAsync">
-            <inheritdoc/>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Identity.CustomAuthenticationStateProvider">
-            <summary>
-            Custom implemenntatio of <see cref="T:Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider"/>
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.CustomAuthenticationStateProvider.#ctor(Blazored.LocalStorage.ILocalStorageService,SpacedRepetitionSystem.Components.Middleware.IApiConnector,Microsoft.AspNetCore.Components.NavigationManager)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="localStorageService">LocalStorageService (injected)</param>
-            <param name="apiConnector">ApiConnector (injected)</param>
-            <param name="navigationManager">NavigationManager (injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.CustomAuthenticationStateProvider.GetAuthenticationStateAsync">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.CustomAuthenticationStateProvider.MarkUserAsAuthenticated(SpacedRepetitionSystem.Entities.Entities.Security.User)">
-            <summary>
-            Marks an user as authenticated
-            </summary>
-            <param name="user">The user</param>
-            <returns></returns>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.CustomAuthenticationStateProvider.MarkUserAsLoggedOut">
-            <summary>
-            Marks a user as logged out
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase">
-            <summary>
-            baseclass for login or signup ViewModel
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.ApiConnector">
-            <summary>
-            The api connetcor
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.HasEmailError">
-            <summary>
-            Whether the e-mail is invalid
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.HasPasswordError">
-            <summary>
-            Whether the password is invalid
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.AuthenticationStateProvider">
-            <summary>
-            The authemntication state provider
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.ErrorMessage">
-            <summary>
-            The error message
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.IsBusy">
-            <summary>
-            Whether the ViewModel is currently logging in
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.User">
-            <summary>
-            The user
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.#ctor(Microsoft.AspNetCore.Components.NavigationManager,Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider,SpacedRepetitionSystem.Components.Middleware.IApiConnector,SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Security.User})">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="authenticationStateProvider">AuthenticationStateProvider (Injected)</param>
-            <param name="apiConnector">API Connector (Injected)</param>
-            <param name="changeValidator">EntityChangeValdiator (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.SubmitAsync">
-            <summary>
-            Submit the result
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.SubmitAsyncCore">
-            <summary>
-            Action performaed on submit
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.IdentityViewModelBase.ValidateUser">
-            <summary>
-            Valdiates the user befor submitting
-            </summary>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Identity.LoginViewModel">
-            <summary>
-            ViewModel for a login page
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.LoginViewModel.AuthenticationStateTask">
-            <summary>
-            The authentication state task
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.LoginViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider,SpacedRepetitionSystem.Components.Middleware.IApiConnector,SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Security.User})">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="authenticationStateProvider">AuthenticationStateProvider (Injected)</param>
-            <param name="apiConnector">API Connector (Injected)</param>
-            <param name="changeValidator">EntityChangeValdiator (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.LoginViewModel.InitializeAsync">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.LoginViewModel.SubmitAsyncCore">
-            <summary>
-            Tries to log in
-            </summary>
-            <returns>Task with result</returns>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Identity.SignupViewModel">
-            <summary>
-            ViewModel for a signup page
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.SignupViewModel.ConfirmPassword">
-            <summary>
-            The Confirm password
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Identity.SignupViewModel.HasConfirmPasswordError">
-            <summary>
-            Whether confirm password is invalid
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.SignupViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider,SpacedRepetitionSystem.Components.Middleware.IApiConnector,SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Security.User})">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="authenticationStateProvider">AuthenticationStateProvider (Injected)</param>
-            <param name="apiConnector">API Connector (Injected)</param>
-            <param name="changeValidator">EntityChangeValdiator (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.SignupViewModel.SubmitAsyncCore">
-            <summary>
-            Tries to sign up
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Identity.SignupViewModel.ValidateUser">
-            <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Components.ViewModels.PageViewModelBase">
             <summary>
@@ -1512,6 +777,11 @@
             </summary>
             <typeparam name="TEntity"></typeparam>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.Id">
+            <summary>
+            The Id of the entity
+            </summary>
+        </member>
         <member name="F:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.Correct">
             <summary>
             Correct
@@ -1589,11 +859,13 @@
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnetcor (Injected)</param>
         </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.LoadEntityAsync(System.Object)">
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.InitializeAsync">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.LoadEntityAsync">
             <summary>
             Loads the Entity
             </summary>
-            <param name="id">Id of the entity</param>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.RecalculateChartData">
             <summary>
@@ -1634,26 +906,6 @@
             <summary>
             1 year
             </summary>
-        </member>
-        <member name="T:SpacedRepetitionSystem.Components.ViewModels.Statistics.CardStatisticsViewModel">
-            <summary>
-            ViewModel for displaying the practice statistics of a card
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.Statistics.CardStatisticsViewModel.DisplayedEntries">
-            <summary>
-            The displayed Entries
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Statistics.CardStatisticsViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnetcor (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.Statistics.CardStatisticsViewModel.InitializeAsync">
-            <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Components.ViewModels.ViewModelBase">
             <summary>
@@ -1916,26 +1168,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.Notification.NotificationBar.OnInitialized">
-            <inheritdoc/>
-        </member>
-        <member name="T:DeckStatisticsViewModel">
-            <summary>
-            ViewModel for displaying the practice statistics of a card
-            </summary>
-        </member>
-        <member name="P:DeckStatisticsViewModel.DisplayedEntries">
-            <summary>
-            The displayed Entries
-            </summary>
-        </member>
-        <member name="M:DeckStatisticsViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
-            <summary>
-            Constructor
-            </summary>
-            <param name="navigationManager">NavigationManager (Injected)</param>
-            <param name="apiConnector">ApiConnetcor (Injected)</param>
-        </member>
-        <member name="M:DeckStatisticsViewModel.InitializeAsync">
             <inheritdoc/>
         </member>
     </members>

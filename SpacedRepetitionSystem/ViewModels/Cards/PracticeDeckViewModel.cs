@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Internal;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.Utility.Notification;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Cards
+namespace SpacedRepetitionSystem.ViewModels.Cards
 {
   /// <summary>
   /// ViewModel for practicing a deck
@@ -25,6 +26,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     string inputText;
     private bool? wasInputCorrect;
     private bool isSummary = false;
+
+    /// <summary>
+    /// The Id of the entity
+    /// </summary>
+    public object Id { get; set; }
 
     /// <summary>
     /// Whether the results should be shown 
@@ -244,12 +250,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels.Cards
     /// <summary>
     /// Loads the Entity
     /// </summary>
-    /// <param name="id">Id of the entity</param>
-    public async Task LoadEntity(object id) => Deck = (await ApiConnector.GetAsync<Deck>(id)).Result;
+    public async Task LoadEntityAsync() => Deck = (await ApiConnector.GetAsync<Deck>(Id)).Result;
 
     ///<inheritdoc/>
     public override async Task InitializeAsync()
     {
+      await LoadEntityAsync();
       await base.InitializeAsync();
 
       bool isActivePractice = Deck.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue);

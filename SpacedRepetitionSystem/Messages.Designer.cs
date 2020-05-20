@@ -29,9 +29,207 @@ namespace SpacedRepetitionSystem
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the Close key.
+        /// </summary>
+        public static string Close
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("Close", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the culture to use for lookups using this strongly typed resource class.
         /// </summary>
         public static CultureInfo CultureInfo { get; set; }
+
+        /// <summary>
+        /// Gets the resource string indexed by the DeleteCardDialogText key.
+        /// </summary>
+        public static string DeleteCardDialogText
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("DeleteCardDialogText", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the DeleteCardDialogTitle key.
+        /// </summary>
+        public static string DeleteCardDialogTitle
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("DeleteCardDialogTitle", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the DeleteCardTemplateDialogText key.
+        /// </summary>
+        public static string DeleteCardTemplateDialogText
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("DeleteCardTemplateDialogText", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the DeleteCardTemplateDialogTitle key.
+        /// </summary>
+        public static string DeleteCardTemplateDialogTitle
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("DeleteCardTemplateDialogTitle", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the DeleteDeckDialogText key.
+        /// </summary>
+        public static string DeleteDeckDialogText
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("DeleteDeckDialogText", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the DeleteDeckDialogTitle key.
+        /// </summary>
+        public static string DeleteDeckDialogTitle
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("DeleteDeckDialogTitle", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Difficult key.
+        /// </summary>
+        public static string Difficult
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("Difficult", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the DoesNotKnow key.
+        /// </summary>
+        public static string DoesNotKnow
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("DoesNotKnow", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Easy key.
+        /// </summary>
+        public static string Easy
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("Easy", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the NewCard key.
+        /// </summary>
+        public static string NewCard
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("NewCard", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the NewDeck key.
+        /// </summary>
+        public static string NewDeck
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("NewDeck", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the NewTemplate key.
+        /// </summary>
+        public static string NewTemplate
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("NewTemplate", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Next key.
+        /// </summary>
+        public static string Next
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("Next", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Practice key.
+        /// </summary>
+        public static string Practice
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("Practice", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the PracticePageSummaryTitle key.
+        /// </summary>
+        public static string PracticePageSummaryTitle
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticePageSummaryTitle", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the PracticePageTitle key.
+        /// </summary>
+        public static string PracticePageTitle
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticePageTitle", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the PracticeStatistics key.
+        /// </summary>
+        public static string PracticeStatistics
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticeStatistics", Messages.CultureInfo);
+            }
+        }
 
         /// <summary>
         /// Gets the cached ResourceManager instance used by this class.
@@ -46,6 +244,50 @@ namespace SpacedRepetitionSystem
                 }
 
                 return Messages.resourceManager;
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the SearchCards key.
+        /// </summary>
+        public static string SearchCards
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("SearchCards", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the SearchDecks key.
+        /// </summary>
+        public static string SearchDecks
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("SearchDecks", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the SearchTemplates key.
+        /// </summary>
+        public static string SearchTemplates
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("SearchTemplates", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the Show key.
+        /// </summary>
+        public static string Show
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("Show", Messages.CultureInfo);
             }
         }
     }

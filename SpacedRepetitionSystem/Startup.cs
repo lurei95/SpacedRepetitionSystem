@@ -3,17 +3,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SpacedRepetitionSystem.Components.ViewModels.Cards;
 using SpacedRepetitionSystem.Entities;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-using SpacedRepetitionSystem.Components.ViewModels.Statistics;
-using SpacedRepetitionSystem.Components.ViewModels;
 using Microsoft.AspNetCore.Components.Authorization;
-using SpacedRepetitionSystem.Components.ViewModels.Identity;
 using Blazored.LocalStorage;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.ViewModels.Cards;
+using SpacedRepetitionSystem.ViewModels;
+using SpacedRepetitionSystem.ViewModels.Identity;
+using SpacedRepetitionSystem.ViewModels.Statistics;
 
 namespace SpacedRepetitionSystem
 {

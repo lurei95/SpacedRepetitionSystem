@@ -18,6 +18,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     private string selectedDisplayUnit;
 
     /// <summary>
+    /// The Id of the entity
+    /// </summary>
+    public object Id { get; set; }
+
+    /// <summary>
     /// Correct
     /// </summary>
     private static readonly string Correct = nameof(Correct);
@@ -140,11 +145,17 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public StatisticsViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector) : base(navigationManager, apiConnector)
     { }
 
+    ///<inheritdoc/>
+    public override async Task InitializeAsync()
+    {
+      await base.InitializeAsync();
+      await LoadEntityAsync();
+    }
+
     /// <summary>
     /// Loads the Entity
     /// </summary>
-    /// <param name="id">Id of the entity</param>
-    public virtual async Task LoadEntityAsync(object id) => Entity = (await ApiConnector.GetAsync<TEntity>(id)).Result;
+    public virtual async Task LoadEntityAsync() => Entity = (await ApiConnector.GetAsync<TEntity>(Id)).Result;
 
     /// <summary>
     /// Reacalculates the datapoint for the charts

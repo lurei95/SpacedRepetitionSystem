@@ -2,7 +2,7 @@
 using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities;
 
-namespace SpacedRepetitionSystem.Pages
+namespace SpacedRepetitionSystem.Components.Pages
 {
   /// <summary>
   /// Baseclass for all EditPages

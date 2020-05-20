@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Identity
+namespace SpacedRepetitionSystem.ViewModels.Identity
 {
   /// <summary>
   /// baseclass for login or signup ViewModel

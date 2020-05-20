@@ -1,6 +1,6 @@
 ﻿@page "/Decks/{DeckId:long}/Cards/{CardId:long}/Statistics/"
 
-@using SpacedRepetitionSystem.Components.ViewModels.Statistics;
+@using SpacedRepetitionSystem.ViewModels.Statistics;
 @using SpacedRepetitionSystem.Entities.Entities.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
 @using SpacedRepetitionSystem.Components.ViewModels;
@@ -107,7 +107,7 @@
   /// Id of the card
   /// </summary>
   [Parameter]
-  public long CardId { set => ViewModel.LoadEntityAsync(value); }
+  public long CardId { set => ViewModel.Id = value; }
 
   /// <summary>
   /// Id of the deck

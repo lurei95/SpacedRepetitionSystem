@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Cards
+namespace SpacedRepetitionSystem.ViewModels.Cards
 {
   /// <summary>
   /// SearchViewModel for <see cref="Card"/>

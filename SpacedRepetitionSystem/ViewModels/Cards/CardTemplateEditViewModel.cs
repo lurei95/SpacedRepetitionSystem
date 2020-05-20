@@ -2,6 +2,7 @@
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
@@ -9,7 +10,7 @@ using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Cards
+namespace SpacedRepetitionSystem.ViewModels.Cards
 {
   /// <summary>
   /// EditViewModel for <see cref="CardTemplate"/>

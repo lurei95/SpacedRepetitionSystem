@@ -1,6 +1,6 @@
 ﻿@page "/Decks/{DeckId:long}/Statistics/"
 
-@using SpacedRepetitionSystem.Components.ViewModels.Statistics;
+@using SpacedRepetitionSystem.ViewModels.Statistics;
 @using SpacedRepetitionSystem.Entities.Entities.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
 @using SpacedRepetitionSystem.Components.ViewModels;
@@ -107,7 +107,7 @@
   /// Id of the deck
   /// </summary>
   [Parameter]
-  public long DeckId { set => ViewModel.LoadEntityAsync(value); }
+  public long DeckId { set => ViewModel.Id = value; }
 
   ///<inheritdoc/>
   protected override async Task OnAfterRenderAsync(bool firstRender)

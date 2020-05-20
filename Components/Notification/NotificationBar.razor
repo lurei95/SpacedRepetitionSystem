@@ -5,7 +5,10 @@
 
 @if (alertVisible)
 {
-  <div class="@alertClass" style="@Style" id="@Id" role="alert">
+  <div class="@alertClass" 
+       style="@Style" 
+       id="@Id" 
+       role="alert">
     @message
     <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="ResetNotification">
       <span aria-hidden="true">&times;</span>

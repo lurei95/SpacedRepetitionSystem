@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SpacedRepetitionSystem.Components.ViewModels.Cards
+namespace SpacedRepetitionSystem.ViewModels.Cards
 {
   /// <summary>
   /// Practice Result
