@@ -135,6 +135,10 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public StatisticsViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector) : base(navigationManager, apiConnector)
     { }
 
+    ///<inheritdoc/>
+    public override async Task<bool> InitializeAsync()
+    { return await LoadEntityAsync() && await base.InitializeAsync(); }
+
     /// <summary>
     /// Reacalculates the datapoint for the charts
     /// </summary>

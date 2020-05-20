@@ -22,7 +22,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Command for deleting an entity
     /// </summary>
-    public Command DeleteCommand { get; set; }
+    public EntityDeleteCommand<TEntity> DeleteCommand { get; set; }
 
     /// <summary>
     /// Command for editing an entity
@@ -69,12 +69,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public SearchViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector) 
       : base(navigationManager, apiConnector)
     {
-      DeleteCommand = new Command()
-      {
-        CommandText = Messages.Delete,
-        ExecuteAction = async (param) => await DeleteEntity(param as TEntity)
-      };
-
       EditCommand = new Command()
       {
         CommandText = Messages.Edit,
@@ -86,6 +80,25 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         CommandText = Messages.New,
         ExecuteAction = (param) => NewEntity()
       };
+    }
+
+    ///<inheritdoc/>
+    public override async Task<bool> InitializeAsync()
+    {
+      bool result = await base.InitializeAsync();
+      if (!result)
+        return false;
+
+      DeleteCommand = new EntityDeleteCommand<TEntity>(ApiConnector)
+      {
+        CommandText = Messages.Delete,
+        OnDeletedAction = (entity) =>
+        {
+          SearchResults.Remove(entity);
+          OnPropertyChanged(nameof(SearchResults));
+        }
+      };
+      return true;
     }
 
     /// <summary>
@@ -101,23 +114,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       if (SearchResults.Count > 0)
         SelectedEntity = SearchResults[0];
       IsSearching = false;
-    }
-
-    /// <summary>
-    /// Deletes the entity
-    /// </summary>
-    /// <param name="entity">The entity</param>
-    protected virtual async Task DeleteEntity(TEntity entity)
-    {
-      ApiReply reply = await ApiConnector.DeleteAsync(entity);
-      if (reply.WasSuccessful)
-      {
-        NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(entity.GetDisplayName()));
-        SearchResults.Remove(entity);
-        OnPropertyChanged(nameof(SearchResults));
-      }
-      else
-        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
     }
 
     /// <summary>

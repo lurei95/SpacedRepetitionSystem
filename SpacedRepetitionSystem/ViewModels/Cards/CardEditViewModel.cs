@@ -138,12 +138,15 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (!result)
         return false;
 
-      if (DeckId != Entity.DeckId)
+      if (!IsNewEntity && DeckId != Entity.DeckId)
       {
         NotificationMessageProvider.ShowErrorMessage(
           Components.Errors.EntityDoesNotExist.FormatWith(EntityNameHelper.GetName<Deck>(), DeckId));
         return false;
       }
+
+      DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
+      DeleteCommand.DeleteDialogText = Messages.DeleteCardDialogText.FormatWith(Entity.CardId);
 
       cardTemplateId = Entity.CardTemplateId;
       if (IsNewEntity)
@@ -179,18 +182,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (success && IsNewEntity)
         NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
       return success;
-    }
-
-    ///<inheritdoc/>
-    protected override async Task DeleteEntity()
-    {
-      ModalDialogManager.ShowDialog(Messages.DeleteCardDialogTitle, 
-        Messages.DeleteCardDialogText.FormatWith(Entity.CardId), DialogButtons.YesNo, async (result) =>
-      {
-        if (result == DialogResult.Yes)
-          await base.DeleteEntity();
-      });
-      await Task.FromResult<object>(null);
     }
 
     private async void ChangeDeck()

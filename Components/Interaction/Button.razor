@@ -10,24 +10,24 @@
   {
     <button type="button" id="@Id"
             data-toggle="tooltip"
-            title="@Command.ToolTip"
+            title="@Command?.ToolTip"
             @onclick="ButtonClicked"
             class="btn @ClassString"
             disabled="@(Command?.IsEnabled == false)"
             style="@Style">
-      @if (!string.IsNullOrEmpty(Command.Icon))
+      @if (!string.IsNullOrEmpty(Command?.Icon))
       {
-        <span class="@Command.Icon" style="@TextColorString"></span>
+        <span class="@Command?.Icon" style="@TextColorString"></span>
       }
 
-      @Command.CommandText
+      @Command?.CommandText
     </button>
   }
 </ViewModelArea>
 
 @code
 {
-  private Command command;
+  private CommandBase command;
 
   private string ClassString => (IsIconButton ? "icon-button" : " ") + (string.IsNullOrEmpty(Class) ? "" : " ") + Class;
 
@@ -49,7 +49,7 @@
   /// Command of the button
   /// </summary>
   [Parameter]
-  public Command Command
+  public CommandBase Command
   {
     get => command;
     set

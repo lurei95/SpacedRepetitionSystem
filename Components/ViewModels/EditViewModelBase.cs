@@ -14,7 +14,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   /// Base class for all edit view models
   /// </summary>
   /// <typeparam name="TEntity">The entity type</typeparam>
-  public abstract class EditViewModelBase<TEntity> : SingleEntityViewModelBase<TEntity> where TEntity : IRootEntity, new()
+  public abstract class EditViewModelBase<TEntity> : SingleEntityViewModelBase<TEntity> where TEntity : class, IRootEntity, new()
   {
     private readonly EntityChangeValidator<TEntity> changeValidator;
 
@@ -31,7 +31,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Command for Saving the changes
     /// </summary>
-    public Command DeleteCommand { get; set; }
+    public EntityDeleteCommand<TEntity> DeleteCommand { get; set; }
 
     /// <summary>
     /// Constructor
@@ -49,18 +49,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         CommandText = Messages.Save,
         ExecuteAction = async (param) => await SaveChanges() 
       };
-
-      DeleteCommand = new Command()
-      {
-        CommandText = Messages.Delete,
-        ExecuteAction = async (param) => await DeleteEntity()
-      };
     }
 
     /// <summary>
     /// Loads the entity or creates a new one
     /// </summary>
-    protected virtual async Task<bool> LoadOrCreateEntity()
+    protected virtual async Task<bool> LoadOrCreateEntityAsync()
     {
       bool result;
       if (Id == null)
@@ -71,8 +65,25 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       }
       else
         result = await LoadEntityAsync();
-      DeleteCommand.IsEnabled = !IsNewEntity;
       return result;
+    }
+
+    ///<inheritdoc/>
+    public override async Task<bool> InitializeAsync()
+    {
+      bool result = await LoadOrCreateEntityAsync() && await base.InitializeAsync();
+      if (!result)
+        return false;
+
+      DeleteCommand = new EntityDeleteCommand<TEntity>(ApiConnector)
+      {
+        CommandText = Messages.Delete,
+        Entity = Entity,
+        OnDeletedAction = (entity) => NavigationManager.NavigateTo("/"),
+        IsEnabled = !IsNewEntity
+      };
+
+      return true;
     }
 
     /// <summary>
@@ -97,21 +108,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
 
       return reply.WasSuccessful;
-    }
-
-    /// <summary>
-    /// Deletes the Entity
-    /// </summary>
-    protected virtual async Task DeleteEntity()
-    {
-      ApiReply reply = await ApiConnector.DeleteAsync(Entity);
-      if (reply.WasSuccessful)
-      {
-        NotificationMessageProvider.ShowSuccessMessage(Messages.EntityDeleted.FormatWith(Entity.GetDisplayName()));
-        NavigationManager.NavigateTo("/Home");
-      }
-      else
-        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
     }
 
     /// <summary>

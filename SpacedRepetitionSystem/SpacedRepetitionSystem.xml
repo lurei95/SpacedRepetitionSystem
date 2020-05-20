@@ -248,9 +248,6 @@
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.SaveChanges">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.DeleteEntity">
-            <inheritdoc/>
-        </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel">
             <summary>
             SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
@@ -276,10 +273,10 @@
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnector (Injected)</param>
         </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.SearchCore">
+        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.InitializeAsync">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.DeleteEntity(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
+        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.SearchCore">
             <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.NewEntity">
@@ -335,9 +332,6 @@
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateEditViewModel.CreateNewEntity">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateEditViewModel.DeleteEntity">
-            <inheritdoc/>
-        </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateSearchViewModel">
             <summary>
             SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
@@ -350,10 +344,10 @@
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnector (Injected)</param>
         </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateSearchViewModel.SearchCore">
+        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateSearchViewModel.InitializeAsync">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateSearchViewModel.DeleteEntity(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate)">
+        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateSearchViewModel.SearchCore">
             <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel">
@@ -417,9 +411,6 @@
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel.InitializeAsync">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel.DeleteEntity">
-            <inheritdoc/>
-        </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel.CreateNewEntity">
             <inheritdoc/>
         </member>
@@ -450,15 +441,15 @@
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnector (Injected)</param>
         </member>
+        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckSearchViewModel.InitializeAsync">
+            <inheritdoc/>
+        </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckSearchViewModel.TogglePinned(System.Boolean,SpacedRepetitionSystem.Entities.Entities.Cards.Deck)">
             <summary>
             Toggles <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Deck.IsPinned"/> for the deck
             </summary>
             <param name="value">the new value</param>
             <param name="deck">the deck</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckSearchViewModel.DeleteEntity(SpacedRepetitionSystem.Entities.Entities.Cards.Deck)">
-            <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckSearchViewModel.SearchCore">
             <inheritdoc/>

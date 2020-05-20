@@ -53,9 +53,5 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         return false;
       }
     }
-
-    ///<inheritdoc/>
-    public override async Task<bool> InitializeAsync()
-    { return await LoadEntityAsync() && await base.InitializeAsync(); }
   }
 }

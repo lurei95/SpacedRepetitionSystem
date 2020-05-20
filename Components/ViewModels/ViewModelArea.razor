@@ -19,7 +19,8 @@
   protected override void OnInitialized()
   {
     base.OnInitialized();
-    
-    ViewModel.PropertyChanged += (o, e) => StateHasChanged();
+
+    if (ViewModel != null)
+      ViewModel.PropertyChanged += (o, e) => StateHasChanged();
   }
 }

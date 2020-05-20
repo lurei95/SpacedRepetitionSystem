@@ -59,6 +59,18 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       };
     }
 
+    ///<inheritdoc/>
+    public override async Task<bool> InitializeAsync()
+    {
+      bool result = await base.InitializeAsync();
+      if (!result)
+        return false;
+
+      DeleteCommand.DeleteDialogTitle = Messages.DeleteDeckDialogTitle;
+      DeleteCommand.DeleteDialogTextFactory = (entity) => Messages.DeleteDeckDialogText.FormatWith(entity.Title);
+      return true;
+    }
+
     /// <summary>
     /// Toggles <see cref="Deck.IsPinned"/> for the deck
     /// </summary>
@@ -68,18 +80,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     {
       deck.IsPinned = value;
       await ApiConnector.PutAsync(deck);
-    }
-
-    ///<inheritdoc/>
-    protected override async Task DeleteEntity(Deck entity)
-    {
-      ModalDialogManager.ShowDialog(Messages.DeleteDeckDialogTitle, 
-        Messages.DeleteDeckDialogText.FormatWith(entity.Title), DialogButtons.YesNo, async (result) =>
-      {
-        if (result == DialogResult.Yes)
-          await base.DeleteEntity(entity);
-      });
-      await Task.FromResult<object>(null);
     }
 
     ///<inheritdoc/>

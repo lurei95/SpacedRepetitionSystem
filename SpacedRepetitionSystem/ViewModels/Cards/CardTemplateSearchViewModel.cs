@@ -24,19 +24,19 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     { }
 
     ///<inheritdoc/>
-    protected override async Task<List<CardTemplate>> SearchCore()
-      => (await ApiConnector.GetAsync <CardTemplate>(new Dictionary<string, object>())).Result;
+    public override async Task<bool> InitializeAsync()
+    {
+      bool result = await base.InitializeAsync();
+      if (!result)
+        return false;
+
+      DeleteCommand.DeleteDialogTitle = Messages.DeleteCardTemplateDialogTitle;
+      DeleteCommand.DeleteDialogTextFactory = (entity) => Messages.DeleteCardTemplateDialogText.FormatWith(entity.Title);
+      return true;
+    }
 
     ///<inheritdoc/>
-    protected override async Task DeleteEntity(CardTemplate entity)
-    {
-      ModalDialogManager.ShowDialog(Messages.DeleteCardTemplateDialogTitle,
-        Messages.DeleteCardTemplateDialogText.FormatWith(entity.Title), DialogButtons.YesNo, async (result) =>
-      {
-        if (result == DialogResult.Yes)
-          await base.DeleteEntity(entity);
-      });
-      await Task.FromResult<object>(null);
-    }
+    protected override async Task<List<CardTemplate>> SearchCore()
+      => (await ApiConnector.GetAsync <CardTemplate>(new Dictionary<string, object>())).Result;
   }
 }

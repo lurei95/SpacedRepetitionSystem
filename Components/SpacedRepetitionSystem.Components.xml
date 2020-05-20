@@ -9,46 +9,122 @@
             Command for a button
             </summary>
         </member>
-        <member name="E:SpacedRepetitionSystem.Components.Commands.Command.PropertyChanged">
-            <summary>
-            PropertyChanged Event
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.Components.Commands.Command.ExecuteAction">
             <summary>
             Action performed when the command is executed
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Commands.Command.IsEnabled">
+        <member name="M:SpacedRepetitionSystem.Components.Commands.Command.ExecuteCommand(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Components.Commands.CommandBase">
+            <summary>
+            Baseclass for a command
+            </summary>
+        </member>
+        <member name="E:SpacedRepetitionSystem.Components.Commands.CommandBase.PropertyChanged">
+            <summary>
+            PropertyChanged Event
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.CommandBase.IsEnabled">
             <summary>
             Whether the button is enabled
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Commands.Command.Icon">
+        <member name="P:SpacedRepetitionSystem.Components.Commands.CommandBase.Icon">
             <summary>
             The icon of the button
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Commands.Command.IsVisible">
+        <member name="P:SpacedRepetitionSystem.Components.Commands.CommandBase.IsVisible">
             <summary>
             Ehether the button is visible
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Commands.Command.CommandText">
+        <member name="P:SpacedRepetitionSystem.Components.Commands.CommandBase.CommandText">
             <summary>
             Text of the button
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Commands.Command.ToolTip">
+        <member name="P:SpacedRepetitionSystem.Components.Commands.CommandBase.ToolTip">
             <summary>
             Tooltip of the button
             </summary>
         </member>
-        <member name="M:SpacedRepetitionSystem.Components.Commands.Command.ExecuteCommand(System.Object)">
+        <member name="M:SpacedRepetitionSystem.Components.Commands.CommandBase.ExecuteCommand(System.Object)">
             <summary>
             Executes the command
             </summary>
             <param name="param">Parameter for executing the command</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Commands.CommandBase.OnPropertyChanged(System.String)">
+            <summary>
+            Invokes the property change event
+            </summary>
+            <param name="propertyName">The property name</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Components.Commands.EntityCommandBase`1">
+            <summary>
+            Base class for command for a certain entity
+            </summary>
+            <typeparam name="TEntity">Type of the entity</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntityCommandBase`1.Entity">
+            <summary>
+            The entity
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntityCommandBase`1.ApiConnector">
+            <summary>
+            ApiConnector
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Commands.EntityCommandBase`1.#ctor(SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="apiConnector">ApiConnector</param>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1">
+            <summary>
+            Command for deleting an entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1.ShowDeleteDialog">
+            <summary>
+            Whether the delete dislog should be shown
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1.DeleteDialogTitle">
+            <summary>
+            Delete dialog title
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1.DeleteDialogText">
+            <summary>
+            Delete dialog text
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1.DeleteDialogTextFactory">
+            <summary>
+            Factory for creating the delete dialog text depending on the entity
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1.OnDeletedAction">
+            <summary>
+            Action to perform when the entity was successfully deleted
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1.#ctor(SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="apiConnector">ApiConnector</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1.ExecuteCommand(System.Object)">
+            <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Components.CustomComponentBase">
             <summary>
@@ -630,10 +706,13 @@
             <param name="apiConnector">ApiConnector (Injected)</param>
             <param name="changeValidator">Validator fpr property changes</param>
         </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.LoadOrCreateEntity">
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.LoadOrCreateEntityAsync">
             <summary>
             Loads the entity or creates a new one
             </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.InitializeAsync">
+            <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.CreateNewEntity">
             <summary>
@@ -643,11 +722,6 @@
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.SaveChanges">
             <summary>
             Saves the changes
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.DeleteEntity">
-            <summary>
-            Deletes the Entity
             </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.RegisterPropertyProperty(SpacedRepetitionSystem.Components.Edits.PropertyProxy)">
@@ -749,17 +823,14 @@
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnector (Injected)</param>
         </member>
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.InitializeAsync">
+            <inheritdoc/>
+        </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.Search">
             <summary>
             Executes the search
             </summary>
             <returns>async Task</returns>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.DeleteEntity(`0)">
-            <summary>
-            Deletes the entity
-            </summary>
-            <param name="entity">The entity</param>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.EditEntity(`0)">
             <summary>
@@ -805,9 +876,6 @@
             <summary>
             Loads the Entity
             </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SingleEntityViewModelBase`1.InitializeAsync">
-            <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1">
             <summary>
@@ -886,6 +954,9 @@
             </summary>
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnetcor (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.InitializeAsync">
+            <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.RecalculateChartData">
             <summary>

@@ -72,6 +72,9 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (!result)
         return false;
 
+      DeleteCommand.DeleteDialogTitle = Messages.DeleteCardTemplateDialogTitle;
+      DeleteCommand.DeleteDialogText = Messages.DeleteCardTemplateDialogText.FormatWith(Entity.Title);
+
       TitleProperty = new PropertyProxy(
         () => Entity.Title,
         (value) => Entity.Title = value,
@@ -100,18 +103,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       Entity = new CardTemplate();
       Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Front" });
       Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Back" });
-    }
-
-    ///<inheritdoc/>
-    protected override async Task DeleteEntity()
-    {
-      ModalDialogManager.ShowDialog(Messages.DeleteCardTemplateDialogTitle, 
-        Messages.DeleteCardTemplateDialogText.FormatWith(Entity.Title), DialogButtons.YesNo, async (result) =>
-      {
-        if (result == DialogResult.Yes)
-          await base.DeleteEntity();
-      });
-      await Task.FromResult<object>(null);
     }
 
     private void RemoveFieldDefiniton(int index)

@@ -11,7 +11,7 @@ namespace SpacedRepetitionSystem.Components.Pages
   /// <typeparam name="TViewModel">ViewModel-Type</typeparam>
   public abstract class EditPageBase<TEntity, TViewModel> : PageBase<TViewModel> 
     where TViewModel : EditViewModelBase<TEntity> 
-    where TEntity : IRootEntity, new()
+    where TEntity : class, IRootEntity, new()
   {
     /// <summary>
     /// Id of the entity to edit

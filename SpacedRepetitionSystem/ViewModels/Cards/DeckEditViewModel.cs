@@ -131,6 +131,9 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (!result)
         return false;
 
+      DeleteCommand.DeleteDialogTitle = Messages.DeleteDeckDialogTitle;
+      DeleteCommand.DeleteDialogText = Messages.DeleteDeckDialogText.FormatWith(Entity.Title);
+
       CardTemplateTitleProperty = new PropertyProxy(
         () => CardTemplateTitle,
         (value) => CardTemplateTitle = value,
@@ -147,18 +150,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       RegisterPropertyProperty(TitleProperty);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
       return true;
-    }
-
-    ///<inheritdoc/>
-    protected override async Task DeleteEntity()
-    {
-      ModalDialogManager.ShowDialog(Messages.DeleteDeckDialogTitle, 
-        Messages.DeleteDeckDialogText.FormatWith(Entity.Title), DialogButtons.YesNo, async (result) =>
-      {
-        if (result == DialogResult.Yes)
-          await base.DeleteEntity();
-      });
-      await Task.FromResult<object>(null);
     }
 
     ///<inheritdoc/>
