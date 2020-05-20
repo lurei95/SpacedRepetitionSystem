@@ -13,6 +13,7 @@ namespace SpacedRepetitionSystem.Entities.Tests
     /// <summary>
     /// Tests <see cref="EntityNameHelper.GetName{Card}"/>
     /// </summary>
+    [TestMethod]
     public void GetNameOfCardTest()
     {
       string name = EntityNameHelper.GetName<Card>();
@@ -21,6 +22,7 @@ namespace SpacedRepetitionSystem.Entities.Tests
     /// <summary>
     /// Tests <see cref="EntityNameHelper.GetName{Deck}"/>
     /// </summary>
+    [TestMethod]
     public void GetNameOfDeckTest()
     {
       string name = EntityNameHelper.GetName<Deck>();
@@ -30,6 +32,7 @@ namespace SpacedRepetitionSystem.Entities.Tests
     /// <summary>
     /// Tests <see cref="EntityNameHelper.GetName{CardTemplate}"/>
     /// </summary>
+    [TestMethod]
     public void GetNameOfCardTemplateTest()
     {
       string name = EntityNameHelper.GetName<CardTemplate>();
@@ -39,6 +42,7 @@ namespace SpacedRepetitionSystem.Entities.Tests
     /// <summary>
     /// Tests <see cref="EntityNameHelper.GetName{User}"/>
     /// </summary>
+    [TestMethod]
     public void GetNameOfUserTest()
     {
       string name = EntityNameHelper.GetName<User>();
