@@ -6,7 +6,6 @@ using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
@@ -147,6 +146,11 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
 
       DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
       DeleteCommand.DeleteDialogText = Messages.DeleteCardDialogText.FormatWith(Entity.CardId);
+      SaveChangesCommand.OnSavedAction = (entity) =>
+      {
+        if (IsNewEntity)
+          NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
+      };
 
       cardTemplateId = Entity.CardTemplateId;
       if (IsNewEntity)
@@ -173,15 +177,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     {
       Entity = new Card();
       CardTemplateId = CardTemplate.DefaultCardTemplateId; 
-    }
-
-    ///<inheritdoc/>
-    protected override async Task<bool> SaveChanges()
-    {
-      bool success = await base.SaveChanges();
-      if (success && IsNewEntity)
-        NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
-      return success;
     }
 
     private async void ChangeDeck()

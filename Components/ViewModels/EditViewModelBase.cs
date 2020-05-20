@@ -4,8 +4,6 @@ using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Utility.Extensions;
-using SpacedRepetitionSystem.Utility.Notification;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
@@ -26,7 +24,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Command for Saving the changes
     /// </summary>
-    public Command SaveChangesCommand { get; set; }
+    public EntitySaveCommand<TEntity> SaveChangesCommand { get; set; }
 
     /// <summary>
     /// Command for Saving the changes
@@ -42,14 +40,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public EditViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector, 
       EntityChangeValidator<TEntity> changeValidator)
       : base(navigationManager, apiConnector)
-    {
-      this.changeValidator = changeValidator;
-
-      SaveChangesCommand = new Command() {
-        CommandText = Messages.Save,
-        ExecuteAction = async (param) => await SaveChanges() 
-      };
-    }
+    { this.changeValidator = changeValidator; }
 
     /// <summary>
     /// Loads the entity or creates a new one
@@ -82,6 +73,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         OnDeletedAction = (entity) => NavigationManager.NavigateTo("/"),
         IsEnabled = !IsNewEntity
       };
+      SaveChangesCommand = new EntitySaveCommand<TEntity>(ApiConnector)
+      {
+        CommandText = Messages.Save,
+        Entity = Entity,
+        IsNewEntity = IsNewEntity
+      };
 
       return true;
     }
@@ -90,25 +87,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Creates a new Entity
     /// </summary>
     protected abstract void CreateNewEntity();
-
-    /// <summary>
-    /// Saves the changes
-    /// </summary>
-    protected virtual async Task<bool> SaveChanges()
-    {
-      ApiReply reply;
-      if (IsNewEntity)
-        reply = await ApiConnector.PostAsync(Entity);
-      else
-        reply = await ApiConnector.PutAsync(Entity);
-
-      if (reply.WasSuccessful)
-        NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(Entity.GetDisplayName()));
-      else
-        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
-
-      return reply.WasSuccessful;
-    }
 
     /// <summary>
     /// Registers a PropertyProxy

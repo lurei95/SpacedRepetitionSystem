@@ -5,13 +5,13 @@
 
 @if (alertVisible)
 {
-  <div class="@alertClass" 
-       style="@Style" 
-       id="@Id" 
+  <div class="@alertClass"
+       style="@Style"
+       id="@Id"
        role="alert">
     @message
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close" @onclick="ResetNotification">
-      <span aria-hidden="true">&times;</span>
+    <button type="button" class="close" @onclick="ResetNotification">
+      <span>&times;</span>
     </button>
   </div>
 }
@@ -61,14 +61,16 @@
     InvokeAsync(() => StateHasChanged());
   }
 
-
   ///<inheritdoc/>
   public void ResetNotification()
   {
-    alertVisible = false;
-    alertClass = null;
-    message = null;
-    InvokeAsync(() => StateHasChanged());
+    if (alertVisible)
+    {
+      alertVisible = false;
+      alertClass = null;
+      message = null;
+      InvokeAsync(() => StateHasChanged());
+    }
   }
 
   ///<inheritdoc/>
