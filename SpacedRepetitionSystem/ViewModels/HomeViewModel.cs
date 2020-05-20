@@ -134,9 +134,10 @@ namespace SpacedRepetitionSystem.ViewModels
     }
 
     ///<inheritdoc/>
-    public override async Task InitializeAsync()
+    public override async Task<bool> InitializeAsync()
     {
       await base.InitializeAsync();
+
       Dictionary<string, object> parameters1 = new Dictionary<string, object>
       { { nameof(Deck.IsPinned), true } };
       PinnedDecks.AddRange((await apiConnector.GetAsync<Deck>(parameters1)).Result);
@@ -146,6 +147,8 @@ namespace SpacedRepetitionSystem.ViewModels
       foreach (PracticeHistoryEntry entry in ProblemWords)
         if (!ProblemWordDecks.ContainsKey(entry.DeckId))
           ProblemWordDecks.Add(entry.DeckId, (await apiConnector.GetAsync<Deck>(entry.DeckId)).Result);
+
+      return true;
     }
 
     private void ShowStatistics(Deck deck)

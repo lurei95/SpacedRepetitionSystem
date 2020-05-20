@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
-using SpacedRepetitionSystem.Entities.Validation.Cards;
 using SpacedRepetitionSystem.WebAPI.Core;
 using SpacedRepetitionSystem.WebAPI.Validation.Cards;
 using SpacedRepetitionSystem.WebAPI.Validation.CardTemplates;

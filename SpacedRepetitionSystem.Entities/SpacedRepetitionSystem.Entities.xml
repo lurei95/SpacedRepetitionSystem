@@ -235,6 +235,7 @@
         </member>
         <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate.GetDisplayName">
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Entities.Entities.Cards.Configurations.CardConfiguration">
             <summary>
@@ -571,13 +572,25 @@
             The refresh token
             </summary>
         </member>
-        <member name="M:SpacedRepetitionSystem.Entities.Entities.Security.User.GetDisplayName">
-            <inheritdoc/>
-        </member>
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.RefreshTokens">
             <summary>
             Refresh tokens
             </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Entities.Security.User.GetDisplayName">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.EntityNameHelper">
+            <summary>
+            Helper class for geting the name of an entity
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.EntityNameHelper.GetName``1">
+            <summary>
+            Gets the localized name for an entity type
+            </summary>
+            <typeparam name="TEntity">the entity type</typeparam>
+            <returns>The localized name for an entity type</returns>
         </member>
         <member name="T:SpacedRepetitionSystem.Entities.EntityNames">
             <summary>
@@ -597,17 +610,27 @@
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.Card">
             <summary>
-              Looks up a localized string similar to Card - &quot;{0}&quot;.
+              Looks up a localized string similar to Card.
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.CardTemplate">
             <summary>
-              Looks up a localized string similar to Card Template - &quot;{0}&quot;.
+              Looks up a localized string similar to Template.
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.Deck">
             <summary>
-              Looks up a localized string similar to Deck - &quot;{0}&quot;.
+              Looks up a localized string similar to Deck.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.EntityDisplayNameFormat">
+            <summary>
+              Looks up a localized string similar to {0} - {1}.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.User">
+            <summary>
+              Looks up a localized string similar to User.
             </summary>
         </member>
         <member name="T:SpacedRepetitionSystem.Entities.Errors">

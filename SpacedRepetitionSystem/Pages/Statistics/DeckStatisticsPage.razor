@@ -113,7 +113,7 @@
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
     await base.OnAfterRenderAsync(firstRender);
-    if (!isDrawingCharts)
+    if (!isDrawingCharts && pieChart != null && lineChart != null)
     {
       isDrawingCharts = true;
       await pieChart.Redraw();

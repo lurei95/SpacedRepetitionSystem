@@ -468,11 +468,6 @@
             ViewModel for practicing a deck
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.PracticeDeckViewModel.Id">
-            <summary>
-            The Id of the entity
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.PracticeDeckViewModel.IsShowingSolution">
             <summary>
             Whether the results should be shown 
@@ -543,11 +538,6 @@
             The fields to practice
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.PracticeDeckViewModel.Deck">
-            <summary>
-            The deck to practice
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.PracticeDeckViewModel.DifficultResultCommand">
             <summary>
             Command for the result difficult
@@ -584,11 +574,6 @@
             </summary>
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnetcor (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.PracticeDeckViewModel.LoadEntityAsync">
-            <summary>
-            Loads the Entity
-            </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.PracticeDeckViewModel.InitializeAsync">
             <inheritdoc/>

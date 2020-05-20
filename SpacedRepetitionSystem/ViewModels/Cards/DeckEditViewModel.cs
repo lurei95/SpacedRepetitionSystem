@@ -122,12 +122,14 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     }
 
     ///<inheritdoc/>
-    public override async Task InitializeAsync()
+    public override async Task<bool> InitializeAsync()
     {
       foreach (CardTemplate cardTemplate in (await ApiConnector.GetAsync<CardTemplate>(new Dictionary<string, object>())).Result)
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate);
 
-      await base.InitializeAsync();
+      bool result = await base.InitializeAsync();
+      if (!result)
+        return false;
 
       CardTemplateTitleProperty = new PropertyProxy(
         () => CardTemplateTitle,
@@ -144,6 +146,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       );
       RegisterPropertyProperty(TitleProperty);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
+      return true;
     }
 
     ///<inheritdoc/>

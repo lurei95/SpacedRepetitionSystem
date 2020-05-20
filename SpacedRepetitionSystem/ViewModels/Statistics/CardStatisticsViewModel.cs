@@ -36,9 +36,12 @@ namespace SpacedRepetitionSystem.ViewModels.Statistics
     { }
 
     ///<inheritdoc/>
-    public override async Task InitializeAsync()
+    public override async Task<bool> InitializeAsync()
     {
-      await base.InitializeAsync();
+      bool result = await base.InitializeAsync();
+      if (!result)
+        return false;
+
       Dictionary<string, object> parameters = new Dictionary<string, object>()
       { { nameof(Card.CardId), Entity.CardId } };
       List<PracticeHistoryEntry> entries = (await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters)).Result;
@@ -46,6 +49,7 @@ namespace SpacedRepetitionSystem.ViewModels.Statistics
       SelectableDisplayUnits.Add(nameof(Card));
       SelectableDisplayUnits.AddRange(Entity.Fields.Select(field => field.FieldName));
       SelectedDisplayUnit = SelectableDisplayUnits.First();
+      return true;
     }
   }
 }

@@ -71,6 +71,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     #endregion
 
     ///<inheritdoc/>
-    public string GetDisplayName() => EntityNames.Deck.FormatWith(Title); 
+    public string GetDisplayName()
+      => EntityNames.EntityDisplayNameFormat.FormatWith(EntityNameHelper.GetName<Deck>(), Title);
   }
 }

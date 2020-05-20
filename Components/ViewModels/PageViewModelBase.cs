@@ -23,7 +23,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Performs initialization tasks async when the page is shown
     /// </summary>
     /// <returns></returns>
-    public virtual async Task InitializeAsync() => await Task.FromResult<object>(null);
+    public virtual async Task<bool> InitializeAsync() => await Task.FromResult(true);
 
     /// <summary>
     /// Constructor

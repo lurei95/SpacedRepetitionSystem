@@ -11,6 +11,12 @@ namespace SpacedRepetitionSystem.Components.Pages
   public abstract class PageBase<TViewModel> : ComponentBase where TViewModel : PageViewModelBase
   {
     /// <summary>
+    /// NavigationManager
+    /// </summary>
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    /// <summary>
     /// The ViewModel
     /// </summary>
     [Inject]
@@ -27,9 +33,14 @@ namespace SpacedRepetitionSystem.Components.Pages
       await base.OnAfterRenderAsync(firstRender);
       if (firstRender)
       {
-        await ViewModel.InitializeAsync();
-        IsLoading = false;
-        StateHasChanged();
+        bool result = await ViewModel.InitializeAsync();
+        if (!result)
+          NavigationManager.NavigateTo("/");
+        else
+        {
+          IsLoading = false;
+          StateHasChanged();
+        }
       }
     }
   }

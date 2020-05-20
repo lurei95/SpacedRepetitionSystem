@@ -277,6 +277,27 @@
             Value changed event
             </summary>
         </member>
+        <member name="T:SpacedRepetitionSystem.Components.Errors">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Errors.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Errors.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Errors.EntityDoesNotExist">
+            <summary>
+              Looks up a localized string similar to A {0} with the id {1} does not exist..
+            </summary>
+        </member>
         <member name="T:SpacedRepetitionSystem.Components.Messages">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -555,6 +576,11 @@
             </summary>
             <typeparam name="TViewModel">ViewModel-Type</typeparam>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Pages.PageBase`1.NavigationManager">
+            <summary>
+            NavigationManager
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Pages.PageBase`1.ViewModel">
             <summary>
             The ViewModel
@@ -581,19 +607,9 @@
             </summary>
             <typeparam name="TEntity">The entity type</typeparam>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.Id">
-            <summary>
-            The Id of the entity
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.IsNewEntity">
             <summary>
             Whether the entity is new
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.Entity">
-            <summary>
-            The Entity
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.SaveChangesCommand">
@@ -614,9 +630,6 @@
             <param name="apiConnector">ApiConnector (Injected)</param>
             <param name="changeValidator">Validator fpr property changes</param>
         </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.InitializeAsync">
-            <inheritdoc/>
-        </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.LoadOrCreateEntity">
             <summary>
             Loads the entity or creates a new one
@@ -626,12 +639,6 @@
             <summary>
             Creates a new Entity
             </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.LoadEntity(System.Object)">
-            <summary>
-            Loads the Entity
-            </summary>
-            <param name="id">Id of the entity</param>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.SaveChanges">
             <summary>
@@ -771,16 +778,42 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:SpacedRepetitionSystem.Components.ViewModels.SingleEntityViewModelBase`1">
+            <summary>
+            Baseclass for a ViewModel for a single entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.SingleEntityViewModelBase`1.Id">
+            <summary>
+            The Id of the entity
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.SingleEntityViewModelBase`1.Entity">
+            <summary>
+            The Entity
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SingleEntityViewModelBase`1.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="navigationManager">NavigationManager (Injected)</param>
+            <param name="apiConnector">ApiConnector (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SingleEntityViewModelBase`1.LoadEntityAsync">
+            <summary>
+            Loads the Entity
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SingleEntityViewModelBase`1.InitializeAsync">
+            <inheritdoc/>
+        </member>
         <member name="T:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1">
             <summary>
             Baseclass for a ViewModel of a statistics Page
             </summary>
             <typeparam name="TEntity"></typeparam>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.Id">
-            <summary>
-            The Id of the entity
-            </summary>
         </member>
         <member name="F:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.Correct">
             <summary>
@@ -847,25 +880,12 @@
             Result values
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.Entity">
-            <summary>
-            The entity
-            </summary>
-        </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
             <summary>
             Constructor
             </summary>
             <param name="navigationManager">NavigationManager (Injected)</param>
             <param name="apiConnector">ApiConnetcor (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.InitializeAsync">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.LoadEntityAsync">
-            <summary>
-            Loads the Entity
-            </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.RecalculateChartData">
             <summary>

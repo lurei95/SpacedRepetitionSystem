@@ -13,14 +13,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   /// Baseclass for a ViewModel of a statistics Page
   /// </summary>
   /// <typeparam name="TEntity"></typeparam>
-  public abstract class StatisticsViewModelBase<TEntity> : EntityViewModelBase<TEntity> where TEntity : IRootEntity, new()
+  public abstract class StatisticsViewModelBase<TEntity> : SingleEntityViewModelBase<TEntity> where TEntity : IRootEntity, new()
   {
     private string selectedDisplayUnit;
-
-    /// <summary>
-    /// The Id of the entity
-    /// </summary>
-    public object Id { get; set; }
 
     /// <summary>
     /// Correct
@@ -133,29 +128,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     #endregion
 
     /// <summary>
-    /// The entity
-    /// </summary>
-    public TEntity Entity { get; set; }
-
-    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
     /// <param name="apiConnector">ApiConnetcor (Injected)</param>
     public StatisticsViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector) : base(navigationManager, apiConnector)
     { }
-
-    ///<inheritdoc/>
-    public override async Task InitializeAsync()
-    {
-      await base.InitializeAsync();
-      await LoadEntityAsync();
-    }
-
-    /// <summary>
-    /// Loads the Entity
-    /// </summary>
-    public virtual async Task LoadEntityAsync() => Entity = (await ApiConnector.GetAsync<TEntity>(Id)).Result;
 
     /// <summary>
     /// Reacalculates the datapoint for the charts

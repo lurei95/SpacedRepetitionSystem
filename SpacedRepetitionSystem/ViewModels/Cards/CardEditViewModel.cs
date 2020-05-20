@@ -8,6 +8,7 @@ using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -97,7 +98,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// The fields of the card
     /// </summary>
-    public List<CardField> Fields => Entity.Fields;
+    public List<CardField> Fields => Entity?.Fields;
 
     /// <summary>
     /// The tags assigned to the the card
@@ -128,12 +129,22 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     }
 
     ///<inheritdoc/>
-    public override async Task InitializeAsync() 
+    public override async Task<bool> InitializeAsync() 
     {
       foreach (CardTemplate cardTemplate in (await ApiConnector.GetAsync<CardTemplate>(new Dictionary<string, object>())).Result)
         availableCardTemplates.Add(cardTemplate.Title, cardTemplate);
 
-      await base.InitializeAsync();
+      bool result = await base.InitializeAsync();
+      if (!result)
+        return false;
+
+      if (DeckId != Entity.DeckId)
+      {
+        NotificationMessageProvider.ShowErrorMessage(
+          Components.Errors.EntityDoesNotExist.FormatWith(EntityNameHelper.GetName<Deck>(), DeckId));
+        return false;
+      }
+
       cardTemplateId = Entity.CardTemplateId;
       if (IsNewEntity)
       {
@@ -151,6 +162,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
 
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
       ShowStatisticsCommand.IsEnabled = !IsNewEntity;
+      return true;
     }
 
     ///<inheritdoc/>

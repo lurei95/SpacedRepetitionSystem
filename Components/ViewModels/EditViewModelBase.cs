@@ -14,24 +14,14 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   /// Base class for all edit view models
   /// </summary>
   /// <typeparam name="TEntity">The entity type</typeparam>
-  public abstract class EditViewModelBase<TEntity> : EntityViewModelBase<TEntity> where TEntity : IRootEntity, new()
+  public abstract class EditViewModelBase<TEntity> : SingleEntityViewModelBase<TEntity> where TEntity : IRootEntity, new()
   {
     private readonly EntityChangeValidator<TEntity> changeValidator;
-
-    /// <summary>
-    /// The Id of the entity
-    /// </summary>
-    public object Id { get; set; }
 
     /// <summary>
     /// Whether the entity is new
     /// </summary>
     protected bool IsNewEntity { get; set; }
-
-    /// <summary>
-    /// The Entity
-    /// </summary>
-    public TEntity Entity { get; protected set; }
 
     /// <summary>
     /// Command for Saving the changes
@@ -67,38 +57,28 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       };
     }
 
-    ///<inheritdoc/>
-    public override async Task InitializeAsync()
-    {
-      await LoadOrCreateEntity();
-      await base.InitializeAsync();
-    }
-
     /// <summary>
     /// Loads the entity or creates a new one
     /// </summary>
-    protected virtual async Task LoadOrCreateEntity()
+    protected virtual async Task<bool> LoadOrCreateEntity()
     {
+      bool result;
       if (Id == null)
       {
         CreateNewEntity();
         IsNewEntity = true;
+        result = true;
       }
       else
-        await LoadEntity(Id);
+        result = await LoadEntityAsync();
       DeleteCommand.IsEnabled = !IsNewEntity;
+      return result;
     }
 
     /// <summary>
     /// Creates a new Entity
     /// </summary>
     protected abstract void CreateNewEntity();
-
-    /// <summary>
-    /// Loads the Entity
-    /// </summary>
-    /// <param name="id">Id of the entity</param>
-    protected virtual async Task LoadEntity(object id) => Entity = (await ApiConnector.GetAsync<TEntity>(id)).Result;
 
     /// <summary>
     /// Saves the changes

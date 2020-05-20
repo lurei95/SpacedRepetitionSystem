@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpacedRepetitionSystem.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace SpacedRepetitionSystem.Entities.Entities.Security
@@ -39,12 +40,13 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security
     /// </summary>
     public string RefreshToken { get; set; }
 
-    ///<inheritdoc/>
-    public string GetDisplayName() => null;
-
     /// <summary>
     /// Refresh tokens
     /// </summary>
     public List<RefreshToken> RefreshTokens { get; } = new List<RefreshToken>();
+
+    ///<inheritdoc/>
+    public string GetDisplayName()
+      => EntityNames.EntityDisplayNameFormat.FormatWith(EntityNameHelper.GetName<User>(), Email);
   }
 }

@@ -34,12 +34,13 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
     { }
 
     ///<inheritdoc/>
-    public async override Task InitializeAsync()
+    public async override Task<bool> InitializeAsync()
     {
       User = new User();
       claimsPrincipal = (await AuthenticationStateTask).User;
       if (claimsPrincipal.Identity.IsAuthenticated)
-        NavigationManager.NavigateTo("/");
+        return false;
+      return true;
     }
 
     /// <summary>

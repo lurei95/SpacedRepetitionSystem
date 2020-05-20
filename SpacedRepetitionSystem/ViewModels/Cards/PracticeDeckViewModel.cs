@@ -16,7 +16,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
   /// <summary>
   /// ViewModel for practicing a deck
   /// </summary>
-  public sealed class PracticeDeckViewModel : EntityViewModelBase<Deck>
+  public sealed class PracticeDeckViewModel : SingleEntityViewModelBase<Deck>
   {
     private int currentIndex = 0;
     private bool isShowingSolution = false;
@@ -26,11 +26,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     string inputText;
     private bool? wasInputCorrect;
     private bool isSummary = false;
-
-    /// <summary>
-    /// The Id of the entity
-    /// </summary>
-    public object Id { get; set; }
 
     /// <summary>
     /// Whether the results should be shown 
@@ -85,7 +80,8 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// Title of the page
     /// </summary>
-    public string Title => IsSummary ? Messages.PracticePageSummaryTitle : Messages.PracticePageTitle.FormatWith(Deck.Title);
+    public string Title 
+      => Entity != null ? IsSummary ? Messages.PracticePageSummaryTitle : Messages.PracticePageTitle.FormatWith(Entity.Title) : null;
 
     /// <summary>
     /// Class for validation
@@ -168,11 +164,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     public List<CardField> PracticeFields { get; private set; }
 
     /// <summary>
-    /// The deck to practice
-    /// </summary>
-    public Deck Deck { get; set; }
-
-    /// <summary>
     /// Command for the result difficult
     /// </summary>
     public Command DifficultResultCommand { get; private set; }
@@ -247,28 +238,34 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       };
     }
 
-    /// <summary>
-    /// Loads the Entity
-    /// </summary>
-    public async Task LoadEntityAsync() => Deck = (await ApiConnector.GetAsync<Deck>(Id)).Result;
-
     ///<inheritdoc/>
-    public override async Task InitializeAsync()
+    public override async Task<bool> InitializeAsync()
     {
-      await LoadEntityAsync();
-      await base.InitializeAsync();
+      bool result = await base.InitializeAsync();
+      if (!result)
+        return false;
 
-      bool isActivePractice = Deck.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue);
+      bool isActivePractice = Entity.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue);
       if (isActivePractice)
-        PracticeFields = Deck.Cards.SelectMany(card => card.Fields).Where(field => field.IsDue).ToList();
+        PracticeFields = Entity.Cards.SelectMany(card => card.Fields).Where(field => field.IsDue).ToList();
       else
       {
         PracticeFields = new List<CardField>();
-        PracticeFields.AddRange(Deck.Cards.SelectMany(card => card.Fields));
+        PracticeFields.AddRange(Entity.Cards.SelectMany(card => card.Fields));
       }
       PracticeFields.Shuffle();
+
+      //Restore circular references lost due to json serialization 
+      foreach (Card card in Entity.Cards)
+      {
+        card.Deck = Entity;
+        foreach (CardField field in card.Fields)
+          field.Card = card;
+      }
+
       if (PracticeFields.Count > 0)
         Current = PracticeFields[0];
+      return true;
     }
 
     /// <summary>
@@ -295,7 +292,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       {
         PracticeDate = DateTime.Today,
         CardId = Current.CardId,
-        DeckId = Deck.DeckId,
+        DeckId = Entity.DeckId,
         FieldName = Current.FieldName,
         CorrectCount = result == PracticeResultKind.Easy ? 1 : 0,
         HardCount = result == PracticeResultKind.Hard ? 1 : 0,

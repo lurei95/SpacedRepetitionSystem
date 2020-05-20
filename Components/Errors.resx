@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card" xml:space="preserve">
-    <value>Card</value>
-  </data>
-  <data name="CardTemplate" xml:space="preserve">
-    <value>Template</value>
-  </data>
-  <data name="Deck" xml:space="preserve">
-    <value>Deck</value>
-  </data>
-  <data name="EntityDisplayNameFormat" xml:space="preserve">
-    <value>{0} - {1}</value>
-  </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
+  <data name="EntityDoesNotExist" xml:space="preserve">
+    <value>A {0} with the id {1} does not exist.</value>
   </data>
 </root>
