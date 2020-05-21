@@ -4,9 +4,9 @@
 @using SpacedRepetitionSystem.Entities.Entities.Cards;
 @using SpacedRepetitionSystem.ViewModels.Cards;
 @using SpacedRepetitionSystem.Components.Interaction;
-@using SpacedRepetitionSystem.Components.Edits;
 @using SpacedRepetitionSystem.Components.ViewModels;
 @using SpacedRepetitionSystem.Components.Containers
+@using SpacedRepetitionSystem.Components.Edits;
 @using Blazorise.DataGrid;
 
 @inherits EditPageBase<Deck, DeckEditViewModel>
@@ -23,7 +23,6 @@
         <h5 class="card-title mb-4">Cards</h5>
         <SearchGrid TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                     Items="@ViewModel.Entity?.Cards"
-                    WaitSpinnerVisible="false"
                     EditCommand="ViewModel.EditCardCommand"
                     DeleteCommand="ViewModel.DeleteCardCommand"
                     NewCommand="ViewModel.NewCardCommand"
@@ -49,9 +48,9 @@
                             Caption="Field 1" Sortable="false">
               <DisplayTemplate>
                 @{
-                    string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[0].FieldName;
-                    if (!string.IsNullOrEmpty(value))
-                      @($"{value}")
+                  string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[0].FieldName;
+                  if (!string.IsNullOrEmpty(value))
+                    @($"{value}")
                 }
               </DisplayTemplate>
             </DataGridColumn>
@@ -60,9 +59,9 @@
                             Caption="Field 2" Sortable="false">
               <DisplayTemplate>
                 @{
-                    string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[1].FieldName;
-                    if (!string.IsNullOrEmpty(value))
-                      @($"{value}")
+                  string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[1].FieldName;
+                  if (!string.IsNullOrEmpty(value))
+                    @($"{value}")
                 }
               </DisplayTemplate>
             </DataGridColumn>
@@ -71,12 +70,12 @@
                             Caption="Field 3" Sortable="false">
               <DisplayTemplate>
                 @{
-                    SpacedRepetitionSystem.Entities.Entities.Cards.Card card = context as SpacedRepetitionSystem.Entities.Entities.Cards.Card;
-                    if (card != null)
-                    {
-                      string value = card.Fields.Count > 2 ? card.Fields[2].FieldName : String.Empty;
-                      if (!string.IsNullOrEmpty(value))
-                        @($"{value}")
+                  SpacedRepetitionSystem.Entities.Entities.Cards.Card card = context as SpacedRepetitionSystem.Entities.Entities.Cards.Card;
+                  if (card != null)
+                  {
+                    string value = card.Fields.Count > 2 ? card.Fields[2].FieldName : String.Empty;
+                    if (!string.IsNullOrEmpty(value))
+                      @($"{value}")
                     }
                 }
               </DisplayTemplate>
@@ -89,7 +88,7 @@
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle dropdown-no-text mr-1" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 0px;" />
         <ToggleButton ActiveIcon="fas fa-thumbtack" Value="@(ViewModel.Entity?.IsPinned == true)" ToggleAction="(value, param) => ViewModel.Entity.IsPinned = value"
-                      ActiveIconColor="#5DB761" NotActiveIconColor="#94989c" Style="padding: 0px; padding-top: 3px;" Class="mr-1"/>
+                      ActiveIconColor="#5DB761" NotActiveIconColor="#94989c" Style="padding: 0px; padding-top: 3px;" Class="mr-1" />
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
           <Button Command="@ViewModel?.DeleteCommand" Class="dropdown-item"></Button>
           <Button Command="@ViewModel?.SaveChangesCommand" Class="dropdown-item"></Button>

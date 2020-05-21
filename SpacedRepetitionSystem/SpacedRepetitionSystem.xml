@@ -447,6 +447,11 @@
             ViewModel for practicing a deck
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.PracticeDeckViewModel.IsLoading">
+            <summary>
+            Whether data is being loaded
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.PracticeDeckViewModel.IsShowingSolution">
             <summary>
             Whether the results should be shown 
@@ -911,6 +916,9 @@
             </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.Pages.Statistics.DeckStatisticsPage.OnAfterRenderAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Shared.MainLayout.OnParametersSet">
             <inheritdoc/>
         </member>
         <member name="P:SpacedRepetitionSystem.Shared.TopBar.IsLoggedIn">

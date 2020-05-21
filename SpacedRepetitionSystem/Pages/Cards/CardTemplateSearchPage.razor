@@ -10,7 +10,8 @@
 @inherits SearchPageBase<CardTemplate, CardTemplateSearchViewModel>
 
   <ViewModelArea ViewModel="@ViewModel">
-    <TabCard Title="Search Templates">
+    <TabCard Title="Search Templates"
+             IsLoading="ViewModel.IsSearching">
       <HeaderButtons>
         <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
       </HeaderButtons>
@@ -18,7 +19,6 @@
         <SearchGrid TItem="CardTemplate"
                     Items="@ViewModel.SearchResults"
                     @bind-SelectedItem="@ViewModel.SelectedEntity"
-                    WaitSpinnerVisible="ViewModel.IsSearching"
                     PageSize="12"
                     ShowPager="true"
                     DeleteCommand="@ViewModel.DeleteCommand"

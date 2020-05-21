@@ -10,14 +10,14 @@
 @inherits SearchPageBase<SpacedRepetitionSystem.Entities.Entities.Cards.Card, CardSearchViewModel>
 
   <ViewModelArea ViewModel="@ViewModel">
-    <TabCard Title="Search Cards">
+    <TabCard Title="Search Cards" 
+             IsLoading="ViewModel.IsSearching">
       <HeaderButtons>
         <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
       </HeaderButtons>
       <ChildContent>
         <SearchGrid TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                     Items="@ViewModel.SearchResults"
-                    WaitSpinnerVisible="ViewModel.IsSearching"
                     @bind-SelectedItem="@ViewModel.SelectedEntity"
                     PageSize="12"
                     ShowPager="true"

@@ -79,6 +79,20 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
     /// Tests <see cref="EditViewModelBase{TEntity}.RegisterPropertyProxy(PropertyProxy)"/>
     /// </summary>
     [TestMethod]
+    public async Task SavingEntitySetsIsNewEntityToFalseTest()
+    {
+      TestViewModel viewModel = new TestViewModel(navigationManagerMock, apiConnectorMock, new EntityChangeValidator<Card>());
+      apiConnectorMock.Reply = new ApiReply() { WasSuccessful = true };
+      await viewModel.InitializeAsync();
+      viewModel.SaveChangesCommand.ExecuteCommand();
+
+      Assert.IsFalse(viewModel.GetIsNewEntity());
+    }
+
+    /// <summary>
+    /// Tests <see cref="EditViewModelBase{TEntity}.RegisterPropertyProxy(PropertyProxy)"/>
+    /// </summary>
+    [TestMethod]
     public void RegisterPropertyProxyTest()
     {
       PropertyProxy proxy = new PropertyProxy(() => card.CardId.ToString(),

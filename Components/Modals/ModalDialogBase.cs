@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using SpacedRepetitionSystem.Utility.Dialogs;
+﻿using SpacedRepetitionSystem.Utility.Dialogs;
 using System;
 
 namespace SpacedRepetitionSystem.Components.Modals

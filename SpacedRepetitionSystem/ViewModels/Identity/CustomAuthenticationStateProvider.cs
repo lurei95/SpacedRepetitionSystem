@@ -58,7 +58,9 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
         navigationManager.NavigateTo("/Login");
 
       ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
-      return await Task.FromResult(new AuthenticationState(claimsPrincipal));
+
+      NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
+      return new AuthenticationState(claimsPrincipal);
     }
 
     /// <summary>

@@ -10,13 +10,13 @@
 @inherits SearchPageBase<Deck, DeckSearchViewModel>
 
   <ViewModelArea ViewModel="@ViewModel">
-    <TabCard Title="Search Decks">
+    <TabCard Title="Search Decks"
+             IsLoading="ViewModel.IsSearching">
       <HeaderButtons>
         <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
       </HeaderButtons>
       <ChildContent>
         <SearchGrid TItem="Deck"
-                    WaitSpinnerVisible="ViewModel.IsSearching"
                     Items="@ViewModel.SearchResults"
                     @bind-SelectedItem="@ViewModel.SelectedEntity"
                     PageSize="12"

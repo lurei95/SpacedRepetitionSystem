@@ -103,7 +103,7 @@
 }
 
 .fullsizeCard {
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 84px);
   max-height: inherit;
 }
 
@@ -291,4 +291,22 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+}
+
+@media (max-width: 1200px) {
+  .login-container {
+    max-width: 100vw;
+    border: none;
+    padding 1rem
+  }
+
+  .card-header {
+    border-radius: unset !important;
+  }
+
+  .fullsizeCard {
+    min-height: calc(100vh - 60px);
+    border: none;
+    border-radius: unset;
+  }
 }

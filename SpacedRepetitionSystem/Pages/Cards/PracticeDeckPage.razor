@@ -10,7 +10,7 @@
 @inherits PageBase<PracticeDeckViewModel>
 
   <ViewModelArea ViewModel="ViewModel">
-    <TabCard Title="@ViewModel?.Title" IsLoading="IsLoading" BodyClass="d-flex">
+    <TabCard Title="@ViewModel?.Title" IsLoading="IsLoading || ViewModel.IsLoading" BodyClass="d-flex">
       <HeaderButtons>
         <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
       </HeaderButtons>

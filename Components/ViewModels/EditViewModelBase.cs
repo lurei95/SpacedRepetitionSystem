@@ -77,7 +77,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       {
         CommandText = Messages.Save,
         Entity = Entity,
-        IsNewEntity = IsNewEntity
+        IsNewEntity = IsNewEntity,
+        OnSavedAction = (entity) => IsNewEntity = false
       };
 
       return true;

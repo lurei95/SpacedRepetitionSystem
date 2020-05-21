@@ -26,6 +26,23 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     string inputText;
     private bool? wasInputCorrect;
     private bool isSummary = false;
+    private bool isLoading = false;
+
+    /// <summary>
+    /// Whether data is being loaded
+    /// </summary>
+    public bool IsLoading
+    {
+      get => isLoading;
+      set
+      {
+        if (isLoading != value)
+        {
+          isLoading = value;
+          OnPropertyChanged();
+        }
+      }
+    }
 
     /// <summary>
     /// Whether the results should be shown 
@@ -241,17 +258,17 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     ///<inheritdoc/>
     public override async Task<bool> InitializeAsync()
     {
-      bool result = await base.InitializeAsync();
+      bool result = await base.InitializeAsync() && await LoadEntityAsync();
       if (!result)
         return false;
 
       bool isActivePractice = Entity.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue);
       if (isActivePractice)
-        PracticeFields = Entity.Cards.SelectMany(card => card.Fields).Where(field => field.IsDue).ToList();
+        PracticeFields = Entity.Cards.SelectMany(card => card.Fields).Where(field => field.IsDue && !string.IsNullOrEmpty(field.Value)).ToList();
       else
       {
         PracticeFields = new List<CardField>();
-        PracticeFields.AddRange(Entity.Cards.SelectMany(card => card.Fields));
+        PracticeFields.AddRange(Entity.Cards.SelectMany(card => card.Fields).Where(field => !string.IsNullOrEmpty(field.Value)));
       }
       PracticeFields.Shuffle();
 
@@ -281,6 +298,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
 
     private async Task ReportPracticeResult(PracticeResultKind result)
     {
+      IsLoading = true;
       AddResult(result);
       if (result == PracticeResultKind.Failed) // if failed insert at random position again 
       {
@@ -307,6 +325,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         ShowSolution();
       else
         Next();
+      IsLoading = false;
     }
 
     private void ShowSolution()
