@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SpacedRepetitionSystem.ViewModels.Identity
 {
   /// <summary>
-  /// baseclass for login or signup ViewModel
+  /// Base class for login or signup ViewModel
   /// </summary>
   public abstract class IdentityViewModelBase : PageViewModelBase
   {

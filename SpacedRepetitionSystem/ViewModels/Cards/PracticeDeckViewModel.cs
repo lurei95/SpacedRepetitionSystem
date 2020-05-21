@@ -191,7 +191,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// Command for closing the summary
     /// </summary>
-    public Command CloseSummaryCommand { get; set; }
+    public NavigationCommand CloseSummaryCommand { get; set; }
 
     /// <summary>
     /// Constructor
@@ -231,10 +231,10 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         ExecuteAction = (param) => Next()
       };
 
-      CloseSummaryCommand = new Command()
+      CloseSummaryCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.Close,
-        ExecuteAction = (param) => NavigationManager.NavigateTo("/")
+        TargetUri = "/"
       };
     }
 

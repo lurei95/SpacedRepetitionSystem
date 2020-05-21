@@ -2,8 +2,6 @@
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities;
-using SpacedRepetitionSystem.Utility.Extensions;
-using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,12 +25,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Command for editing an entity
     /// </summary>
-    public Command EditCommand { get; set; }
+    public NavigationCommand EditCommand { get; set; }
 
     /// <summary>
     /// Command for creating a new entity
     /// </summary>
-    public Command NewCommand { get; set; }
+    public NavigationCommand NewCommand { get; set; }
 
     /// <summary>
     /// Results of the search
@@ -69,16 +67,18 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public SearchViewModelBase(NavigationManager navigationManager, IApiConnector apiConnector) 
       : base(navigationManager, apiConnector)
     {
-      EditCommand = new Command()
+      EditCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.Edit,
-        ExecuteAction = (param) => EditEntity(param as TEntity)
+        IsRelative = true,
+        TargetUriFactory = (param) => "/" + (param as TEntity).Id
       };
 
-      NewCommand = new Command()
+      NewCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.New,
-        ExecuteAction = (param) => NewEntity()
+        IsRelative = true,
+        TargetUri = "/New/"
       };
     }
 
@@ -115,19 +115,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         SelectedEntity = SearchResults[0];
       IsSearching = false;
     }
-
-    /// <summary>
-    /// Opens the entity for editing
-    /// </summary>
-    /// <param name="entity">The entity</param>
-    protected virtual void EditEntity(TEntity entity)
-    { NavigationManager.NavigateTo(NavigationManager.Uri + "/" + entity.Id); }
-
-    /// <summary>
-    /// Adds a new entity
-    /// </summary>
-    protected virtual void NewEntity()
-    { NavigationManager.NavigateTo(NavigationManager.Uri + "/New/"); }
 
     /// <summary>
     /// Performs the actual search

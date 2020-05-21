@@ -15,9 +15,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     protected NavigationManager NavigationManager { get; private set; }
 
     /// <summary>
-    /// Command for Saving the changes
+    /// Command for closing the page
     /// </summary>
-    public Command CloseCommand { get; set; }
+    public NavigationCommand CloseCommand { get; set; }
 
     /// <summary>
     /// Performs initialization tasks async when the page is shown
@@ -32,17 +32,12 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public PageViewModelBase(NavigationManager navigationManager)
     {
       NavigationManager = navigationManager;
-      CloseCommand = new Command()
+      CloseCommand = new NavigationCommand(navigationManager)
       {
         Icon = "oi oi-x",
         IsEnabled = true,
-        ExecuteAction = (param) => Close()
+        TargetUri = "/"
       };
     }
-
-    /// <summary>
-    /// navigates away from the current page to the home page
-    /// </summary>
-    protected virtual void Close() { NavigationManager.NavigateTo("/Home"); }
   }
 }

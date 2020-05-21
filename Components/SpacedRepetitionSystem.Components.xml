@@ -151,6 +151,35 @@
         <member name="M:SpacedRepetitionSystem.Components.Commands.EntitySaveCommand`1.ExecuteCommand(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="T:SpacedRepetitionSystem.Components.Commands.NavigationCommand">
+            <summary>
+            Command for performing a navigation
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.NavigationCommand.TargetUri">
+            <summary>
+            The target uri
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.NavigationCommand.IsRelative">
+            <summary>
+            Whether the target uri is relative from the current uri
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.NavigationCommand.TargetUriFactory">
+            <summary>
+            Factory to construct the target uri
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Commands.NavigationCommand.#ctor(Microsoft.AspNetCore.Components.NavigationManager)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="navigationManager">NavigationManager</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Commands.NavigationCommand.ExecuteCommand(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="T:SpacedRepetitionSystem.Components.CustomComponentBase">
             <summary>
             Baseclass for all custom razor components
@@ -780,7 +809,7 @@
         </member>
         <member name="P:SpacedRepetitionSystem.Components.ViewModels.PageViewModelBase.CloseCommand">
             <summary>
-            Command for Saving the changes
+            Command for closing the page
             </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.PageViewModelBase.InitializeAsync">
@@ -794,11 +823,6 @@
             Constructor
             </summary>
             <param name="navigationManager">NavigationManager (Injected)</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.PageViewModelBase.Close">
-            <summary>
-            navigates away from the current page to the home page
-            </summary>
         </member>
         <member name="T:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1">
             <summary>
@@ -851,17 +875,6 @@
             Executes the search
             </summary>
             <returns>async Task</returns>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.EditEntity(`0)">
-            <summary>
-            Opens the entity for editing
-            </summary>
-            <param name="entity">The entity</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.NewEntity">
-            <summary>
-            Adds a new entity
-            </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.SearchCore">
             <summary>

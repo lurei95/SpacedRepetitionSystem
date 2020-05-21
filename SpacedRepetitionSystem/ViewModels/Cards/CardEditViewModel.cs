@@ -107,7 +107,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// Command for showing the practice statistics
     /// </summary>
-    public Command ShowStatisticsCommand { get; private set; }
+    public NavigationCommand ShowStatisticsCommand { get; private set; }
 
     /// <summary>
     /// Constructor
@@ -120,10 +120,11 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       : base(navigationManager, apiConnector, changeValidator)
     { 
       Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags));
-      ShowStatisticsCommand = new Command()
+      ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.PracticeStatistics,
-        ExecuteAction = (param) => NavigationManager.NavigateTo(NavigationManager.Uri + "/Statistics/")
+        IsRelative = true,
+        TargetUri = "/Statistics/"
       };
     }
 

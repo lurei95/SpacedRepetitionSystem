@@ -35,42 +35,42 @@ namespace SpacedRepetitionSystem.ViewModels
     /// <summary>
     /// Command for practicing the deck
     /// </summary>
-    public Command PracticeDeckCommand { get; private set; }
+    public NavigationCommand PracticeDeckCommand { get; private set; }
 
     /// <summary>
     /// Command for adding a new card to the deck
     /// </summary>
-    public Command AddCardsCommand { get; private set; }
+    public NavigationCommand AddCardsCommand { get; private set; }
 
     /// <summary>
     /// Command for showing the practice statistics
     /// </summary>
-    public Command ShowStatisticsCommand { get; private set; }
+    public NavigationCommand ShowStatisticsCommand { get; private set; }
 
     /// <summary>
     /// Command for creating a new deck
     /// </summary>
-    public Command NewDeckCommand { get; private set; }
+    public NavigationCommand NewDeckCommand { get; private set; }
 
     /// <summary>
     /// Command for searching decks
     /// </summary>
-    public Command SearchDecksCommand { get; private set; }
+    public NavigationCommand SearchDecksCommand { get; private set; }
 
     /// <summary>
     /// Command for adding a new template
     /// </summary>
-    public Command NewTemplateCommand { get; private set; }
+    public NavigationCommand NewTemplateCommand { get; private set; }
 
     /// <summary>
     /// Command for searching templates
     /// </summary>
-    public Command SearchTemplatesCommand { get; private set; }
+    public NavigationCommand SearchTemplatesCommand { get; private set; }
 
     /// <summary>
     /// Command for searching templates
     /// </summary>
-    public Command SearchCardsCommand { get; private set; }
+    public NavigationCommand SearchCardsCommand { get; private set; }
 
     /// <summary>
     /// Constructor
@@ -81,56 +81,48 @@ namespace SpacedRepetitionSystem.ViewModels
     { 
       this.apiConnector = apiConnector;
 
-      PracticeDeckCommand = new Command()
+      PracticeDeckCommand = new NavigationCommand(navigationManager)
       {
-        ExecuteAction = (param) => PracticeDeck((long)param),
+        TargetUriFactory = (param) => $"/Decks/{(long)param}/Practice",
         CommandText = Messages.Practice,
         ToolTip = ""
       };
-
-      AddCardsCommand = new Command()
+      AddCardsCommand = new NavigationCommand(navigationManager)
       {
-        ExecuteAction = (param) => AddCards((long)param),
+        TargetUriFactory = (param) => $"/Decks/{(long)param}/Cards/New",
         CommandText = Messages.NewCard,
         ToolTip = ""
       };
-
-      ShowStatisticsCommand = new Command()
+      ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
+        TargetUriFactory = (param) => $"/Decks/{(param as Deck).DeckId}/Statistics/",
         CommandText = Messages.PracticeStatistics,
-        ExecuteAction = (param) => ShowStatistics(param as Deck)
       };
-
-      NewDeckCommand = new Command()
+      NewDeckCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.NewDeck,
-        ExecuteAction = (param) => NavigationManager.NavigateTo("/Decks/New/")
+        TargetUri = "/Decks/New/"
       };
-
-      NewTemplateCommand = new Command()
+      NewTemplateCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.NewTemplate,
-        ExecuteAction = (param) => NavigationManager.NavigateTo("/Templates/New/")
+        TargetUri = "/Templates/New/"
       };
-
-      SearchDecksCommand = new Command()
+      SearchDecksCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchDecks,
-        ExecuteAction = (param) => NavigationManager.NavigateTo("/Decks/")
+        TargetUri = "/Decks/"
       };
-
-      SearchTemplatesCommand = new Command()
+      SearchTemplatesCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchTemplates,
-        ExecuteAction = (param) => NavigationManager.NavigateTo("/Templates/")
+        TargetUri = "/Templates/"
       };
-
-      SearchCardsCommand = new Command()
+      SearchCardsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchCards,
-        ExecuteAction = (param) => NavigationManager.NavigateTo("/Cards/")
+        TargetUri = "/Cards/"
       };
-
     }
 
     ///<inheritdoc/>
@@ -150,14 +142,5 @@ namespace SpacedRepetitionSystem.ViewModels
 
       return true;
     }
-
-    private void ShowStatistics(Deck deck)
-    { NavigationManager.NavigateTo($"/Decks/{deck.DeckId}/Statistics/"); }
-
-    private void AddCards(long deckId)
-    { NavigationManager.NavigateTo($"/Decks/{deckId}/Cards/New"); }
-
-    private void PracticeDeck(long deckId)
-    { NavigationManager.NavigateTo($"/Decks/{deckId}/Practice"); }
   }
 }

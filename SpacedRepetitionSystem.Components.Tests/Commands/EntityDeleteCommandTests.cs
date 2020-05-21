@@ -7,7 +7,6 @@ using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.Utility.Tests.Dialogs;
 using SpacedRepetitionSystem.Utility.Tests.Notification;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.Tests.Commands
 {
@@ -41,38 +40,38 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
     /// Tests <see cref="EntityDeleteCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithoutDialogSuccessfulTest()
-    { await ExecuteTestCore(true, false, DialogResult.No, false); }
+    public void ExecuteWithoutDialogSuccessfulTest()
+    { ExecuteTestCore(true, false, DialogResult.No, false); }
 
     /// <summary>
     /// Tests <see cref="EntityDeleteCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithoutDialogErrorTest()
-    { await ExecuteTestCore(false, false, DialogResult.No, false); }
+    public void ExecuteWithoutDialogErrorTest()
+    { ExecuteTestCore(false, false, DialogResult.No, false); }
 
     /// <summary>
     /// Tests <see cref="EntityDeleteCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithDialogResultNoTest()
-    { await ExecuteTestCore(true, true, DialogResult.No, false); }
+    public void ExecuteWithDialogResultNoTest()
+    { ExecuteTestCore(true, true, DialogResult.No, false); }
 
     /// <summary>
     /// Tests <see cref="EntityDeleteCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithDialogResultYesTest()
-    { await ExecuteTestCore(false, true, DialogResult.Yes, false); }
+    public void ExecuteWithDialogResultYesTest()
+    { ExecuteTestCore(false, true, DialogResult.Yes, false); }
 
     /// <summary>
     /// Tests <see cref="EntityDeleteCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithDialogAnTextFactoryTest()
-    { await ExecuteTestCore(false, true, DialogResult.Yes, true); }
+    public void ExecuteWithDialogAnTextFactoryTest()
+    { ExecuteTestCore(false, true, DialogResult.Yes, true); }
 
-    private async Task ExecuteTestCore(bool successful, bool useDialog, DialogResult dialogResult, bool useDialogTextFactory)
+    private void ExecuteTestCore(bool successful, bool useDialog, DialogResult dialogResult, bool useDialogTextFactory)
     {
       deleteCommand.ShowDeleteDialog = useDialog;
       deleteCommand.DeleteDialogTitle = "title";
@@ -95,9 +94,7 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
         mock.Reply = new ApiReply() { WasSuccessful = true };
       else
         mock.Reply = new ApiReply() { WasSuccessful = false, ResultMessage = "test" };
-
       deleteCommand.ExecuteCommand();
-      await Task.Delay(200);
       if (useDialog)
         dialogProviderMock.Callback(dialogResult);
         

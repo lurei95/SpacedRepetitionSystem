@@ -245,9 +245,6 @@
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.CreateNewEntity">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.SaveChanges">
-            <inheritdoc/>
-        </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel">
             <summary>
             SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
@@ -277,15 +274,6 @@
             <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.SearchCore">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.NewEntity">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.EditEntity(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.ShowStatistics(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
             <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateEditViewModel">
@@ -424,7 +412,7 @@
             Command for practicing the deck
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.DeckSearchViewModel.AddCardsCommand">
+        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.DeckSearchViewModel.AddCardCommand">
             <summary>
             Command for adding a new card to the deck
             </summary>
@@ -705,7 +693,7 @@
         </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Identity.IdentityViewModelBase">
             <summary>
-            baseclass for login or signup ViewModel
+            Base class for login or signup ViewModel
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Identity.IdentityViewModelBase.ApiConnector">

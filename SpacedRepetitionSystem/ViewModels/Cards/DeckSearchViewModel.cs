@@ -3,7 +3,6 @@ using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,17 +17,17 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// Command for practicing the deck
     /// </summary>
-    public Command PracticeDeckCommand { get; private set; }
+    public NavigationCommand PracticeDeckCommand { get; private set; }
 
     /// <summary>
     /// Command for adding a new card to the deck
     /// </summary>
-    public Command AddCardsCommand { get; private set; }
+    public NavigationCommand AddCardCommand { get; private set; }
 
     /// <summary>
     /// Command for showing the practice statistics
     /// </summary>
-    public Command ShowStatisticsCommand { get; private set; }
+    public NavigationCommand ShowStatisticsCommand { get; private set; }
 
     /// <summary>
     /// Constructor
@@ -38,24 +37,22 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     public DeckSearchViewModel(NavigationManager navigationManager, IApiConnector apiConnector) 
       : base(navigationManager, apiConnector)
     {
-      PracticeDeckCommand = new Command()
+      PracticeDeckCommand = new NavigationCommand(navigationManager)
       {
-        ExecuteAction = (param) => PracticeDeck((long)param),
         CommandText = Messages.Practice,
-        ToolTip = ""
+        ToolTip = "",
+        TargetUriFactory = (param) => $"/Decks/{(long)param}/Practice"
       };
-
-      AddCardsCommand = new Command()
+      AddCardCommand = new NavigationCommand(navigationManager)
       {
-        ExecuteAction = (param) => AddCards((long)param),
         CommandText = Messages.NewCard,
-        ToolTip = ""
+        ToolTip = "",
+        TargetUriFactory = (param) => $"/Decks/{(long)param}/Cards/New"
       };
-
-      ShowStatisticsCommand = new Command()
+      ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.PracticeStatistics,
-        ExecuteAction = (param) => ShowStatistics(param as Deck)
+        TargetUriFactory = (param) => $"/Decks/{(param as Deck).DeckId}/Statistics/"
       };
     }
 
@@ -85,14 +82,5 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     ///<inheritdoc/>
     protected override async Task<List<Deck>> SearchCore() 
       => (await ApiConnector.GetAsync<Deck>(new Dictionary<string, object>())).Result;
-
-    private void ShowStatistics(Deck deck)
-    { NavigationManager.NavigateTo("/Decks/" + deck.DeckId + "/Statistics/"); }
-
-    private void AddCards(long deckId)
-    { NavigationManager.NavigateTo($"/Decks/{deckId}/Cards/New"); }
-
-    private void PracticeDeck(long deckId)
-    { NavigationManager.NavigateTo($"/Decks/{deckId}/Practice"); }
   }
 }

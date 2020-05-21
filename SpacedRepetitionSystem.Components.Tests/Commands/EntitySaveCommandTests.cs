@@ -5,7 +5,6 @@ using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.Utility.Tests.Notification;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.Tests.Commands
 {
@@ -36,31 +35,31 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
     /// Tests <see cref="EntitySaveCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithNewEntityTest()
-    { await ExecuteTestCore(true, true); }
+    public void ExecuteWithNewEntityTest()
+    { ExecuteTestCore(true, true); }
 
     /// <summary>
     /// Tests <see cref="EntitySaveCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithExistingEntityTest()
-    { await ExecuteTestCore(false, true); }
+    public void ExecuteWithExistingEntityTest()
+    { ExecuteTestCore(false, true); }
 
     /// <summary>
     /// Tests <see cref="EntitySaveCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithNewEntityErrorTest()
-    { await ExecuteTestCore(true, false); }
+    public void ExecuteWithNewEntityErrorTest()
+    { ExecuteTestCore(true, false); }
 
     /// <summary>
     /// Tests <see cref="EntitySaveCommand{TEntity}.ExecuteCommand(object)"/>
     /// </summary>
     [TestMethod]
-    public async Task ExecuteWithExistingEntityErrorTest()
-    { await ExecuteTestCore(false, false); }
+    public void ExecuteWithExistingEntityErrorTest()
+    { ExecuteTestCore(false, false); }
 
-    private async Task ExecuteTestCore(bool newEntity, bool successful)
+    private void ExecuteTestCore(bool newEntity, bool successful)
     {
       saveCommand.IsNewEntity = newEntity;
       bool wasExecuted = false;
@@ -79,9 +78,7 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
         mock.Reply = new ApiReply() { WasSuccessful = true };
       else
         mock.Reply = new ApiReply() { WasSuccessful = false, ResultMessage = "test" };
-
       saveCommand.ExecuteCommand();
-      await Task.Delay(200);
 
       Assert.AreSame(mock.Parameter, card);
       Assert.AreEqual(newEntity ? HttpMethod.Post : HttpMethod.Put, mock.Method);

@@ -6,9 +6,7 @@ using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
-using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
-using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,22 +67,22 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// Command for editing a card from the deck
     /// </summary>
-    public Command EditCardCommand { get; private set; }
+    public NavigationCommand EditCardCommand { get; private set; }
 
     /// <summary>
     /// Command for deleting a card from the deck
     /// </summary>
-    public Command DeleteCardCommand { get; private set; }
+    public EntityDeleteCommand<Card> DeleteCardCommand { get; private set; }
 
     /// <summary>
     /// Command for adding a new card to the deck
     /// </summary>
-    public Command NewCardCommand { get; private set; }
+    public NavigationCommand NewCardCommand { get; private set; }
 
     /// <summary>
     /// Command for showing the practice statistics
     /// </summary>
-    public Command ShowStatisticsCommand { get; private set; }
+    public NavigationCommand ShowStatisticsCommand { get; private set; }
 
     /// <summary>
     /// Constructor
@@ -96,28 +94,23 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       EntityChangeValidator<Deck> changeValidator)
       : base(navigationManager, apiConnector, changeValidator)
     {
-      EditCardCommand = new Command()
+      EditCardCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Components.Messages.Edit,
-        ExecuteAction = (param) => EditCard(param as Card)
+        IsRelative = true,
+        TargetUriFactory = (param) => "/Cards/" + (param as Card).Id
       };
-
-      DeleteCardCommand = new Command()
-      {
-        CommandText = Components.Messages.Delete,
-        ExecuteAction = async (param) => await DeleteCard(param as Card)
-      };
-
-      NewCardCommand = new Command()
+      NewCardCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Components.Messages.New,
-        ExecuteAction = (param) => NewCard()
+        IsRelative = true,
+        TargetUri = "/Cards/New"
       };
-
-      ShowStatisticsCommand = new Command()
+      ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.PracticeStatistics,
-        ExecuteAction = (param) => NavigationManager.NavigateTo(NavigationManager.Uri + "/Statistics/")
+        IsRelative = true,
+        TargetUri = "/Statistics/"
       };
     }
 
@@ -131,6 +124,12 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (!result)
         return false;
 
+      DeleteCardCommand = new EntityDeleteCommand<Card>(ApiConnector)
+      { 
+        CommandText = Components.Messages.Delete, 
+        DeleteDialogTitle = Messages.DeleteCardDialogTitle,
+        DeleteDialogTextFactory = (card) => Messages.DeleteCardDialogText.FormatWith(card.CardId)
+      };
       DeleteCommand.DeleteDialogTitle = Messages.DeleteDeckDialogTitle;
       DeleteCommand.DeleteDialogText = Messages.DeleteDeckDialogText.FormatWith(Entity.Title);
 
@@ -158,21 +157,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       Entity = new Deck();
       CardTemplateId = CardTemplate.DefaultCardTemplateId;
     }
-
-    private async Task DeleteCard(Card card)
-    {
-      ApiReply reply = await ApiConnector.DeleteAsync(card);
-      if (reply.WasSuccessful)
-        NotificationMessageProvider.ShowSuccessMessage(Components.Messages.EntityDeleted.FormatWith(card.GetDisplayName()));
-      else
-        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
-    }
-
-    private void EditCard(Card card)
-    { NavigationManager.NavigateTo(NavigationManager.Uri + "/Cards/" + card.Id); }
-
-    private void NewCard()
-    { NavigationManager.NavigateTo(NavigationManager.Uri + "/Cards/New"); }
 
     private string ValidateCardTemplateTitle(string value)
       => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(PropertyNames.CardTemplate) : null;

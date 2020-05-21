@@ -3,7 +3,6 @@ using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
-using SpacedRepetitionSystem.Utility.Dialogs;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -34,7 +33,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// Command for showing the practice statistics
     /// </summary>
-    public Command ShowStatisticsCommand { get; private set; }
+    public NavigationCommand ShowStatisticsCommand { get; private set; }
 
     /// <summary>
     /// Constructor
@@ -44,10 +43,11 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     public CardSearchViewModel(NavigationManager navigationManager, IApiConnector apiConnector) 
       : base(navigationManager, apiConnector)
     {
-      ShowStatisticsCommand = new Command()
+      ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.PracticeStatistics,
-        ExecuteAction = (param) => ShowStatistics(param as Card)
+        IsRelative = true,
+        TargetUriFactory = (param) =>  $"/Decks/{(param as Card).DeckId}/Cards/{(param as Card).CardId}/Statistics/"
       };
     }
 
@@ -60,6 +60,9 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
 
       DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
       DeleteCommand.DeleteDialogTextFactory = (entity) => Messages.DeleteCardDialogText.FormatWith(entity.CardId);
+      NewCommand.IsRelative = EditCommand.IsRelative = false;
+      NewCommand.TargetUriFactory = (param) => $"/Decks/{SelectedEntity.DeckId}/Cards/New";
+      EditCommand.TargetUriFactory = (param) => $"/Decks/{(param as Card).DeckId}/Cards/{(param as Card).CardId}";
       return true;
     }
 
@@ -71,17 +74,5 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         parameters.Add(nameof(Deck.DeckId), DeckId);
       return (await ApiConnector.GetAsync<Card>(parameters)).Result;
     }
-
-    ///<inheritdoc/>
-    protected override void NewEntity()
-    { NavigationManager.NavigateTo("/Decks/" + SelectedEntity.DeckId + "/Cards/New"); }
-
-    ///<inheritdoc/>
-    protected override void EditEntity(Card entity)
-    { NavigationManager.NavigateTo("/Decks/" + entity.DeckId + "/Cards/" + entity.CardId); }
-
-    ///<inheritdoc/>
-    private void ShowStatistics(Card card)
-    { NavigationManager.NavigateTo("/Decks/" + card.DeckId + "/Cards/" + card.CardId + "/Statistics/"); }
   }
 }
