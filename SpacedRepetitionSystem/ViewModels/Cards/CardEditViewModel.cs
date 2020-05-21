@@ -166,7 +166,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         nameof(CardTemplateTitle),
         Entity
       );
-      RegisterPropertyProperty(CardTemplateTitleProperty);
+      RegisterPropertyProxy(CardTemplateTitleProperty);
 
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
       ShowStatisticsCommand.IsEnabled = !IsNewEntity;

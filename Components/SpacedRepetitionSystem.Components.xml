@@ -773,7 +773,7 @@
             Creates a new Entity
             </summary>
         </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.RegisterPropertyProperty(SpacedRepetitionSystem.Components.Edits.PropertyProxy)">
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.RegisterPropertyProxy(SpacedRepetitionSystem.Components.Edits.PropertyProxy)">
             <summary>
             Registers a PropertyProxy
             </summary>
@@ -870,7 +870,7 @@
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.InitializeAsync">
             <inheritdoc/>
         </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.Search">
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.SearchAsync">
             <summary>
             Executes the search
             </summary>

@@ -105,7 +105,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Executes the search
     /// </summary>
     /// <returns>async Task</returns>
-    public async Task Search()
+    public async Task SearchAsync()
     {
       IsSearching = true;
       List<TEntity> results = await SearchCore();

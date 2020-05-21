@@ -92,7 +92,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Registers a PropertyProxy
     /// </summary>
     /// <param name="proxy">Proxy</param>
-    protected void RegisterPropertyProperty(PropertyProxy proxy)
+    protected void RegisterPropertyProxy(PropertyProxy proxy)
     { proxy.Validator = (newValue, entity) => changeValidator.Validate(proxy.PropertyName, entity, newValue); }
   }
 }

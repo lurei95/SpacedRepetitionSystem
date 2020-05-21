@@ -80,7 +80,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         nameof(Entity.Title),
         Entity
       );
-      RegisterPropertyProperty(TitleProperty);
+      RegisterPropertyProxy(TitleProperty);
 
       foreach (CardFieldDefinition fieldDefinition in Entity.FieldDefinitions)
       {
@@ -90,7 +90,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
           nameof(CardFieldDefinition.FieldName),
           fieldDefinition
         );
-        RegisterPropertyProperty(proxy);
+        RegisterPropertyProxy(proxy);
         FieldNameProperties.Add(proxy);
       }
       return true;
@@ -122,7 +122,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         nameof(CardFieldDefinition.FieldName),
         fieldDefinition
       );
-      RegisterPropertyProperty(proxy);
+      RegisterPropertyProxy(proxy);
       FieldNameProperties.Add(proxy);
       RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 1;
       OnPropertyChanged(nameof(FieldDefinitions));

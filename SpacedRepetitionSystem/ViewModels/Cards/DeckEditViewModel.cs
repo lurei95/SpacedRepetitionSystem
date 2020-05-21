@@ -139,14 +139,14 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         nameof(CardTemplateTitle),
         Entity
       );
-      RegisterPropertyProperty(CardTemplateTitleProperty);
+      RegisterPropertyProxy(CardTemplateTitleProperty);
       TitleProperty = new PropertyProxy(
         () => Entity.Title,
         (value) => Entity.Title = value,
         nameof(Entity.Title),
         Entity
       );
-      RegisterPropertyProperty(TitleProperty);
+      RegisterPropertyProxy(TitleProperty);
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
       return true;
     }
