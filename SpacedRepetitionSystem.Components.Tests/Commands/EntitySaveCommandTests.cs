@@ -1,0 +1,95 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SpacedRepetitionSystem.Components.Commands;
+using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Utility.Notification;
+using SpacedRepetitionSystem.Utility.Tests.Notification;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace SpacedRepetitionSystem.Components.Tests.Commands
+{
+  /// <summary>
+  /// Testclass for <see cref="EntitySaveCommand{TEntity}"/>
+  /// </summary>
+  [TestClass]
+  public sealed class EntitySaveCommandTests
+  {
+    private static ApiConnectorMock mock;
+    private static EntitySaveCommand<Card> saveCommand;
+    private static NotificationProviderMock notificationProviderMock;
+    private static readonly Card card = new Card();
+
+    /// <summary>
+    /// Method for initializing the test
+    /// </summary>
+    [TestInitialize]
+    public void TestInitialize()
+    {
+      notificationProviderMock = new NotificationProviderMock();
+      NotificationMessageProvider.Initialize(notificationProviderMock, 1000000);
+      mock = new ApiConnectorMock();
+      saveCommand = new EntitySaveCommand<Card>(mock) { Entity = card };
+    }
+
+    /// <summary>
+    /// Tests <see cref="EntitySaveCommand{TEntity}.ExecuteCommand(object)"/>
+    /// </summary>
+    [TestMethod]
+    public async Task ExecuteWithNewEntityTest()
+    { await ExecuteTestCore(true, true); }
+
+    /// <summary>
+    /// Tests <see cref="EntitySaveCommand{TEntity}.ExecuteCommand(object)"/>
+    /// </summary>
+    [TestMethod]
+    public async Task ExecuteWithExistingEntityTest()
+    { await ExecuteTestCore(false, true); }
+
+    /// <summary>
+    /// Tests <see cref="EntitySaveCommand{TEntity}.ExecuteCommand(object)"/>
+    /// </summary>
+    [TestMethod]
+    public async Task ExecuteWithNewEntityErrorTest()
+    { await ExecuteTestCore(true, false); }
+
+    /// <summary>
+    /// Tests <see cref="EntitySaveCommand{TEntity}.ExecuteCommand(object)"/>
+    /// </summary>
+    [TestMethod]
+    public async Task ExecuteWithExistingEntityErrorTest()
+    { await ExecuteTestCore(false, false); }
+
+    private async Task ExecuteTestCore(bool newEntity, bool successful)
+    {
+      saveCommand.IsNewEntity = newEntity;
+      bool wasExecuted = false;
+      saveCommand.OnSavedAction = (card1) =>
+      {
+        if (successful)
+        {
+          Assert.AreSame(card, card1);
+          wasExecuted = true;
+        }
+        else
+          Assert.Fail();
+      };
+
+      if (successful)
+        mock.Reply = new ApiReply() { WasSuccessful = true };
+      else
+        mock.Reply = new ApiReply() { WasSuccessful = false, ResultMessage = "test" };
+
+      saveCommand.ExecuteCommand();
+      await Task.Delay(200);
+
+      Assert.AreSame(mock.Parameter, card);
+      Assert.AreEqual(newEntity ? HttpMethod.Post : HttpMethod.Put, mock.Method);
+      Assert.AreEqual(successful ? NotificationKind.SuccessNotification : NotificationKind.ErrorNotification, notificationProviderMock.NotificationKind);
+      if (successful)
+        Assert.IsTrue(wasExecuted);
+      else
+        Assert.AreEqual("test", notificationProviderMock.Message);  
+    }
+  }
+}

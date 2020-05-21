@@ -126,6 +126,31 @@
         <member name="M:SpacedRepetitionSystem.Components.Commands.EntityDeleteCommand`1.ExecuteCommand(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="T:SpacedRepetitionSystem.Components.Commands.EntitySaveCommand`1">
+            <summary>
+            Command for saving an entity
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntitySaveCommand`1.IsNewEntity">
+            <summary>
+            Whether the entity is new
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.EntitySaveCommand`1.OnSavedAction">
+            <summary>
+            Action to perform when the entity was successfully deleted
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Commands.EntitySaveCommand`1.#ctor(SpacedRepetitionSystem.Components.Middleware.IApiConnector)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="apiConnector">ApiConnector</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Commands.EntitySaveCommand`1.ExecuteCommand(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="T:SpacedRepetitionSystem.Components.CustomComponentBase">
             <summary>
             Baseclass for all custom razor components
@@ -717,11 +742,6 @@
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.CreateNewEntity">
             <summary>
             Creates a new Entity
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.SaveChanges">
-            <summary>
-            Saves the changes
             </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.RegisterPropertyProperty(SpacedRepetitionSystem.Components.Edits.PropertyProxy)">
