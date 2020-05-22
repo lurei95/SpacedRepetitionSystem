@@ -8,6 +8,7 @@ using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
 using SpacedRepetitionSystem.WebAPI.Validation.CardTemplates;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
@@ -19,9 +20,13 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
   public sealed class CardTemplatesControllerTests : ControllerTestBase
   {
     private static User otherUser;
-    private static CardTemplate template;
+    private static CardTemplate template1;
+    private static CardTemplate template2;
     private static CardTemplate otherUserTemplate;
     private static CardFieldDefinition fieldDefinition1;
+    private static CardFieldDefinition fieldDefinition2;
+    private static Card card;
+    private static CardField field; 
 
     /// <summary>
     /// Creates the test data when the class is initialized
@@ -38,11 +43,17 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         Email = "test1@test1.com",
         Password = "test1"
       };
-      template = new CardTemplate()
+      template1 = new CardTemplate()
       {
         UserId = User.UserId,
         CardTemplateId = 1,
         Title = "Default"
+      };
+      template2 = new CardTemplate()
+      {
+        UserId = User.UserId,
+        CardTemplateId = 3,
+        Title = "Default1"
       };
       otherUserTemplate = new CardTemplate()
       {
@@ -52,10 +63,31 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       fieldDefinition1 = new CardFieldDefinition()
       {
-        CardTemplateId = template.CardTemplateId,
+        FieldId = 1,
+        CardTemplateId = template1.CardTemplateId,
         FieldName = "Front"
       };
-      template.FieldDefinitions.Add(fieldDefinition1);
+      fieldDefinition2 = new CardFieldDefinition()
+      {
+        FieldId = 1,
+        CardTemplateId = template2.CardTemplateId,
+        FieldName = "Front"
+      };
+      card = new Card() 
+      { 
+        CardId = 1,
+        CardTemplateId = template1.CardTemplateId 
+      };
+      field = new CardField()
+      {
+        CardId = card.CardId,
+        CardTemplateId = template1.CardTemplateId,
+        FieldName = "Front",
+        FieldId = 1,
+      };
+      template1.FieldDefinitions.Add(fieldDefinition1);
+      template2.FieldDefinitions.Add(fieldDefinition2);
+      card.Fields.Add(field);
     }
 
     ///<inheritdoc/>
@@ -66,8 +98,11 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CreateData(context =>
       {
         context.Add(otherUser);
-        context.Add(template);
+        context.Add(template1);
+        context.Add(template2);
         context.Add(otherUserTemplate);
+        context.Add(field);
+        context.Add(card);
       });
     }
 
@@ -82,7 +117,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CardTemplatesController controller = CreateController(context);
 
       //get template successfully
-      ActionResult<CardTemplate> result = await controller.GetAsync(1);
+      ActionResult<CardTemplate> result = await controller.GetAsync(3);
       Assert.IsNotNull(result.Value);
       Assert.AreEqual(1, result.Value.FieldDefinitions.Count);
 
@@ -91,7 +126,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result.Result is UnauthorizedResult);
 
       //template does not exist -> not found
-      result = await controller.GetAsync(3);
+      result = await controller.GetAsync(4);
       Assert.IsTrue(result.Result is NotFoundResult);
     }
 
@@ -108,8 +143,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       
       //Get all templates of user
       ActionResult<List<CardTemplate>> result = await controller.GetAsync(parameters);
-      Assert.AreEqual(1, result.Value.Count);
-      Assert.AreEqual(1, result.Value[0].FieldDefinitions.Count);
+      Assert.AreEqual(2, result.Value.Count);
+      Assert.AreEqual(1, result.Value[1].FieldDefinitions.Count);
     }
 
     /// <summary>
@@ -129,7 +164,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       //Create new valid entity
       CardTemplate cardTemplate1 = new CardTemplate()
       {
-        CardTemplateId = 3,
+        CardTemplateId = 4,
         Title = "test123"
       };
       result = await controller.PostAsync(cardTemplate1);
@@ -169,10 +204,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       result = await controller.DeleteAsync(new CardTemplate());
       Assert.IsTrue(result is NotFoundResult);
 
-      //delete exitsting entity
-      result = await controller.DeleteAsync(template);
+      //delete existing entity
+      result = await controller.DeleteAsync(template2);
       Assert.IsTrue(result is OkResult);
-      CardTemplate template1 = context.Find<CardTemplate>((long)1);
+      CardTemplate template1 = context.Find<CardTemplate>((long)3);
       Assert.IsNull(template1);
     }
 
@@ -200,20 +235,12 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result is NotFoundResult);
 
       //Save changed entity
-      template.Title = "New Title";
-      template.FieldDefinitions.Remove(fieldDefinition1);
-      CardFieldDefinition newField = new CardFieldDefinition()
-      {
-        CardTemplateId = template.CardTemplateId,
-        FieldName = "NewField"
-      };
-      template.FieldDefinitions.Add(newField);
-      result = await controller.PutAsync(template);
+      template2.Title = "New Title";
+      result = await controller.PutAsync(template2);
       Assert.IsTrue(result is OkResult);
-      CardTemplate template1 = context.Find<CardTemplate>(template.CardTemplateId);
-      Assert.AreEqual("New Title", template1.Title);
-      Assert.AreEqual(1, template1.FieldDefinitions.Count);
-      Assert.AreEqual(newField.FieldName, template1.FieldDefinitions[0].FieldName);
+      CardTemplate template3 = context.Find<CardTemplate>(template2.CardTemplateId);
+      Assert.AreEqual("New Title", template3.Title);
+      Assert.AreEqual(1, template3.FieldDefinitions.Count);
 
       //Invalid template is validated
       bool wasThrown = false;
@@ -226,6 +253,76 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         wasThrown = true;
       }
       Assert.IsTrue(wasThrown);
+    }
+
+    /// <summary>
+    /// Tests <see cref="CardTemplatesController.PutAsync(CardTemplate entity)/>
+    /// </summary>
+    /// <returns></returns>
+    [TestMethod]
+    public async Task UpdateFieldDefinitionOnPutCardTemplateTest()
+    {
+      using DbContext context = CreateContext();
+      CardTemplatesController controller = CreateController(context);
+
+      //Save changed entity
+      template1.FieldDefinitions[0].FieldName = "NewFieldName";
+      template1.FieldDefinitions[0].ShowInputForPractice = true;
+      IActionResult result = await controller.PutAsync(template1);
+      Assert.IsTrue(result is OkResult);
+      CardFieldDefinition definition3 = context.Find<CardFieldDefinition>(template1.CardTemplateId, 1);
+      Assert.IsTrue(definition3.ShowInputForPractice);
+      Assert.AreEqual("NewFieldName", definition3.FieldName);
+      Card card1 = context.Set<Card>().SingleOrDefault(card => card.CardId == 1);
+      Assert.AreEqual(1, card1.Fields.Count);
+      Assert.AreEqual("NewFieldName", card1.Fields[0].FieldName);
+    }
+
+    /// <summary>
+    /// Tests <see cref="CardTemplatesController.PutAsync(CardTemplate entity)/>
+    /// </summary>
+    /// <returns></returns>
+    [TestMethod]
+    public async Task RemoveFieldDefinitionOnPutCardTemplateTest()
+    {
+      using DbContext context = CreateContext();
+      CardTemplatesController controller = CreateController(context);
+
+      //Save changed entity
+      template1.FieldDefinitions.Clear();
+      IActionResult result = await controller.PutAsync(template1);
+      Assert.IsTrue(result is OkResult);
+      CardTemplate template3 = context.Find<CardTemplate>((long)1);
+      Assert.AreEqual(0, template3.FieldDefinitions.Count);
+      Card card1 = context.Find<Card>((long)1);
+      Assert.AreEqual(0, card1.Fields.Count);
+    }
+
+    /// <summary>
+    /// Tests <see cref="CardTemplatesController.PutAsync(CardTemplate entity)/>
+    /// </summary>
+    /// <returns></returns>
+    [TestMethod]
+    public async Task AddNewFieldDefinitionOnPutCardTemplateTest()
+    {
+      using DbContext context = CreateContext();
+      CardTemplatesController controller = CreateController(context);
+
+      //Save changed entity
+      CardFieldDefinition fieldDefinition2 = new CardFieldDefinition()
+      {
+        CardTemplateId = 1,
+        FieldName = "Field2",
+      };
+      template1.FieldDefinitions.Add(fieldDefinition2);
+      IActionResult result = await controller.PutAsync(template1);
+      Assert.IsTrue(result is OkResult);
+      CardTemplate template3 = context.Set<CardTemplate>().FirstOrDefault(template => template.CardTemplateId == 1);
+      Assert.AreEqual(2, template3.FieldDefinitions.Count);
+      Assert.AreEqual(2, template3.FieldDefinitions[1].FieldId);
+      Card card1 = context.Set<Card>().Include(card => card.Fields).FirstOrDefault(card => card.CardId == 1);
+      Assert.AreEqual(2, card1.Fields.Count);
+      Assert.AreEqual("Field2", card1.Fields.OrderBy(field => field.FieldId).ToList()[1].FieldName);
     }
 
     private CardTemplatesController CreateController(DbContext context)

@@ -312,7 +312,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         PracticeDate = DateTime.Today,
         CardId = Current.CardId,
         DeckId = Entity.DeckId,
-        FieldName = Current.FieldName,
+        FieldId = Current.FieldId,
         CorrectCount = result == PracticeResultKind.Easy ? 1 : 0,
         HardCount = result == PracticeResultKind.Hard ? 1 : 0,
         WrongCount = result == PracticeResultKind.Failed ? 1 : 0
@@ -352,17 +352,12 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
 
     private void SelectRandomDisplayField()
     {
-      int current = 0;
-      int index = random.Next(Current.Card.Fields.Count - 1);
-      for (int i = 0; i < Current.Card.Fields.Count; i++)
-      {
-        if (Current.FieldName != Current.Card.Fields[i].FieldName)
-        {
-          if (index == current)
-            DisplayedCardField = Current.Card.Fields[i];
-          current++;
-        }
-      }
+      List<CardField> fields = Current.Card.Fields
+        .Where(field => field.FieldName != Current.FieldName && !string.IsNullOrEmpty(field.Value))
+        .ToList();
+      fields.Shuffle();
+      int index = random.Next(fields.Count - 1);
+      DisplayedCardField = fields[index];
     }
 
     private void AddResult(PracticeResultKind resultKind)

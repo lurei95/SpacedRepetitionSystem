@@ -12,15 +12,22 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     public void Configure(EntityTypeBuilder<CardFieldDefinition> builder)
     {
       builder.ToTable("CardFieldDefinitions", "Cards");
-      builder.HasKey(definition => new { definition.CardTemplateId, definition.FieldName });
+      builder.HasKey(definition => new { definition.CardTemplateId, definition.FieldId });
 
       builder.Property(definition => definition.FieldName)
         .IsRequired()
         .HasMaxLength(100);
       builder.Property(definition => definition.ShowInputForPractice)
         .IsRequired();
+      builder.Property(definition => definition.FieldId)
+       .IsRequired();
       builder.Property(definition => definition.CardTemplateId)
         .IsRequired();
+      builder.Property(definition => definition.IsRequired)
+        .IsRequired();
+
+      builder.HasIndex(field => field.FieldName)
+        .IsUnique(); 
     }
   }
 }

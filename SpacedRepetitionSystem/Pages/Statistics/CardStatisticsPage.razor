@@ -48,8 +48,12 @@
                 </DisplayTemplate>
               </DataGridColumn>
               <DataGridColumn TItem="PracticeHistoryEntry"
-                              Field="@nameof(PracticeHistoryEntry.FieldName)"
-                              Caption="Field Name" Sortable="true" />
+                              Field="@nameof(PracticeHistoryEntry.PracticeHistoryEntryId)"
+                              Caption="Field Name" Sortable="true">
+                <DisplayTemplate>
+                  @context.Field.FieldName
+                </DisplayTemplate>
+              </DataGridColumn>
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.CorrectCount)"
                               Caption="Correct" Sortable="true" CellClass="@((item) => "right")" />

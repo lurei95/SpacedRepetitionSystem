@@ -22,7 +22,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
         .ValueGeneratedOnAdd();
       builder.Property(entry => entry.CardId)
         .IsRequired();
-      builder.Property(entry => entry.FieldName)
+      builder.Property(entry => entry.FieldId)
         .IsRequired();
       builder.Property(entry => entry.DeckId)
         .IsRequired();
@@ -38,6 +38,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.HasOne(entry => entry.User)
         .WithMany()
         .HasForeignKey(entry => entry.UserId)
+        .OnDelete(DeleteBehavior.NoAction);
+
+      builder.HasOne(entry => entry.Field)
+        .WithMany()
+        .HasForeignKey(entry => new { entry.CardId, entry.FieldId })
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.HasIndex(entry => entry.DeckId).IsUnique(false);

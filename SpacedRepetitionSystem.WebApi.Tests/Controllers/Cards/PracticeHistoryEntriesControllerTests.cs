@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
@@ -8,7 +7,6 @@ using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
 using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
@@ -20,7 +18,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
   public sealed class PracticeHistoryEntriesControllerTests : ControllerTestBase
   {
     private static User otherUser;
-    private static CardField field;
+    private static CardField field1;
+    private static CardField field2;
+    private static CardField field3;
+    private static CardField field4;
     private static PracticeHistoryEntry entry1;
     private static PracticeHistoryEntry entry2;
     private static PracticeHistoryEntry entry3;
@@ -45,7 +46,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         CardId = 1,
         DeckId = 1,
-        FieldName = "Field 1",
+        FieldId = 1,
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 1,
         UserId = User.UserId,
@@ -57,7 +58,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         CardId = 2,
         DeckId = 2,
-        FieldName = "Field 1",
+        FieldId = 1,
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 2,
         UserId = User.UserId
@@ -66,7 +67,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         CardId = 1,
         DeckId = 1,
-        FieldName = "Field 3",
+        FieldId = 3,
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 3,
         UserId = User.UserId,
@@ -78,15 +79,37 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         CardId = 1,
         DeckId = 1,
-        FieldName = "Field 2",
+        FieldId = 2,
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 4,
         UserId = otherUser.UserId
       };
-      field = new CardField()
+      field1 = new CardField()
       {
-        CardId = 1,
         FieldName = "Field 1",
+        CardId = 1,
+        FieldId = 1,
+        ProficiencyLevel = 3
+      };
+      field2 = new CardField()
+      {
+        FieldName = "Field 12",
+        CardId = 1,
+        FieldId = 2,
+        ProficiencyLevel = 3
+      };
+      field3 = new CardField()
+      {
+        FieldName = "Field 2",
+        CardId = 1,
+        FieldId = 3,
+        ProficiencyLevel = 3
+      };
+      field4 = new CardField()
+      {
+        FieldName = "Field 2",
+        CardId = 2,
+        FieldId = 1,
         ProficiencyLevel = 3
       };
     }
@@ -99,7 +122,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CreateData(context =>
       {
         context.Add(otherUser);
-        context.Add(field);
+        context.Add(field1);
+        context.Add(field2);
+        context.Add(field3);
+        context.Add(field4);
         context.Add(entry1);
         context.Add(entry2);
         context.Add(entry3);
@@ -120,6 +146,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       //get entry successfully
       ActionResult<PracticeHistoryEntry> result = await controller.GetAsync(1);
       Assert.IsNotNull(result.Value);
+      Assert.AreEqual(field1.FieldId, result.Value.Field.FieldId);
 
       //Entry of other user -> unauthorized
       result = await controller.GetAsync(4);
@@ -158,7 +185,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
 
       //Get all entries of a field
       parameters.Clear();
-      parameters.Add(nameof(CardField.FieldName), "Field 3");
+      parameters.Add(nameof(CardField.FieldId), 3);
       result = await controller.GetAsync(parameters);
       Assert.AreEqual(1, result.Value.Count);
 
@@ -192,7 +219,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         CardId = 1,
         DeckId = 1,
-        FieldName = "Field 1",
+        FieldId = 1,
         PracticeDate = DateTime.Today,
         PracticeHistoryEntryId = 5,
         UserId = User.UserId,
@@ -206,7 +233,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsNull(newEntry);
       newEntry = context.Find<PracticeHistoryEntry>((long)1);
       Assert.AreEqual(4, newEntry.WrongCount);
-      CardField field1 = context.Find<CardField>((long)1, "Field 1");
+      CardField field1 = context.Find<CardField>((long)1, 1);
       Assert.AreEqual(1, field1.ProficiencyLevel);
       Assert.AreEqual(DateTime.Today.AddDays(1).Date, field1.DueDate.Date);
 
@@ -215,7 +242,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         CardId = 1,
         DeckId = 1,
-        FieldName = "Field 1",
+        FieldId = 1,
         PracticeDate = DateTime.Today.AddDays(1),
         PracticeHistoryEntryId = 5,
         UserId = User.UserId,
@@ -227,7 +254,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.IsTrue(result is OkResult);
       newEntry = context.Find<PracticeHistoryEntry>((long)5);
       Assert.AreEqual(1, newEntry.CorrectCount);
-      field1 = context.Find<CardField>((long)1, "Field 1");
+      field1 = context.Find<CardField>((long)1, 1);
       Assert.AreEqual(2, field1.ProficiencyLevel);
       Assert.AreEqual(DateTime.Today.AddDays(3).Date, field1.DueDate.Date);
 
@@ -236,7 +263,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         CardId = 1,
         DeckId = 1,
-        FieldName = "Field 1",
+        FieldId = 1,
         PracticeDate = DateTime.Today.AddDays(1),
         PracticeHistoryEntryId = 6,
         UserId = User.UserId,
@@ -246,7 +273,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       result = await controller.PostAsync(newEntry);
       Assert.IsTrue(result is OkResult);
-      field1 = context.Find<CardField>((long)1, "Field 1");
+      field1 = context.Find<CardField>((long)1, 1);
       Assert.AreEqual((long)1, field1.ProficiencyLevel);
       Assert.AreEqual(DateTime.Today.AddDays(2).Date, field1.DueDate.Date);
     }

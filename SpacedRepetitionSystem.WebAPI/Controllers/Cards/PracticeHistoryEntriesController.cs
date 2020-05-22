@@ -49,7 +49,8 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     public override async Task<ActionResult<PracticeHistoryEntry>> GetAsync([FromRoute] long id)
     {
       PracticeHistoryEntry entry = await Context.Set<PracticeHistoryEntry>()
-        .FirstOrDefaultAsync(entry1 => entry1.PracticeHistoryEntryId == id);
+        .Include(entry => entry.Field)
+        .FirstOrDefaultAsync(entry => entry.PracticeHistoryEntryId == id);
 
       if (entry == null)
         return NotFound();
@@ -63,6 +64,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     public override async Task<ActionResult<List<PracticeHistoryEntry>>> GetAsync(IDictionary<string, object> searchParameters)
     {
       IQueryable<PracticeHistoryEntry> results = Context.Set<PracticeHistoryEntry>()
+        .Include(entry => entry.Field)
         .Where(entry => entry.UserId == GetUserId());
 
       if (searchParameters.ContainsKey(ProblemWords))
@@ -83,8 +85,8 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         results = results.Where(entry => entry.DeckId == (long)searchParameters[nameof(Card.DeckId)]);
       if (searchParameters != null && searchParameters.ContainsKey(nameof(Card.CardId)))
         results = results.Where(entry => entry.CardId == (long)searchParameters[nameof(Card.CardId)]);
-      if (searchParameters != null && searchParameters.ContainsKey(nameof(CardField.FieldName)))
-        results = results.Where(entry => entry.FieldName == (searchParameters[nameof(CardField.FieldName)] as string));
+      if (searchParameters != null && searchParameters.ContainsKey(nameof(CardField.FieldId)))
+        results = results.Where(entry => entry.FieldId == (int)searchParameters[nameof(CardField.FieldId)]);
       return await results.ToListAsync();
     }
 
@@ -95,12 +97,16 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         return BadRequest();
 
       PracticeHistoryEntry existingEntry = await Context.Set<PracticeHistoryEntry>()
-      .Where(entry => entry.PracticeDate.Date == entity.PracticeDate.Date
-        && entry.DeckId == entity.DeckId && entry.CardId == entity.CardId
-        && entry.FieldName == entity.FieldName).FirstOrDefaultAsync();
+        .Where(entry => entry.PracticeDate.Date == entity.PracticeDate.Date
+          && entry.DeckId == entity.DeckId 
+          && entry.CardId == entity.CardId
+          && entry.FieldId == entity.FieldId)
+        .FirstOrDefaultAsync();
 
       if (existingEntry != null)
       {
+        if (existingEntry.UserId != GetUserId())
+          return Unauthorized();
         existingEntry.CorrectCount += entity.CorrectCount;
         existingEntry.HardCount += entity.HardCount;
         existingEntry.WrongCount += entity.WrongCount;
@@ -116,7 +122,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
 
     private async Task UpdatePracticeInformationAsync(PracticeHistoryEntry entry)
     {
-      CardField field = await Context.Set<CardField>().FindAsync(entry.CardId, entry.FieldName);
+      CardField field = await Context.Set<CardField>().FindAsync(entry.CardId, entry.FieldId);
       if (entry.WrongCount > 0)
         field.ProficiencyLevel = 1;
       else if (entry.HardCount > 0 && field.ProficiencyLevel != 1)

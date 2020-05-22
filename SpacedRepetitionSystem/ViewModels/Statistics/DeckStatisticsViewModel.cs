@@ -22,7 +22,7 @@ namespace SpacedRepetitionSystem.ViewModels.Statistics
       {
         if (SelectedDisplayUnit == SelectableDisplayUnits[0])
           return PracticeHistoryEntries;
-        return PracticeHistoryEntries.Where(entry => entry.FieldName == SelectedDisplayUnit);
+        return PracticeHistoryEntries.Where(entry => entry.Field.FieldName == SelectedDisplayUnit);
       }
     }
 

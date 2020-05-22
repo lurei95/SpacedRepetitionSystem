@@ -258,23 +258,6 @@
         <member name="M:SpacedRepetitionSystem.WebAPI.Core.SpacedRepetionSystemDBContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc/>
         </member>
-        <member name="T:SpacedRepetitionSystem.WebAPI.Migrations.InitialCreate">
-            <summary>
-            Initial create
-            </summary>
-        </member>
-        <member name="M:SpacedRepetitionSystem.WebAPI.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <summary>
-            Migration up
-            </summary>
-            <param name="migrationBuilder">migration builder</param>
-        </member>
-        <member name="M:SpacedRepetitionSystem.WebAPI.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <summary>
-            Migration down
-            </summary>
-            <param name="migrationBuilder">migration builder</param>
-        </member>
         <member name="T:SpacedRepetitionSystem.WebAPI.Program">
             <summary>
             Pragram

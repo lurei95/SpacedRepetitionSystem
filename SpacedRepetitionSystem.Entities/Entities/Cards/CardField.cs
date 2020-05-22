@@ -8,7 +8,12 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
   public sealed class CardField : IEntity
   {
     ///<inheritdoc/>
-    public object Id => new { CardId, FieldName };
+    public object Id => new { CardId, FieldId };
+
+    /// <summary>
+    /// The id of the field
+    /// </summary>
+    public int FieldId { get; set; }
 
     /// <summary>
     /// Value of the field

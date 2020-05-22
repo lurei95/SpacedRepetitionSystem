@@ -3,15 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SpacedRepetitionSystem.WebAPI.Migrations
 {
-  /// <summary>
-  /// Initial create
-  /// </summary>
     public partial class InitialCreate : Migration
     {
-        /// <summary>
-        /// Migration up
-        /// </summary>
-        /// <param name="migrationBuilder">migration builder</param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
@@ -57,34 +50,6 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PracticeHistoryEntries",
-                schema: "Cards",
-                columns: table => new
-                {
-                    PracticeHistoryEntryId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PracticeDate = table.Column<DateTime>(nullable: false),
-                    WrongCount = table.Column<int>(nullable: false),
-                    HardCount = table.Column<int>(nullable: false),
-                    CorrectCount = table.Column<int>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    CardId = table.Column<long>(nullable: false),
-                    DeckId = table.Column<long>(nullable: false),
-                    FieldName = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PracticeHistoryEntries", x => x.PracticeHistoryEntryId);
-                    table.ForeignKey(
-                        name: "FK_PracticeHistoryEntries_Users_UserId",
-                        column: x => x.UserId,
-                        principalSchema: "Security",
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RefreshTokens",
                 schema: "Security",
                 columns: table => new
@@ -112,13 +77,15 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                 schema: "Cards",
                 columns: table => new
                 {
-                    FieldName = table.Column<string>(maxLength: 100, nullable: false),
+                    FieldId = table.Column<int>(nullable: false),
                     CardTemplateId = table.Column<long>(nullable: false),
-                    ShowInputForPractice = table.Column<bool>(nullable: false)
+                    FieldName = table.Column<string>(maxLength: 100, nullable: false),
+                    ShowInputForPractice = table.Column<bool>(nullable: false),
+                    IsRequired = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CardFieldDefinitions", x => new { x.CardTemplateId, x.FieldName });
+                    table.PrimaryKey("PK_CardFieldDefinitions", x => new { x.CardTemplateId, x.FieldId });
                     table.ForeignKey(
                         name: "FK_CardFieldDefinitions_CardTemplates_CardTemplateId",
                         column: x => x.CardTemplateId,
@@ -201,16 +168,17 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                 schema: "Cards",
                 columns: table => new
                 {
+                    FieldId = table.Column<int>(nullable: false),
                     CardId = table.Column<long>(nullable: false),
-                    FieldName = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true),
                     DueDate = table.Column<DateTime>(nullable: false),
                     ProficiencyLevel = table.Column<int>(nullable: false),
-                    CardTemplateId = table.Column<long>(nullable: false)
+                    CardTemplateId = table.Column<long>(nullable: false),
+                    FieldName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CardFields", x => new { x.CardId, x.FieldName });
+                    table.PrimaryKey("PK_CardFields", x => new { x.CardId, x.FieldId });
                     table.ForeignKey(
                         name: "FK_CardFields_Cards_CardId",
                         column: x => x.CardId,
@@ -226,19 +194,67 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                         principalColumn: "CardTemplateId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CardFields_CardFieldDefinitions_CardTemplateId_FieldName",
-                        columns: x => new { x.CardTemplateId, x.FieldName },
+                        name: "FK_CardFields_CardFieldDefinitions_CardTemplateId_FieldId",
+                        columns: x => new { x.CardTemplateId, x.FieldId },
                         principalSchema: "Cards",
                         principalTable: "CardFieldDefinitions",
-                        principalColumns: new[] { "CardTemplateId", "FieldName" },
+                        principalColumns: new[] { "CardTemplateId", "FieldId" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PracticeHistoryEntries",
+                schema: "Cards",
+                columns: table => new
+                {
+                    PracticeHistoryEntryId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PracticeDate = table.Column<DateTime>(nullable: false),
+                    WrongCount = table.Column<int>(nullable: false),
+                    HardCount = table.Column<int>(nullable: false),
+                    CorrectCount = table.Column<int>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    CardId = table.Column<long>(nullable: false),
+                    DeckId = table.Column<long>(nullable: false),
+                    FieldId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PracticeHistoryEntries", x => x.PracticeHistoryEntryId);
+                    table.ForeignKey(
+                        name: "FK_PracticeHistoryEntries_Users_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "Security",
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                    table.ForeignKey(
+                        name: "FK_PracticeHistoryEntries_CardFields_CardId_FieldId",
+                        columns: x => new { x.CardId, x.FieldId },
+                        principalSchema: "Cards",
+                        principalTable: "CardFields",
+                        principalColumns: new[] { "CardId", "FieldId" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_CardFields_CardTemplateId_FieldName",
+                name: "IX_CardFieldDefinitions_FieldName",
+                schema: "Cards",
+                table: "CardFieldDefinitions",
+                column: "FieldName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CardFields_CardId_FieldName",
                 schema: "Cards",
                 table: "CardFields",
-                columns: new[] { "CardTemplateId", "FieldName" });
+                columns: new[] { "CardId", "FieldName" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CardFields_CardTemplateId_FieldId",
+                schema: "Cards",
+                table: "CardFields",
+                columns: new[] { "CardTemplateId", "FieldId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cards_CardTemplateId",
@@ -295,22 +311,20 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PracticeHistoryEntries_CardId_FieldId",
+                schema: "Cards",
+                table: "PracticeHistoryEntries",
+                columns: new[] { "CardId", "FieldId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_UserId",
                 schema: "Security",
                 table: "RefreshTokens",
                 column: "UserId");
         }
-        
-        /// <summary>
-        /// Migration down
-        /// </summary>
-        /// <param name="migrationBuilder">migration builder</param>
+
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "CardFields",
-                schema: "Cards");
-
             migrationBuilder.DropTable(
                 name: "PracticeHistoryEntries",
                 schema: "Cards");
@@ -318,6 +332,10 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
             migrationBuilder.DropTable(
                 name: "RefreshTokens",
                 schema: "Security");
+
+            migrationBuilder.DropTable(
+                name: "CardFields",
+                schema: "Cards");
 
             migrationBuilder.DropTable(
                 name: "Cards",

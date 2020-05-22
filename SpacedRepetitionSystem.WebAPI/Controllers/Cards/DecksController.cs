@@ -58,15 +58,13 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
       List<Deck> result = await query.ToListAsync();
       foreach (Deck deck in result)
       {
-        deck.CardCount = Context.Set<Card>()
-          .AsNoTracking()
-          .Where(card => card.DeckId == deck.DeckId)
-          .Count();
-        deck.DueCardCount = Context.Set<Card>()
+        IEnumerable<CardField> fields = Context.Set<Card>()
           .AsNoTracking()
           .Where(card => card.DeckId == deck.DeckId)
           .SelectMany(card => card.Fields)
-          .Count(field => field.DueDate <= DateTime.Today);
+          .AsEnumerable();
+        deck.CardCount = fields.Count();
+        deck.DueCardCount = fields.Count(field => !string.IsNullOrEmpty(field.Value) && field.DueDate <= DateTime.Today);
       }
       return result;
     }

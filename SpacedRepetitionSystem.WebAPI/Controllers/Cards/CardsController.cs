@@ -71,21 +71,22 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
 
       foreach (CardField field in existing.Fields)
       {
-        CardField field1 = entity.Fields.SingleOrDefault(x => x.FieldName == field.FieldName);
+        CardField field1 = entity.Fields.SingleOrDefault(x => x.FieldId == field.FieldId);
         if (field1 != null)
-        {
-          field.CardTemplateId = field1.CardTemplateId;
-          field.DueDate = field1.DueDate;
-          field.Value = field1.Value;
-          field.ProficiencyLevel = field1.ProficiencyLevel;
-        }
+          CopyField(field, field1);
         else
-          Context.Entry(field).State = EntityState.Deleted;
+          return BadRequest();
       }
-
-      foreach (CardField field in entity.Fields.Where(x => !existing.Fields.Any(y => y.FieldName == x.FieldName)))
-        existing.Fields.Add(field);
       return Ok();
+    }
+
+    private void CopyField(CardField field1, CardField field2)
+    {
+      field1.FieldName = field2.FieldName;
+      field1.CardTemplateId = field2.CardTemplateId;
+      field1.DueDate = field2.DueDate;
+      field1.Value = field2.Value;
+      field1.ProficiencyLevel = field2.ProficiencyLevel;
     }
   }
 }

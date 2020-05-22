@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
@@ -10,7 +9,6 @@ using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using SpacedRepetitionSystem.WebAPI.Validation.Decks;
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
@@ -28,6 +26,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
     private static Deck otherUserDeck;
     private static Card card;
     private static CardField field1;
+    private static CardField field2;
 
     /// <summary>
     /// Creates the test data when the class is initialized
@@ -52,6 +51,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       fieldDefinition1 = new CardFieldDefinition()
       {
+        FieldId = 1,
         CardTemplateId = template.CardTemplateId,
         FieldName = "Front"
       };
@@ -78,12 +78,20 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       field1 = new CardField()
       {
+        FieldId = 1,
         CardId = card.CardId,
         CardTemplateId = template.CardTemplateId,
         FieldName = "Front",
         Value = "Field1"
       };
+      field2 = new CardField()
+      {
+        CardId = card.CardId,
+        CardTemplateId = template.CardTemplateId,
+        FieldName = "Back",
+      };
       card.Fields.Add(field1);
+      card.Fields.Add(field2);
       deck.Cards.Add(card);
     }
 
@@ -143,8 +151,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       ActionResult<List<Deck>> result = await controller.GetAsync(parameters);
       Assert.AreEqual(1, result.Value.Count);
       Assert.AreEqual(deck.DeckId, result.Value[0].DeckId);
-      Assert.AreEqual(1, result.Value[0].CardCount);
-      Assert.AreEqual(1, result.Value[0].DueCardCount);
+      Assert.AreEqual(2, result.Value[0].CardCount);
+      Assert.AreEqual(1, result.Value[0].DueCardCount); //Only fields with a value are counted
 
       //Get all pinned decks
       parameters.Add(nameof(Deck.IsPinned), true);

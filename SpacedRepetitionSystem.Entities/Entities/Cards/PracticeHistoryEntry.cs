@@ -52,6 +52,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public User User { get; set; }
 
     /// <summary>
+    /// The field
+    /// </summary>
+    public CardField Field { get; set; }
+
+    /// <summary>
     /// Id of the card
     /// </summary>
     public long CardId { get; set; }
@@ -62,9 +67,9 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards
     public long DeckId { get; set; }
 
     /// <summary>
-    /// Name of the field
+    /// Id of the field
     /// </summary>
-    public string FieldName { get; set; }
+    public int FieldId { get; set; }
 
     #endregion
 

@@ -108,6 +108,11 @@
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.Id">
             <inheritdoc/>
         </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.FieldId">
+            <summary>
+            The id of the field
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.Value">
             <summary>
             Value of the field
@@ -169,6 +174,11 @@
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.Id">
             <inheritdoc/>
         </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.FieldId">
+            <summary>
+            The id of the field
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.FieldName">
             <summary>
             Name of the field
@@ -177,6 +187,11 @@
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.ShowInputForPractice">
             <summary>
             Whether the input should be used for praticing purpose
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.IsRequired">
+            <summary>
+            Whether the field requires a value
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition.CardTemplateId">
@@ -395,6 +410,11 @@
             User
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.Field">
+            <summary>
+            The field
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.CardId">
             <summary>
             Id of the card
@@ -405,9 +425,9 @@
             Id of the deck the card belongs to
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.FieldName">
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.FieldId">
             <summary>
-            Name of the field
+            Id of the field
             </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeHistoryEntry.GetDisplayName">
@@ -657,7 +677,7 @@
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.User_Plural">
             <summary>
-              Looks up a localized string similar to User.
+              Looks up a localized string similar to Users.
             </summary>
         </member>
         <member name="T:SpacedRepetitionSystem.Entities.Errors">

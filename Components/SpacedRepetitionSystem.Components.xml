@@ -1219,6 +1219,11 @@
             </summary>
             <param name="tab">Tab to link with this card</param>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Interaction.Button.IsVisible">
+            <summary>
+            Whether the button is visible
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Interaction.Button.IsFocued">
             <summary>
             If the edit should be focued

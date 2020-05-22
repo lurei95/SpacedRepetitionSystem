@@ -6,7 +6,7 @@
 @inject IJSRuntime JSRuntime;
 
 <ViewModelArea ViewModel="@Command">
-  @if (Command?.IsVisible == true)
+  @if (IsVisible && Command?.IsVisible == true)
   {
     <button type="button" id="@Id"
             data-toggle="tooltip"
@@ -32,6 +32,12 @@
   private string ClassString => (IsIconButton ? "icon-button" : " ") + (string.IsNullOrEmpty(Class) ? "" : " ") + Class;
 
   private string TextColorString => (!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null);
+
+  /// <summary>
+  /// Whether the button is visible
+  /// </summary>
+  [Parameter]
+  public bool IsVisible { get; set; } = true;
 
   /// <summary>
   /// If the edit should be focued

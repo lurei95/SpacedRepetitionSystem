@@ -53,11 +53,13 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       fieldDefinition1 = new CardFieldDefinition()
       {
+        FieldId = 1,
         CardTemplateId = template.CardTemplateId,
         FieldName = "Front"
       };
       fieldDefinition2 = new CardFieldDefinition()
       {
+        FieldId = 2,
         CardTemplateId = template.CardTemplateId,
         FieldName = "Back"
       };
@@ -85,6 +87,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       field1 = new CardField()
       {
+        FieldId = 1,
         CardId = card.CardId,
         CardTemplateId = template.CardTemplateId,
         FieldName = "Front",
@@ -92,6 +95,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       field2 = new CardField()
       {
+        FieldId = 2,
         CardId = card.CardId,
         CardTemplateId = template.CardTemplateId,
         FieldName = "Back",
@@ -201,8 +205,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         DeckId = deck.DeckId,
         CardTemplateId = template.CardTemplateId
       };
-      card1.Fields.Add(new CardField() { FieldName = "test1", Value = "test1" });
-      card1.Fields.Add(new CardField() { FieldName = "test2", Value = "test2" });
+      card1.Fields.Add(new CardField() { FieldId = 1, FieldName = "test1", Value = "test1" });
+      card1.Fields.Add(new CardField() { FieldId = 2, FieldName = "test2", Value = "test2" });
       result = await controller.PostAsync(card1);
       Assert.IsTrue(result is OkResult);
       card1 = context.Find<Card>((long)3);
@@ -268,29 +272,19 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         DeckId = deck.DeckId,
         CardTemplateId = template.CardTemplateId
       };
-      newCard.Fields.Add(new CardField() { FieldName = "test1", Value = "test1" });
-      newCard.Fields.Add(new CardField() { FieldName = "test2", Value = "test2" });
+      newCard.Fields.Add(new CardField() { FieldId = 1, FieldName = "test1", Value = "test1" });
+      newCard.Fields.Add(new CardField() { FieldId = 2, FieldName = "test2", Value = "test2" });
       result = await controller.PutAsync(newCard);
       Assert.IsTrue(result is NotFoundResult);
 
       //Save changed entity
       card.Tags = "test";
-      card.Fields.Remove(field2);
-      CardField newField = new CardField()
-      {
-        CardId = card.CardId,
-        CardTemplateId = template.CardTemplateId,
-        FieldName = "NewField",
-        Value = "test"
-      };
-      card.Fields.Add(newField);
       result = await controller.PutAsync(card);
       Assert.IsTrue(result is OkResult);
       Card card1 = context.Find<Card>(card.CardId);
       Assert.AreEqual("test", card1.Tags);
       Assert.AreEqual(2, card1.Fields.Count);
       Assert.AreEqual(field1.FieldName, card1.Fields[0].FieldName);
-      Assert.AreEqual(newField.FieldName, card1.Fields[1].FieldName);
 
       //Invalid card is validated
       bool wasThrown = false;

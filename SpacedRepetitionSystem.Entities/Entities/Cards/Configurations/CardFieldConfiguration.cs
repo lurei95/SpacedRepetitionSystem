@@ -12,9 +12,11 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
     public void Configure(EntityTypeBuilder<CardField> builder)
     {
       builder.ToTable("CardFields", "Cards");
-      builder.HasKey(field => new { field.CardId, field.FieldName });
+      builder.HasKey(field => new { field.CardId, field.FieldId });
 
       builder.Property(field => field.CardId)
+        .IsRequired();
+      builder.Property(field => field.FieldId)
         .IsRequired();
       builder.Property(field => field.FieldName)
         .IsRequired();
@@ -28,13 +30,16 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
 
       builder.HasOne(field => field.CardFieldDefinition)
         .WithMany()
-        .HasForeignKey(field => new { field.CardTemplateId, field.FieldName })
+        .HasForeignKey(field => new { field.CardTemplateId, field.FieldId })
         .OnDelete(DeleteBehavior.Restrict);
 
       builder.HasOne(field => field.CardTemplate)
         .WithMany()
         .HasForeignKey(field => field.CardTemplateId)
         .OnDelete(DeleteBehavior.Restrict);
+
+      builder.HasIndex(field => new { field.CardId, field.FieldName })
+        .IsUnique();
     }
   }
 }

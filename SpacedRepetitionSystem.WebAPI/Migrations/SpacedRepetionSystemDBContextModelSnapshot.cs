@@ -56,8 +56,8 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                     b.Property<long>("CardId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("FieldName")
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int>("FieldId")
+                        .HasColumnType("int");
 
                     b.Property<long>("CardTemplateId")
                         .HasColumnType("bigint");
@@ -65,15 +65,22 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FieldName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("ProficiencyLevel")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CardId", "FieldName");
+                    b.HasKey("CardId", "FieldId");
 
-                    b.HasIndex("CardTemplateId", "FieldName");
+                    b.HasIndex("CardId", "FieldName")
+                        .IsUnique();
+
+                    b.HasIndex("CardTemplateId", "FieldId");
 
                     b.ToTable("CardFields","Cards");
                 });
@@ -83,14 +90,24 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                     b.Property<long>("CardTemplateId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("FieldId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FieldName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<bool>("IsRequired")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("ShowInputForPractice")
                         .HasColumnType("bit");
 
-                    b.HasKey("CardTemplateId", "FieldName");
+                    b.HasKey("CardTemplateId", "FieldId");
+
+                    b.HasIndex("FieldName")
+                        .IsUnique();
 
                     b.ToTable("CardFieldDefinitions","Cards");
                 });
@@ -163,9 +180,8 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                     b.Property<long>("DeckId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("FieldName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("FieldId")
+                        .HasColumnType("int");
 
                     b.Property<int>("HardCount")
                         .HasColumnType("int");
@@ -186,6 +202,8 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                     b.HasIndex("DeckId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("CardId", "FieldId");
 
                     b.ToTable("PracticeHistoryEntries","Cards");
                 });
@@ -273,7 +291,7 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
 
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardFieldDefinition", "CardFieldDefinition")
                         .WithMany()
-                        .HasForeignKey("CardTemplateId", "FieldName")
+                        .HasForeignKey("CardTemplateId", "FieldId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -316,6 +334,12 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                     b.HasOne("SpacedRepetitionSystem.Entities.Entities.Security.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SpacedRepetitionSystem.Entities.Entities.Cards.CardField", "Field")
+                        .WithMany()
+                        .HasForeignKey("CardId", "FieldId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -53,21 +53,21 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         return NotFound();
       existing.Title = entity.Title;
 
-      foreach (CardFieldDefinition field in existing.FieldDefinitions)
+      foreach (CardFieldDefinition field in existing.FieldDefinitions.Where(field => !field.IsRequired))
       {
-        CardFieldDefinition field1 = entity.FieldDefinitions.SingleOrDefault(x => x.FieldName == field.FieldName);
+        CardFieldDefinition field1 = entity.FieldDefinitions.SingleOrDefault(x => x.FieldId == field.FieldId);
         if (field1 != null) // Update exisiting
-          field1.ShowInputForPractice = field.ShowInputForPractice;
+          UpdateExistingFieldDefinition(field, field1);
         else // Remove old
-          Context.Entry(field).State = EntityState.Deleted;
+          RemoveFieldDefinition(field);
       }
 
       //Add new
-      foreach (CardFieldDefinition field in entity.FieldDefinitions.Where(x => !existing.FieldDefinitions.Any(y => y.FieldName == x.FieldName)))
+      int newId = existing.FieldDefinitions.Count + 1;
+      foreach (CardFieldDefinition field in entity.FieldDefinitions.Where(x => x.FieldId == default))
       {
-        existing.FieldDefinitions.Add(field);
-        foreach (Card card in Context.Set<Card>().Where(card => card.CardTemplateId == existing.CardTemplateId))
-          card.Fields.Add(new CardField() { CardTemplateId = existing.CardTemplateId, FieldName = field.FieldName, CardId = card.CardId });
+        AddNewFieldDefinition(existing, field, newId);
+        newId++;
       }
       return Ok();
     }
@@ -80,6 +80,40 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         .Include(template => template.FieldDefinitions)
         .Where(template => template.UserId == GetUserId())
         .ToListAsync();
+    }
+
+    private void UpdateExistingFieldDefinition(CardFieldDefinition fieldDefinition1, CardFieldDefinition fieldDefinition2)
+    {
+      fieldDefinition1.ShowInputForPractice = fieldDefinition2.ShowInputForPractice;
+      if (fieldDefinition1.FieldName != fieldDefinition2.FieldName)
+      {
+        fieldDefinition1.FieldName = fieldDefinition2.FieldName;
+        //Update fieldnames of card fields
+        foreach (CardField field in Context.Set<CardField>().Where(field => field.FieldId == fieldDefinition1.FieldId))
+          field.FieldName = fieldDefinition1.FieldName;
+      }
+    }
+
+    private void RemoveFieldDefinition(CardFieldDefinition fieldDefinition)
+    {
+      Context.Entry(fieldDefinition).State = EntityState.Deleted;
+      //Delete fields
+      foreach (CardField field in Context.Set<CardField>().Where(field => field.FieldId == fieldDefinition.FieldId))
+        Context.Entry(field).State = EntityState.Deleted;
+    }
+
+    private void AddNewFieldDefinition(CardTemplate template, CardFieldDefinition fieldDefinition, int id)
+    {
+      fieldDefinition.FieldId = id;
+      template.FieldDefinitions.Add(fieldDefinition);
+      foreach (Card card in Context.Set<Card>().Where(card => card.CardTemplateId == template.CardTemplateId))
+        card.Fields.Add(new CardField() 
+        { 
+          CardTemplateId = template.CardTemplateId, 
+          FieldName = fieldDefinition.FieldName, 
+          CardId = card.CardId,
+          FieldId = fieldDefinition.FieldId
+        });
     }
   }
 }

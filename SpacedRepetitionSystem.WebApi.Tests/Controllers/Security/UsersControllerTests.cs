@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Logic.Controllers.Security;
 using SpacedRepetitionSystem.Utility.Notification;
@@ -227,6 +228,39 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         .FirstOrDefaultAsync(token => token.UserId == result.Value.UserId);
       Assert.IsNotNull(refreshToken);
       Assert.AreEqual(result.Value.RefreshToken, refreshToken.Token);
+    }
+
+    /// <summary>
+    /// Tests that the initial data for each user is created on <see cref="UsersController.Signup(User)"/>
+    /// </summary>
+    [TestMethod]
+    public async Task InitialDataisCreatedOnSignupTest()
+    {
+      using DbContext context = CreateContext();
+      UsersController controller = CreateController(context);
+
+      ActionResult<User> result = await controller.Signup(new User { Email = "test1@test1.com", Password = "test1" });
+      Assert.IsNotNull(result.Value);
+      Assert.IsFalse(string.IsNullOrEmpty(result.Value.RefreshToken));
+      Assert.IsFalse(string.IsNullOrEmpty(result.Value.AccessToken));
+
+      CardTemplate defaultTemplate = context.Set<CardTemplate>()
+        .Include(template => template.FieldDefinitions)
+        .SingleOrDefault(template => template.CardTemplateId == 1);
+      Assert.IsNotNull(defaultTemplate);
+      Assert.AreEqual("Default", defaultTemplate.Title);
+      Assert.AreEqual(2, defaultTemplate.FieldDefinitions.Count);
+      Assert.AreEqual(1, defaultTemplate.FieldDefinitions[0].FieldId);
+      Assert.AreEqual("Front", defaultTemplate.FieldDefinitions[0].FieldName);
+      Assert.IsTrue(defaultTemplate.FieldDefinitions[0].IsRequired);
+      Assert.AreEqual(2, defaultTemplate.FieldDefinitions[1].FieldId);
+      Assert.AreEqual("Back", defaultTemplate.FieldDefinitions[1].FieldName);
+      Assert.IsTrue(defaultTemplate.FieldDefinitions[1].IsRequired);
+
+      Deck defaultDeck = context.Find<Deck>((long)1);
+      Assert.IsNotNull(defaultDeck);
+      Assert.AreEqual("Default", defaultDeck.Title);
+      Assert.AreEqual(1, defaultDeck.DefaultCardTemplateId);
     }
 
     /// <summary>

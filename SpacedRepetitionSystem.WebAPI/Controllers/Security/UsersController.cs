@@ -248,11 +248,15 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
       };
       template.FieldDefinitions.Add(new CardFieldDefinition()
       {
+        FieldId = 1,
+        IsRequired = true,
         CardTemplate = template,
         FieldName = "Front"
       });
       template.FieldDefinitions.Add(new CardFieldDefinition()
       {
+        FieldId = 2,
+        IsRequired = true,
         CardTemplate = template,
         FieldName = "Back"
       });

@@ -6,7 +6,12 @@
   public sealed class CardFieldDefinition : IEntity
   {
     ///<inheritdoc/>
-    public object Id => new { CardTemplateId, FieldName };
+    public object Id => new { CardTemplateId, FieldId };
+
+    /// <summary>
+    /// The id of the field
+    /// </summary>
+    public int FieldId { get; set; }
 
     /// <summary>
     /// Name of the field
@@ -17,6 +22,11 @@
     /// Whether the input should be used for praticing purpose
     /// </summary>
     public bool ShowInputForPractice { get; set; } = false;
+
+    /// <summary>
+    /// Whether the field requires a value
+    /// </summary>
+    public bool IsRequired { get; set; } 
 
     #region References
 
