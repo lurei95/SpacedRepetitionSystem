@@ -45,7 +45,9 @@
     <div class="flex-fill pl-2" style="padding-top:15px;">
       @if (IsLoggedIn)
       {
+      <div class="bread-crumb-container">
         <BreadCrumb></BreadCrumb>
+      </div>
       }
     </div>
     <div class="pr-2 row d-flex align-content-center align-items-center">
@@ -92,6 +94,10 @@
   @@media (max-width: 1200px) {
     .title {
       display: none !important;
+    }
+
+    .bread-crumb-container{
+      display: none;
     }
 
     .top-row {

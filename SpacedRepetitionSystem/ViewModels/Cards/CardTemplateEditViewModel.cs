@@ -3,6 +3,7 @@ using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.ViewModels;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Validation.Core;
 using SpacedRepetitionSystem.Utility.Extensions;
@@ -54,11 +55,13 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       AddFieldDefinitionCommand = new Command()
       {
         Icon = "oi oi-plus",
+        ToolTip = Messages.AddFieldCommandToolTip.FormatWith(EntityNameHelper.GetName<CardTemplate>()),
         ExecuteAction = (param) => AddFieldDefiniton()
       };
       RemoveFieldDefinitionCommand = new Command()
       {
         Icon = "oi oi-x",
+        ToolTip = Messages.RemoveFieldCommandToolTip.FormatWith(EntityNameHelper.GetName<CardTemplate>()),
         IsEnabled = true,
         ExecuteAction = (param) => RemoveFieldDefiniton((int)param)
       };

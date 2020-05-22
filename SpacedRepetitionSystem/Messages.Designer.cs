@@ -29,6 +29,17 @@ namespace SpacedRepetitionSystem
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the AddFieldCommandToolTip key.
+        /// </summary>
+        public static string AddFieldCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("AddFieldCommandToolTip", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the Close key.
         /// </summary>
         public static string Close
@@ -199,6 +210,61 @@ namespace SpacedRepetitionSystem
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the PracticeCommandToolTip key.
+        /// </summary>
+        public static string PracticeCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticeCommandToolTip", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the PracticeDifficultCommandToolTip key.
+        /// </summary>
+        public static string PracticeDifficultCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticeDifficultCommandToolTip", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the PracticeDoesNotKnowToolTip key.
+        /// </summary>
+        public static string PracticeDoesNotKnowToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticeDoesNotKnowToolTip", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the PracticeEasyCommandToolTip key.
+        /// </summary>
+        public static string PracticeEasyCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticeEasyCommandToolTip", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the PracticeNextCommandToolTip key.
+        /// </summary>
+        public static string PracticeNextCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticeNextCommandToolTip", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the PracticePageSummaryTitle key.
         /// </summary>
         public static string PracticePageSummaryTitle
@@ -221,6 +287,17 @@ namespace SpacedRepetitionSystem
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the PracticeShowResultCommandToolTip key.
+        /// </summary>
+        public static string PracticeShowResultCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("PracticeShowResultCommandToolTip", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the PracticeStatistics key.
         /// </summary>
         public static string PracticeStatistics
@@ -228,6 +305,17 @@ namespace SpacedRepetitionSystem
             get
             {
                 return Messages.ResourceManager.GetString("PracticeStatistics", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the RemoveFieldCommandToolTip key.
+        /// </summary>
+        public static string RemoveFieldCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("RemoveFieldCommandToolTip", Messages.CultureInfo);
             }
         }
 
@@ -255,6 +343,17 @@ namespace SpacedRepetitionSystem
             get
             {
                 return Messages.ResourceManager.GetString("SearchCards", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the SearchCommandToolTip key.
+        /// </summary>
+        public static string SearchCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("SearchCommandToolTip", Messages.CultureInfo);
             }
         }
 
@@ -288,6 +387,17 @@ namespace SpacedRepetitionSystem
             get
             {
                 return Messages.ResourceManager.GetString("Show", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the ShowStatisticsCommandToolTip key.
+        /// </summary>
+        public static string ShowStatisticsCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("ShowStatisticsCommandToolTip", Messages.CultureInfo);
             }
         }
     }

@@ -2,6 +2,7 @@
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.ViewModels;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
@@ -40,18 +41,19 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       PracticeDeckCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.Practice,
-        ToolTip = "",
+        ToolTip = Messages.PracticeCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
         TargetUriFactory = (param) => $"/Decks/{(long)param}/Practice"
       };
       AddCardCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.NewCard,
-        ToolTip = "",
+        ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         TargetUriFactory = (param) => $"/Decks/{(long)param}/Cards/New"
       };
       ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.PracticeStatistics,
+        ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
         TargetUriFactory = (param) => $"/Decks/{(param as Deck).DeckId}/Statistics/"
       };
     }

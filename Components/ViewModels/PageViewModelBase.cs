@@ -36,7 +36,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       {
         Icon = "oi oi-x",
         IsEnabled = true,
-        TargetUri = "/"
+        TargetUri = "/",
+        ToolTip = Messages.CloseCommandToolTip
       };
     }
   }

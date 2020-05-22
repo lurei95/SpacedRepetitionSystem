@@ -123,13 +123,25 @@
   <data name="CardTemplate" xml:space="preserve">
     <value>Template</value>
   </data>
+  <data name="CardTemplate_Plural" xml:space="preserve">
+    <value>Templates</value>
+  </data>
+  <data name="Card_Plural" xml:space="preserve">
+    <value>Cards</value>
+  </data>
   <data name="Deck" xml:space="preserve">
     <value>Deck</value>
+  </data>
+  <data name="Deck_Plural" xml:space="preserve">
+    <value>Decks</value>
   </data>
   <data name="EntityDisplayNameFormat" xml:space="preserve">
     <value>{0} - {1}</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
+  </data>
+  <data name="User_Plural" xml:space="preserve">
+    <value>Users</value>
   </data>
 </root>

@@ -70,6 +70,15 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closes the current page..
+        /// </summary>
+        public static string CloseCommandToolTip {
+            get {
+                return ResourceManager.GetString("CloseCommandToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -79,11 +88,29 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deletes the {0}..
+        /// </summary>
+        public static string DeleteCommandToolTip {
+            get {
+                return ResourceManager.GetString("DeleteCommandToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the selected {0} to edit it..
+        /// </summary>
+        public static string EditCommandToolTip {
+            get {
+                return ResourceManager.GetString("EditCommandToolTip", resourceCulture);
             }
         }
         
@@ -115,6 +142,15 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creates a new {0}..
+        /// </summary>
+        public static string NewCommandToolTip {
+            get {
+                return ResourceManager.GetString("NewCommandToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {
@@ -138,6 +174,15 @@ namespace SpacedRepetitionSystem.Components {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saves the current changes to the {0}..
+        /// </summary>
+        public static string SaveCommandToolTip {
+            get {
+                return ResourceManager.GetString("SaveCommandToolTip", resourceCulture);
             }
         }
         

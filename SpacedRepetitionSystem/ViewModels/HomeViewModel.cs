@@ -2,7 +2,9 @@
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.ViewModels;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -40,7 +42,7 @@ namespace SpacedRepetitionSystem.ViewModels
     /// <summary>
     /// Command for adding a new card to the deck
     /// </summary>
-    public NavigationCommand AddCardsCommand { get; private set; }
+    public NavigationCommand AddCardCommand { get; private set; }
 
     /// <summary>
     /// Command for showing the practice statistics
@@ -85,43 +87,49 @@ namespace SpacedRepetitionSystem.ViewModels
       {
         TargetUriFactory = (param) => $"/Decks/{(long)param}/Practice",
         CommandText = Messages.Practice,
-        ToolTip = ""
+        ToolTip = Messages.PracticeCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>())
       };
-      AddCardsCommand = new NavigationCommand(navigationManager)
+      AddCardCommand = new NavigationCommand(navigationManager)
       {
         TargetUriFactory = (param) => $"/Decks/{(long)param}/Cards/New",
         CommandText = Messages.NewCard,
-        ToolTip = ""
+        ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>())
       };
       ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         TargetUriFactory = (param) => $"/Decks/{(param as Deck).DeckId}/Statistics/",
         CommandText = Messages.PracticeStatistics,
+        ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>())
       };
       NewDeckCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.NewDeck,
-        TargetUri = "/Decks/New/"
+        TargetUri = "/Decks/New/",
+        ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>())
       };
       NewTemplateCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.NewTemplate,
-        TargetUri = "/Templates/New/"
+        TargetUri = "/Templates/New/",
+        ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<CardTemplate>())
       };
       SearchDecksCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchDecks,
-        TargetUri = "/Decks/"
+        TargetUri = "/Decks/",
+        ToolTip = Messages.SearchCommandToolTip.FormatWith(EntityNameHelper.GetPluralName<Deck>())
       };
       SearchTemplatesCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchTemplates,
-        TargetUri = "/Templates/"
+        TargetUri = "/Templates/",
+        ToolTip = Messages.SearchCommandToolTip.FormatWith(EntityNameHelper.GetPluralName<CardTemplate>())
       };
       SearchCardsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchCards,
-        TargetUri = "/Cards/"
+        TargetUri = "/Cards/",
+        ToolTip = Messages.SearchCommandToolTip.FormatWith(EntityNameHelper.GetPluralName<Card>())
       };
     }
 

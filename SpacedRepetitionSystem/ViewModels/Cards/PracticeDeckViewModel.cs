@@ -221,36 +221,37 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       ShowSolutionCommand = new Command()
       {
         CommandText = Messages.Show,
+        ToolTip = Messages.PracticeShowResultCommandToolTip,
         ExecuteAction = (param) => ShowSolution()
       };
-
       DifficultResultCommand = new Command()
       {
         CommandText = Messages.Difficult,
+        ToolTip = Messages.PracticeDifficultCommandToolTip,
         ExecuteAction = async (param) => await ReportPracticeResult(PracticeResultKind.Hard)
       };
-
       EasyResultCommand = new Command()
       {
         CommandText = Messages.Easy,
+        ToolTip = Messages.PracticeEasyCommandToolTip,
         ExecuteAction = async (param) => await ReportPracticeResult(PracticeResultKind.Easy)
       };
-
       DoesNotKnowResultCommand = new Command()
       {
         CommandText = Messages.DoesNotKnow,
+        ToolTip = Messages.PracticeDoesNotKnowToolTip,
         ExecuteAction = async (param) => await ReportPracticeResult(PracticeResultKind.Failed)
       };
-
       NextCommand = new Command()
       {
         CommandText = Messages.Next,
+        ToolTip = Messages.PracticeNextCommandToolTip,
         ExecuteAction = (param) => Next()
       };
-
       CloseSummaryCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.Close,
+        ToolTip = Components.Messages.CloseCommandToolTip,
         TargetUri = "/"
       };
     }
@@ -262,7 +263,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (!result)
         return false;
 
-      bool isActivePractice = Entity.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue);
+      bool isActivePractice = Entity.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue && !string.IsNullOrEmpty(field.Value));
       if (isActivePractice)
         PracticeFields = Entity.Cards.SelectMany(card => card.Fields).Where(field => field.IsDue && !string.IsNullOrEmpty(field.Value)).ToList();
       else

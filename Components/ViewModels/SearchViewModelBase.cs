@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -70,6 +72,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       EditCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.Edit,
+        ToolTip = Messages.EditCommandToolTip.FormatWith(EntityNameHelper.GetName<TEntity>()),
         IsRelative = true,
         TargetUriFactory = (param) => "/" + (param as TEntity).Id
       };
@@ -77,6 +80,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       NewCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.New,
+        ToolTip = Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<TEntity>()),
         IsRelative = true,
         TargetUri = "/New/"
       };
@@ -92,6 +96,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       DeleteCommand = new EntityDeleteCommand<TEntity>(ApiConnector)
       {
         CommandText = Messages.Delete,
+        ToolTip = Messages.DeleteCommandToolTip.FormatWith(EntityNameHelper.GetName<TEntity>()),
         OnDeletedAction = (entity) =>
         {
           SearchResults.Remove(entity);

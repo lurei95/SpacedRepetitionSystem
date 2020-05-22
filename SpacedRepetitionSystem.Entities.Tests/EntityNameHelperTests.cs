@@ -48,5 +48,44 @@ namespace SpacedRepetitionSystem.Entities.Tests
       string name = EntityNameHelper.GetName<User>();
       Assert.AreEqual("User", name);
     }
+
+    /// <summary>
+    /// Tests <see cref="EntityNameHelper.GetPluralName{Card}"/>
+    /// </summary>
+    [TestMethod]
+    public void GetPluralNameOfCardTest()
+    {
+      string name = EntityNameHelper.GetPluralName<Card>();
+      Assert.AreEqual("Cards", name);
+    }
+    /// <summary>
+    /// Tests <see cref="EntityNameHelper.GetPluralName{Deck}"/>
+    /// </summary>
+    [TestMethod]
+    public void GetPluralNameOfDeckTest()
+    {
+      string name = EntityNameHelper.GetPluralName<Deck>();
+      Assert.AreEqual("Decks", name);
+    }
+
+    /// <summary>
+    /// Tests <see cref="EntityNameHelper.GetPluralName{CardTemplate}"/>
+    /// </summary>
+    [TestMethod]
+    public void GetPluralNameOfCardTemplateTest()
+    {
+      string name = EntityNameHelper.GetPluralName<CardTemplate>();
+      Assert.AreEqual("Templates", name);
+    }
+
+    /// <summary>
+    /// Tests <see cref="EntityNameHelper.GetPluralName{User}"/>
+    /// </summary>
+    [TestMethod]
+    public void GetPluralNameOfUserTest()
+    {
+      string name = EntityNameHelper.GetPluralName<User>();
+      Assert.AreEqual("Users", name);
+    }
   }
 }

@@ -2,8 +2,10 @@
 using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Edits;
 using SpacedRepetitionSystem.Components.Middleware;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Validation.Core;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Components.ViewModels
@@ -70,6 +72,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       {
         CommandText = Messages.Delete,
         Entity = Entity,
+        ToolTip = Messages.DeleteCommandToolTip.FormatWith(EntityNameHelper.GetName<TEntity>()),
         OnDeletedAction = (entity) => NavigationManager.NavigateTo("/"),
         IsEnabled = !IsNewEntity
       };
@@ -77,6 +80,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       {
         CommandText = Messages.Save,
         Entity = Entity,
+        ToolTip = Messages.SaveCommandToolTip.FormatWith(EntityNameHelper.GetName<TEntity>()),
         IsNewEntity = IsNewEntity,
         OnSavedAction = (entity) => IsNewEntity = false
       };

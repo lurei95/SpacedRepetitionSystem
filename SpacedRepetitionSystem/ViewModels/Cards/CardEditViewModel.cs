@@ -123,6 +123,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.PracticeStatistics,
+        ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         IsRelative = true,
         TargetUri = "/Statistics/"
       };

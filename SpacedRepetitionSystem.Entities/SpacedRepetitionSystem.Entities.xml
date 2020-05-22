@@ -592,6 +592,13 @@
             <typeparam name="TEntity">the entity type</typeparam>
             <returns>The localized name for an entity type</returns>
         </member>
+        <member name="M:SpacedRepetitionSystem.Entities.EntityNameHelper.GetPluralName``1">
+            <summary>
+            Gets the localized name in plural for an entity type
+            </summary>
+            <typeparam name="TEntity">the entity type</typeparam>
+            <returns>The localized name for an entity type</returns>
+        </member>
         <member name="T:SpacedRepetitionSystem.Entities.EntityNames">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -613,14 +620,29 @@
               Looks up a localized string similar to Card.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.Card_Plural">
+            <summary>
+              Looks up a localized string similar to Cards.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.CardTemplate">
             <summary>
               Looks up a localized string similar to Template.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.CardTemplate_Plural">
+            <summary>
+              Looks up a localized string similar to Templates.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.Deck">
             <summary>
               Looks up a localized string similar to Deck.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.Deck_Plural">
+            <summary>
+              Looks up a localized string similar to Decks.
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.EntityDisplayNameFormat">
@@ -629,6 +651,11 @@
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.User">
+            <summary>
+              Looks up a localized string similar to User.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.User_Plural">
             <summary>
               Looks up a localized string similar to User.
             </summary>

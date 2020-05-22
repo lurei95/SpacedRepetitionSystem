@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddFieldCommandToolTip" xml:space="preserve">
+    <value>Adds a new Field to the {0}.</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -162,17 +165,41 @@
   <data name="Practice" xml:space="preserve">
     <value>Practice</value>
   </data>
+  <data name="PracticeCommandToolTip" xml:space="preserve">
+    <value>Opens a page to practice the {0}.</value>
+  </data>
+  <data name="PracticeDifficultCommandToolTip" xml:space="preserve">
+    <value>Difficult to remember the correct result.</value>
+  </data>
+  <data name="PracticeDoesNotKnowToolTip" xml:space="preserve">
+    <value>Unable to remember the correct result.</value>
+  </data>
+  <data name="PracticeEasyCommandToolTip" xml:space="preserve">
+    <value>Easy to remember the correct result.</value>
+  </data>
+  <data name="PracticeNextCommandToolTip" xml:space="preserve">
+    <value>Move on to the next card.</value>
+  </data>
   <data name="PracticePageSummaryTitle" xml:space="preserve">
     <value>Practice Summary</value>
   </data>
   <data name="PracticePageTitle" xml:space="preserve">
     <value>Practice {0}</value>
   </data>
+  <data name="PracticeShowResultCommandToolTip" xml:space="preserve">
+    <value>Shows the result.</value>
+  </data>
   <data name="PracticeStatistics" xml:space="preserve">
     <value>Statistics</value>
   </data>
+  <data name="RemoveFieldCommandToolTip" xml:space="preserve">
+    <value>Removes the Field from the {0}.</value>
+  </data>
   <data name="SearchCards" xml:space="preserve">
     <value>Search Cards</value>
+  </data>
+  <data name="SearchCommandToolTip" xml:space="preserve">
+    <value>Opens a page for searching {0}.</value>
   </data>
   <data name="SearchDecks" xml:space="preserve">
     <value>Search Decks</value>
@@ -182,5 +209,8 @@
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>
+  </data>
+  <data name="ShowStatisticsCommandToolTip" xml:space="preserve">
+    <value>Opens a page that displays the practice statistics for the {0}.</value>
   </data>
 </root>

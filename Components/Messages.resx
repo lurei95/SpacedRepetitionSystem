@@ -120,11 +120,20 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="CloseCommandToolTip" xml:space="preserve">
+    <value>Closes the current page.</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="DeleteCommandToolTip" xml:space="preserve">
+    <value>Deletes the {0}.</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="EditCommandToolTip" xml:space="preserve">
+    <value>Opens the selected {0} to edit it.</value>
   </data>
   <data name="EntityDeleted" xml:space="preserve">
     <value>The {0} was deleted successfully.</value>
@@ -135,6 +144,9 @@
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="NewCommandToolTip" xml:space="preserve">
+    <value>Creates a new {0}.</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
@@ -143,6 +155,9 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SaveCommandToolTip" xml:space="preserve">
+    <value>Saves the current changes to the {0}.</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

@@ -449,14 +449,29 @@
               Looks up a localized string similar to Cancel.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Messages.CloseCommandToolTip">
+            <summary>
+              Looks up a localized string similar to Closes the current page..
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.Delete">
             <summary>
               Looks up a localized string similar to Delete.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Messages.DeleteCommandToolTip">
+            <summary>
+              Looks up a localized string similar to Deletes the {0}..
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.Edit">
             <summary>
               Looks up a localized string similar to Edit.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Messages.EditCommandToolTip">
+            <summary>
+              Looks up a localized string similar to Opens the selected {0} to edit it..
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.EntityDeleted">
@@ -474,6 +489,11 @@
               Looks up a localized string similar to New.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Messages.NewCommandToolTip">
+            <summary>
+              Looks up a localized string similar to Creates a new {0}..
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.No">
             <summary>
               Looks up a localized string similar to No.
@@ -487,6 +507,11 @@
         <member name="P:SpacedRepetitionSystem.Components.Messages.Save">
             <summary>
               Looks up a localized string similar to Save.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Messages.SaveCommandToolTip">
+            <summary>
+              Looks up a localized string similar to Saves the current changes to the {0}..
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.Yes">

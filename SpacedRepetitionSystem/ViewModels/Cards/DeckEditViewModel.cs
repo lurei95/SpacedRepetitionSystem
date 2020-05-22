@@ -85,6 +85,11 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     public NavigationCommand ShowStatisticsCommand { get; private set; }
 
     /// <summary>
+    /// Command for practicing the deck
+    /// </summary>
+    public NavigationCommand PracticeDeckCommand { get; private set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
@@ -94,21 +99,30 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       EntityChangeValidator<Deck> changeValidator)
       : base(navigationManager, apiConnector, changeValidator)
     {
+      PracticeDeckCommand = new NavigationCommand(navigationManager)
+      {
+        CommandText = Messages.Practice,
+        ToolTip = Messages.PracticeCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
+        TargetUriFactory = (param) => $"/Decks/{(long)param}/Practice"
+      };
       EditCardCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Components.Messages.Edit,
+        ToolTip = Components.Messages.EditCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         IsRelative = true,
         TargetUriFactory = (param) => "/Cards/" + (param as Card).Id
       };
       NewCardCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Components.Messages.New,
+        ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         IsRelative = true,
         TargetUri = "/Cards/New"
       };
       ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.PracticeStatistics,
+        ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
         IsRelative = true,
         TargetUri = "/Statistics/"
       };
@@ -126,7 +140,8 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
 
       DeleteCardCommand = new EntityDeleteCommand<Card>(ApiConnector)
       { 
-        CommandText = Components.Messages.Delete, 
+        CommandText = Components.Messages.Delete,
+        ToolTip = Components.Messages.DeleteCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         DeleteDialogTitle = Messages.DeleteCardDialogTitle,
         DeleteDialogTextFactory = (card) => Messages.DeleteCardDialogText.FormatWith(card.CardId)
       };
