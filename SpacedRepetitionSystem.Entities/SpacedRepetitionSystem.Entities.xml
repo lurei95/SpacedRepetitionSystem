@@ -17,12 +17,6 @@
             <typeparam name="TImplementation">Implementation</typeparam>
             <param name="services">service collection</param>
         </member>
-        <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddCardPropertyValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            Adds the Property validator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
-            </summary>
-            <param name="services">Service-collection</param>
-        </member>
         <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddDecksPropertyValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Adds the Property validator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Deck"/>
@@ -30,6 +24,12 @@
             <param name="services">Service-collection</param>
         </member>
         <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddCardTemplatePropertyValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds the Property validator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
+            </summary>
+            <param name="services">Service-collection</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.DependencyInjectionExtensions.AddCardPropertyValidator(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             Adds the Property validator for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
             </summary>
@@ -696,11 +696,6 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Entities.Errors.CardRequiresFieldWithValue">
-            <summary>
-              Looks up a localized string similar to At least one of the fields requires a value..
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.Entities.Errors.CardTemplateInUse">
             <summary>
               Looks up a localized string similar to The template &quot;{0}&quot; cannot be deleted because it is currently still in use..
@@ -714,6 +709,11 @@
         <member name="P:SpacedRepetitionSystem.Entities.Errors.DeckTitleNotUnique">
             <summary>
               Looks up a localized string similar to A deck with the title &quot;{0}&quot; already exists..
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Errors.FieldRequiresValue">
+            <summary>
+              Looks up a localized string similar to The field erquires a value..
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.Errors.InvalidUserNameOrPassword">
@@ -752,16 +752,6 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.CardTemplate">
-            <summary>
-              Looks up a localized string similar to Template.
-            </summary>
-        </member>
-        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.Deck">
-            <summary>
-              Looks up a localized string similar to Deck.
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.DefaultCardTemplate">
             <summary>
               Looks up a localized string similar to Default Template.
@@ -782,6 +772,11 @@
               Looks up a localized string similar to Title.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Entities.PropertyNames.Value">
+            <summary>
+              Looks up a localized string similar to value.
+            </summary>
+        </member>
         <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardCardTemplateIdValidator">
             <summary>
             Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardTemplateId"/>
@@ -793,6 +788,27 @@
         <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardCardTemplateIdValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card,System.Int64)">
             <inheritdoc/>
         </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardChangeValidator">
+            <summary>
+            Validator for validating the changes to <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
+            </summary>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardChangeValidator.#ctor(SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Cards.CardField})">
+            <summary>
+            Constructor
+            </summary>
+            <param name="fieldChangeValidator">FieldChangeValidator (Injected)</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardChangeValidator.Validate``1(System.String,System.Object,``0)">
+            <summary>
+            Validates the new value of the property
+            </summary>
+            <typeparam name="TProperty">Proeprty-Type</typeparam>
+            <param name="propertyName">Name of the property</param>
+            <param name="entity">The entity</param>
+            <param name="newValue">The new value of the property</param>
+            <returns>Error message or null</returns>
+        </member>
         <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardDeckIdValidator">
             <summary>
             Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.Card.DeckId"/>
@@ -802,6 +818,17 @@
             <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardDeckIdValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.Card,System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="T:SpacedRepetitionSystem.Entities.Validation.Cards.CardFieldValueValidator">
+            <summary>
+            Validator for <see cref="P:SpacedRepetitionSystem.Entities.Entities.Cards.CardField.Value"/>
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Validation.Cards.CardFieldValueValidator.PropertyName">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Entities.Validation.Cards.CardFieldValueValidator.Validate(SpacedRepetitionSystem.Entities.Entities.Cards.CardField,System.String)">
             <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.Entities.Validation.CardTemplates.CardFieldDefinitionFieldNameValidator">

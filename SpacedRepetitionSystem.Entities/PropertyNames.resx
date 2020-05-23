@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CardTemplate" xml:space="preserve">
-    <value>Template</value>
-  </data>
-  <data name="Deck" xml:space="preserve">
-    <value>Deck</value>
-  </data>
   <data name="DefaultCardTemplate" xml:space="preserve">
     <value>Default Template</value>
   </data>
@@ -134,5 +128,8 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>value</value>
   </data>
 </root>

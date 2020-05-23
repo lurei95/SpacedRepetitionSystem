@@ -174,6 +174,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     }
 
     private string ValidateCardTemplateTitle(string value)
-      => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(PropertyNames.CardTemplate) : null;
+      => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(EntityNameHelper.GetName<CardTemplate>()) : null;
   }
 }

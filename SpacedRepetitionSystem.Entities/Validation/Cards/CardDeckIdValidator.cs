@@ -16,7 +16,7 @@ namespace SpacedRepetitionSystem.Entities.Validation.Cards
     public override string Validate(Card entity, long newValue)
     {
       if (newValue == default)
-        return Errors.PropertyRequired.FormatWith(PropertyNames.Deck);
+        return Errors.PropertyRequired.FormatWith(EntityNameHelper.GetName<Deck>());
       return null;
     }
   }

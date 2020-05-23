@@ -61,6 +61,8 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
           foreach (CardFieldDefinition fieldDefinition in template.FieldDefinitions)
             Entity.Fields.Add(new CardField()
             {
+              FieldId = fieldDefinition.FieldId,
+              CardFieldDefinition = fieldDefinition,
               CardId = Entity.CardId,
               CardTemplateId = value,
               FieldName = fieldDefinition.FieldName
@@ -95,14 +97,14 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     public List<string> AvailableCardTemplates => availableCardTemplates.Keys.ToList();
 
     /// <summary>
-    /// The fields of the card
-    /// </summary>
-    public List<CardField> Fields => Entity?.Fields;
-
-    /// <summary>
     /// The tags assigned to the the card
     /// </summary>
     public ObservableCollection<string> Tags { get; } = new ObservableCollection<string>();
+
+    /// <summary>
+    /// FieldName Properties
+    /// </summary>
+    public List<PropertyProxy> FieldValueProperties { get; } = new List<PropertyProxy>();
 
     /// <summary>
     /// Command for showing the practice statistics
@@ -146,14 +148,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         return false;
       }
 
-      DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
-      DeleteCommand.DeleteDialogText = Messages.DeleteCardDialogText.FormatWith(Entity.CardId);
-      SaveChangesCommand.OnSavedAction = (entity) =>
-      {
-        if (IsNewEntity)
-          NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
-      };
-
       cardTemplateId = Entity.CardTemplateId;
       if (IsNewEntity)
       {
@@ -161,16 +155,18 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         ChangeDeck();
       }
 
-      CardTemplateTitleProperty = new PropertyProxy(
-       () => CardTemplateTitle,
-       (value) => CardTemplateTitle = value,
-        nameof(CardTemplateTitle),
-        Entity
-      );
-      RegisterPropertyProxy(CardTemplateTitleProperty);
+      DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
+      DeleteCommand.DeleteDialogText = Messages.DeleteCardDialogText.FormatWith(Entity.CardId);
+      ShowStatisticsCommand.IsEnabled = !IsNewEntity;
+      SaveChangesCommand.OnSavedAction = (entity) =>
+      {
+        if (IsNewEntity)
+          NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
+      };
+
+      RegisterPropertyProxies();
 
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
-      ShowStatisticsCommand.IsEnabled = !IsNewEntity;
       return true;
     }
 
@@ -189,7 +185,30 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       OnPropertyChanged();
     }
 
+    private void RegisterPropertyProxies()
+    {
+      CardTemplateTitleProperty = new PropertyProxy(
+        () => CardTemplateTitle,
+        (value) => CardTemplateTitle = value,
+        nameof(CardTemplateTitle),
+        Entity
+      );
+      RegisterPropertyProxy(CardTemplateTitleProperty);
+
+      foreach (CardField field in Entity.Fields)
+      {
+        PropertyProxy proxy = new PropertyProxy(
+          () => field.Value,
+          (value) => field.Value = value,
+          nameof(CardField.Value),
+          field
+        );
+        RegisterPropertyProxy(proxy);
+        FieldValueProperties.Add(proxy);
+      }
+    }
+
     private string ValidateCardTemplateTitle(string value)
-      => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(PropertyNames.CardTemplate) : null;
+      => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(EntityNameHelper.GetName<CardTemplate>()) : null;
   }
 }

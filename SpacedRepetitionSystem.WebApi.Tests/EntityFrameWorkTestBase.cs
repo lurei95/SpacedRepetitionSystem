@@ -32,20 +32,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests
     /// </summary>
     [TestInitialize]
     public virtual void TestInitialize()
-    {
-      using DbContext context = CreateContext();
-      context.Database.EnsureCreated();
-    }
-
-    /// <summary>
-    /// Initializes the state before each test
-    /// </summary>
-    [TestCleanup]
-    public virtual void TestCleanup()
-    {
-      using DbContext context = CreateContext();
-      context.Database.EnsureDeleted();
-    }
+    { AssureCleanDatabase();  }
 
     /// <summary>
     /// Creates a new context

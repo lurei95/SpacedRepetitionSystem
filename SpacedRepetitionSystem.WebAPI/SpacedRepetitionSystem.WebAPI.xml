@@ -26,6 +26,7 @@
         <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
             <inheritdoc/>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.PostCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.Card)" -->
         <member name="T:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController">
             <summary>
             Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>

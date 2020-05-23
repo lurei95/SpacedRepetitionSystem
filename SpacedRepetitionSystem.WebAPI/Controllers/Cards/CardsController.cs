@@ -80,6 +80,16 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
       return Ok();
     }
 
+    ///</inheritdoc/>
+    protected override async Task<IActionResult> PostCoreAsync(Card entity)
+    {
+      IActionResult result = await base.PostCoreAsync(entity);
+      if (result is OkResult)
+        foreach (CardField field in entity.Fields)
+          Context.Entry(field.CardFieldDefinition).State = EntityState.Detached;
+      return result;
+    }
+
     private void CopyField(CardField field1, CardField field2)
     {
       field1.FieldName = field2.FieldName;

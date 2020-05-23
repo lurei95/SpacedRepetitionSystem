@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CardRequiresFieldWithValue" xml:space="preserve">
-    <value>At least one of the fields requires a value.</value>
-  </data>
   <data name="CardTemplateInUse" xml:space="preserve">
     <value>The template "{0}" cannot be deleted because it is currently still in use.</value>
   </data>
@@ -128,6 +125,9 @@
   </data>
   <data name="DeckTitleNotUnique" xml:space="preserve">
     <value>A deck with the title "{0}" already exists.</value>
+  </data>
+  <data name="FieldRequiresValue" xml:space="preserve">
+    <value>The field erquires a value.</value>
   </data>
   <data name="InvalidUserNameOrPassword" xml:space="preserve">
     <value>Invalid username or password.</value>

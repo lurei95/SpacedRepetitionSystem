@@ -25,18 +25,6 @@ namespace SpacedRepetitionSystem.Entities
       => services.AddScoped<TValidator, TImplementation>();
 
     /// <summary>
-    /// Adds the Property validator for <see cref="Card"/>
-    /// </summary>
-    /// <param name="services">Service-collection</param>
-    public static void AddCardPropertyValidator(this IServiceCollection services)
-    {
-      EntityChangeValidator<Card> validator = new EntityChangeValidator<Card>();
-      validator.Register(nameof(Card.CardTemplateId), new CardCardTemplateIdValidator());
-      validator.Register(nameof(Card.DeckId), new CardDeckIdValidator());
-      services.AddSingleton(typeof(EntityChangeValidator<Card>), validator);
-    }
-
-    /// <summary>
     /// Adds the Property validator for <see cref="Deck"/>
     /// </summary>
     /// <param name="services">Service-collection</param>
@@ -59,6 +47,20 @@ namespace SpacedRepetitionSystem.Entities
       EntityChangeValidator<CardTemplate> validator = new CardTemplateChangeValidator(fieldDefinitionChangeValidator);
       validator.Register(nameof(CardTemplate.Title), new CardTemplateTitleValidator());
       services.AddSingleton(typeof(EntityChangeValidator<CardTemplate>), validator);
+    }
+
+    /// <summary>
+    /// Adds the Property validator for <see cref="CardTemplate"/>
+    /// </summary>
+    /// <param name="services">Service-collection</param>
+    public static void AddCardPropertyValidator(this IServiceCollection services)
+    {
+      EntityChangeValidator<CardField> fieldChangeValidator = new EntityChangeValidator<CardField>();
+      fieldChangeValidator.Register(nameof(CardField.Value), new CardFieldValueValidator());
+      EntityChangeValidator<Card> validator = new CardChangeValidator(fieldChangeValidator);
+      validator.Register(nameof(Card.CardTemplateId), new CardCardTemplateIdValidator());
+      validator.Register(nameof(Card.DeckId), new CardDeckIdValidator());
+      services.AddSingleton(typeof(EntityChangeValidator<Card>), validator);
     }
 
     /// <summary>

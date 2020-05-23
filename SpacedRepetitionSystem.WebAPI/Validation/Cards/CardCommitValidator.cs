@@ -28,8 +28,13 @@ namespace SpacedRepetitionSystem.WebAPI.Validation.Cards
       error = new CardDeckIdValidator().Validate(entity, entity.DeckId);
       if (!string.IsNullOrEmpty(error))
         return error;
-      if (!entity.Fields.Any(field => !string.IsNullOrEmpty(field.Value)))
-        return Errors.CardRequiresFieldWithValue;
+      CardFieldValueValidator fieldValidator = new CardFieldValueValidator();
+      foreach (CardField field in entity.Fields)
+      {
+        error = fieldValidator.Validate(field, field.Value);
+        if (!string.IsNullOrEmpty(error))
+          return error;
+      }
       return null;
     }
   }

@@ -266,14 +266,14 @@
             The available card templates
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.Fields">
-            <summary>
-            The fields of the card
-            </summary>
-        </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.Tags">
             <summary>
             The tags assigned to the the card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.FieldValueProperties">
+            <summary>
+            FieldName Properties
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.ShowStatisticsCommand">

@@ -18,9 +18,10 @@
         <DropDownEdit Caption="Template" Property="ViewModel.CardTemplateTitleProperty" SelectableValues="ViewModel.AvailableCardTemplates"></DropDownEdit>
 
         <h5 class="card-title">Fields</h5>
-        @foreach (CardField field in ViewModel.Fields)
+        @for (int i = 0; i < ViewModel.FieldValueProperties.Count; i++)
         {
-          <TextEdit Caption="@field.FieldName" @bind-Value="field.Value"></TextEdit>
+          <TextEdit Caption="@ViewModel.Entity.Fields[i].FieldName" Property="ViewModel.FieldValueProperties[i]"></TextEdit>
+
         }
         <h5 class="card-title">Tags</h5>
         <TagEdit Tags="ViewModel.Tags"></TagEdit>

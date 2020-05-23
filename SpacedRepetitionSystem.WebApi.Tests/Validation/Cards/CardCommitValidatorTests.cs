@@ -72,10 +72,10 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Validation.Cards
     }
 
     /// <summary>
-    /// Tests <see cref="Car"/>
+    /// Tests <see cref="CardField.Value"/>
     /// </summary>
     [TestMethod]
-    public void ValidatesHasFieldWithValueTest()
+    public void ValidatesFieldValueTest()
     {
       using DbContext context = CreateContext();
       CardCommitValidator validator = new CardCommitValidator(context);
@@ -89,12 +89,15 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Validation.Cards
       {
         CardId = 1,
         FieldName = "TestField1",
+        CardFieldDefinition = new CardFieldDefinition() {  IsRequired = true }
       });
       card.Fields.Add(new CardField()
       {
         CardId = 1,
         FieldName = "TestField2",
+        CardFieldDefinition = new CardFieldDefinition() { IsRequired = false }
       });
+
       //not successful
       string error = validator.Validate(card);
       Assert.IsFalse(string.IsNullOrEmpty(error));
