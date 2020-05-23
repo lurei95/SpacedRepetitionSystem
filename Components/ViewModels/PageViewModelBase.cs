@@ -5,10 +5,15 @@ using System.Threading.Tasks;
 namespace SpacedRepetitionSystem.Components.ViewModels
 {
   /// <summary>
-  /// 
+  /// Baseclass for ViewModel for a page
   /// </summary>
   public abstract class PageViewModelBase : ViewModelBase
   {
+    /// <summary>
+    /// The Title of the page
+    /// </summary>
+    public abstract string Title { get; }
+
     /// <summary>
     /// Navigation Manager
     /// </summary>

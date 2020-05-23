@@ -159,6 +159,12 @@
   <data name="SaveCommandToolTip" xml:space="preserve">
     <value>Saves the current changes to the {0}.</value>
   </data>
+  <data name="SearchPageTitle" xml:space="preserve">
+    <value>Search {0}</value>
+  </data>
+  <data name="StatisticsPageTitle" xml:space="preserve">
+    <value>{0} - Statistics</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>

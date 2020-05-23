@@ -150,6 +150,9 @@
   <data name="Easy" xml:space="preserve">
     <value>Easy</value>
   </data>
+  <data name="HomePageTitle" xml:space="preserve">
+    <value>Home</value>
+  </data>
   <data name="NewCard" xml:space="preserve">
     <value>New Card</value>
   </data>

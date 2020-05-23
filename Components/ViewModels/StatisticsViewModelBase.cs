@@ -2,6 +2,7 @@
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   public abstract class StatisticsViewModelBase<TEntity> : SingleEntityViewModelBase<TEntity> where TEntity : IRootEntity, new()
   {
     private string selectedDisplayUnit;
+
+    ///<inheritdoc/>
+    public override string Title => Messages.StatisticsPageTitle.FormatWith(Entity.GetDisplayName());
 
     /// <summary>
     /// Correct

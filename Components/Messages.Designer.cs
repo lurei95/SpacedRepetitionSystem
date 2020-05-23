@@ -187,6 +187,24 @@ namespace SpacedRepetitionSystem.Components {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search {0}.
+        /// </summary>
+        public static string SearchPageTitle {
+            get {
+                return ResourceManager.GetString("SearchPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} - Statistics.
+        /// </summary>
+        public static string StatisticsPageTitle {
+            get {
+                return ResourceManager.GetString("StatisticsPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
         public static string Yes {

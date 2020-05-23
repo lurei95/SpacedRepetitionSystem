@@ -18,6 +18,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   {
     private readonly EntityChangeValidator<TEntity> changeValidator;
 
+    ///<inheritdoc/>
+    public override string Title => Entity?.GetDisplayName();
+
     /// <summary>
     /// Whether the entity is new
     /// </summary>

@@ -79,6 +79,11 @@
             Gets the resource string indexed by the Easy key.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Messages.HomePageTitle">
+            <summary>
+            Gets the resource string indexed by the HomePageTitle key.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Messages.NewCard">
             <summary>
             Gets the resource string indexed by the NewCard key.
@@ -657,6 +662,9 @@
             ViewModel for the home page
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.HomeViewModel.Title">
+            <inheritdoc/>
+        </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.HomeViewModel.PinnedDecks">
             <summary>
             List of pinned decks
@@ -755,6 +763,9 @@
             <summary>
             Base class for login or signup ViewModel
             </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Identity.IdentityViewModelBase.Title">
+            <inheritdoc/>
         </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Identity.IdentityViewModelBase.ApiConnector">
             <summary>

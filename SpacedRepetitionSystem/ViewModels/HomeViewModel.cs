@@ -19,6 +19,9 @@ namespace SpacedRepetitionSystem.ViewModels
 
     private static readonly string ProblemWordsParameter = nameof(ProblemWords);
 
+    ///<inheritdoc/>
+    public override string Title => Messages.HomePageTitle;
+
     /// <summary>
     /// List of pinned decks
     /// </summary>

@@ -19,6 +19,9 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     private TEntity selectedEntity;
     private bool isSearching = false;
 
+    ///<inheritdoc/>
+    public override string Title => Messages.SearchPageTitle.FormatWith(EntityNameHelper.GetPluralName<TEntity>());
+
     /// <summary>
     /// Command for deleting an entity
     /// </summary>

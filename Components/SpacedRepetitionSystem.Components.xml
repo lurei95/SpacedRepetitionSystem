@@ -514,6 +514,16 @@
               Looks up a localized string similar to Saves the current changes to the {0}..
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Messages.SearchPageTitle">
+            <summary>
+              Looks up a localized string similar to Search {0}.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Messages.StatisticsPageTitle">
+            <summary>
+              Looks up a localized string similar to {0} - Statistics.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Messages.Yes">
             <summary>
               Looks up a localized string similar to Yes.
@@ -762,6 +772,9 @@
             </summary>
             <typeparam name="TEntity">The entity type</typeparam>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.Title">
+            <inheritdoc/>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.IsNewEntity">
             <summary>
             Whether the entity is new
@@ -824,7 +837,12 @@
         </member>
         <member name="T:SpacedRepetitionSystem.Components.ViewModels.PageViewModelBase">
             <summary>
-            
+            Baseclass for ViewModel for a page
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.PageViewModelBase.Title">
+            <summary>
+            The Title of the page
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Components.ViewModels.PageViewModelBase.NavigationManager">
@@ -854,6 +872,9 @@
             Base class for all search view models
             </summary>
             <typeparam name="TEntity">The entity type</typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.Title">
+            <inheritdoc/>
         </member>
         <member name="P:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.DeleteCommand">
             <summary>
@@ -940,6 +961,9 @@
             Baseclass for a ViewModel of a statistics Page
             </summary>
             <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.Title">
+            <inheritdoc/>
         </member>
         <member name="F:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.Correct">
             <summary>

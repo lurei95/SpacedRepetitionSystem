@@ -10,7 +10,7 @@
 @inherits SearchPageBase<CardTemplate, CardTemplateSearchViewModel>
 
   <ViewModelArea ViewModel="@ViewModel">
-    <TabCard Title="Search Templates"
+    <TabCard Title="@ViewModel?.Title"
              IsLoading="ViewModel.IsSearching">
       <HeaderButtons>
         <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>

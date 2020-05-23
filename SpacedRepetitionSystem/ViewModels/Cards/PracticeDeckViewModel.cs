@@ -97,7 +97,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// Title of the page
     /// </summary>
-    public string Title 
+    public override string Title 
       => Entity != null ? IsSummary ? Messages.PracticePageSummaryTitle : Messages.PracticePageTitle.FormatWith(Entity.Title) : null;
 
     /// <summary>

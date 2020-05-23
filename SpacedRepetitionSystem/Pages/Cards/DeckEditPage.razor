@@ -12,7 +12,7 @@
 @inherits EditPageBase<Deck, DeckEditViewModel>
 
 <ViewModelArea ViewModel="ViewModel">
-  <TabCard Title="@ViewModel?.Entity?.GetDisplayName()" IsLoading="@IsLoading">
+  <TabCard Title="@ViewModel?.Title" IsLoading="@IsLoading">
     <CardTabs>
       <CardTab Title="Main">
         <h5 class="card-title">Main Properties</h5>

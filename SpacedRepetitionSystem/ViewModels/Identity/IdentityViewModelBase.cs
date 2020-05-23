@@ -15,6 +15,9 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
   {
     private readonly EntityChangeValidator<User> changeValidator;
 
+    ///<inheritdoc/>
+    public override string Title => null;
+
     /// <summary>
     /// The api connetcor
     /// </summary>

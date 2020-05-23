@@ -10,7 +10,7 @@
 @inherits SearchPageBase<SpacedRepetitionSystem.Entities.Entities.Cards.Card, CardSearchViewModel>
 
   <ViewModelArea ViewModel="@ViewModel">
-    <TabCard Title="Search Cards" 
+    <TabCard Title="@ViewModel?.Title" 
              IsLoading="ViewModel.IsSearching">
       <HeaderButtons>
         <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>

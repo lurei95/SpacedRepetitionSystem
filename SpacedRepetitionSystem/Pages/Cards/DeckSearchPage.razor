@@ -10,7 +10,7 @@
 @inherits SearchPageBase<Deck, DeckSearchViewModel>
 
   <ViewModelArea ViewModel="@ViewModel">
-    <TabCard Title="Search Decks"
+    <TabCard Title="@ViewModel?.Title"
              IsLoading="ViewModel.IsSearching">
       <HeaderButtons>
         <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>

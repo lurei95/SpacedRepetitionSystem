@@ -155,6 +155,17 @@ namespace SpacedRepetitionSystem
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the HomePageTitle key.
+        /// </summary>
+        public static string HomePageTitle
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("HomePageTitle", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the NewCard key.
         /// </summary>
         public static string NewCard
