@@ -10,16 +10,25 @@
 @inherits SearchPageBase<SpacedRepetitionSystem.Entities.Entities.Cards.Card, CardSearchViewModel>
 
   <ViewModelArea ViewModel="@ViewModel">
-    <TabCard Title="@ViewModel?.Title" 
-             IsLoading="ViewModel.IsSearching">
+    <TabCard Title="@ViewModel?.Title"
+             IsLoading="IsLoading">
       <HeaderButtons>
         <Button Command="@ViewModel?.CloseCommand" IsIconButton="true" TextColor="#e74c3c"></Button>
       </HeaderButtons>
       <ChildContent>
+        <div class="row">
+          <TextEdit Caption="Search" @bind-Value="ViewModel.SearchText" IsFocued="true" EnterAction="async () => await ViewModel.SearchAsync()">
+            <button style="padding-top: 8px; padding-bottom: 4px;" class="btn bg-dark" type="button" id="button-addon2" @onclick="ViewModel.SearchAsync">
+              <span class="oi oi-magnifying-glass text-white" aria-hidden="true"></span>
+            </button>
+          </TextEdit>
+          <DropDownEdit Caption="Deck" SelectableValues="ViewModel.AvailableDecks" @bind-Value="ViewModel.SelectedDeckTitle" IsEnabled="ViewModel.DeckSelectable"></DropDownEdit>
+        </div>
         <SearchGrid TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                     Items="@ViewModel.SearchResults"
                     @bind-SelectedItem="@ViewModel.SelectedEntity"
                     PageSize="12"
+                    WaitSpinnerVisible="ViewModel.IsSearching"
                     ShowPager="true"
                     DeleteCommand="@ViewModel.DeleteCommand"
                     EditCommand="@ViewModel.EditCommand"
@@ -102,7 +111,7 @@
   ///<inheritdoc/>
   protected override async Task OnInitializedAsync()
   {
+
     await base.OnInitializedAsync();
-    await ViewModel.SearchAsync();
   }
 }

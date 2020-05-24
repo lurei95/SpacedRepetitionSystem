@@ -120,6 +120,9 @@
   <data name="AddFieldCommandToolTip" xml:space="preserve">
     <value>Adds a new Field to the {0}.</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>

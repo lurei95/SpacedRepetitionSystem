@@ -5,45 +5,45 @@
 @inherits CustomComponentBase
 @typeparam TItem
 
-  <WaitSpinner Visible="WaitSpinnerVisible">
-    <DataGrid TItem="TItem"
-              Style="@Style"
-              Class="Class"
-              Data="Items"
-              ShowPager="ShowPager"
-              @bind-SelectedRow="SelectedItem"
-              Editable="true"
-              Striped="true"
-              Bordered="true"
-              RowSelectable="(item) => SelectionEnabled"
-              Hoverable="true"
-              PageSize="@PageSize">
-      @if (EditCommand != null || DeleteCommand != null || NewCommand != null)
-      {
-        <DataGridCommandColumn TItem="TItem" Width="160px">
-          <EditCommandTemplate>
-            @if (EditCommand != null)
-            {
-              <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="EditCommand"></Button>
-            }
-          </EditCommandTemplate>
-          <DeleteCommandTemplate>
-            @if (DeleteCommand != null)
-            {
-              <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="DeleteCommand"></Button>
-            }
-          </DeleteCommandTemplate>
-          <NewCommandTemplate>
-            @if (NewCommand != null)
-            {
-              <Button Class="grid-new-button column-button" Command="NewCommand"></Button>
-            }
-          </NewCommandTemplate>
-        </DataGridCommandColumn>
-      }
-      @Columns
-    </DataGrid>
-  </WaitSpinner>
+<WaitSpinner Visible="WaitSpinnerVisible">
+  <DataGrid TItem="TItem"
+            Style="@Style"
+            Class="Class"
+            Data="Items"
+            ShowPager="ShowPager"
+            @bind-SelectedRow="SelectedItem"
+            Editable="true"
+            Striped="true"
+            Bordered="true"
+            RowSelectable="(item) => SelectionEnabled"
+            Hoverable="true"
+            PageSize="@PageSize">
+    @if (EditCommand != null || DeleteCommand != null || NewCommand != null)
+    {
+      <DataGridCommandColumn TItem="TItem" Width="160px">
+        <EditCommandTemplate>
+          @if (EditCommand != null)
+          {
+            <Button Class="grid-edit-button column-button" CommandParameter="@context.Item" Command="EditCommand"></Button>
+          }
+        </EditCommandTemplate>
+        <DeleteCommandTemplate>
+          @if (DeleteCommand != null)
+          {
+            <Button Class="grid-delete-button column-button" CommandParameter="@context.Item" Command="DeleteCommand"></Button>
+          }
+        </DeleteCommandTemplate>
+        <NewCommandTemplate>
+          @if (NewCommand != null)
+          {
+            <Button Class="grid-new-button column-button" Command="NewCommand"></Button>
+          }
+        </NewCommandTemplate>
+      </DataGridCommandColumn>
+    }
+    @Columns
+  </DataGrid>
+</WaitSpinner>
 
 @code
 {
@@ -100,7 +100,7 @@
     get => selectedItem;
     set
     {
-      if (!(SelectedItem== null && value == null) && !value.Equals(selectedItem))
+      if (!(SelectedItem == null && value == null) && !value.Equals(selectedItem))
       {
         selectedItem = value;
         SelectedItemChanged.InvokeAsync(value);

@@ -29,6 +29,8 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
       public TestViewModel(NavigationManager navigationManager, IApiConnector apiConnector) : base(navigationManager, apiConnector)
       { }
 
+      public override string Title => null;
+
       public async Task<bool> CallLoadAsync() => await LoadEntityAsync();
     }
 

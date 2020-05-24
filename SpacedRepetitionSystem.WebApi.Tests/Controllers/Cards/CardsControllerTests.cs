@@ -5,6 +5,7 @@ using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
+using SpacedRepetitionSystem.WebAPI.Core;
 using SpacedRepetitionSystem.WebAPI.Validation.Cards;
 using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using System;
@@ -182,6 +183,41 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       parameters[nameof(Deck.DeckId)] = (long)2;
       result = await controller.GetAsync(parameters);
       Assert.AreEqual(0, result.Value.Count);
+    }
+
+    /// <summary>
+    /// Tests <see cref="CardsController.GetAsync(IDictionary{string, object})/>
+    /// </summary>
+    /// <returns></returns>
+    [TestMethod]
+    public async Task GetCardsWithSearchTextTest()
+    {
+      using DbContext context = CreateContext();
+      CardsController controller = CreateController(context);
+      Dictionary<string, object> parameters = new Dictionary<string, object>()
+      { { EntityControllerBase<Card, long>.SearchTextParameter, "test123" } };
+
+      //No cards matching the search text
+      ActionResult<List<Card>> result = await controller.GetAsync(parameters);
+      Assert.AreEqual(0, result.Value.Count);
+
+      //Search text is card id
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "1";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(card.CardId, result.Value[0].CardId);
+
+      //Deck title contains the search text
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "fault";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(card.CardId, result.Value[0].CardId);
+
+      //One of the field names contains the search text
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "Fro";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(card.CardId, result.Value[0].CardId);
     }
 
     /// <summary>

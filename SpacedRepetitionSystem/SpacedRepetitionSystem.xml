@@ -305,6 +305,11 @@
             SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.AvailableDecks">
+            <summary>
+            The available card templates
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.DeckId">
             <summary>
             Id of the deck
@@ -312,6 +317,16 @@
         </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.SelectedEntity">
             <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.DeckSelectable">
+            <summary>
+            Whether the deck is selctable
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.SelectedDeckTitle">
+            <summary>
+            The selected deck title
+            </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel.ShowStatisticsCommand">
             <summary>

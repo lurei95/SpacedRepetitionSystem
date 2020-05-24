@@ -873,6 +873,11 @@
             </summary>
             <typeparam name="TEntity">The entity type</typeparam>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.SearchText">
+            <summary>
+            The search text
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.ViewModels.SearchViewModelBase`1.Title">
             <inheritdoc/>
         </member>

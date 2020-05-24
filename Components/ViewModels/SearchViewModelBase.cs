@@ -19,6 +19,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     private TEntity selectedEntity;
     private bool isSearching = false;
 
+    /// <summary>
+    /// The search text
+    /// </summary>
+    public string SearchText { get; set; }
+
     ///<inheritdoc/>
     public override string Title => Messages.SearchPageTitle.FormatWith(EntityNameHelper.GetPluralName<TEntity>());
 
@@ -106,6 +111,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
           OnPropertyChanged(nameof(SearchResults));
         }
       };
+      await SearchAsync();
       return true;
     }
 

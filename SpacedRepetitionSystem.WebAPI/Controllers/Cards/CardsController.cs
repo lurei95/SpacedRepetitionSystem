@@ -53,8 +53,15 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         .Include(card => card.Deck)
         .Include(card => card.CardTemplate)
         .Where(card => card.UserId == GetUserId());
-      if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.DeckId)))
+      if (searchParameters.ContainsKey(nameof(Deck.DeckId)))
         query = query.Where(card => card.DeckId == (long)searchParameters[nameof(Deck.DeckId)]);
+      if (searchParameters.ContainsKey(SearchTextParameter))
+      {
+        string searchText = searchParameters[SearchTextParameter] as string;
+        query = query.Where(card => card.CardId.ToString() == searchText
+          || card.Deck.Title.Contains(searchText)
+          || card.Fields.Any(field => field.FieldName.Contains(searchText)));
+      }
       return await query.ToListAsync();
     }
 
@@ -80,13 +87,14 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
       return Ok();
     }
 
-    ///</inheritdoc/>
+    ///<inheritdoc/>
     protected override async Task<IActionResult> PostCoreAsync(Card entity)
     {
       IActionResult result = await base.PostCoreAsync(entity);
       if (result is OkResult)
         foreach (CardField field in entity.Fields)
-          Context.Entry(field.CardFieldDefinition).State = EntityState.Detached;
+          if (field.CardFieldDefinition != null)
+            Context.Entry(field.CardFieldDefinition).State = EntityState.Detached;
       return result;
     }
 

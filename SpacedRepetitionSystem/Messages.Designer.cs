@@ -40,6 +40,17 @@ namespace SpacedRepetitionSystem
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the All key.
+        /// </summary>
+        public static string All
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("All", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the Close key.
         /// </summary>
         public static string Close

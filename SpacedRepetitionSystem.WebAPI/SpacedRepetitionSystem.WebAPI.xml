@@ -26,7 +26,9 @@
         <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.PutCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
             <inheritdoc/>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.PostCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.Card)" -->
+        <member name="M:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardsController.PostCoreAsync(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
+            <inheritdoc/>
+        </member>
         <member name="T:SpacedRepetitionSystem.WebAPI.Controllers.Cards.CardTemplatesController">
             <summary>
             Controller for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
@@ -107,6 +109,11 @@
             </summary>
             <typeparam name="TEntity"></typeparam>
             <typeparam name="TKey">Type of the primary key</typeparam>
+        </member>
+        <member name="F:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.SearchTextParameter">
+            <summary>
+            Parameter name for the search text
+            </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.WebAPI.Core.EntityControllerBase`2.DeleteValidator">
             <summary>

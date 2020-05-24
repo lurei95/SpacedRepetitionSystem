@@ -17,6 +17,11 @@ namespace SpacedRepetitionSystem.WebAPI.Core
   public abstract class EntityControllerBase<TEntity, TKey> : ControllerBase where TEntity : class, IEntity
   {
     /// <summary>
+    /// Parameter name for the search text
+    /// </summary>
+    public static readonly string SearchTextParameter = "SearchText";
+
+    /// <summary>
     /// DeleteValdiator
     /// </summary>
     protected DeleteValidatorBase<TEntity> DeleteValidator { get; private set; }
