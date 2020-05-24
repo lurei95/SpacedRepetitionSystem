@@ -5,6 +5,7 @@ using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
+using SpacedRepetitionSystem.WebAPI.Core;
 using SpacedRepetitionSystem.WebAPI.Validation.Core;
 using SpacedRepetitionSystem.WebAPI.Validation.Decks;
 using System;
@@ -47,7 +48,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         UserId = User.UserId,
         CardTemplateId = 1,
-        Title = "Default"
+        Title = "Template"
       };
       fieldDefinition1 = new CardFieldDefinition()
       {
@@ -158,6 +159,41 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       parameters.Add(nameof(Deck.IsPinned), true);
       result = await controller.GetAsync(parameters);
       Assert.AreEqual(0, result.Value.Count);
+    }
+
+    /// <summary>
+    /// Tests <see cref="DecksController.GetAsync(IDictionary{string, object})/>
+    /// </summary>
+    /// <returns></returns>
+    [TestMethod]
+    public async Task GetDecksWithSearchTextTest()
+    {
+      using DbContext context = CreateContext();
+      DecksController controller = CreateController(context);
+      Dictionary<string, object> parameters = new Dictionary<string, object>()
+      { { EntityControllerBase<Deck, long>.SearchTextParameter, "test123" } };
+
+      //No cards matching the search text
+      ActionResult<List<Deck>> result = await controller.GetAsync(parameters);
+      Assert.AreEqual(0, result.Value.Count);
+
+      //Search text is deck id
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "1";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(deck.DeckId, result.Value[0].DeckId);
+
+      //title contains the search text
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "fault";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(deck.DeckId, result.Value[0].DeckId);
+
+      //title of default card template contains the search text
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "emp";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(deck.DeckId, result.Value[0].DeckId);
     }
 
     /// <summary>

@@ -5,6 +5,7 @@ using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Entities.Entities.Security;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.WebAPI.Controllers.Cards;
+using SpacedRepetitionSystem.WebAPI.Core;
 using SpacedRepetitionSystem.WebAPI.Validation.CardTemplates;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         UserId = User.UserId,
         CardTemplateId = 3,
-        Title = "Default1"
+        Title = "asdefaxyfsdfult"
       };
       otherUserTemplate = new CardTemplate()
       {
@@ -71,7 +72,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         FieldId = 1,
         CardTemplateId = template2.CardTemplateId,
-        FieldName = "Front"
+        FieldName = "Back"
       };
       card = new Card() 
       { 
@@ -276,6 +277,41 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Card card1 = context.Set<Card>().SingleOrDefault(card => card.CardId == 1);
       Assert.AreEqual(1, card1.Fields.Count);
       Assert.AreEqual("NewFieldName", card1.Fields[0].FieldName);
+    }
+
+    /// <summary>
+    /// Tests <see cref="CardTemplatesController.GetAsync(IDictionary{string, object})/>
+    /// </summary>
+    /// <returns></returns>
+    [TestMethod]
+    public async Task GetCardTemplatesWithSearchTextTest()
+    {
+      using DbContext context = CreateContext();
+      CardTemplatesController controller = CreateController(context);
+      Dictionary<string, object> parameters = new Dictionary<string, object>()
+      { { EntityControllerBase<CardTemplate, long>.SearchTextParameter, "test123" } };
+
+      //No cards matching the search text
+      ActionResult<List<CardTemplate>> result = await controller.GetAsync(parameters);
+      Assert.AreEqual(0, result.Value.Count);
+
+      //Search text is template id
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "1";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(template1.CardTemplateId, result.Value[0].CardTemplateId);
+
+      //title contains the search text
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "fault";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(template1.CardTemplateId, result.Value[0].CardTemplateId);
+
+      //One of the field names contains the search text
+      parameters[EntityControllerBase<Card, long>.SearchTextParameter] = "Fro";
+      result = await controller.GetAsync(parameters);
+      Assert.AreEqual(1, result.Value.Count);
+      Assert.AreEqual(template1.CardTemplateId, result.Value[0].CardTemplateId);
     }
 
     /// <summary>

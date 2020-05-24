@@ -24,6 +24,11 @@
             Gets the resource string indexed by the AddFieldCommandToolTip key.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Messages.All">
+            <summary>
+            Gets the resource string indexed by the All key.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Messages.Close">
             <summary>
             Gets the resource string indexed by the Close key.

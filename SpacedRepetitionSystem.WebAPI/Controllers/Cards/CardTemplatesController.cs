@@ -76,10 +76,17 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     [HttpGet]
     public override async Task<ActionResult<List<CardTemplate>>> GetAsync(IDictionary<string, object> searchParameters)
     {
-      return await Context.Set<CardTemplate>()
+      IQueryable<CardTemplate> query = Context.Set<CardTemplate>()
         .Include(template => template.FieldDefinitions)
-        .Where(template => template.UserId == GetUserId())
-        .ToListAsync();
+        .Where(template => template.UserId == GetUserId());
+      if (searchParameters.ContainsKey(SearchTextParameter))
+      {
+        string searchText = searchParameters[SearchTextParameter] as string;
+        query = query.Where(template => template.CardTemplateId.ToString() == searchText
+          || template.Title.Contains(searchText)
+          || template.FieldDefinitions.Any(field => field.FieldName.Contains(searchText)));
+      }
+      return await query.ToListAsync();
     }
 
     private void UpdateExistingFieldDefinition(CardFieldDefinition fieldDefinition1, CardFieldDefinition fieldDefinition2)

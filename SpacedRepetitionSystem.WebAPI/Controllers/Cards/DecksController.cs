@@ -55,6 +55,14 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
       if (searchParameters != null && searchParameters.ContainsKey(nameof(Deck.IsPinned)))
         query = query.Where(deck => deck.IsPinned == (bool)searchParameters[nameof(Deck.IsPinned)]);
 
+      if (searchParameters.ContainsKey(SearchTextParameter))
+      {
+        string searchText = searchParameters[SearchTextParameter] as string;
+        query = query.Where(deck => deck.DeckId.ToString() == searchText
+          || deck.Title.Contains(searchText)
+          || deck.DefaultCardTemplate.Title.Contains(searchText));
+      }
+
       List<Deck> result = await query.ToListAsync();
       foreach (Deck deck in result)
       {

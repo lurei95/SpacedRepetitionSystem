@@ -82,7 +82,12 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<List<Deck>> SearchCore() 
-      => (await ApiConnector.GetAsync<Deck>(new Dictionary<string, object>())).Result;
+    protected override async Task<List<Deck>> SearchCore()
+    {
+      Dictionary<string, object> parameters = new Dictionary<string, object>();
+      if (!string.IsNullOrEmpty(SearchText))
+        parameters.Add(nameof(SearchText), SearchText);
+      return (await ApiConnector.GetAsync<Deck>(parameters)).Result;
+    }
   }
 }
