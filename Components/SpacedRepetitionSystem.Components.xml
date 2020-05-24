@@ -694,7 +694,7 @@
             Text of the second button
             </summary>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Modals.ModalDialogBase.ThridButtonText">
+        <member name="P:SpacedRepetitionSystem.Components.Modals.ModalDialogBase.ThirdButtonText">
             <summary>
             Text of the third button
             </summary>
@@ -722,6 +722,13 @@
             Closes the dialog an executed the callback action
             </summary>
             <param name="result">The result with which the dialog was closed</param>
+        </member>
+        <member name="M:SpacedRepetitionSystem.Components.Modals.ModalDialogBase.CalculateDialogResult(SpacedRepetitionSystem.Utility.Dialogs.DialogButton)">
+            <summary>
+            Calculates the dialog result depending on thebutton
+            </summary>
+            <param name="result">The button pressed</param>
+            <returns></returns>
         </member>
         <member name="T:SpacedRepetitionSystem.Components.Pages.EditPageBase`2">
             <summary>

@@ -56,12 +56,12 @@ namespace SpacedRepetitionSystem.Components.Modals
 		/// <summary>
 		/// Text of the third button
 		/// </summary>
-		protected string ThridButtonText => Buttons == DialogButtons.YesNoCancel ? Messages.Cancel : null;
+		protected string ThirdButtonText => Buttons == DialogButtons.YesNoCancel ? Messages.Cancel : null;
 
 		/// <summary>
 		/// The buttons of the dialog
 		/// </summary>
-		protected DialogButtons Buttons { get; private set; }
+		protected DialogButtons Buttons { get; set; }
 
 		/// <summary>
 		/// Callback when the dialog is closed
@@ -97,7 +97,12 @@ namespace SpacedRepetitionSystem.Components.Modals
 			Callback = null;
 		}
 
-		private DialogResult CalculateDialogResult(DialogButton result) =>
+		/// <summary>
+		/// Calculates the dialog result depending on thebutton
+		/// </summary>
+		/// <param name="result">The button pressed</param>
+		/// <returns></returns>
+		protected virtual DialogResult CalculateDialogResult(DialogButton result) =>
 			(result, Buttons) switch
 			{
 				(DialogButton.None, DialogButtons.OkayCancel) => DialogResult.Cancel,
@@ -109,7 +114,7 @@ namespace SpacedRepetitionSystem.Components.Modals
 				(DialogButton.Button1, DialogButtons.YesNoCancel) => DialogResult.Yes,
 				(DialogButton.Button2, DialogButtons.OkayCancel) => DialogResult.Cancel,
 				(DialogButton.Button2, DialogButtons.YesNo) => DialogResult.No,
-				(DialogButton.Button2, DialogButtons.YesNoCancel) => DialogResult.Cancel,
+				(DialogButton.Button2, DialogButtons.YesNoCancel) => DialogResult.No,
 				(_, _) => DialogResult.Cancel,
 			};
 	}
