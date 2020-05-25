@@ -200,6 +200,11 @@
             Id of the component
             </summary>
         </member>
+        <member name="M:SpacedRepetitionSystem.Components.CustomComponentBase.NotifyStateChanged">
+            <summary>
+            Method for notifying that the state has changed
+            </summary>
+        </member>
         <member name="T:SpacedRepetitionSystem.Components.Data.ChartComponentBase`1">
             <summary>
             Baseclass for a chart component
@@ -737,7 +742,7 @@
             <typeparam name="TEntity">Entity-Type</typeparam>
             <typeparam name="TViewModel">ViewModel-Type</typeparam>
         </member>
-        <member name="P:SpacedRepetitionSystem.Components.Pages.EditPageBase`2.Id">
+        <member name="P:SpacedRepetitionSystem.Components.Pages.EditPageBase`2.EntityId">
             <summary>
             Id of the entity to edit
             </summary>
@@ -1350,6 +1355,21 @@
         </member>
         <member name="M:SpacedRepetitionSystem.Components.Navigation.BreadCrumb.OnInitialized">
             <inheritdoc/>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Notification.NotificationBar.AlertVisible">
+            <summary>
+            Whether the alert is visble
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Notification.NotificationBar.AlertClass">
+            <summary>
+            The css class for the alert
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Components.Notification.NotificationBar.Message">
+            <summary>
+            The message
+            </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.Components.Notification.NotificationBar.NotifyMessage(SpacedRepetitionSystem.Utility.Notification.NotificationKind,System.String)">
             <inheritdoc/>

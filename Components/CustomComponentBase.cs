@@ -24,5 +24,10 @@ namespace SpacedRepetitionSystem.Components
     /// </summary>
     [Parameter]
     public virtual string Id { get; set; }
+
+    /// <summary>
+    /// Method for notifying that the state has changed
+    /// </summary>
+    protected virtual void NotifyStateChanged() => InvokeAsync(() => StateHasChanged());
   }
 }

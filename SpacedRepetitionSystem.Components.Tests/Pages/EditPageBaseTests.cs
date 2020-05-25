@@ -19,8 +19,7 @@ namespace SpacedRepetitionSystem.Components.Tests.Pages
     {
       public TestViewModel(NavigationManager navigationManager, IApiConnector apiConnector, EntityChangeValidator<Card> changeValidator) 
         : base(navigationManager, apiConnector, changeValidator)
-      {
-      }
+      { }
 
       public bool InitializeResult { get; set; }
 
@@ -52,7 +51,7 @@ namespace SpacedRepetitionSystem.Components.Tests.Pages
         ViewModel = viewModel,
         NavigationManager = navigationManagerMock,
       };
-      page.Id = 3;
+      page.EntityId = 3;
       Assert.AreEqual(3, viewModel.Id);
     }
   }

@@ -3,13 +3,13 @@
 @inherits SpacedRepetitionSystem.Components.CustomComponentBase
 @implements INotificationProvider
 
-@if (alertVisible)
+@if (AlertVisible)
 {
   <div class="@alertClass"
        style="@Style"
        id="@Id"
        role="alert">
-    @message
+    @Message
     <button type="button" class="close" @onclick="ResetNotification">
       <span>&times;</span>
     </button>
@@ -29,47 +29,60 @@
 @code
 {
   private string alertClass;
-  private string message;
-  private bool alertVisible = false;
+
+  /// <summary>
+  /// Whether the alert is visble
+  /// </summary>
+  public bool AlertVisible { get; set;}
+
+  /// <summary>
+  /// The css class for the alert
+  /// </summary>
+  public string AlertClass { get; set; }
+
+  /// <summary>
+  /// The message
+  /// </summary>
+  public string Message { get; set; }
 
   ///<inheritdoc/>
   public void NotifyMessage(NotificationKind notificationKind, string message)
   {
-    this.message = message;
+    Message = message;
     switch (notificationKind)
     {
       case NotificationKind.SuccessNotification:
         alertClass = "alert alert-success bottomBar " + Class;
-        alertVisible = true;
+        AlertVisible = true;
         break;
       case NotificationKind.InformationNotification:
         alertClass = "alert alert-info bottomBar " + Class;
-        alertVisible = true;
+        AlertVisible = true;
         break;
       case NotificationKind.WarningNotification:
         alertClass = "alert alert-warning bottomBar " + Class;
-        alertVisible = true;
+        AlertVisible = true;
         break;
       case NotificationKind.ErrorNotification:
         alertClass = "alert alert-danger bottomBar " + Class;
-        alertVisible = true;
+        AlertVisible = true;
         break;
       default:
         ResetNotification();
         break;
     }
-    InvokeAsync(() => StateHasChanged());
+    NotifyStateChanged();
   }
 
   ///<inheritdoc/>
   public void ResetNotification()
   {
-    if (alertVisible)
+    if (AlertVisible)
     {
-      alertVisible = false;
+      AlertVisible = false;
       alertClass = null;
-      message = null;
-      InvokeAsync(() => StateHasChanged());
+      Message = null;
+      NotifyStateChanged();
     }
   }
 

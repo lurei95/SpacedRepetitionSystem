@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Moq.Protected;
 using SpacedRepetitionSystem.Components.Pages;
 using SpacedRepetitionSystem.Components.ViewModels;
 using System;
@@ -13,7 +15,7 @@ namespace SpacedRepetitionSystem.Components.Tests.Pages
   [TestClass]
   public sealed class PageBaseTests
   {
-    private sealed class TestViewModel : PageViewModelBase
+    public sealed class TestViewModel : PageViewModelBase
     {
       public bool InitializeResult { get; set; }
 
@@ -31,36 +33,36 @@ namespace SpacedRepetitionSystem.Components.Tests.Pages
       }
     }
 
-    private sealed class TestPage : PageBase<TestViewModel>
+    public class TestPage : PageBase<TestViewModel>
     {
       public async Task CallOnAfterRenderAsync(bool firstRender)
-      { await OnAfterRenderAsync(firstRender); }
+      { await base.OnAfterRenderAsync(firstRender); }
     }
 
-    ///// <summary>
-    ///// Tests that <see cref="PageViewModelBase.InitializeAsync"/> is called when the page is loaded
-    ///// </summary>
-    ///// <returns></returns>
-    //[TestMethod]
-    //public async Task InitializesViewModelOnLoadSuccessTest()
-    //{
-    //  NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
-    //  TestViewModel viewModel = new TestViewModel(navigationManagerMock);
-    //  TestPage page = new TestPage
-    //  {
-    //    ViewModel = viewModel,
-    //    NavigationManager = navigationManagerMock,
-    //  };
-    //  viewModel.InitializeResult = true;
+    /// <summary>
+    /// Tests that <see cref="PageViewModelBase.InitializeAsync"/> is called when the page is loaded
+    /// </summary>
+    /// <returns></returns>
+    [TestMethod]
+    public async Task InitializesViewModelOnLoadSuccessTest()
+    {
+      Mock<TestPage> mockPage = new Mock<TestPage>();
+      mockPage.Protected().Setup("NotifyStateChanged").Callback(() => { });
+      NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
+      TestViewModel viewModel = new TestViewModel(navigationManagerMock);
+      TestPage page = mockPage.Object;
+      page.ViewModel = viewModel;
+      page.NavigationManager = navigationManagerMock;
+      viewModel.InitializeResult = true;
 
-    //  await page.CallOnAfterRenderAsync(false);
-    //  Assert.IsFalse(viewModel.WasInitializeCalled);
-    //  Assert.IsTrue(page.IsLoading);
+      await page.CallOnAfterRenderAsync(false);
+      Assert.IsFalse(viewModel.WasInitializeCalled);
+      Assert.IsTrue(page.IsLoading);
 
-    //  await page.CallOnAfterRenderAsync(true);
-    //  Assert.IsTrue(viewModel.WasInitializeCalled);
-    //  Assert.IsFalse(page.IsLoading);
-    //}
+      await page.CallOnAfterRenderAsync(true);
+      Assert.IsTrue(viewModel.WasInitializeCalled);
+      Assert.IsFalse(page.IsLoading);
+    }
 
     /// <summary>
     /// Tests that <see cref="PageViewModelBase.InitializeAsync"/> is called when the page is loaded

@@ -8,7 +8,7 @@ namespace SpacedRepetitionSystem.Components.Pages
   /// Baseclass for all pages
   /// </summary>
   /// <typeparam name="TViewModel">ViewModel-Type</typeparam>
-  public abstract class PageBase<TViewModel> : ComponentBase where TViewModel : PageViewModelBase
+  public abstract class PageBase<TViewModel> : CustomComponentBase where TViewModel : PageViewModelBase
   {
     /// <summary>
     /// NavigationManager
@@ -39,7 +39,7 @@ namespace SpacedRepetitionSystem.Components.Pages
         else
         {
           IsLoading = false;
-          StateHasChanged();
+          NotifyStateChanged();
         }
       }
     }

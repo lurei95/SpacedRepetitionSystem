@@ -17,6 +17,6 @@ namespace SpacedRepetitionSystem.Components.Pages
     /// Id of the entity to edit
     /// </summary>
     [Parameter]
-    public object Id { set => ViewModel.Id = value; }
+    public object EntityId { set => ViewModel.Id = value; }
   }
 }
