@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Moq.Protected;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,12 +15,12 @@ namespace SpacedRepetitionSystem.Components.Tests
     /// <summary>
     /// The response to return
     /// </summary>
-    public HttpResponseMessage ResponseMessage { get; set; }
+    public Stack<HttpResponseMessage> ResponseMessages { get; } = new Stack<HttpResponseMessage>();
 
     /// <summary>
     /// The request that was sent
     /// </summary>
-    public HttpRequestMessage RequestMessage { get; set; }
+    public Stack<HttpRequestMessage> RequestMessages { get; } = new Stack<HttpRequestMessage>();
 
     /// <summary>
     /// The Baseaddress
@@ -32,8 +33,8 @@ namespace SpacedRepetitionSystem.Components.Tests
       Mock<HttpMessageHandler> mockHttpMessageHandler = new Mock<HttpMessageHandler>();
       mockHttpMessageHandler.Protected()
           .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
-          .Callback<HttpRequestMessage, CancellationToken>((message, token) => RequestMessage = message)
-          .ReturnsAsync(ResponseMessage);
+          .Callback<HttpRequestMessage, CancellationToken>((message, token) => RequestMessages.Push(message))
+          .ReturnsAsync(ResponseMessages.Pop());
       HttpClient client = new HttpClient(mockHttpMessageHandler.Object)
       { BaseAddress = new System.Uri(BaseAddress) };
       return client;
