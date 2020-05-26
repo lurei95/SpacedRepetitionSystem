@@ -63,7 +63,7 @@
       if (command != value)
       {
         command = value;
-        RefreshUi();
+        NotifyStateChanged();
       }
     }
   }
@@ -85,9 +85,6 @@
     if (Command != null)
       Command.ExecuteCommand(CommandParameter);
   }
-
-  private void RefreshUi()
-  { InvokeAsync(() => StateHasChanged()); }
 
   ///<inheritdoc/>
   protected override async Task OnAfterRenderAsync(bool firstRender)
