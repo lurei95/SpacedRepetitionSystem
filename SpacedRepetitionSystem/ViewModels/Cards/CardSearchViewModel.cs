@@ -85,7 +85,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         CommandText = Messages.PracticeStatistics,
         ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         IsRelative = true,
-        TargetUriFactory = (param) =>  $"/Decks/{(param as Card).DeckId}/Cards/{(param as Card).CardId}/Statistics/"
+        TargetUriFactory = (param) =>  $"/Decks/{(param as Card).DeckId}/Cards/{(param as Card).CardId}/Statistics"
       };
     }
 
@@ -133,7 +133,8 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (DeckId.HasValue)
       {
         DeckSelectable = false;
-        selectedDeckTitle = availableDecks.SingleOrDefault(pair => pair.Value.DeckId == DeckId).Key;
+        selectedDeckTitle = availableDecks
+          .SingleOrDefault(pair => pair.Value != null && pair.Value.DeckId == DeckId).Key;
       }
       return true;
     }

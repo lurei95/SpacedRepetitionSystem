@@ -15,11 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.WebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.WebApi.Tests", "SpacedRepetitionSystem.WebApi.Tests\SpacedRepetitionSystem.WebApi.Tests.csproj", "{39B7BECF-5BB4-4DD4-95CB-2865C5B29305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpacedRepetitionSystem.Utility.Tests", "SpacedRepetitionSystem.Utility.Tests\SpacedRepetitionSystem.Utility.Tests.csproj", "{DAF8E307-F49F-4603-80CE-A1663697207B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.Utility.Tests", "SpacedRepetitionSystem.Utility.Tests\SpacedRepetitionSystem.Utility.Tests.csproj", "{DAF8E307-F49F-4603-80CE-A1663697207B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpacedRepetitionSystem.Entities.Tests", "SpacedRepetitionSystem.Entities.Tests\SpacedRepetitionSystem.Entities.Tests.csproj", "{03B3C7A6-53CD-4899-82A2-B25BF0BAB957}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.Entities.Tests", "SpacedRepetitionSystem.Entities.Tests\SpacedRepetitionSystem.Entities.Tests.csproj", "{03B3C7A6-53CD-4899-82A2-B25BF0BAB957}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpacedRepetitionSystem.Components.Tests", "SpacedRepetitionSystem.Components.Tests\SpacedRepetitionSystem.Components.Tests.csproj", "{BA43C1E7-25FD-4966-B2AC-9A113E2D6BFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacedRepetitionSystem.Components.Tests", "SpacedRepetitionSystem.Components.Tests\SpacedRepetitionSystem.Components.Tests.csproj", "{BA43C1E7-25FD-4966-B2AC-9A113E2D6BFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpacedRepetitionSystem.Tests", "SpacedRepetitionSystem.Tests\SpacedRepetitionSystem.Tests.csproj", "{7E3E08B2-1034-41C3-A22C-05F68A0D25C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{BA43C1E7-25FD-4966-B2AC-9A113E2D6BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA43C1E7-25FD-4966-B2AC-9A113E2D6BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA43C1E7-25FD-4966-B2AC-9A113E2D6BFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E3E08B2-1034-41C3-A22C-05F68A0D25C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E3E08B2-1034-41C3-A22C-05F68A0D25C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E3E08B2-1034-41C3-A22C-05F68A0D25C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E3E08B2-1034-41C3-A22C-05F68A0D25C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

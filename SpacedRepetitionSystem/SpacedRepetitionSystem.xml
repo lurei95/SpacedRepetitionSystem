@@ -970,7 +970,7 @@
         <member name="M:SpacedRepetitionSystem.Pages.Cards.DeckSearchPage.OnInitializedAsync">
             <inheritdoc/>
         </member>
-        <member name="P:SpacedRepetitionSystem.Pages.Cards.PracticeDeckPage.Id">
+        <member name="P:SpacedRepetitionSystem.Pages.Cards.PracticeDeckPage.EntityId">
             <summary>
             Id of the Deck
             </summary>

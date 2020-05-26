@@ -75,9 +75,9 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
       };
 
       if (successful)
-        mock.Reply = new ApiReply() { WasSuccessful = true };
+        mock.Replies.Push(new ApiReply() { WasSuccessful = true });
       else
-        mock.Reply = new ApiReply() { WasSuccessful = false, ResultMessage = "test" };
+        mock.Replies.Push(new ApiReply() { WasSuccessful = false, ResultMessage = "test" });
       saveCommand.ExecuteCommand();
 
       Assert.AreSame(mock.Parameter, card);

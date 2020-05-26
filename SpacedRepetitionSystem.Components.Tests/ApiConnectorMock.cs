@@ -30,7 +30,7 @@ namespace SpacedRepetitionSystem.Components.Tests
     /// <summary>
     /// The reply
     /// </summary>
-    public ApiReply Reply { get; set; }
+    public Stack<ApiReply> Replies { get; } = new Stack<ApiReply>();
 
     /// <summary>
     /// Method
@@ -42,7 +42,7 @@ namespace SpacedRepetitionSystem.Components.Tests
     {
       Parameter = entity;
       Method = HttpMethod.Delete;
-      return await Task.FromResult(Reply);
+      return await Task.FromResult(Replies.Pop());
     }
 
     ///<inheritdoc/>
@@ -50,7 +50,7 @@ namespace SpacedRepetitionSystem.Components.Tests
     {
       Parameter = id;
       Method = HttpMethod.Get;
-      return await Task.FromResult(Reply as ApiReply<TEntity>);
+      return await Task.FromResult(Replies.Pop() as ApiReply<TEntity>);
     }
 
     ///<inheritdoc/>
@@ -58,7 +58,7 @@ namespace SpacedRepetitionSystem.Components.Tests
     {
       Parameter = searchParameters;
       Method = HttpMethod.Get;
-      return await Task.FromResult(Reply as ApiReply<List<TEntity>>);
+      return await Task.FromResult(Replies.Pop() as ApiReply<List<TEntity>>);
     }
 
     ///<inheritdoc/>
@@ -66,7 +66,7 @@ namespace SpacedRepetitionSystem.Components.Tests
     {
       Parameter = entity;
       Method = HttpMethod.Post;
-      return await Task.FromResult(Reply);
+      return await Task.FromResult(Replies.Pop());
     }
 
     ///<inheritdoc/>
@@ -75,7 +75,7 @@ namespace SpacedRepetitionSystem.Components.Tests
       Route = route;
       Parameter = value;
       Method = HttpMethod.Post;
-      return await Task.FromResult(Reply as ApiReply<TReturn>);
+      return await Task.FromResult(Replies.Pop() as ApiReply<TReturn>);
     }
 
     ///<inheritdoc/>
@@ -84,7 +84,7 @@ namespace SpacedRepetitionSystem.Components.Tests
       Route = route;
       Parameter = value;
       Method = HttpMethod.Post;
-      return await Task.FromResult(Reply);
+      return await Task.FromResult(Replies.Pop());
     }
 
     ///<inheritdoc/>
@@ -92,7 +92,7 @@ namespace SpacedRepetitionSystem.Components.Tests
     {
       Parameter = entity;
       Method = HttpMethod.Put;
-      return await Task.FromResult(Reply as ApiReply);
+      return await Task.FromResult(Replies.Pop() as ApiReply);
     }
   }
 }

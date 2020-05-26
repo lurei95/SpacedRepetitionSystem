@@ -17,7 +17,7 @@ namespace SpacedRepetitionSystem.Components.Tests.Edits
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "BL0005:Component parameter should not be set outside of its component.", Justification = "<Pending>")]
     public void SetsValueWhenSelectableValuesIsSetTests()
     {
-      DropDownEdit edit = new DropDownEdit
+      DropDownEdit edit = new DropDownEdit()
       { SelectableValues = new List<string>() { "test", "test1" }  };
       Assert.AreEqual("test", edit.Value);
     }

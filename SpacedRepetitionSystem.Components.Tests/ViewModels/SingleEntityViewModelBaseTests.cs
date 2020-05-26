@@ -53,7 +53,7 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
     [TestMethod]
     public async Task LoadEntitySuccessfullyTest()
     {
-      apiConnectorMock.Reply = new ApiReply<Card>() { WasSuccessful = true, Result = card };
+      apiConnectorMock.Replies.Push(new ApiReply<Card>() { WasSuccessful = true, Result = card });
       await LoadTestCore(true, null);
     }
 
@@ -63,7 +63,7 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
     [TestMethod]
     public async Task LoadEntityGenericErrorTest()
     {
-      apiConnectorMock.Reply = new ApiReply<Card>() { WasSuccessful = false, ResultMessage = "test" };
+      apiConnectorMock.Replies.Push(new ApiReply<Card>() { WasSuccessful = false, ResultMessage = "test" });
       await LoadTestCore(false, "test");
     }
 
@@ -73,7 +73,7 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
     [TestMethod]
     public async Task LoadEntityNotFoundErrorTest()
     {
-      apiConnectorMock.Reply = new ApiReply<Card>() { WasSuccessful = false, StatusCode = HttpStatusCode.NotFound };
+      apiConnectorMock.Replies.Push(new ApiReply<Card>() { WasSuccessful = false, StatusCode = HttpStatusCode.NotFound });
       await LoadTestCore(false, Errors.EntityDoesNotExist.FormatWith("Card", 12));
     }
 
