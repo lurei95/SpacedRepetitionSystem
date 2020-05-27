@@ -35,12 +35,12 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<List<CardTemplate>> SearchCore()
+    protected override async Task<ApiReply<List<CardTemplate>>> SearchCore()
     {
       Dictionary<string, object> parameters = new Dictionary<string, object>();
       if (!string.IsNullOrEmpty(SearchText))
         parameters.Add(nameof(SearchText), SearchText);
-      return (await ApiConnector.GetAsync<CardTemplate>(parameters)).Result;
+      return await ApiConnector.GetAsync<CardTemplate>(parameters);
     }
   }
 }

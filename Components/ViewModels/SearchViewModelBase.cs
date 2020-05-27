@@ -4,6 +4,7 @@ using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities;
 using SpacedRepetitionSystem.Utility.Extensions;
+using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -123,11 +124,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public async Task SearchAsync()
     {
       IsSearching = true;
-      List<TEntity> results = await SearchCore();
-      SearchResults.Clear();
-      SearchResults.AddRange(results);
-      if (SearchResults.Count > 0)
-        SelectedEntity = SearchResults[0];
+      ApiReply<List<TEntity>> reply = await SearchCore();
+      if (reply.WasSuccessful)
+      {
+        SearchResults.Clear();
+        SearchResults.AddRange(reply.Result);
+        if (SearchResults.Count > 0)
+          SelectedEntity = SearchResults[0];
+      }
+      else
+        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
       IsSearching = false;
     }
 
@@ -135,6 +141,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// Performs the actual search
     /// </summary>
     /// <returns></returns>
-    protected abstract Task<List<TEntity>> SearchCore();
+    protected abstract Task<ApiReply<List<TEntity>>> SearchCore();
   }
 }

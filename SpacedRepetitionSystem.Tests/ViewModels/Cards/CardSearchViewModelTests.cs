@@ -2,10 +2,10 @@
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.Tests;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Utility.Notification;
+using SpacedRepetitionSystem.Utility.Tests.Notification;
 using SpacedRepetitionSystem.ViewModels.Cards;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
@@ -16,33 +16,48 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
   [TestClass]
   public sealed class CardSearchViewModelTests
   {
+    private readonly NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
+    private readonly NotificationProviderMock notificationProviderMock = new NotificationProviderMock();
+
+    /// <summary>
+    /// Initializes the tests
+    /// </summary>
+    [TestInitialize]
+    public void TestInitialize()
+    { NotificationMessageProvider.Initialize(notificationProviderMock, 500000); }
+
     /// <summary>
     /// Tests that the available decks are loaded on initialize
     /// </summary>
     [TestMethod]
     public async Task LoadsAvailableDecksOnInitializeTest()
     {
-      ApiConnectorMock mock = new ApiConnectorMock();
-      NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
+      ApiConnectorMock mock = CreateMockForInitialize(true, true, new List<Card>(),
+        new List<Deck>() { new Deck() { DeckId = 1, Title = "test" } });
       CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock);
+      bool result = await viewModel.InitializeAsync();
 
-      //Deck Id not already set
-      mock.Replies.Push(new ApiReply<List<Card>>() 
-      { 
-        WasSuccessful = true,
-        Result = new List<Card>(),
-      });
-      mock.Replies.Push(new ApiReply<List<Deck>>() 
-      { 
-        WasSuccessful = true, 
-        Result = new List<Deck>() { new Deck() { DeckId = 1, Title = "test" } } 
-      });
-      await viewModel.InitializeAsync();
-
+      Assert.IsTrue(result);
       Assert.AreEqual(2, viewModel.AvailableDecks.Count);
       Assert.IsTrue(viewModel.AvailableDecks.Contains("test"));
       Assert.IsTrue(viewModel.AvailableDecks.Contains(Messages.All));
       Assert.IsTrue(viewModel.DeckSelectable);
+    }
+
+    /// <summary>
+    /// Tests the behavior when an error is returned instead of the available decks
+    /// </summary>
+    [TestMethod]
+    public async Task LoadsAvailableDecksErrorTest()
+    {
+      ApiConnectorMock mock = CreateMockForInitialize(false, true, new List<Card>(),
+        new List<Deck>() { new Deck() { DeckId = 1, Title = "test" } });
+      CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock);
+      bool result = await viewModel.InitializeAsync();
+
+      Assert.IsFalse(result);
+      Assert.AreEqual("test-error", notificationProviderMock.Message);
+      Assert.AreEqual(NotificationKind.ErrorNotification, notificationProviderMock.NotificationKind);
     }
 
     /// <summary>
@@ -51,22 +66,13 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     [TestMethod]
     public async Task LoadsAvailableDecksWithDeckIdSetOnInitializeTest()
     {
-      ApiConnectorMock mock = new ApiConnectorMock();
-      NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
+      ApiConnectorMock mock = CreateMockForInitialize(true, true, new List<Card>(), 
+        new List<Deck>() { new Deck() { DeckId = 1, Title = "test" } });
       CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock)
       { DeckId = 1 };
-      mock.Replies.Push(new ApiReply<List<Card>>()
-      {
-        WasSuccessful = true,
-        Result = new List<Card>(),
-      });
-      mock.Replies.Push(new ApiReply<List<Deck>>()
-      {
-        WasSuccessful = true,
-        Result = new List<Deck>() { new Deck() { DeckId = 1, Title = "test" } }
-      });
-      await viewModel.InitializeAsync();
+      bool result = await viewModel.InitializeAsync();
 
+      Assert.IsTrue(result);
       Assert.AreEqual(2, viewModel.AvailableDecks.Count);
       Assert.IsTrue(viewModel.AvailableDecks.Contains("test"));
       Assert.IsTrue(viewModel.AvailableDecks.Contains(Messages.All));
@@ -81,21 +87,12 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     public async Task DoesExecuteSearchOnInitializeTest()
     {
       Card card = new Card();
-      ApiConnectorMock mock = new ApiConnectorMock();
+      ApiConnectorMock mock = CreateMockForInitialize(true, true, new List<Card>() { card }, new List<Deck>());
       NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
       CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock);
-      mock.Replies.Push(new ApiReply<List<Card>>()
-      {
-        WasSuccessful = true,
-        Result = new List<Card>() { card },
-      });
-      mock.Replies.Push(new ApiReply<List<Deck>>()
-      {
-        WasSuccessful = true,
-        Result = new List<Deck>()
-      });
-      await viewModel.InitializeAsync();
+      bool result = await viewModel.InitializeAsync();
 
+      Assert.IsTrue(result);
       Assert.AreEqual(1, viewModel.SearchResults.Count);
       Assert.AreSame(card, viewModel.SearchResults[0]);
     }
@@ -107,7 +104,6 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     public async Task ExecuteSearchParametersTest()
     {
       ApiConnectorMock mock = new ApiConnectorMock();
-      NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
       CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock);
 
       mock.Replies.Push(new ApiReply<List<Card>>()
@@ -149,7 +145,6 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     public void NewCommandEnabledTest()
     {
       ApiConnectorMock mock = new ApiConnectorMock();
-      NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
       CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock);
       Assert.IsFalse(viewModel.NewCommand.IsEnabled);
       viewModel.SelectedEntity = new Card();
@@ -163,20 +158,10 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     public async Task CommandsAreInitializedCorrectlyTest()
     {
       Card card = new Card() { CardId = 1, DeckId = 2 };
-      ApiConnectorMock mock = new ApiConnectorMock();
+      ApiConnectorMock mock = CreateMockForInitialize(true, true, new List<Card>() { card }, new List<Deck>());
       NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
-      CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock);
-      viewModel.SelectedEntity = card;
-      mock.Replies.Push(new ApiReply<List<Card>>()
-      {
-        WasSuccessful = true,
-        Result = new List<Card>() { card },
-      });
-      mock.Replies.Push(new ApiReply<List<Deck>>()
-      {
-        WasSuccessful = true,
-        Result = new List<Deck>()
-      });
+      CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock)
+      { SelectedEntity = card };
       await viewModel.InitializeAsync();
 
       Assert.IsNotNull(viewModel.NewCommand.CommandText);
@@ -193,6 +178,24 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
 
       Assert.IsNotNull(viewModel.DeleteCommand.CommandText);
       Assert.IsNotNull(viewModel.DeleteCommand.ToolTip);
+    }
+
+    private ApiConnectorMock CreateMockForInitialize(bool getDecksSuccessful, bool searchSucessful, List<Card> cards, List<Deck> decks)
+    {
+      ApiConnectorMock mock = new ApiConnectorMock();
+      mock.Replies.Push(new ApiReply<List<Card>>()
+      {
+        ResultMessage = searchSucessful ? null : "test-error",
+        WasSuccessful = searchSucessful,
+        Result = cards,
+      });
+      mock.Replies.Push(new ApiReply<List<Deck>>()
+      {
+        ResultMessage = getDecksSuccessful ? null : "test-error",
+        WasSuccessful = getDecksSuccessful,
+        Result = decks
+      });
+      return mock;
     }
   }
 }

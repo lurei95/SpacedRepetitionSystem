@@ -109,14 +109,14 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<List<Card>> SearchCore()
+    protected override async Task<ApiReply<List<Card>>> SearchCore()
     {
       Dictionary<string, object> parameters = new Dictionary<string, object>();
       if (DeckId.HasValue)
         parameters.Add(nameof(Deck.DeckId), DeckId);
       if (!string.IsNullOrEmpty(SearchText))
         parameters.Add(nameof(SearchText), SearchText);
-      return (await ApiConnector.GetAsync<Card>(parameters)).Result;
+      return await ApiConnector.GetAsync<Card>(parameters);
     }
 
     private async Task<bool> LoadAvaliableDecksAsync()
