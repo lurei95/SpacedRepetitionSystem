@@ -120,24 +120,16 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     public CardEditViewModel(NavigationManager navigationManager, IApiConnector apiConnector,
       EntityChangeValidator<Card> changeValidator) 
       : base(navigationManager, apiConnector, changeValidator)
-    { 
-      Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags));
-      ShowStatisticsCommand = new NavigationCommand(navigationManager)
-      {
-        CommandText = Messages.PracticeStatistics,
-        ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
-        IsRelative = true,
-        TargetUri = "/Statistics/"
-      };
-    }
+    { Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags)); }
 
     ///<inheritdoc/>
     public override async Task<bool> InitializeAsync() 
     {
-      foreach (CardTemplate cardTemplate in (await ApiConnector.GetAsync<CardTemplate>(new Dictionary<string, object>())).Result)
-        availableCardTemplates.Add(cardTemplate.Title, cardTemplate);
+      bool result = await LoadAvailaleCardTemplates();
+      if (!result)
+        return result;
 
-      bool result = await base.InitializeAsync();
+      result = await base.InitializeAsync();
       if (!result)
         return false;
 
@@ -155,17 +147,9 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         ChangeDeck();
       }
 
-      DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
-      DeleteCommand.DeleteDialogText = Messages.DeleteCardDialogText.FormatWith(Entity.CardId);
-      ShowStatisticsCommand.IsEnabled = !IsNewEntity;
-      SaveChangesCommand.OnSavedAction = (entity) =>
-      {
-        if (IsNewEntity)
-          NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
-      };
+      InitializeCommands();
 
       RegisterPropertyProxies();
-
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
       return true;
     }
@@ -175,6 +159,26 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     {
       Entity = new Card();
       CardTemplateId = CardTemplate.DefaultCardTemplateId; 
+    }
+
+    private void InitializeCommands()
+    {
+      ShowStatisticsCommand = new NavigationCommand(NavigationManager)
+      {
+        CommandText = Messages.PracticeStatistics,
+        ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
+        IsRelative = true,
+        TargetUri = "/Statistics"
+      };
+
+      DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
+      DeleteCommand.DeleteDialogText = Messages.DeleteCardDialogText.FormatWith(Entity.CardId);
+      ShowStatisticsCommand.IsEnabled = DeleteCommand.IsEnabled = !IsNewEntity;
+      SaveChangesCommand.OnSavedAction = (entity) =>
+      {
+        if (IsNewEntity)
+          NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
+      };
     }
 
     private async void ChangeDeck()
@@ -210,5 +214,18 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
 
     private string ValidateCardTemplateTitle(string value)
       => string.IsNullOrEmpty(value) ? Errors.PropertyRequired.FormatWith(EntityNameHelper.GetName<CardTemplate>()) : null;
+
+    private async Task<bool> LoadAvailaleCardTemplates()
+    {
+      ApiReply<List<CardTemplate>> reply = await ApiConnector.GetAsync<CardTemplate>(new Dictionary<string, object>());
+      if (!reply.WasSuccessful)
+      {
+        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
+        return false;
+      }
+      foreach (CardTemplate cardTemplate in reply.Result)
+        availableCardTemplates.Add(cardTemplate.Title, cardTemplate);
+      return true;
+    }
   }
 }

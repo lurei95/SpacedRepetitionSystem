@@ -118,6 +118,9 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
 
       Assert.IsNotNull(viewModel.DeleteCardCommand.CommandText);
       Assert.IsNotNull(viewModel.DeleteCardCommand.ToolTip);
+
+      Assert.IsNotNull(viewModel.SaveChangesCommand.CommandText);
+      Assert.IsNotNull(viewModel.SaveChangesCommand.ToolTip);
     }
 
     /// <summary>
