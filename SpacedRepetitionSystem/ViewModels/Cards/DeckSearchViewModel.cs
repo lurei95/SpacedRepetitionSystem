@@ -41,20 +41,23 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       PracticeDeckCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.Practice,
+        IsRelative = true,
         ToolTip = Messages.PracticeCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
-        TargetUriFactory = (param) => $"/Decks/{(long)param}/Practice"
+        TargetUriFactory = (param) => $"/{(long)param}/Practice"
       };
       AddCardCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.NewCard,
+        IsRelative = true,
         ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
-        TargetUriFactory = (param) => $"/Decks/{(long)param}/Cards/New"
+        TargetUriFactory = (param) => $"/{(long)param}/Cards/New"
       };
       ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.PracticeStatistics,
+        IsRelative = true,
         ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
-        TargetUriFactory = (param) => $"/Decks/{(param as Deck).DeckId}/Statistics/"
+        TargetUriFactory = (param) => $"/{(param as Deck).DeckId}/Statistics"
       };
     }
 

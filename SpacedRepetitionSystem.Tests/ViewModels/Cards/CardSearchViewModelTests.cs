@@ -88,7 +88,6 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     {
       Card card = new Card();
       ApiConnectorMock mock = CreateMockForInitialize(true, true, new List<Card>() { card }, new List<Deck>());
-      NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
       CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock);
       bool result = await viewModel.InitializeAsync();
 
@@ -159,7 +158,6 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     {
       Card card = new Card() { CardId = 1, DeckId = 2 };
       ApiConnectorMock mock = CreateMockForInitialize(true, true, new List<Card>() { card }, new List<Deck>());
-      NavigationManagerMock navigationManagerMock = new NavigationManagerMock();
       CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock)
       { SelectedEntity = card };
       await viewModel.InitializeAsync();
