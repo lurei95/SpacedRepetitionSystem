@@ -18,6 +18,6 @@
     /// <summary>
     /// Failed to remember the card/wrong input
     /// </summary>
-    Failed
+    Wrong
   }
 }

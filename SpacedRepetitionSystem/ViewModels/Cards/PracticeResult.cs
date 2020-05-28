@@ -31,6 +31,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     /// <summary>
     /// Pratcice results of the fields of the card
     /// </summary>
-    public Dictionary<string, PracticeResult> FieldResults { get; } = new Dictionary<string, PracticeResult>(); 
+    public Dictionary<int, PracticeResult> FieldResults { get; } = new Dictionary<int, PracticeResult>(); 
   }
 }

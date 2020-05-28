@@ -240,7 +240,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       {
         CommandText = Messages.DoesNotKnow,
         ToolTip = Messages.PracticeDoesNotKnowToolTip,
-        ExecuteAction = async (param) => await ReportPracticeResult(PracticeResultKind.Failed)
+        ExecuteAction = async (param) => await ReportPracticeResult(PracticeResultKind.Wrong)
       };
       NextCommand = new Command()
       {
@@ -294,14 +294,14 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (InputText == Solution)
         await ReportPracticeResult(PracticeResultKind.Easy);
       else
-        await ReportPracticeResult(PracticeResultKind.Failed);
+        await ReportPracticeResult(PracticeResultKind.Wrong);
     }
 
     private async Task ReportPracticeResult(PracticeResultKind result)
     {
       IsLoading = true;
       AddResult(result);
-      if (result == PracticeResultKind.Failed) // if failed insert at random position again 
+      if (result == PracticeResultKind.Wrong) // if failed insert at random position again 
       {
         int i = random.Next(currentIndex + 1, PracticeFields.Count);
         PracticeFields.Insert(i, Current);
@@ -315,7 +315,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         FieldId = Current.FieldId,
         CorrectCount = result == PracticeResultKind.Easy ? 1 : 0,
         HardCount = result == PracticeResultKind.Hard ? 1 : 0,
-        WrongCount = result == PracticeResultKind.Failed ? 1 : 0
+        WrongCount = result == PracticeResultKind.Wrong ? 1 : 0
       };
      
       ApiReply reply = await ApiConnector.PostAsync(entry);
@@ -366,21 +366,21 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (PracticeResults.ContainsKey(Current.CardId))
       {
         cardResult = PracticeResults[current.CardId];
-        if (!cardResult.FieldResults.ContainsKey(current.FieldName))
-          cardResult.FieldResults.Add(current.FieldName, new PracticeResult());
+        if (!cardResult.FieldResults.ContainsKey(current.FieldId))
+          cardResult.FieldResults.Add(current.FieldId, new PracticeResult());
         switch (resultKind)
         {
           case PracticeResultKind.Easy:
             cardResult.Correct++;
-            cardResult.FieldResults[current.FieldName].Correct++;
+            cardResult.FieldResults[current.FieldId].Correct++;
             break;
           case PracticeResultKind.Hard:
             cardResult.Difficult++;
-            cardResult.FieldResults[current.FieldName].Difficult++;
+            cardResult.FieldResults[current.FieldId].Difficult++;
             break;
-          case PracticeResultKind.Failed:
+          case PracticeResultKind.Wrong:
             cardResult.Wrong++;
-            cardResult.FieldResults[current.FieldName].Wrong++;
+            cardResult.FieldResults[current.FieldId].Wrong++;
             break;
           default:
             break;
@@ -392,7 +392,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         {
           Correct = resultKind == PracticeResultKind.Easy ? 1 : 0,
           Difficult = resultKind == PracticeResultKind.Hard ? 1 : 0,
-          Wrong = resultKind == PracticeResultKind.Failed ? 1 : 0
+          Wrong = resultKind == PracticeResultKind.Wrong ? 1 : 0
         };
         AddNewFieldResult(cardResult, resultKind);
         PracticeResults.Add(current.CardId, cardResult);
@@ -405,9 +405,9 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       {
         Correct = resultKind == PracticeResultKind.Easy ? 1 : 0,
         Difficult = resultKind == PracticeResultKind.Hard ? 1 : 0,
-        Wrong = resultKind == PracticeResultKind.Failed ? 1 : 0
+        Wrong = resultKind == PracticeResultKind.Wrong ? 1 : 0
       };
-      cardPracticeResult.FieldResults.Add(current.FieldName, result);
+      cardPracticeResult.FieldResults.Add(current.FieldId, result);
     }
   }
 }

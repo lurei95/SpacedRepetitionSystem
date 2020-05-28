@@ -448,7 +448,7 @@
             Card was hard to remember
             </summary>
         </member>
-        <member name="F:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeResultKind.Failed">
+        <member name="F:SpacedRepetitionSystem.Entities.Entities.Cards.PracticeResultKind.Wrong">
             <summary>
             Failed to remember the card/wrong input
             </summary>
