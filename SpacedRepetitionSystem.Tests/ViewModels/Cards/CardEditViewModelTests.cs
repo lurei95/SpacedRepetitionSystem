@@ -75,7 +75,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     /// Tests that <see cref="CardEditViewModel.InitializeAsync"/> fails when the deckId is not the same as the cards deck id
     /// </summary>
     [TestMethod]
-    public async Task InitializeFailsForWronDeckIdTest()
+    public async Task InitializeFailsForWrongDeckIdTest()
     {
       Deck deck = new Deck() { DeckId = 1, Title = "test", DefaultCardTemplateId = 2 };
       CardTemplate template1 = new CardTemplate() { CardTemplateId = 1, Title = "test" };

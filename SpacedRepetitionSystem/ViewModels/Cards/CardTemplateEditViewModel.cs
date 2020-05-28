@@ -62,7 +62,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       {
         Icon = "oi oi-x",
         ToolTip = Messages.RemoveFieldCommandToolTip.FormatWith(EntityNameHelper.GetName<CardTemplate>()),
-        IsEnabled = true,
         ExecuteAction = (param) => RemoveFieldDefiniton((int)param)
       };
     }
@@ -76,6 +75,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
 
       DeleteCommand.DeleteDialogTitle = Messages.DeleteCardTemplateDialogTitle;
       DeleteCommand.DeleteDialogText = Messages.DeleteCardTemplateDialogText.FormatWith(Entity.Title);
+      RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 2;
 
       TitleProperty = new PropertyProxy(
         () => Entity.Title,
@@ -103,15 +103,15 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     protected override void CreateNewEntity()
     {
       Entity = new CardTemplate();
-      Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Front" });
-      Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Back" });
+      Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Front", IsRequired = true });
+      Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Back", IsRequired = true });
     }
 
     private void RemoveFieldDefiniton(int index)
     {
       Entity.FieldDefinitions.Remove(FieldDefinitions[index]);
       FieldNameProperties.RemoveAt(index);
-      RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 1;
+      RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 2;
       OnPropertyChanged(nameof(FieldDefinitions));
     }
 
@@ -127,7 +127,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       );
       RegisterPropertyProxy(proxy);
       FieldNameProperties.Add(proxy);
-      RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 1;
+      RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 2;
       OnPropertyChanged(nameof(FieldDefinitions));
     }
   }
