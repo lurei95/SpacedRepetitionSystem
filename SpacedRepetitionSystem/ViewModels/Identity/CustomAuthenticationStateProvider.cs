@@ -67,7 +67,6 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
     /// Marks an user as authenticated
     /// </summary>
     /// <param name="user">The user</param>
-    /// <returns></returns>
     public async Task MarkUserAsAuthenticated(User user)
     {
       await localStorageService.SetItemAsync("accessToken", user.AccessToken);
@@ -82,7 +81,6 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
     /// <summary>
     /// Marks a user as logged out
     /// </summary>
-    /// <returns></returns>
     public async Task MarkUserAsLoggedOut()
     {
       await localStorageService.RemoveItemAsync("refreshToken");
@@ -98,7 +96,7 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
     {
       ClaimsIdentity claimsIdentity = new ClaimsIdentity();
       if (user?.Email != null)
-        claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.Email) }, "apiauth_type");
+        claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, user.UserId.ToString()) }, "apiauth_type");
       return claimsIdentity;
     }
   }

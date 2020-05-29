@@ -771,13 +771,11 @@
             Marks an user as authenticated
             </summary>
             <param name="user">The user</param>
-            <returns></returns>
         </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Identity.CustomAuthenticationStateProvider.MarkUserAsLoggedOut">
             <summary>
             Marks a user as logged out
             </summary>
-            <returns></returns>
         </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Identity.IdentityViewModelBase">
             <summary>
