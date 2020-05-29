@@ -95,7 +95,7 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
       ErrorMessage = null;
       HasEmailError = HasPasswordError = false;
 
-      string error = changeValidator.Validate(nameof(User.UserId), User, User.UserId);
+      string error = changeValidator.Validate(nameof(User.Email), User, User.Email);
       if (!string.IsNullOrEmpty(error))
       {
         ErrorMessage = error;

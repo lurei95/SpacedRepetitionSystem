@@ -49,7 +49,7 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
     /// <returns>Task with result</returns>
     protected override async Task SubmitAsyncCore()
     {
-      ApiReply<User> reply = await ApiConnector.PostAsync<User>("Users/login", User);
+      ApiReply<User> reply = await ApiConnector.PostAsync<User>("Users/Login", User);
       if (reply.WasSuccessful)
       {
         await AuthenticationStateProvider.MarkUserAsAuthenticated(reply.Result);
