@@ -111,7 +111,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
         Result = new List<Card>()
       });
       await viewModel.SearchAsync();
-      Dictionary<string, object> parameters = mock.Parameter as Dictionary<string, object>;
+      Dictionary<string, object> parameters = mock.Parameters.Pop() as Dictionary<string, object>;
       Assert.AreEqual(0, parameters.Count);
 
       viewModel.SearchText = "text";
@@ -121,7 +121,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
         Result = new List<Card>()
       });
       await viewModel.SearchAsync();
-      parameters = mock.Parameter as Dictionary<string, object>;
+      parameters = mock.Parameters.Pop() as Dictionary<string, object>;
       Assert.AreEqual(1, parameters.Count);
       Assert.AreEqual("text", parameters[nameof(viewModel.SearchText)]);
 
@@ -132,7 +132,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
         Result = new List<Card>()
       });
       await viewModel.SearchAsync();
-      parameters = mock.Parameter as Dictionary<string, object>;
+      parameters = mock.Parameters.Pop() as Dictionary<string, object>;
       Assert.AreEqual(2, parameters.Count);
       Assert.AreEqual((long)1, parameters[nameof(Deck.DeckId)]);
     }

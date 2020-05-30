@@ -75,9 +75,9 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Identity
       { User = user };
       await viewModel.SubmitAsync();
 
-      Assert.AreSame(user, mock.Parameter);
-      Assert.AreEqual("Users/Login", mock.Route);
-      Assert.AreEqual(HttpMethod.Post, mock.Method);
+      Assert.AreSame(user, mock.Parameters.Pop());
+      Assert.AreEqual("Users/Login", mock.Routes.Pop());
+      Assert.AreEqual(HttpMethod.Post, mock.Methods);
 
       if (successful)
       {

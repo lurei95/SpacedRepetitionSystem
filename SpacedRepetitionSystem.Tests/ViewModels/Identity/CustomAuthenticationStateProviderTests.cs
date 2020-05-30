@@ -159,9 +159,9 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Identity
 
       if (hasTokensInStorage)
       {
-        Assert.AreEqual(user.AccessToken, mock.Parameter);
-        Assert.AreEqual("Users/GetUserByAccessToken", mock.Route);
-        Assert.AreEqual(HttpMethod.Post, mock.Method);
+        Assert.AreEqual(user.AccessToken, mock.Parameters.Pop());
+        Assert.AreEqual("Users/GetUserByAccessToken", mock.Routes.Pop());
+        Assert.AreEqual(HttpMethod.Post, mock.Methods);
       }
 
       if (!hasTokensInStorage || !replySuccessful)

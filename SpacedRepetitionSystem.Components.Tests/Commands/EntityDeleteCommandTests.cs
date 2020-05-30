@@ -123,11 +123,11 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
         }
       }
       else if (useDialog)
-        Assert.IsNull(mock.Parameter);
+        Assert.IsNull(mock.Parameters.Pop());
       else
       {
-        Assert.AreSame(mock.Parameter, card);
-        Assert.AreEqual(HttpMethod.Delete, mock.Method);
+        Assert.AreSame(card, mock.Parameters.Pop());
+        Assert.AreEqual(HttpMethod.Delete, mock.Methods);
       }
     }
   }

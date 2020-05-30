@@ -80,8 +80,8 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
         mock.Replies.Push(new ApiReply() { WasSuccessful = false, ResultMessage = "test" });
       saveCommand.ExecuteCommand();
 
-      Assert.AreSame(mock.Parameter, card);
-      Assert.AreEqual(newEntity ? HttpMethod.Post : HttpMethod.Put, mock.Method);
+      Assert.AreSame(card, mock.Parameters.Pop());
+      Assert.AreEqual(newEntity ? HttpMethod.Post : HttpMethod.Put, mock.Methods);
       Assert.AreEqual(successful ? NotificationKind.SuccessNotification : NotificationKind.ErrorNotification, notificationProviderMock.NotificationKind);
       if (successful)
         Assert.IsTrue(wasExecuted);

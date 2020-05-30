@@ -20,12 +20,12 @@ namespace SpacedRepetitionSystem.Components.Tests
     /// <summary>
     /// The parameter
     /// </summary>
-    public object Parameter { get; set; }
+    public Stack<object> Parameters { get; } = new Stack<object>();
 
     /// <summary>
     /// The route
     /// </summary>
-    public string Route { get; set; }
+    public Stack<string> Routes { get; } = new Stack<string>();
 
     /// <summary>
     /// The reply
@@ -35,63 +35,63 @@ namespace SpacedRepetitionSystem.Components.Tests
     /// <summary>
     /// Method
     /// </summary>
-    public HttpMethod Method { get; set; }
+    public Stack<HttpMethod> Methods { get; } = new Stack<HttpMethod>();
 
     ///<inheritdoc/>
     public async Task<ApiReply> DeleteAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
     {
-      Parameter = entity;
-      Method = HttpMethod.Delete;
+      Parameters.Push(entity);
+      Methods.Push(HttpMethod.Delete);
       return await Task.FromResult(Replies.Pop());
     }
 
     ///<inheritdoc/>
     public async Task<ApiReply<TEntity>> GetAsync<TEntity>(object id) where TEntity : IRootEntity, new()
     {
-      Parameter = id;
-      Method = HttpMethod.Get;
+      Parameters.Push(id);
+      Methods.Push(HttpMethod.Get);
       return await Task.FromResult(Replies.Pop() as ApiReply<TEntity>);
     }
 
     ///<inheritdoc/>
     public async Task<ApiReply<List<TEntity>>> GetAsync<TEntity>(IDictionary<string, object> searchParameters) where TEntity : IRootEntity, new()
     {
-      Parameter = searchParameters;
-      Method = HttpMethod.Get;
+      Parameters.Push(searchParameters);
+      Methods.Push(HttpMethod.Get);
       return await Task.FromResult(Replies.Pop() as ApiReply<List<TEntity>>);
     }
 
     ///<inheritdoc/>
     public async Task<ApiReply> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
     {
-      Parameter = entity;
-      Method = HttpMethod.Post;
+      Parameters.Push(entity);
+      Methods.Push(HttpMethod.Post);
       return await Task.FromResult(Replies.Pop());
     }
 
     ///<inheritdoc/>
     public async Task<ApiReply<TReturn>> PostAsync<TReturn>(string route, object value)
     {
-      Route = route;
-      Parameter = value;
-      Method = HttpMethod.Post;
+      Routes.Push(route);
+      Parameters.Push(value);
+      Methods.Push(HttpMethod.Post);
       return await Task.FromResult(Replies.Pop() as ApiReply<TReturn>);
     }
 
     ///<inheritdoc/>
     public async Task<ApiReply> PostAsync(string route, object value)
     {
-      Route = route;
-      Parameter = value;
-      Method = HttpMethod.Post;
+      Routes.Push(route);
+      Parameters.Push(value);
+      Methods.Push(HttpMethod.Post);
       return await Task.FromResult(Replies.Pop());
     }
 
     ///<inheritdoc/>
     public async Task<ApiReply> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
     {
-      Parameter = entity;
-      Method = HttpMethod.Put;
+      Parameters.Push(entity);
+      Methods.Push(HttpMethod.Put);
       return await Task.FromResult(Replies.Pop() as ApiReply);
     }
   }

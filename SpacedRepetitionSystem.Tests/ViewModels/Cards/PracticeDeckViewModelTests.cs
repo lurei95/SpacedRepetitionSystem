@@ -388,8 +388,8 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     private void TestReportedResult(PracticeDeckViewModel viewModel, PracticeResultKind expectedResult,
       ApiConnectorMock mock, long cardId, int fieldId)
     {
-      PracticeHistoryEntry entry = mock.Parameter as PracticeHistoryEntry;
-      Assert.AreEqual(HttpMethod.Post, mock.Method);
+      PracticeHistoryEntry entry = mock.Parameters.Pop() as PracticeHistoryEntry;
+      Assert.AreEqual(HttpMethod.Post, mock.Methods);
       Assert.AreEqual(DateTime.Today, entry.PracticeDate);
       Assert.AreEqual(cardId, entry.CardId);
       Assert.AreEqual(fieldId, entry.FieldId);

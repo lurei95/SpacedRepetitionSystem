@@ -72,7 +72,7 @@
                             Caption="" Sortable="false">
               <DisplayTemplate>
                 @{
-                  <Button CommandParameter="(context as Deck).DeckId" Class="grid-new-button column-button" Command="ViewModel.AddCardCommand"></Button>
+                  <Button CommandParameter="context.DeckId" Class="grid-new-button column-button" Command="ViewModel.AddCardCommand"></Button>
                 }
               </DisplayTemplate>
             </DataGridColumn>
@@ -81,7 +81,7 @@
                             Caption="" Sortable="false">
               <DisplayTemplate>
                 @{
-                  <Button CommandParameter="context" Class="grid-edit-button column-button" Command="ViewModel.ShowStatisticsCommand"></Button>
+                  <Button CommandParameter="context.DeckId" Class="grid-edit-button column-button" Command="ViewModel.ShowStatisticsCommand"></Button>
                 }
               </DisplayTemplate>
             </DataGridColumn>

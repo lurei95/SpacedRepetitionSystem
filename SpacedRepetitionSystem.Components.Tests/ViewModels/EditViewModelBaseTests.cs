@@ -159,8 +159,8 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
       { Id = 12 };
       bool result = await viewModel.InitializeAsync();
       Assert.AreEqual(successful, result);
-      Assert.AreEqual(12, apiConnectorMock.Parameter);
-      Assert.AreEqual(apiConnectorMock.Method, HttpMethod.Get);
+      Assert.AreEqual(12, apiConnectorMock.Parameters.Pop());
+      Assert.AreEqual(apiConnectorMock.Methods, HttpMethod.Get);
       Assert.IsFalse(viewModel.GetIsNewEntity());
       if (successful)
         Assert.AreSame(card, viewModel.Entity);

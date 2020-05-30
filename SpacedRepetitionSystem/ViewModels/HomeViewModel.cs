@@ -100,38 +100,38 @@ namespace SpacedRepetitionSystem.ViewModels
       };
       ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {
-        TargetUriFactory = (param) => $"/Decks/{(param as Deck).DeckId}/Statistics/",
+        TargetUriFactory = (param) => $"/Decks/{(long)param}/Statistics",
         CommandText = Messages.PracticeStatistics,
         ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>())
       };
       NewDeckCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.NewDeck,
-        TargetUri = "/Decks/New/",
+        TargetUri = "/Decks/New",
         ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>())
       };
       NewTemplateCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.NewTemplate,
-        TargetUri = "/Templates/New/",
+        TargetUri = "/Templates/New",
         ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<CardTemplate>())
       };
       SearchDecksCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchDecks,
-        TargetUri = "/Decks/",
+        TargetUri = "/Decks",
         ToolTip = Messages.SearchCommandToolTip.FormatWith(EntityNameHelper.GetPluralName<Deck>())
       };
       SearchTemplatesCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchTemplates,
-        TargetUri = "/Templates/",
+        TargetUri = "/Templates",
         ToolTip = Messages.SearchCommandToolTip.FormatWith(EntityNameHelper.GetPluralName<CardTemplate>())
       };
       SearchCardsCommand = new NavigationCommand(navigationManager)
       {
         CommandText = Messages.SearchCards,
-        TargetUri = "/Cards/",
+        TargetUri = "/Cards",
         ToolTip = Messages.SearchCommandToolTip.FormatWith(EntityNameHelper.GetPluralName<Card>())
       };
     }

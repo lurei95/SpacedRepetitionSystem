@@ -54,7 +54,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
       DeckSearchViewModel viewModel = new DeckSearchViewModel(navigationManagerMock, mock);
 
       await viewModel.SearchAsync();
-      Dictionary<string, object> parameters = mock.Parameter as Dictionary<string, object>;
+      Dictionary<string, object> parameters = mock.Parameters.Pop() as Dictionary<string, object>;
       Assert.AreEqual(0, parameters.Count);
 
       viewModel.SearchText = "text";
@@ -64,7 +64,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
         Result = new List<Deck>()
       });
       await viewModel.SearchAsync();
-      parameters = mock.Parameter as Dictionary<string, object>;
+      parameters = mock.Parameters.Pop() as Dictionary<string, object>;
       Assert.AreEqual(1, parameters.Count);
       Assert.AreEqual("text", parameters[nameof(viewModel.SearchText)]);
     }
@@ -119,8 +119,8 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
       viewModel.TogglePinned(true, deck);
 
       Assert.IsTrue(deck.IsPinned);
-      Assert.AreEqual(HttpMethod.Put, mock.Method);
-      Assert.AreSame(deck, mock.Parameter);
+      Assert.AreEqual(HttpMethod.Put, mock.Methods);
+      Assert.AreSame(deck, mock.Parameters.Pop());
     }
 
     private ApiConnectorMock CreateMockForInitialize(List<Deck> decks)
