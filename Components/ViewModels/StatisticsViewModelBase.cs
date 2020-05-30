@@ -159,7 +159,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       LineChartLabels.Clear();
       PieChartData.Clear();
 
-      IEnumerable<PracticeHistoryEntry> entries = DisplayedEntries; ;
+      IEnumerable<PracticeHistoryEntry> entries = DisplayedEntries;
       switch (SelectedDisplayPeriod)
       {
         case DisplayPeriod.Week:
@@ -239,9 +239,15 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       {
         DateTime date = DateTime.Today.AddMonths(-11 + i);
         LineChartLabels.Add(date.ToString("MMMM"));
-        int correct = DisplayedEntries.Where(entry => entry.PracticeDate.Month == date.Month).Sum(entry => entry.CorrectCount);
-        int hard = DisplayedEntries.Where(entry => entry.PracticeDate.Month == date.Month).Sum(entry => entry.HardCount);
-        int wrong = DisplayedEntries.Where(entry => entry.PracticeDate.Month == date.Month).Sum(entry => entry.WrongCount);
+        int correct = DisplayedEntries
+          .Where(entry => entry.PracticeDate.Year == date.Year && entry.PracticeDate.Month == date.Month)
+          .Sum(entry => entry.CorrectCount);
+        int hard = DisplayedEntries
+          .Where(entry => entry.PracticeDate.Year == date.Year && entry.PracticeDate.Month == date.Month)
+          .Sum(entry => entry.HardCount);
+        int wrong = DisplayedEntries
+          .Where(entry => entry.PracticeDate.Year == date.Year && entry.PracticeDate.Month == date.Month)
+          .Sum(entry => entry.WrongCount);
         LineChartData[Correct].Add(correct);
         LineChartData[Hard].Add(hard);
         LineChartData[Wrong].Add(wrong);
