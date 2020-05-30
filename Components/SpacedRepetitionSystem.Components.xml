@@ -979,6 +979,11 @@
             </summary>
             <typeparam name="TEntity"></typeparam>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.RefreshAction">
+            <summary>
+            Action to refresh the charts
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.ViewModels.StatisticsViewModelBase`1.Title">
             <inheritdoc/>
         </member>

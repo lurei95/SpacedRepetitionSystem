@@ -84,7 +84,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       {
         CommandText = Messages.PracticeStatistics,
         ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
-        IsRelative = true,
         TargetUriFactory = (param) =>  $"/Decks/{(param as Card).DeckId}/Cards/{(param as Card).CardId}/Statistics"
       };
     }

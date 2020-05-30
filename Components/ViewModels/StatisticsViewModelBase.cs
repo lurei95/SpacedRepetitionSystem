@@ -18,8 +18,13 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   {
     private string selectedDisplayUnit;
 
+    /// <summary>
+    /// Action to refresh the charts
+    /// </summary>
+    public Action RefreshAction { get; set; }
+
     ///<inheritdoc/>
-    public override string Title => Messages.StatisticsPageTitle.FormatWith(Entity.GetDisplayName());
+    public override string Title => Messages.StatisticsPageTitle.FormatWith(Entity?.GetDisplayName());
 
     /// <summary>
     /// Correct
@@ -176,6 +181,8 @@ namespace SpacedRepetitionSystem.Components.ViewModels
       PieChartData.Add(entries.Sum(entry => entry.CorrectCount));
       PieChartData.Add(entries.Sum(entry => entry.HardCount));
       PieChartData.Add(entries.Sum(entry => entry.WrongCount));
+
+      RefreshAction?.Invoke();
     }
 
     /// <summary>

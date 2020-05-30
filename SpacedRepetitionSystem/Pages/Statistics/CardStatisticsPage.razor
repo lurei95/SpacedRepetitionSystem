@@ -105,7 +105,6 @@
   private List<int> resultValues = new List<int>();
   private CustomPieChart<int> pieChart;
   private CustomLineChart<int> lineChart;
-  bool isDrawingCharts;
 
   /// <summary>
   /// Id of the card
@@ -123,12 +122,15 @@
   protected override async Task OnAfterRenderAsync(bool firstRender)
   {
     await base.OnAfterRenderAsync(firstRender);
-    if (!isDrawingCharts)
+    if (firstRender)
     {
-      isDrawingCharts = true;
       await pieChart.Redraw();
       await lineChart.Redraw();
-      isDrawingCharts = false;
+      ViewModel.RefreshAction = async () =>
+      {
+        await lineChart.Redraw();
+        await pieChart.Redraw();
+      };
     }
   }
 }

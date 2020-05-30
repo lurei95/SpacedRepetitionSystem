@@ -5,7 +5,7 @@
 
 @if (IsVisible)
 {
-  <LineChart @ref="chart" TItem="TItem" />
+  <LineChart @ref="chart" OptionsJsonString="@("{\"animation\": {\"duration\": 0}}")" TItem="TItem"/>
 }
 
 @code
