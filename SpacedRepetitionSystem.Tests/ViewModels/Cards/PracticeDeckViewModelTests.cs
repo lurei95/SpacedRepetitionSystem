@@ -389,7 +389,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
       ApiConnectorMock mock, long cardId, int fieldId)
     {
       PracticeHistoryEntry entry = mock.Parameters.Pop() as PracticeHistoryEntry;
-      Assert.AreEqual(HttpMethod.Post, mock.Methods);
+      Assert.AreEqual(HttpMethod.Post, mock.Methods.Pop());
       Assert.AreEqual(DateTime.Today, entry.PracticeDate);
       Assert.AreEqual(cardId, entry.CardId);
       Assert.AreEqual(fieldId, entry.FieldId);

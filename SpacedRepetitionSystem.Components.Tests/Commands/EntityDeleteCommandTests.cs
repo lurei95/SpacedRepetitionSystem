@@ -123,7 +123,7 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
         }
       }
       else if (useDialog)
-        Assert.IsNull(mock.Parameters.Pop());
+        Assert.AreEqual(0, mock.Parameters.Count);
       else
       {
         Assert.AreSame(card, mock.Parameters.Pop());

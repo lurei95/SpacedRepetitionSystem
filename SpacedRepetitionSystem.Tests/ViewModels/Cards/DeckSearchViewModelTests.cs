@@ -119,7 +119,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
       viewModel.TogglePinned(true, deck);
 
       Assert.IsTrue(deck.IsPinned);
-      Assert.AreEqual(HttpMethod.Put, mock.Methods);
+      Assert.AreEqual(HttpMethod.Put, mock.Methods.Pop());
       Assert.AreSame(deck, mock.Parameters.Pop());
     }
 

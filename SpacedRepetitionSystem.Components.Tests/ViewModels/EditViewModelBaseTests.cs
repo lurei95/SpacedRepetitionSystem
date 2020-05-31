@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using SpacedRepetitionSystem.Components.Edits;
+using Moq;
 
 namespace SpacedRepetitionSystem.Components.Tests.ViewModels
 {
@@ -160,7 +161,7 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
       bool result = await viewModel.InitializeAsync();
       Assert.AreEqual(successful, result);
       Assert.AreEqual(12, apiConnectorMock.Parameters.Pop());
-      Assert.AreEqual(apiConnectorMock.Methods, HttpMethod.Get);
+      Assert.AreEqual(HttpMethod.Get, apiConnectorMock.Methods.Pop());
       Assert.IsFalse(viewModel.GetIsNewEntity());
       if (successful)
         Assert.AreSame(card, viewModel.Entity);

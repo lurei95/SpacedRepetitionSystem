@@ -81,7 +81,7 @@ namespace SpacedRepetitionSystem.Components.Tests.Commands
       saveCommand.ExecuteCommand();
 
       Assert.AreSame(card, mock.Parameters.Pop());
-      Assert.AreEqual(newEntity ? HttpMethod.Post : HttpMethod.Put, mock.Methods);
+      Assert.AreEqual(newEntity ? HttpMethod.Post : HttpMethod.Put, mock.Methods.Pop());
       Assert.AreEqual(successful ? NotificationKind.SuccessNotification : NotificationKind.ErrorNotification, notificationProviderMock.NotificationKind);
       if (successful)
         Assert.IsTrue(wasExecuted);

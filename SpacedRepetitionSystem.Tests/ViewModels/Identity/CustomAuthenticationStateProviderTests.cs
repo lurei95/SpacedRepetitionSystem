@@ -161,11 +161,11 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Identity
       {
         Assert.AreEqual(user.AccessToken, mock.Parameters.Pop());
         Assert.AreEqual("Users/GetUserByAccessToken", mock.Routes.Pop());
-        Assert.AreEqual(HttpMethod.Post, mock.Methods);
+        Assert.AreEqual(HttpMethod.Post, mock.Methods.Pop());
       }
 
       if (!hasTokensInStorage || !replySuccessful)
-        Assert.AreEqual("/Login", navigationManagerMock);
+        Assert.AreEqual("/Login", navigationManagerMock.NavigatedUri);
     }
 
     private string GenerateAccessToken(Guid userId)

@@ -2,6 +2,7 @@
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.ViewModels;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,8 +45,14 @@ namespace SpacedRepetitionSystem.ViewModels.Statistics
 
       Dictionary<string, object> parameters = new Dictionary<string, object>()
       { { nameof(Card.CardId), Entity.CardId } };
-      List<PracticeHistoryEntry> entries = (await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters)).Result;
-      PracticeHistoryEntries.AddRange(entries);
+      ApiReply<List<PracticeHistoryEntry>> reply = await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters);
+      if (!reply.WasSuccessful)
+      {
+        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
+        return false;
+      }
+
+      PracticeHistoryEntries.AddRange(reply.Result);
       SelectableDisplayUnits.Add(nameof(Card));
       SelectableDisplayUnits.AddRange(Entity.Fields.Select(field => field.FieldName));
       SelectedDisplayUnit = SelectableDisplayUnits.First();
