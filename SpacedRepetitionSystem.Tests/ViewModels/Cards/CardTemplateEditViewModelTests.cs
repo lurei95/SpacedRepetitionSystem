@@ -49,6 +49,22 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     }
 
     /// <summary>
+    /// Tests that IsNewEntity is set to false after new entity is saved
+    /// </summary>
+    [TestMethod]
+    public async Task DoesSetIsNewEntityFalseAfterSaveTest()
+    {
+      ApiConnectorMock mock = CreateMockForInitialize(false, null);
+      CardTemplateEditViewModel viewModel
+        = new CardTemplateEditViewModel(navigationManagerMock, mock, new EntityChangeValidator<CardTemplate>());
+      await viewModel.InitializeAsync();
+
+      Assert.IsTrue(viewModel.IsNewEntity);
+      viewModel.SaveChangesCommand.OnSavedAction.Invoke(null);
+      Assert.IsFalse(viewModel.IsNewEntity);
+    }
+
+    /// <summary>
     /// Tests that all commands are initialized correctly
     /// </summary>
     [TestMethod]

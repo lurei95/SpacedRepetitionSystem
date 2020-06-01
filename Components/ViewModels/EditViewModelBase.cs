@@ -24,7 +24,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Whether the entity is new
     /// </summary>
-    protected bool IsNewEntity { get; set; }
+    public bool IsNewEntity { get; set; }
 
     /// <summary>
     /// Command for Saving the changes

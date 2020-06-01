@@ -76,6 +76,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       DeleteCommand.DeleteDialogTitle = Messages.DeleteCardTemplateDialogTitle;
       DeleteCommand.DeleteDialogText = Messages.DeleteCardTemplateDialogText.FormatWith(Entity.Title);
       RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 2;
+      SaveChangesCommand.OnSavedAction = (entity) => IsNewEntity = false;
 
       TitleProperty = new PropertyProxy(
         () => Entity.Title,
