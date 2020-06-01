@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.Tests;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Utility.Notification;
 using SpacedRepetitionSystem.Utility.Tests.Notification;
@@ -9,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SpacedRepetitionSystem.Tests.ViewModels.Statistics
@@ -32,11 +32,11 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Statistics
       PracticeHistoryEntry entry2 = new PracticeHistoryEntry() { Field = new CardField() { FieldName = "Field 2" } };
       CardStatisticsViewModel viewModel = new CardStatisticsViewModel(navigationManagerMock, new ApiConnectorMock());
       viewModel.PracticeHistoryEntries.AddRange(new List<PracticeHistoryEntry>() { entry1, entry2 });
-      viewModel.SelectableDisplayUnits.Add("Card");
+      viewModel.SelectableDisplayUnits.Add(EntityNameHelper.GetName<Card>());
       viewModel.SelectableDisplayUnits.Add("Field 1");
       viewModel.SelectableDisplayUnits.Add("Field 2");
 
-      viewModel.SelectedDisplayUnit = "Card";
+      viewModel.SelectedDisplayUnit = EntityNameHelper.GetName<Card>();
       Assert.AreEqual(2, viewModel.DisplayedEntries.Count());
       Assert.IsTrue(viewModel.DisplayedEntries.Contains(entry1));
       Assert.IsTrue(viewModel.DisplayedEntries.Contains(entry2));
@@ -81,8 +81,8 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Statistics
       Assert.AreEqual((long)1, parameters[nameof(Card.CardId)]);
       Assert.IsTrue(viewModel.PracticeHistoryEntries.Contains(entry1));
       Assert.IsTrue(viewModel.PracticeHistoryEntries.Contains(entry2));
-      Assert.AreEqual(nameof(Card), viewModel.SelectableDisplayUnits[0]);
-      Assert.AreEqual(nameof(Card), viewModel.SelectedDisplayUnit);
+      Assert.AreEqual(EntityNameHelper.GetName<Card>(), viewModel.SelectableDisplayUnits[0]);
+      Assert.AreEqual(EntityNameHelper.GetName<Card>(), viewModel.SelectedDisplayUnit);
       Assert.IsTrue(viewModel.SelectableDisplayUnits.Contains("Field 1"));
       Assert.IsTrue(viewModel.SelectableDisplayUnits.Contains("Field 2"));
     }

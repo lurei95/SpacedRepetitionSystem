@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.ViewModels;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
 using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace SpacedRepetitionSystem.ViewModels.Statistics
       }
 
       PracticeHistoryEntries.AddRange(reply.Result);
-      SelectableDisplayUnits.Add(nameof(Card));
+      SelectableDisplayUnits.Add(EntityNameHelper.GetName<Card>());
       SelectableDisplayUnits.AddRange(Entity.Fields.Select(field => field.FieldName));
       SelectedDisplayUnit = SelectableDisplayUnits.First();
       return true;

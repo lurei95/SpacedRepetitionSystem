@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Components.ViewModels;
+using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Cards;
+using SpacedRepetitionSystem.Utility.Notification;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +15,8 @@ namespace SpacedRepetitionSystem.ViewModels.Statistics
   /// </summary>
   public sealed class DeckStatisticsViewModel : StatisticsViewModelBase<Deck>
   {
+    private readonly Dictionary<string, long> cardIdLookup = new Dictionary<string, long>();
+
     /// <summary>
     /// The displayed Entries
     /// </summary>
@@ -22,7 +26,7 @@ namespace SpacedRepetitionSystem.ViewModels.Statistics
       {
         if (SelectedDisplayUnit == SelectableDisplayUnits[0])
           return PracticeHistoryEntries;
-        return PracticeHistoryEntries.Where(entry => entry.Field.FieldName == SelectedDisplayUnit);
+        return PracticeHistoryEntries.Where(entry => entry.CardId == cardIdLookup[SelectedDisplayUnit]);
       }
     }
 
@@ -44,10 +48,18 @@ namespace SpacedRepetitionSystem.ViewModels.Statistics
 
       Dictionary<string, object> parameters = new Dictionary<string, object>()
       { { nameof(Card.DeckId), Entity.DeckId } };
-      List<PracticeHistoryEntry> entries = (await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters)).Result;
-      PracticeHistoryEntries.AddRange(entries);
-      SelectableDisplayUnits.Add(nameof(Deck));
-      //SelectableDisplayUnits.AddRange(Entity.C.Select(field => field.FieldName));
+      ApiReply<List<PracticeHistoryEntry>> reply = await ApiConnector.GetAsync<PracticeHistoryEntry>(parameters);
+      if (!reply.WasSuccessful)
+      {
+        NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);
+        return false;
+      }
+
+      PracticeHistoryEntries.AddRange(reply.Result);
+      SelectableDisplayUnits.Add(EntityNameHelper.GetName<Deck>());
+      SelectableDisplayUnits.AddRange(Entity.Cards.Select(card => card.GetDisplayName()));
+      foreach (Card card in Entity.Cards)
+        cardIdLookup.Add(card.GetDisplayName(), card.CardId);
       SelectedDisplayUnit = SelectableDisplayUnits.First();
       return true;
     }
