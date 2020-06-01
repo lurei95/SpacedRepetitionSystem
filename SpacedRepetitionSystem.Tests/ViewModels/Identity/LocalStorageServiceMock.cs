@@ -64,7 +64,6 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Identity
       SetItems.Remove(key);
       return Task.FromResult<object>(null);
     }
-
     ///<inheritdoc/>
     public Task SetItemAsync<T>(string key, T data)
     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using SpacedRepetitionSystem.Components.Commands;
 using SpacedRepetitionSystem.Components.Middleware;
 using SpacedRepetitionSystem.Entities;
 using SpacedRepetitionSystem.Entities.Entities.Security;
@@ -22,6 +23,11 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
     /// <summary>
+    /// Command for loging in as guest user
+    /// </summary>
+    public Command LoginAsGuestUserCommand { get; private set; }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
@@ -31,7 +37,14 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
     public LoginViewModel(NavigationManager navigationManager, AuthenticationStateProvider authenticationStateProvider, 
       IApiConnector apiConnector, EntityChangeValidator<User> changeValidator) 
       : base(navigationManager, authenticationStateProvider, apiConnector, changeValidator)
-    { }
+    {
+      LoginAsGuestUserCommand = new Command()
+      {
+        ToolTip = Messages.LoginAsGuestUserCommandToolTip,
+        CommandText = Messages.LoginAsGuestUser,
+        ExecuteAction = async (parameter) => await LoginAsGuestUser()
+      };
+    }
 
     ///<inheritdoc/>
     public async override Task<bool> InitializeAsync()
@@ -57,6 +70,12 @@ namespace SpacedRepetitionSystem.ViewModels.Identity
       }
       else
         ErrorMessage = Errors.InvalidUserNameOrPassword;
+    }
+
+    private async Task LoginAsGuestUser()
+    {
+      User = User.GuestUser;
+      await SubmitAsync();
     }
   }
 }

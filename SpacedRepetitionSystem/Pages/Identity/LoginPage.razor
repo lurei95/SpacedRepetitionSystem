@@ -2,6 +2,7 @@
 
 @using SpacedRepetitionSystem.ViewModels.Identity;
 @using SpacedRepetitionSystem.Components.ViewModels;
+@using SpacedRepetitionSystem.Components.Interaction;
 
 @inherits PageBase<LoginViewModel>
 
@@ -11,10 +12,10 @@
       <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.SubmitAsync">
         <div class="login-container">
           <div>
-            <h3 style="font-weight:bold; color:#343a40">Repetition System</h3>
+            <h3 style="font-weight:bold; color:#343a40">Login</h3>
           </div>
           <div>
-            <br />
+            <br/>
           </div>
           <div class="col-12 row">
             <input class="form-control col-12 @(ViewModel.HasEmailError ? "error-border" : null)" @bind="ViewModel.User.Email" placeholder="email address" />
@@ -23,11 +24,19 @@
           <div class="col-12 row">
             <input type="password" class="form-control col-12 @(ViewModel.HasPasswordError ? "error-border" : null)" @bind="ViewModel.User.Password" placeholder="password" />
           </div>
-          <br />
-          <div class="col-12 row" style="text-align:left; font-weight:bold">
-            <span class="col-12 wrong">@ViewModel.ErrorMessage</span>
+          <br/>
+          <div class="col-12 row">
+            <Button Class="col-12 btn-primary" Command="ViewModel.LoginAsGuestUserCommand" />
           </div>
-          <br />
+          <br/>
+          @if (!string.IsNullOrEmpty(ViewModel.ErrorMessage))
+          {
+            <div class="col-12 row" style="text-align:left; font-weight:bold">
+              <span class="col-12 wrong">@ViewModel.ErrorMessage</span>
+            </div>
+            <br/>
+          }
+          <hr class="mt-0"/>
           <div class="col-12 row d-flex align-items-center">
             <span class="col-12"></span>
             <input type="submit" class="form-control col-6 btn btn-primary" value="Login" />

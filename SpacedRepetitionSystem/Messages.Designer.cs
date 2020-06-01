@@ -177,6 +177,28 @@ namespace SpacedRepetitionSystem
         }
 
         /// <summary>
+        /// Gets the resource string indexed by the LoginAsGuestUser key.
+        /// </summary>
+        public static string LoginAsGuestUser
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("LoginAsGuestUser", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
+        /// Gets the resource string indexed by the LoginAsGuestUserCommandToolTip key.
+        /// </summary>
+        public static string LoginAsGuestUserCommandToolTip
+        {
+            get
+            {
+                return Messages.ResourceManager.GetString("LoginAsGuestUserCommandToolTip", Messages.CultureInfo);
+            }
+        }
+
+        /// <summary>
         /// Gets the resource string indexed by the NewCard key.
         /// </summary>
         public static string NewCard

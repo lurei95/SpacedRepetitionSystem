@@ -156,6 +156,12 @@
   <data name="HomePageTitle" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="LoginAsGuestUser" xml:space="preserve">
+    <value>Login as guest user</value>
+  </data>
+  <data name="LoginAsGuestUserCommandToolTip" xml:space="preserve">
+    <value>Logs in as a guest user</value>
+  </data>
   <data name="NewCard" xml:space="preserve">
     <value>New Card</value>
   </data>

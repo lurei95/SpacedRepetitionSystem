@@ -11,7 +11,7 @@
       <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.SubmitAsync">
         <div class="login-container">
           <div>
-            <h3 style="font-weight:bold; color:#343a40">Repetition System Register</h3>
+            <h3 style="font-weight:bold; color:#343a40">Signup</h3>
           </div>
           <div>
             <br />
@@ -21,17 +21,21 @@
           </div>
           <br />
           <div class="col-12 row">
-            <input type="password" class="form-control col-12 @(ViewModel.HasPasswordError ? "error-border" : null)" @bind="ViewModel.User.Password" placeholder="password"/>
+            <input type="password" class="form-control col-12 @(ViewModel.HasPasswordError ? "error-border" : null)" @bind="ViewModel.User.Password" placeholder="password" />
           </div>
           <br />
           <div class="col-12 row">
-            <input type="password" class="form-control col-12 @(ViewModel.HasConfirmPasswordError ? "error-border" : null)" @bind="ViewModel.ConfirmPassword" placeholder="confirm password"/>
+            <input type="password" class="form-control col-12 @(ViewModel.HasConfirmPasswordError ? "error-border" : null)" @bind="ViewModel.ConfirmPassword" placeholder="confirm password" />
           </div>
           <br />
-          <div class="col-12 row" style="text-align:left; font-weight:bold">
-            <span class="col-12 wrong">@ViewModel.ErrorMessage</span>
-          </div>
-          <br />
+          @if (!string.IsNullOrEmpty(ViewModel.ErrorMessage))
+          {
+            <div class="col-12 row" style="text-align:left; font-weight:bold">
+              <span class="col-12 wrong">@ViewModel.ErrorMessage</span>
+            </div>
+            <br />
+          }
+          <hr class="mt-0"/>
           <div class="col-12 row d-flex align-items-center">
             <span class="col-12"></span>
             <input type="submit" class="form-control col-6 btn btn-primary" value="Sign up" />

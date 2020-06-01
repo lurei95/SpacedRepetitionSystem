@@ -46,6 +46,22 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Identity
     }
 
     /// <summary>
+    /// Tests thta the commands are initialized correctly
+    /// </summary>
+    [TestMethod]
+    public void CommandsAreInitializedCorrectlyTest()
+    {
+      CustomAuthenticationStateProvider authenticationStateProvider
+        = new CustomAuthenticationStateProvider(new LocalStorageServiceMock(), new ApiConnectorMock(), navigationManagerMock);
+      LoginViewModel viewModel = new LoginViewModel(navigationManagerMock, authenticationStateProvider, 
+        new ApiConnectorMock(), new EntityChangeValidator<User>());
+
+      Assert.IsFalse(string.IsNullOrEmpty(viewModel.LoginAsGuestUserCommand.CommandText));
+      Assert.IsFalse(string.IsNullOrEmpty(viewModel.LoginAsGuestUserCommand.ToolTip));
+      Assert.IsTrue(viewModel.LoginAsGuestUserCommand.IsEnabled);
+    }
+
+    /// <summary>
     /// Tests <see cref="LoginViewModel.SubmitAsyncCore"/> when signup is successful
     /// </summary>
     [TestMethod]
@@ -58,6 +74,31 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Identity
     [TestMethod]
     public async Task LoginErrorTest()
     { await LoginTestCore(false); }
+
+    /// <summary>
+    /// Tests <see cref="LoginViewModel.LoginAsGuestUserCommand"/>
+    /// </summary>
+    [TestMethod]
+    public void LoginAsGuestUserCommandTest()
+    {
+      User user = new User() { Email = "test@test.com", Password = "test" };
+      ApiConnectorMock mock = new ApiConnectorMock();
+      mock.Replies.Push(new ApiReply<User>()
+      {
+        WasSuccessful = true,
+        Result = User.GuestUser,
+      });
+      LocalStorageServiceMock localStorageServiceMock = new LocalStorageServiceMock();
+      CustomAuthenticationStateProvider authenticationStateProvider
+        = new CustomAuthenticationStateProvider(localStorageServiceMock, mock, navigationManagerMock);
+      LoginViewModel viewModel = new LoginViewModel(navigationManagerMock, authenticationStateProvider, mock, new EntityChangeValidator<User>())
+      { User = user };
+      viewModel.LoginAsGuestUserCommand.ExecuteCommand();
+
+      Assert.AreSame(User.GuestUser, mock.Parameters.Pop());
+      Assert.AreEqual("Users/Login", mock.Routes.Pop());
+      Assert.AreEqual(HttpMethod.Post, mock.Methods.Pop());
+    }
 
     private async Task LoginTestCore(bool successful)
     {

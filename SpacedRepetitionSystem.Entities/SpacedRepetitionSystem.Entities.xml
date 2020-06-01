@@ -561,6 +561,11 @@
             A user of the app
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.GuestUser">
+            <summary>
+            The test user
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Entities.Entities.Security.User.Id">
             <inheritdoc/>
         </member>

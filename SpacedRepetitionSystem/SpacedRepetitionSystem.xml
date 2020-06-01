@@ -89,6 +89,16 @@
             Gets the resource string indexed by the HomePageTitle key.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Messages.LoginAsGuestUser">
+            <summary>
+            Gets the resource string indexed by the LoginAsGuestUser key.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Messages.LoginAsGuestUserCommandToolTip">
+            <summary>
+            Gets the resource string indexed by the LoginAsGuestUserCommandToolTip key.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Messages.NewCard">
             <summary>
             Gets the resource string indexed by the NewCard key.
@@ -854,6 +864,11 @@
         <member name="P:SpacedRepetitionSystem.ViewModels.Identity.LoginViewModel.AuthenticationStateTask">
             <summary>
             The authentication state task
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Identity.LoginViewModel.LoginAsGuestUserCommand">
+            <summary>
+            Command for loging in as guest user
             </summary>
         </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Identity.LoginViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,Microsoft.AspNetCore.Components.Authorization.AuthenticationStateProvider,SpacedRepetitionSystem.Components.Middleware.IApiConnector,SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Security.User})">

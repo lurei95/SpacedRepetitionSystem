@@ -9,6 +9,16 @@ namespace SpacedRepetitionSystem.Entities.Entities.Security
   /// </summary>
   public sealed class User : IRootEntity
   {
+    /// <summary>
+    /// The test user
+    /// </summary>
+    public static User GuestUser { get; } = new User()
+    {
+      UserId = Guid.Parse("58C07E7D-6427-43E2-B318-EBAA9294F8A8"),
+      Email = "test@test.com",
+      Password = "test"
+    };
+
     ///<inheritdoc/>
     public object Id => UserId;
 
