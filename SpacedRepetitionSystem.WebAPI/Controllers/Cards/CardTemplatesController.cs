@@ -69,6 +69,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         AddNewFieldDefinition(existing, field, newId);
         newId++;
       }
+      UpdateFieldIds(existing);
       return Ok();
     }
 
@@ -87,6 +88,20 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
           || template.FieldDefinitions.Any(field => field.FieldName.Contains(searchText)));
       }
       return await query.ToListAsync();
+    }
+
+    ///<inheritdoc/>
+    protected override async Task<IActionResult> PostCoreAsync(CardTemplate entity)
+    {
+      UpdateFieldIds(entity);
+      return await base.PostCoreAsync(entity);
+    }
+
+    private void UpdateFieldIds(CardTemplate template)
+    {
+      for (int i = 0; i < template.FieldDefinitions.Count; i++)
+        if (template.FieldDefinitions[i].FieldId == default)
+          template.FieldDefinitions[i].FieldId = i + 1;
     }
 
     private void UpdateExistingFieldDefinition(CardFieldDefinition fieldDefinition1, CardFieldDefinition fieldDefinition2)

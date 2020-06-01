@@ -10,7 +10,7 @@ using SpacedRepetitionSystem.WebAPI.Core;
 namespace SpacedRepetitionSystem.WebAPI.Migrations
 {
     [DbContext(typeof(SpacedRepetionSystemDBContext))]
-    [Migration("20200522172711_InitialCreate")]
+    [Migration("20200601195730_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,7 +108,7 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
 
                     b.HasKey("CardTemplateId", "FieldId");
 
-                    b.HasIndex("FieldName")
+                    b.HasIndex("CardTemplateId", "FieldName")
                         .IsUnique();
 
                     b.ToTable("CardFieldDefinitions","Cards");

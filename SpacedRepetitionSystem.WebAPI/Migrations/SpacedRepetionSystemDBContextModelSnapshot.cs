@@ -106,7 +106,7 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
 
                     b.HasKey("CardTemplateId", "FieldId");
 
-                    b.HasIndex("FieldName")
+                    b.HasIndex("CardTemplateId", "FieldName")
                         .IsUnique();
 
                     b.ToTable("CardFieldDefinitions","Cards");

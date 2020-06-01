@@ -168,11 +168,20 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         CardTemplateId = 4,
         Title = "test123"
       };
+      CardFieldDefinition fieldDefinition = new CardFieldDefinition()
+      {
+        FieldName = "test",
+        CardTemplateId = 4
+      };
+      cardTemplate1.FieldDefinitions.Add(fieldDefinition);
       result = await controller.PostAsync(cardTemplate1);
       Assert.IsTrue(result is OkResult);
-      cardTemplate1 = context.Find<CardTemplate>((long)3);
+      cardTemplate1 = context.Set<CardTemplate>()
+        .Include(template => template.FieldDefinitions)
+        .SingleOrDefault(field => field.CardTemplateId == 4);
       Assert.IsNotNull(cardTemplate1);
       Assert.AreEqual(User.UserId, cardTemplate1.UserId);
+      Assert.AreEqual(1, cardTemplate1.FieldDefinitions[0].FieldId);
 
       //Invalid template is validated
       bool wasThrown = false;

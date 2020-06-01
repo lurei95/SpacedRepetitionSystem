@@ -237,10 +237,10 @@ namespace SpacedRepetitionSystem.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CardFieldDefinitions_FieldName",
+                name: "IX_CardFieldDefinitions_CardTemplateId_FieldName",
                 schema: "Cards",
                 table: "CardFieldDefinitions",
-                column: "FieldName",
+                columns: new[] { "CardTemplateId", "FieldName" },
                 unique: true);
 
             migrationBuilder.CreateIndex(

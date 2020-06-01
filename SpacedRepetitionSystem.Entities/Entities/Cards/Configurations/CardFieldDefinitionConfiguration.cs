@@ -26,7 +26,7 @@ namespace SpacedRepetitionSystem.Entities.Entities.Cards.Configurations
       builder.Property(definition => definition.IsRequired)
         .IsRequired();
 
-      builder.HasIndex(field => field.FieldName)
+      builder.HasIndex(field => new { field.CardTemplateId, field.FieldName })
         .IsUnique(); 
     }
   }
