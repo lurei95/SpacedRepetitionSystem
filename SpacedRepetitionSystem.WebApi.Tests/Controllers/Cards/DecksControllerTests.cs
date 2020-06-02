@@ -207,8 +207,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       DecksController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PostAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<Deck> result = await controller.PostAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //Create new valid entity
       Deck deck1 = new Deck()
@@ -218,7 +218,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         DefaultCardTemplateId = template.CardTemplateId
       };
       result = await controller.PostAsync(deck1);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       deck1 = context.Find<Deck>((long)3);
       Assert.IsNotNull(deck1);
       Assert.AreEqual(User.UserId, deck1.UserId);
@@ -272,8 +272,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       DecksController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PutAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<Deck> result = await controller.PutAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //deck does not exist in db -> not found
       Deck newDeck = new Deck()
@@ -283,12 +283,12 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         DefaultCardTemplateId = template.CardTemplateId
       };
       result = await controller.PutAsync(newDeck);
-      Assert.IsTrue(result is NotFoundResult);
+      Assert.IsTrue(result.Result is NotFoundResult);
 
       //Save changed entity
       deck.Title = "New Title";
       result = await controller.PutAsync(deck);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       Deck deck1 = context.Find<Deck>(deck.DeckId);
       Assert.AreEqual("New Title", deck1.Title);
 

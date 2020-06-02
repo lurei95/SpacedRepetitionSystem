@@ -99,6 +99,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (!result)
         return result;
 
+      NewCommand.IsEnabled = false;
       DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
       DeleteCommand.DeleteDialogTextFactory = (entity) => Messages.DeleteCardDialogText.FormatWith(entity.CardId);
       NewCommand.IsRelative = EditCommand.IsRelative = false;

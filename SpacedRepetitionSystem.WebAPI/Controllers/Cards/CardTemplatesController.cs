@@ -44,7 +44,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PutCoreAsync(CardTemplate entity)
+    protected override async Task<ActionResult<CardTemplate>> PutCoreAsync(CardTemplate entity)
     {
       CardTemplate existing = await Context.Set<CardTemplate>()
         .Include(template => template.FieldDefinitions)
@@ -70,7 +70,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         newId++;
       }
       UpdateFieldIds(existing);
-      return Ok();
+      return existing;
     }
 
     ///<inheritdoc/>
@@ -91,7 +91,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PostCoreAsync(CardTemplate entity)
+    protected override async Task<ActionResult<CardTemplate>> PostCoreAsync(CardTemplate entity)
     {
       UpdateFieldIds(entity);
       return await base.PostCoreAsync(entity);

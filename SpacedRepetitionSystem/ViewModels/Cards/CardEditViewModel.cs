@@ -176,9 +176,17 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       ShowStatisticsCommand.IsEnabled = DeleteCommand.IsEnabled = !IsNewEntity;
       SaveChangesCommand.OnSavedAction = (entity) =>
       {
-        if (IsNewEntity)
-          NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
+
       };
+    }
+
+    ///<inheritdoc/>
+    protected override void OnEntitySaved(Card entity)
+    {
+      if (IsNewEntity)
+        NavigationManager.NavigateTo($"Decks/{DeckId}/Cards/New", true);
+      else
+        base.OnEntitySaved(entity);
     }
 
     private async void ChangeDeck()

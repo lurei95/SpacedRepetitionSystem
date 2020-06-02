@@ -91,7 +91,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PostCoreAsync(PracticeHistoryEntry entity)
+    protected override async Task<ActionResult<PracticeHistoryEntry>> PostCoreAsync(PracticeHistoryEntry entity)
     {
       if (entity == null)
         return BadRequest();
@@ -111,13 +111,14 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         existingEntry.HardCount += entity.HardCount;
         existingEntry.WrongCount += entity.WrongCount;
         await UpdatePracticeInformationAsync(existingEntry);
+        return existingEntry;
       }
       else
       {
         await UpdatePracticeInformationAsync(entity);
         Context.Add(entity);
+        return entity;
       }
-      return Ok();
     }
 
     private async Task UpdatePracticeInformationAsync(PracticeHistoryEntry entry)
@@ -137,7 +138,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     { throw new NotSupportedException(); }
 
     ///<inheritdoc/>
-    protected override Task<IActionResult> PutCoreAsync(PracticeHistoryEntry entity)
+    protected override Task<ActionResult<PracticeHistoryEntry>> PutCoreAsync(PracticeHistoryEntry entity)
     { throw new NotSupportedException(); }
   }
 }

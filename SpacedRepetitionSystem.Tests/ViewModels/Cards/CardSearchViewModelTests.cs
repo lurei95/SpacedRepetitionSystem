@@ -141,10 +141,11 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     /// Tests the enabled logic for the new command
     /// </summary>
     [TestMethod]
-    public void NewCommandEnabledTest()
+    public async Task NewCommandEnabledTest()
     {
-      ApiConnectorMock mock = new ApiConnectorMock();
+      ApiConnectorMock mock = CreateMockForInitialize(true, true, new List<Card>(), new List<Deck>());
       CardSearchViewModel viewModel = new CardSearchViewModel(navigationManagerMock, mock);
+      await viewModel.InitializeAsync();
       Assert.IsFalse(viewModel.NewCommand.IsEnabled);
       viewModel.SelectedEntity = new Card();
       Assert.IsTrue(viewModel.NewCommand.IsEnabled);

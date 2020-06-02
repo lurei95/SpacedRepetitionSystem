@@ -818,6 +818,12 @@
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.InitializeAsync">
             <inheritdoc/>
         </member>
+        <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.OnEntitySaved(`0)">
+            <summary>
+            actions performened when the entity is saved
+            </summary>
+            <param name="entity">the returned entity</param>
+        </member>
         <member name="M:SpacedRepetitionSystem.Components.ViewModels.EditViewModelBase`1.CreateNewEntity">
             <summary>
             Creates a new Entity

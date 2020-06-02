@@ -77,16 +77,18 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
     }
 
     /// <summary>
-    /// Tests <see cref="EditViewModelBase{TEntity}.RegisterPropertyProxy(PropertyProxy)"/>
+    /// Tests <see cref="EditViewModelBase{TEntity}.SaveChangesCommand.OnSavedAction"/>
     /// </summary>
     [TestMethod]
-    public async Task SavingEntitySetsIsNewEntityToFalseTest()
+    public async Task OnSavedActionTest()
     {
+      Card card = new Card();
       TestViewModel viewModel = new TestViewModel(navigationManagerMock, apiConnectorMock, new EntityChangeValidator<Card>());
-      apiConnectorMock.Replies.Push(new ApiReply() { WasSuccessful = true });
+      apiConnectorMock.Replies.Push(new ApiReply<Card>() { WasSuccessful = true, Result = card });
       await viewModel.InitializeAsync();
       viewModel.SaveChangesCommand.ExecuteCommand();
 
+      Assert.AreSame(card, viewModel.Entity);
       Assert.IsFalse(viewModel.GetIsNewEntity());
     }
 

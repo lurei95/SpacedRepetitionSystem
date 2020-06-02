@@ -62,11 +62,11 @@ namespace SpacedRepetitionSystem.Components.Tests
     }
 
     ///<inheritdoc/>
-    public async Task<ApiReply> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
+    public async Task<ApiReply<TEntity>> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
     {
       Parameters.Push(entity);
       Methods.Push(HttpMethod.Post);
-      return await Task.FromResult(Replies.Pop());
+      return await Task.FromResult(Replies.Pop() as ApiReply<TEntity>);
     }
 
     ///<inheritdoc/>
@@ -88,11 +88,11 @@ namespace SpacedRepetitionSystem.Components.Tests
     }
 
     ///<inheritdoc/>
-    public async Task<ApiReply> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
+    public async Task<ApiReply<TEntity>> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
     {
       Parameters.Push(entity);
       Methods.Push(HttpMethod.Put);
-      return await Task.FromResult(Replies.Pop() as ApiReply);
+      return await Task.FromResult(Replies.Pop() as ApiReply<TEntity>);
     }
   }
 }

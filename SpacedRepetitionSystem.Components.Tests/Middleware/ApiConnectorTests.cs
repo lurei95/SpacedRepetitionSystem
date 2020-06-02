@@ -68,14 +68,21 @@ namespace SpacedRepetitionSystem.Components.Tests.Middleware
       HttpClientFactoryMock mock = CreateMock<object>(HttpStatusCode.OK, null);
       ApiConnector connector = new ApiConnector(mock) { CurrentUser = user };
       user.AccessToken = GenerateAccessToken(user.UserId, DateTime.Now.AddMilliseconds(100));
+
       HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
-      string json = JsonConvert.SerializeObject(newUser, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+      string json = JsonConvert.SerializeObject(new Card(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
       StringContent stringContent = new StringContent(json);
+      responseMessage.Content = stringContent;
+      mock.ResponseMessages.Push(responseMessage);
+
+      responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+      json = JsonConvert.SerializeObject(newUser, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+      stringContent = new StringContent(json);
       responseMessage.Content = stringContent;
       mock.ResponseMessages.Push(responseMessage);
       await Task.Delay(100);
 
-      ApiReply reply = await connector.PutAsync(card);
+      ApiReply<Card> reply = await connector.PutAsync(card);
       TestApiReply(reply, true, null, HttpStatusCode.OK);
       HttpRequestMessage request = TestRequest(mock, "Cards", HttpMethod.Put, newUser.AccessToken);
       string requestBody = await request.Content.ReadAsStringAsync();
@@ -150,6 +157,12 @@ namespace SpacedRepetitionSystem.Components.Tests.Middleware
       Card card = new Card() { CardId = 1 };
       HttpClientFactoryMock mock = CreateMock<object>(HttpStatusCode.OK, null);
       ApiConnector connector = new ApiConnector(mock) { CurrentUser = user };
+
+      HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+      string json = JsonConvert.SerializeObject(new Card(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+      StringContent stringContent = new StringContent(json);
+      responseMessage.Content = stringContent;
+      mock.ResponseMessages.Push(responseMessage);
 
       ApiReply reply = await connector.PostAsync(card);
       TestApiReply(reply, true, null, HttpStatusCode.OK);
@@ -231,6 +244,12 @@ namespace SpacedRepetitionSystem.Components.Tests.Middleware
       Card card = new Card() { CardId = 1 };
       HttpClientFactoryMock mock = CreateMock<object>(HttpStatusCode.OK, null);
       ApiConnector connector = new ApiConnector(mock) { CurrentUser = user };
+
+      HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+      string json = JsonConvert.SerializeObject(new Card(), new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.All });
+      StringContent stringContent = new StringContent(json);
+      responseMessage.Content = stringContent;
+      mock.ResponseMessages.Push(responseMessage);
 
       ApiReply reply = await connector.PutAsync(card);
       TestApiReply(reply, true, null, HttpStatusCode.OK);

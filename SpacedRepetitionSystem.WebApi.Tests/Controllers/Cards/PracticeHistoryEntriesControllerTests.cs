@@ -211,8 +211,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       PracticeHistoryEntriesController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PostAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<PracticeHistoryEntry> result = await controller.PostAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //Same day -> update existing
       PracticeHistoryEntry newEntry = new PracticeHistoryEntry()
@@ -228,7 +228,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         WrongCount = 1
       };
       result = await controller.PostAsync(newEntry);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       newEntry = context.Find<PracticeHistoryEntry>((long)5);
       Assert.IsNull(newEntry);
       newEntry = context.Find<PracticeHistoryEntry>((long)1);
@@ -251,7 +251,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         WrongCount = 0
       };
       result = await controller.PostAsync(newEntry);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       newEntry = context.Find<PracticeHistoryEntry>((long)5);
       Assert.AreEqual(1, newEntry.CorrectCount);
       field1 = context.Find<CardField>((long)1, 1);
@@ -272,7 +272,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         WrongCount = 0
       };
       result = await controller.PostAsync(newEntry);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       field1 = context.Find<CardField>((long)1, 1);
       Assert.AreEqual((long)1, field1.ProficiencyLevel);
       Assert.AreEqual(DateTime.Today.AddDays(2).Date, field1.DueDate.Date);
@@ -310,7 +310,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       bool wasThrown = false;
       try
       {
-        IActionResult result = await controller.PutAsync(entry1);
+        ActionResult<PracticeHistoryEntry> result = await controller.PutAsync(entry1);
       }
       catch (NotSupportedException) { wasThrown = true; }
       Assert.IsTrue(wasThrown);

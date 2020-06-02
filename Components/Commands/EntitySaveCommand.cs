@@ -32,7 +32,7 @@ namespace SpacedRepetitionSystem.Components.Commands
     ///<inheritdoc/>
     public override async void ExecuteCommand(object param = null)
     {
-      ApiReply reply;
+      ApiReply<TEntity> reply;
       if (IsNewEntity)
         reply = await ApiConnector.PostAsync(Entity);
       else
@@ -41,7 +41,7 @@ namespace SpacedRepetitionSystem.Components.Commands
       if (reply.WasSuccessful)
       {
         NotificationMessageProvider.ShowSuccessMessage(Messages.EntitySaved.FormatWith(Entity.GetDisplayName()));
-        OnSavedAction.Invoke(Entity);
+        OnSavedAction.Invoke(reply.Result);
       }
       else
         NotificationMessageProvider.ShowErrorMessage(reply.ResultMessage);

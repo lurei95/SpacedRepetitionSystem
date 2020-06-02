@@ -82,7 +82,8 @@ namespace SpacedRepetitionSystem.Components.Tests.ViewModels
       bool result = await viewModel.CallLoadAsync();
       Assert.AreEqual(successful, result);
       Assert.AreEqual(12, apiConnectorMock.Parameters.Pop());
-      Assert.AreEqual(HttpMethod.Get, apiConnectorMock.Methods.Pop());
+      Assert.AreEqual(HttpMethod.Get, apiConnectorMock.Methods.Pop()
+        );
       if (successful)
         Assert.AreSame(card, viewModel.Entity);
       else

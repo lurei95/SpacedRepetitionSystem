@@ -33,7 +33,7 @@ namespace SpacedRepetitionSystem.Components.Middleware
     /// Updates an existing entity
     /// </summary>
     /// <param name="entity">The updated entity</param>
-    Task<ApiReply> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity;
+    Task<ApiReply<TEntity>> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity;
 
     /// <summary>
     /// Deletes an existing entity
@@ -45,7 +45,7 @@ namespace SpacedRepetitionSystem.Components.Middleware
     /// Creates a new entity
     /// </summary>
     /// <param name="entity">The new entity</param>
-    Task<ApiReply> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity;
+    Task<ApiReply<TEntity>> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity;
 
     /// <summary>
     /// Performs a post request to the specified route with value as content

@@ -315,6 +315,9 @@
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.CreateNewEntity">
             <inheritdoc/>
         </member>
+        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel.OnEntitySaved(SpacedRepetitionSystem.Entities.Entities.Cards.Card)">
+            <inheritdoc/>
+        </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.CardSearchViewModel">
             <summary>
             SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>

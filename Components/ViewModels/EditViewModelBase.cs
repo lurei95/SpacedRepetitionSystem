@@ -16,6 +16,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
   /// <typeparam name="TEntity">The entity type</typeparam>
   public abstract class EditViewModelBase<TEntity> : SingleEntityViewModelBase<TEntity> where TEntity : class, IRootEntity, new()
   {
+    private bool isNewEntity;
     private readonly EntityChangeValidator<TEntity> changeValidator;
 
     ///<inheritdoc/>
@@ -24,7 +25,16 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// <summary>
     /// Whether the entity is new
     /// </summary>
-    public bool IsNewEntity { get; set; }
+    public bool IsNewEntity 
+    { 
+      get => isNewEntity; 
+      set
+      {
+        isNewEntity = value;
+        if (SaveChangesCommand != null)
+          SaveChangesCommand.IsNewEntity = value;
+      }
+    }
 
     /// <summary>
     /// Command for Saving the changes
@@ -85,10 +95,22 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         Entity = Entity,
         ToolTip = Messages.SaveCommandToolTip.FormatWith(EntityNameHelper.GetName<TEntity>()),
         IsNewEntity = IsNewEntity,
-        OnSavedAction = (entity) => IsNewEntity = false
+        OnSavedAction = (entity) => OnEntitySaved(entity)
       };
 
       return true;
+    }
+
+    /// <summary>
+    /// actions performened when the entity is saved
+    /// </summary>
+    /// <param name="entity">the returned entity</param>
+    protected virtual void OnEntitySaved(TEntity entity)
+    {
+      Entity = entity;
+      SaveChangesCommand.Entity = entity;
+      IsNewEntity = false;
+      OnPropertyChanged(null);
     }
 
     /// <summary>

@@ -159,8 +159,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CardTemplatesController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PostAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<CardTemplate> result = await controller.PostAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //Create new valid entity
       CardTemplate cardTemplate1 = new CardTemplate()
@@ -175,7 +175,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       };
       cardTemplate1.FieldDefinitions.Add(fieldDefinition);
       result = await controller.PostAsync(cardTemplate1);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       cardTemplate1 = context.Set<CardTemplate>()
         .Include(template => template.FieldDefinitions)
         .SingleOrDefault(field => field.CardTemplateId == 4);
@@ -232,8 +232,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CardTemplatesController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PutAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<CardTemplate> result = await controller.PutAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //template does not exist in db -> not found
       CardTemplate newTemplate = new CardTemplate()
@@ -242,12 +242,12 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         Title = "dfsdf"
       };
       result = await controller.PutAsync(newTemplate);
-      Assert.IsTrue(result is NotFoundResult);
+      Assert.IsTrue(result.Result is NotFoundResult);
 
       //Save changed entity
       template2.Title = "New Title";
       result = await controller.PutAsync(template2);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       CardTemplate template3 = context.Find<CardTemplate>(template2.CardTemplateId);
       Assert.AreEqual("New Title", template3.Title);
       Assert.AreEqual(1, template3.FieldDefinitions.Count);
@@ -278,8 +278,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       //Save changed entity
       template1.FieldDefinitions[0].FieldName = "NewFieldName";
       template1.FieldDefinitions[0].ShowInputForPractice = true;
-      IActionResult result = await controller.PutAsync(template1);
-      Assert.IsTrue(result is OkResult);
+      ActionResult<CardTemplate> result = await controller.PutAsync(template1);
+      Assert.IsNotNull(result.Value);
       CardFieldDefinition definition3 = context.Find<CardFieldDefinition>(template1.CardTemplateId, 1);
       Assert.IsTrue(definition3.ShowInputForPractice);
       Assert.AreEqual("NewFieldName", definition3.FieldName);
@@ -335,8 +335,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
 
       //Save changed entity
       template1.FieldDefinitions.Clear();
-      IActionResult result = await controller.PutAsync(template1);
-      Assert.IsTrue(result is OkResult);
+      ActionResult<CardTemplate> result = await controller.PutAsync(template1);
+      Assert.IsNotNull(result.Value);
       CardTemplate template3 = context.Find<CardTemplate>((long)1);
       Assert.AreEqual(0, template3.FieldDefinitions.Count);
       Card card1 = context.Find<Card>((long)1);
@@ -360,8 +360,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
         FieldName = "Field2",
       };
       template1.FieldDefinitions.Add(fieldDefinition2);
-      IActionResult result = await controller.PutAsync(template1);
-      Assert.IsTrue(result is OkResult);
+      ActionResult<CardTemplate> result = await controller.PutAsync(template1);
+      Assert.IsNotNull(result.Value);
       CardTemplate template3 = context.Set<CardTemplate>().FirstOrDefault(template => template.CardTemplateId == 1);
       Assert.AreEqual(2, template3.FieldDefinitions.Count);
       Assert.AreEqual(2, template3.FieldDefinitions[1].FieldId);

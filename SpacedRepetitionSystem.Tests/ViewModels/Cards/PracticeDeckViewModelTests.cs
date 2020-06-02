@@ -316,7 +316,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
       ApiConnectorMock mock = CreateMockForInitialize(true, deck);
       PracticeDeckViewModel viewModel = new PracticeDeckViewModel(navigationManagerMock, mock);
       await viewModel.InitializeAsync();
-      mock.Replies.Push(new ApiReply() { WasSuccessful = true });
+      mock.Replies.Push(new ApiReply<PracticeHistoryEntry>() { WasSuccessful = true });
       long cardId = viewModel.Current.CardId;
       int fieldId = viewModel.Current.FieldId;
       viewModel.InputText = expectedResult ? viewModel.Current.Value : null;
@@ -348,7 +348,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
       PracticeDeckViewModel viewModel = new PracticeDeckViewModel(navigationManagerMock, mock)
       { IsShowingSolution = true };
       await viewModel.InitializeAsync();
-      mock.Replies.Push(new ApiReply() { WasSuccessful = true });
+      mock.Replies.Push(new ApiReply<PracticeHistoryEntry>() { WasSuccessful = true, Result = new PracticeHistoryEntry() });
       long cardId = viewModel.Current.CardId;
       int fieldId = viewModel.Current.FieldId;
       CardField previousField = viewModel.Current;

@@ -152,7 +152,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     }
 
     ///<inheritdoc/>
-    protected override Task<IActionResult> PostCoreAsync(User entity)
+    protected override Task<ActionResult<User>> PostCoreAsync(User entity)
     { throw new NotSupportedException(); }
 
     ///<inheritdoc/>
@@ -160,7 +160,7 @@ namespace SpacedRepetitionSystem.Logic.Controllers.Security
     { throw new NotSupportedException(); }
 
     ///<inheritdoc/>
-    protected override Task<IActionResult> PutCoreAsync(User entity)
+    protected override Task<ActionResult<User>> PutCoreAsync(User entity)
     { throw new NotSupportedException(); }
 
     private bool ValidateRefreshToken(User user, string refreshToken)

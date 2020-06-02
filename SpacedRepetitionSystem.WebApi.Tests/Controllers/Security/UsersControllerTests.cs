@@ -96,8 +96,6 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
 
     /// <summary>
     /// Tests <see cref="UsersController.PostAsync(User entity)/>
-    /// </summary>
-    /// <returns></returns>
     [TestMethod]
     public async Task PostUserNotSupportedTest()
     {
@@ -105,8 +103,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       UsersController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PostAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<User> result = await controller.PostAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //Create new valid entity
       bool wasThrown = false;
@@ -129,8 +127,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       UsersController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PostAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<User> result = await controller.PostAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //Create new valid entity
       bool wasThrown = false;
@@ -153,8 +151,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       UsersController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PostAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<User> result = await controller.PostAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //Create new valid entity
       bool wasThrown = false;

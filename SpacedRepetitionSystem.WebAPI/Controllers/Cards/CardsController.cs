@@ -66,7 +66,7 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
     }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PutCoreAsync(Card entity)
+    protected override async Task<ActionResult<Card>> PutCoreAsync(Card entity)
     {
       Card existing = await Context.Set<Card>()
         .Include(card => card.Fields)
@@ -84,14 +84,14 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         else
           return BadRequest();
       }
-      return Ok();
+      return existing;
     }
 
     ///<inheritdoc/>
-    protected override async Task<IActionResult> PostCoreAsync(Card entity)
+    protected override async Task<ActionResult<Card>> PostCoreAsync(Card entity)
     {
-      IActionResult result = await base.PostCoreAsync(entity);
-      if (result is OkResult)
+      ActionResult<Card> result = await base.PostCoreAsync(entity);
+      if (result.Result is OkResult)
         foreach (CardField field in entity.Fields)
           if (field.CardFieldDefinition != null)
             Context.Entry(field.CardFieldDefinition).State = EntityState.Detached;

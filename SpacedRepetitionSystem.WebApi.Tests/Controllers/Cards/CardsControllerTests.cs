@@ -231,8 +231,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CardsController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PostAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<Card> result = await controller.PostAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //Create new valid entity
       Card card1 = new Card()
@@ -244,7 +244,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       card1.Fields.Add(new CardField() { FieldId = 1, FieldName = "test1", Value = "test1" });
       card1.Fields.Add(new CardField() { FieldId = 2, FieldName = "test2", Value = "test2" });
       result = await controller.PostAsync(card1);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       card1 = context.Find<Card>((long)3);
       Assert.IsNotNull(card1);
       Assert.AreEqual(User.UserId, card1.UserId);
@@ -298,8 +298,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       CardsController controller = CreateController(context);
 
       //null as parameter -> bad request
-      IActionResult result = await controller.PutAsync(null);
-      Assert.IsTrue(result is BadRequestResult);
+      ActionResult<Card> result = await controller.PutAsync(null);
+      Assert.IsTrue(result.Result is BadRequestResult);
 
       //card does not exist in db -> not found
       Card newCard = new Card()
@@ -311,12 +311,12 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       newCard.Fields.Add(new CardField() { FieldId = 1, FieldName = "test1", Value = "test1" });
       newCard.Fields.Add(new CardField() { FieldId = 2, FieldName = "test2", Value = "test2" });
       result = await controller.PutAsync(newCard);
-      Assert.IsTrue(result is NotFoundResult);
+      Assert.IsTrue(result.Result is NotFoundResult);
 
       //Save changed entity
       card.Tags = "test";
       result = await controller.PutAsync(card);
-      Assert.IsTrue(result is OkResult);
+      Assert.IsNotNull(result.Value);
       Card card1 = context.Find<Card>(card.CardId);
       Assert.AreEqual("test", card1.Tags);
       Assert.AreEqual(2, card1.Fields.Count);

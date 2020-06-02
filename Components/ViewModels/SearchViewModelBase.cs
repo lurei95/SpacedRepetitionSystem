@@ -91,7 +91,6 @@ namespace SpacedRepetitionSystem.Components.ViewModels
         CommandText = Messages.New,
         ToolTip = Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<TEntity>()),
         IsRelative = true,
-        IsEnabled = false,
         TargetUri = "/New"
       };
     }

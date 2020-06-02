@@ -68,14 +68,14 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// </summary>
     /// <param name="entity">The updated entity</param>
     [HttpPut]
-    public async Task<IActionResult> PutAsync([FromBody] TEntity entity)
+    public async Task<ActionResult<TEntity>> PutAsync([FromBody] TEntity entity)
     {
       if (entity == null)
         return await Task.FromResult(BadRequest());
       string error = CommitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
-        IActionResult result = await PutCoreAsync(entity);
+        ActionResult<TEntity> result = await PutCoreAsync(entity);
         await Context.SaveChangesAsync();
         return result;
       }
@@ -88,7 +88,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// </summary>
     /// <param name="entity">The new entity</param>
     [HttpPost]
-    public async Task<IActionResult> PostAsync([FromBody] TEntity entity)
+    public async Task<ActionResult<TEntity>> PostAsync([FromBody] TEntity entity)
     {
       if (entity == null)
         return await Task.FromResult(BadRequest());
@@ -97,7 +97,7 @@ namespace SpacedRepetitionSystem.WebAPI.Core
       string error = CommitValidator.Validate(entity);
       if (string.IsNullOrEmpty(error))
       {
-        IActionResult result = await PostCoreAsync(entity);
+        ActionResult<TEntity> result = await PostCoreAsync(entity);
         await Context.SaveChangesAsync();
         return result;
       }
@@ -129,14 +129,14 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// Updates an existing entity
     /// </summary>
     /// <param name="entity">The updated entity</param>
-    protected virtual async Task<IActionResult> PutCoreAsync(TEntity entity) 
+    protected virtual async Task<ActionResult<TEntity>> PutCoreAsync(TEntity entity) 
     {
       TEntity exisiting = await Context.FindAsync<TEntity>(entity.Id);
       if (exisiting == null)
         return NotFound();
       Context.Entry(exisiting).State = EntityState.Detached;
       Context.Entry(entity).State = EntityState.Modified;
-      return await Task.FromResult(Ok());
+      return await Task.FromResult(entity);
     }
 
     /// <summary>
@@ -156,10 +156,10 @@ namespace SpacedRepetitionSystem.WebAPI.Core
     /// Creates a new entity
     /// </summary>
     /// <param name="entity">The new entity</param>
-    protected virtual async Task<IActionResult> PostCoreAsync(TEntity entity)
+    protected virtual async Task<ActionResult<TEntity>> PostCoreAsync(TEntity entity)
     {
       Context.Add(entity);
-      return await Task.FromResult(Ok());
+      return await Task.FromResult(entity);
     }
 
     /// <summary>

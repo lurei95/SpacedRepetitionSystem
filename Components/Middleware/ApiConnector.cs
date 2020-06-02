@@ -40,16 +40,16 @@ namespace SpacedRepetitionSystem.Components.Middleware
     { return await CallApi<List<TEntity>>(HttpMethod.Get, new TEntity().Route, searchParameters); }
 
     ///<inheritdoc/>
-    public async Task<ApiReply> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
-    { return await CallApi(HttpMethod.Put, entity.Route, entity); }
+    public async Task<ApiReply<TEntity>> PutAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
+    { return await CallApi<TEntity>(HttpMethod.Put, entity.Route, entity); }
 
     ///<inheritdoc/>
     public async Task<ApiReply> DeleteAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
     { return await CallApi(HttpMethod.Delete, entity.Route, entity); }
 
     ///<inheritdoc/>
-    public async Task<ApiReply> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
-    { return await CallApi(HttpMethod.Post, entity.Route, entity); }
+    public async Task<ApiReply<TEntity>> PostAsync<TEntity>(TEntity entity) where TEntity : IRootEntity
+    { return await CallApi<TEntity>(HttpMethod.Post, entity.Route, entity); }
 
     ///<inheritdoc/>
     public async Task<ApiReply<TReturn>> PostAsync<TReturn>(string route, object value)
