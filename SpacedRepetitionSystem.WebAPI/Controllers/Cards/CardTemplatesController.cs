@@ -53,12 +53,12 @@ namespace SpacedRepetitionSystem.WebAPI.Controllers.Cards
         return NotFound();
       existing.Title = entity.Title;
 
-      foreach (CardFieldDefinition field in existing.FieldDefinitions.Where(field => !field.IsRequired))
+      foreach (CardFieldDefinition field in existing.FieldDefinitions)
       {
         CardFieldDefinition field1 = entity.FieldDefinitions.SingleOrDefault(x => x.FieldId == field.FieldId);
         if (field1 != null) // Update exisiting
           UpdateExistingFieldDefinition(field, field1);
-        else // Remove old
+        else if (!field.IsRequired)  // Remove old
           RemoveFieldDefinition(field);
       }
 

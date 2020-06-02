@@ -26,7 +26,7 @@
          {
             int c = i;
             <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
-              <TextEdit Caption="@("Field " + i)" Property="ViewModel.FieldNameProperties[i]"></TextEdit>
+              <TextEdit Caption="@("Field " + (i + 1))" Property="ViewModel.FieldNameProperties[i]"></TextEdit>
               <Button IsIconButton="true" IsVisible="@(!ViewModel.FieldDefinitions[c].IsRequired)" TextColor="#e74c3c" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="i"></Button>
             </div>
             <div class="row flex-row customRow d-felx">
