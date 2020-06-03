@@ -70,6 +70,22 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     }
 
     /// <summary>
+    /// Tests that <see cref="DeckSearchViewModel.PracticeDeckCommand"/> is only enabled when the deck has cards
+    /// </summary>
+    [TestMethod]
+    public async Task PracticeDeckCommandEnabledTest()
+    {
+      Deck deck = new Deck() { DeckId = 2 };
+      ApiConnectorMock mock = CreateMockForInitialize(new List<Deck>());
+      DeckSearchViewModel viewModel = new DeckSearchViewModel(navigationManagerMock, mock);
+      await viewModel.InitializeAsync();
+
+      Assert.IsFalse(viewModel.PracticeDeckCommand.IsEnabledFunction(deck));
+      deck.CardCount = 1;
+      Assert.IsTrue(viewModel.PracticeDeckCommand.IsEnabledFunction(deck));
+    }
+
+    /// <summary>
     /// Tests that all commands are initialized correctly
     /// </summary>
     [TestMethod]
@@ -98,7 +114,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
 
       Assert.IsNotNull(viewModel.PracticeDeckCommand.CommandText);
       Assert.IsNotNull(viewModel.PracticeDeckCommand.ToolTip);
-      Assert.AreEqual("/2/Practice", viewModel.PracticeDeckCommand.TargetUriFactory.Invoke(deck.DeckId));
+      Assert.AreEqual("/2/Practice", viewModel.PracticeDeckCommand.TargetUriFactory.Invoke(deck));
       Assert.IsTrue(viewModel.PracticeDeckCommand.IsRelative);
 
       Assert.IsNotNull(viewModel.DeleteCommand.CommandText);

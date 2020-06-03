@@ -168,7 +168,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         CommandText = Messages.Practice,
         ToolTip = Messages.PracticeCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
         IsRelative = true,
-        IsEnabled = !IsNewEntity,
+        IsEnabled = !IsNewEntity && Entity.Cards.Count > 0,
         TargetUri = "/Practice"
       };
       EditCardCommand = new NavigationCommand(NavigationManager)

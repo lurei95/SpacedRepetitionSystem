@@ -88,7 +88,8 @@ namespace SpacedRepetitionSystem.ViewModels
 
       PracticeDeckCommand = new NavigationCommand(navigationManager)
       {
-        TargetUriFactory = (param) => $"/Decks/{(long)param}/Practice",
+        IsEnabledFunction = (parameter) => (parameter as Deck).CardCount > 0,
+        TargetUriFactory = (param) => $"/Decks/{(param as Deck).DeckId}/Practice",
         CommandText = Messages.Practice,
         ToolTip = Messages.PracticeCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>())
       };

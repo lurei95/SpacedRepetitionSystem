@@ -32,6 +32,11 @@
             Whether the button is enabled
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Commands.CommandBase.IsEnabledFunction">
+            <summary>
+            Whether the button is enabled
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Commands.CommandBase.Icon">
             <summary>
             The icon of the button

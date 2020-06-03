@@ -13,7 +13,7 @@
             title="@Command?.ToolTip"
             @onclick="ButtonClicked"
             class="btn @ClassString"
-            disabled="@(Command?.IsEnabled == false)"
+            disabled="@(!Enabled)"
             style="@Style">
       @if (!string.IsNullOrEmpty(Command?.Icon))
       {
@@ -32,6 +32,12 @@
   private string ClassString => (IsIconButton ? "icon-button" : " ") + (string.IsNullOrEmpty(Class) ? "" : " ") + Class;
 
   private string TextColorString => (!string.IsNullOrEmpty(TextColor) ? "color: " + TextColor + ";" : null);
+
+  private bool Enabled => Command == null 
+    ? true 
+    : Command.IsEnabledFunction != null 
+      ? Command.IsEnabledFunction.Invoke(CommandParameter) 
+      : Command.IsEnabled;
 
   /// <summary>
   /// Whether the button is visible

@@ -42,8 +42,9 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       {
         CommandText = Messages.Practice,
         IsRelative = true,
+        IsEnabledFunction = (parameter) => (parameter as Deck).CardCount > 0,
         ToolTip = Messages.PracticeCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
-        TargetUriFactory = (param) => $"/{(long)param}/Practice"
+        TargetUriFactory = (param) => $"/{(param as Deck).DeckId}/Practice"
       };
       AddCardCommand = new NavigationCommand(navigationManager)
       {

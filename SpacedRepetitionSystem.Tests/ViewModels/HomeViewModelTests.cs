@@ -63,6 +63,23 @@ namespace SpacedRepetitionSystem.Tests.ViewModels
     }
 
     /// <summary>
+    /// Tests that <see cref="HomeViewModel.PracticeDeckCommand"/> is only enabled when the deck has cards
+    /// </summary>
+    [TestMethod]
+    public async Task PracticeDeckCommandEnabledTest()
+    {
+      Deck deck = new Deck() { Title = "test", DeckId = 1 };
+      PracticeHistoryEntry entry = new PracticeHistoryEntry() { DeckId = deck.DeckId };
+      ApiConnectorMock mock = IntializeApiConnectorMock(new List<Deck>(), new List<PracticeHistoryEntry>() { entry }, deck);
+      HomeViewModel viewModel = new HomeViewModel(navigationManagerMock, mock);
+      await viewModel.InitializeAsync();
+
+      Assert.IsFalse(viewModel.PracticeDeckCommand.IsEnabledFunction(deck));
+      deck.CardCount = 1;
+      Assert.IsTrue(viewModel.PracticeDeckCommand.IsEnabledFunction(deck));
+    }
+
+    /// <summary>
     /// Tests that all commands are initialized correctly
     /// </summary>
     [TestMethod]

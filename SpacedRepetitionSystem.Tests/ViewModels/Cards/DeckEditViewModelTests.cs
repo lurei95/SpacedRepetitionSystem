@@ -150,7 +150,7 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
       viewModel = new DeckEditViewModel(navigationManagerMock, mock, new EntityChangeValidator<Deck>())
       { Id = 1 };
       await viewModel.InitializeAsync();
-      Assert.IsTrue(viewModel.PracticeDeckCommand.IsEnabled);
+      Assert.IsFalse(viewModel.PracticeDeckCommand.IsEnabled);
       Assert.IsTrue(viewModel.ShowStatisticsCommand.IsEnabled);
       Assert.IsTrue(viewModel.DeleteCommand.IsEnabled);
       Assert.IsTrue(viewModel.EditCardCommand.IsEnabled);
@@ -158,6 +158,14 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
       Assert.IsTrue(viewModel.NewCardCommand.IsEnabled);
       Assert.IsTrue(viewModel.SaveChangesCommand.IsEnabled);
       Assert.IsTrue(viewModel.CloseCommand.IsEnabled);
+
+      //Existing entity with cards
+      deck.Cards.Add(new Card());
+      mock = CreateMockForInitialize(true, true, deck, new List<CardTemplate>() { template });
+      viewModel = new DeckEditViewModel(navigationManagerMock, mock, new EntityChangeValidator<Deck>())
+      { Id = 1 };
+      await viewModel.InitializeAsync();
+      Assert.IsTrue(viewModel.PracticeDeckCommand.IsEnabled);
     }
 
     /// <summary>

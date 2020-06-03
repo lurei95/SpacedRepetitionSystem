@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace SpacedRepetitionSystem.Components.Commands
@@ -34,6 +35,12 @@ namespace SpacedRepetitionSystem.Components.Commands
         }
       }
     }
+
+
+    /// <summary>
+    /// Whether the button is enabled
+    /// </summary>
+    public Func<object, bool> IsEnabledFunction { get; set; }
 
     /// <summary>
     /// The icon of the button
