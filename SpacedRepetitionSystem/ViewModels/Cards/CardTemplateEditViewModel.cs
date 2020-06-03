@@ -43,6 +43,22 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     public List<PropertyProxy> FieldNameProperties { get; } = new List<PropertyProxy>();
 
     /// <summary>
+    /// Title of the template
+    /// </summary>
+    public string TemplateTitle
+    {
+      get => Entity?.Title;
+      set
+      {
+        if (value != Entity.Title)
+        {
+          Entity.Title = value;
+          OnPropertyChanged();
+        }
+      }
+    }
+
+    /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="navigationManager">NavigationManager (Injected)</param>
@@ -78,8 +94,8 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       RemoveFieldDefinitionCommand.IsEnabled = FieldDefinitions.Count > 2;
 
       TitleProperty = new PropertyProxy(
-        () => Entity.Title,
-        (value) => Entity.Title = value,
+        () => TemplateTitle,
+        (value) => TemplateTitle = value,
         nameof(Entity.Title),
         Entity
       );

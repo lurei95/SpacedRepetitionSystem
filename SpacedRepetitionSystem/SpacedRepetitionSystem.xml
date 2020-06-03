@@ -394,6 +394,11 @@
             FieldName Properties
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateEditViewModel.TemplateTitle">
+            <summary>
+            Title of the template
+            </summary>
+        </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateEditViewModel.#ctor(Microsoft.AspNetCore.Components.NavigationManager,SpacedRepetitionSystem.Components.Middleware.IApiConnector,SpacedRepetitionSystem.Entities.Validation.Core.EntityChangeValidator{SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate})">
             <summary>
             Constructor
@@ -434,6 +439,11 @@
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel.CardTemplateId">
             <summary>
             Id of the definition of the card
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel.DeckTitle">
+            <summary>
+            Title of the deck
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel.CardTemplateTitleProperty">

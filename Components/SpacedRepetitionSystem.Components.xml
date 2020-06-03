@@ -382,6 +382,11 @@
             ChildContent
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Edits.TextEdit.MaxLength">
+            <summary>
+            Maximum input length 
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Edits.TextEdit.Value">
             <summary>
             Value of the text edit

@@ -38,6 +38,22 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     }
 
     /// <summary>
+    /// Title of the deck
+    /// </summary>
+    public string DeckTitle
+    {
+      get => Entity?.Title;
+      set
+      {
+        if (value != Entity.Title)
+        {
+          Entity.Title = value;
+          OnPropertyChanged();
+        }
+      }
+    }
+
+    /// <summary>
     /// Property for <see cref="CardTemplateTitle"/>
     /// </summary>
     public PropertyProxy CardTemplateTitleProperty { get; private set; }
@@ -129,8 +145,8 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       CardTemplateTitleProperty.Validator = (value, entity) => ValidateCardTemplateTitle(value);
 
       TitleProperty = new PropertyProxy(
-        () => Entity.Title,
-        (value) => Entity.Title = value,
+        () => DeckTitle,
+        (value) => DeckTitle = value,
         nameof(Entity.Title),
         Entity
       );

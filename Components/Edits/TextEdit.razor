@@ -13,11 +13,19 @@
     </div>
     @if (Property != null)
     {
-      <input placeholder="@Placeholder" autocomplete="off" id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Property.Value" @bind:event="oninput" @onkeydown="KeyDown" />
+      <input maxlength="@MaxLength" placeholder="@Placeholder" 
+             autocomplete="off" id="@(Id + "-input")" 
+             disabled="@(!IsEnabled)" type="text" 
+             class="form-control" @bind="Property.Value" 
+             @bind:event="oninput" @onkeydown="KeyDown" />
     }
     else
     {
-      <input placeholder="@Placeholder" autocomplete="off" id="@(Id + "-input")" disabled="@(!IsEnabled)" type="text" class="form-control" @bind="Value" @bind:event="oninput" @onkeydown="KeyDown" />
+      <input maxlength="@MaxLength" placeholder="@Placeholder" 
+             autocomplete="off" id="@(Id + "-input")" 
+             disabled="@(!IsEnabled)" 
+             type="text" class="form-control" 
+             @bind="Value" @bind:event="oninput" @onkeydown="KeyDown" />
     }
     <div class="input-group-append">
       @ChildContent
@@ -39,6 +47,11 @@
   [Parameter]
   public RenderFragment ChildContent { get; set; }
 
+  /// <summary>
+  /// Maximum input length 
+  /// </summary>
+  [Parameter]
+  public int MaxLength { get; set; } = int.MaxValue;
 
   /// <summary>
   /// Value of the text edit

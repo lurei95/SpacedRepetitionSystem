@@ -174,10 +174,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       DeleteCommand.DeleteDialogTitle = Messages.DeleteCardDialogTitle;
       DeleteCommand.DeleteDialogText = Messages.DeleteCardDialogText.FormatWith(Entity.CardId);
       ShowStatisticsCommand.IsEnabled = DeleteCommand.IsEnabled = !IsNewEntity;
-      SaveChangesCommand.OnSavedAction = (entity) =>
-      {
-
-      };
     }
 
     ///<inheritdoc/>
