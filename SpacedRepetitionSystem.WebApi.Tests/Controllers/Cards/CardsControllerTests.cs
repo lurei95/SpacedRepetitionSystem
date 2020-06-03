@@ -90,6 +90,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         FieldId = 1,
         CardId = card.CardId,
+        CardFieldDefinition = fieldDefinition1,
         CardTemplateId = template.CardTemplateId,
         FieldName = "Front",
         Value = "Field1"
@@ -98,6 +99,7 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       {
         FieldId = 2,
         CardId = card.CardId,
+        CardFieldDefinition = fieldDefinition2,
         CardTemplateId = template.CardTemplateId,
         FieldName = "Back",
         Value = "Field2"
@@ -139,6 +141,8 @@ namespace SpacedRepetitionSystem.WebApi.Tests.Controllers.Cards
       Assert.AreEqual(template.CardTemplateId, result.Value.CardTemplate.CardTemplateId);
       Assert.AreEqual(field1.FieldName, result.Value.Fields[0].FieldName);
       Assert.AreEqual(field2.FieldName, result.Value.Fields[1].FieldName);
+      Assert.AreEqual(fieldDefinition1.FieldId, result.Value.Fields[0].CardFieldDefinition.FieldId);
+      Assert.AreEqual(fieldDefinition2.FieldId, result.Value.Fields[1].CardFieldDefinition.FieldId);
 
       //Card of other user -> unauthorized
       result = await controller.GetAsync(2);

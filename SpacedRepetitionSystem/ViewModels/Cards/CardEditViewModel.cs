@@ -56,17 +56,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         {
           cardTemplateId = value;
           Entity.CardTemplateId = value;
-          CardTemplate template = availableCardTemplates.Values.Single(template => template.CardTemplateId == value);
-          Entity.Fields.Clear();
-          foreach (CardFieldDefinition fieldDefinition in template.FieldDefinitions)
-            Entity.Fields.Add(new CardField()
-            {
-              FieldId = fieldDefinition.FieldId,
-              CardFieldDefinition = fieldDefinition,
-              CardId = Entity.CardId,
-              CardTemplateId = value,
-              FieldName = fieldDefinition.FieldName
-            });
+          ChangeCardTemplate(value);
           OnPropertyChanged();
         }
       }
@@ -120,7 +110,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     public CardEditViewModel(NavigationManager navigationManager, IApiConnector apiConnector,
       EntityChangeValidator<Card> changeValidator) 
       : base(navigationManager, apiConnector, changeValidator)
-    { Tags.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tags)); }
+    { }
 
     ///<inheritdoc/>
     public override async Task<bool> InitializeAsync() 
@@ -139,6 +129,14 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
           Components.Errors.EntityDoesNotExist.FormatWith(EntityNameHelper.GetName<Deck>(), DeckId));
         return false;
       }
+
+      if (!string.IsNullOrEmpty(Entity.Tags))
+      {
+        string[] tags = Entity.Tags.Split(",");
+        foreach (string tag in tags)
+          Tags.Add(tag.Trim());
+      }
+      Tags.CollectionChanged += (sender, e) => UpdateTags();
 
       cardTemplateId = Entity.CardTemplateId;
       if (IsNewEntity)
@@ -159,6 +157,12 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     {
       Entity = new Card();
       CardTemplateId = CardTemplate.DefaultCardTemplateId; 
+    }
+
+    private void UpdateTags()
+    { 
+      Entity.Tags = string.Join(",", Tags);
+      OnPropertyChanged(nameof(Tags));
     }
 
     private void InitializeCommands()
@@ -203,6 +207,37 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       );
       RegisterPropertyProxy(CardTemplateTitleProperty);
 
+      if (!IsNewEntity)
+      {
+        foreach (CardField field in Entity.Fields)
+        {
+          PropertyProxy proxy = new PropertyProxy(
+            () => field.Value,
+            (value) => field.Value = value,
+            nameof(CardField.Value),
+            field
+          );
+          RegisterPropertyProxy(proxy);
+          FieldValueProperties.Add(proxy);
+        }
+      }
+    }
+
+    private void ChangeCardTemplate(long id)
+    {
+      CardTemplate template = availableCardTemplates.Values.Single(template => template.CardTemplateId == id);
+      Entity.Fields.Clear();
+      foreach (CardFieldDefinition fieldDefinition in template.FieldDefinitions)
+        Entity.Fields.Add(new CardField()
+        {
+          FieldId = fieldDefinition.FieldId,
+          CardFieldDefinition = fieldDefinition,
+          CardId = Entity.CardId,
+          CardTemplateId = id,
+          FieldName = fieldDefinition.FieldName
+        });
+
+      FieldValueProperties.Clear();
       foreach (CardField field in Entity.Fields)
       {
         PropertyProxy proxy = new PropertyProxy(

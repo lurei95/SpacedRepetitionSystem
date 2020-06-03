@@ -718,7 +718,7 @@
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.Errors.FieldRequiresValue">
             <summary>
-              Looks up a localized string similar to The field erquires a value..
+              Looks up a localized string similar to The field requires a value..
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.Entities.Errors.InvalidUserNameOrPassword">

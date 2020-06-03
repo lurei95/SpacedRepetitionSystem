@@ -46,7 +46,7 @@
     get => value;
     set
     {
-      if (Value != value)
+      if (Value != value && selectableValues.Contains(value))
       {
         this.value = value;
         ValueChanged.InvokeAsync(value);

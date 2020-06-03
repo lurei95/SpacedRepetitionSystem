@@ -48,6 +48,7 @@
 @code
 {
   private TItem selectedItem;
+  private List<TItem> items;
 
   /// <summary>
   /// Whether selection is enabled
@@ -100,7 +101,10 @@
     get => selectedItem;
     set
     {
-      if (!(SelectedItem == null && value == null) && !value.Equals(selectedItem))
+      if (!items.Contains(value))
+        value = default;
+
+      if (!(value == null && selectedItem == null) && (value == null || selectedItem == null || !value.Equals(selectedItem)))
       {
         selectedItem = value;
         SelectedItemChanged.InvokeAsync(value);
@@ -112,7 +116,16 @@
   /// Items to display in the grid
   /// </summary>
   [Parameter]
-  public List<TItem> Items { get; set; }
+  public List<TItem> Items
+  {
+    get => items;
+    set
+    {
+      items = value;
+      if (items.Count == 0)
+        SelectedItem = default;
+    }
+  }
 
   /// <summary>
   /// The Columns of the Grid

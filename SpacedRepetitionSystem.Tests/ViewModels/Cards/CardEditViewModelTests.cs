@@ -111,6 +111,72 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     }
 
     /// <summary>
+    /// Tests that the tags are set on <see cref="CardEditViewModel.InitializeAsync"/>
+    /// </summary>
+    [TestMethod]
+    public async Task SetsTagsOnInitializeTest()
+    {
+      Deck deck = new Deck() { DeckId = 1, Title = "test", DefaultCardTemplateId = 1 };
+      CardTemplate template1 = new CardTemplate() { CardTemplateId = 1, Title = "test1" };
+      Card card = new Card() { CardId = 1, CardTemplateId = 1, DeckId = 1, Tags = "tag1, tag2" };
+      ApiConnectorMock mock = CreateMockForInitialize(true, true, deck, card, new List<CardTemplate>() { template1 });
+      CardEditViewModel viewModel = new CardEditViewModel(navigationManagerMock, mock, new EntityChangeValidator<Card>())
+      { Id = 1, DeckId = 1 };
+      bool result = await viewModel.InitializeAsync();
+
+      Assert.IsTrue(result);
+      Assert.AreEqual(2, viewModel.Tags.Count);
+      Assert.AreEqual("tag1", viewModel.Tags[0]);
+      Assert.AreEqual("tag2", viewModel.Tags[1]);
+    }
+
+    /// <summary>
+    /// Tests that the tags are updated
+    /// </summary>
+    [TestMethod]
+    public async Task UpdateTagsTest()
+    {
+      Deck deck = new Deck() { DeckId = 1, Title = "test", DefaultCardTemplateId = 1 };
+      CardTemplate template1 = new CardTemplate() { CardTemplateId = 1, Title = "test1" };
+      Card card = new Card() { CardId = 1, CardTemplateId = 1, DeckId = 1 };
+      ApiConnectorMock mock = CreateMockForInitialize(true, true, deck, card, new List<CardTemplate>() { template1 });
+      CardEditViewModel viewModel = new CardEditViewModel(navigationManagerMock, mock, new EntityChangeValidator<Card>())
+      { Id = 1, DeckId = 1 };
+      bool result = await viewModel.InitializeAsync();
+
+      Assert.IsTrue(result);
+      Assert.AreEqual(0, viewModel.Tags.Count);
+      viewModel.Tags.Add("tag1");
+      Assert.AreEqual("tag1", viewModel.Entity.Tags);
+      viewModel.Tags.Add("tag2");
+      Assert.AreEqual("tag1,tag2", viewModel.Entity.Tags);
+      viewModel.Tags.RemoveAt(0);
+      Assert.AreEqual("tag2", viewModel.Entity.Tags);
+    }
+
+    /// <summary>
+    /// Tests that fields are updated when the card template is changed
+    /// </summary>
+    [TestMethod]
+    public async Task ChangeCardTemplateUpdatesFieldsTest()
+    {
+      Deck deck = new Deck() { DeckId = 1, Title = "test", DefaultCardTemplateId = 1 };
+      CardTemplate template1 = new CardTemplate() { CardTemplateId = 1, Title = "test1" };
+      CardTemplate template2 = new CardTemplate() { CardTemplateId = 2, Title = "test2" };
+      template2.FieldDefinitions.Add(new CardFieldDefinition() { FieldId = 1, FieldName = "test" });
+      Card card = new Card() { CardId = 1, CardTemplateId = 1, DeckId = 1 };
+      ApiConnectorMock mock = CreateMockForInitialize(true, true, deck, card, new List<CardTemplate>() { template1, template2 });
+      CardEditViewModel viewModel = new CardEditViewModel(navigationManagerMock, mock, new EntityChangeValidator<Card>())
+      { Id = 1, DeckId = 1 };
+      bool result = await viewModel.InitializeAsync();
+
+      Assert.IsTrue(result);
+      viewModel.CardTemplateId = template2.CardTemplateId;
+      Assert.AreEqual(1, viewModel.Entity.Fields.Count);
+      Assert.AreEqual(1, viewModel.FieldValueProperties.Count);
+    }
+
+    /// <summary>
     /// Tests that all commands are initialized correctly
     /// </summary>
     [TestMethod]

@@ -88,7 +88,7 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The field erquires a value..
+        ///   Looks up a localized string similar to The field requires a value..
         /// </summary>
         public static string FieldRequiresValue {
             get {

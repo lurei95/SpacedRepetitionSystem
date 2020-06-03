@@ -54,7 +54,11 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     public virtual TEntity SelectedEntity 
     {
       get => selectedEntity;
-      set => selectedEntity = value;
+      set
+      {
+        if (selectedEntity != value)
+          selectedEntity = value;
+      }
     }
 
     /// <summary>
