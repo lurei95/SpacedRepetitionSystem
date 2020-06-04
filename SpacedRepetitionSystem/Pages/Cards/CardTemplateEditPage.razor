@@ -19,7 +19,7 @@
         <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
           <h5 class="card-title">Fields</h5>
           <div class="d-felx justify-content-end flex-fill">
-            <Button IsIconButton="true" TextColor="Gray" Command="ViewModel.AddFieldDefinitionCommand"></Button>
+            <Button IsIconButton="true" Style="font-size: 1.2rem" TextColor="#343a40" Command="ViewModel.AddFieldDefinitionCommand"></Button>
           </div>
         </div>
         @for (int i = 0; i < ViewModel.FieldDefinitions.Count; i++)
@@ -27,7 +27,7 @@
             int c = i;
             <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
               <TextEdit Caption="@("Field " + (i + 1))" Property="ViewModel.FieldNameProperties[i]" MaxLength="50"></TextEdit>
-              <Button IsIconButton="true" IsVisible="@(!ViewModel.FieldDefinitions[c].IsRequired)" TextColor="#343a40" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="i"></Button>
+              <Button IsIconButton="true" IsVisible="@(!ViewModel.FieldDefinitions[c].IsRequired)" TextColor="#e74c3c" Style="padding-bottom: 5px" Command="ViewModel.RemoveFieldDefinitionCommand" CommandParameter="i"></Button>
             </div>
             <div class="row flex-row customRow d-felx">
               <div class="custom-control custom-checkbox checkbox-lg ml-3 mb-3">
