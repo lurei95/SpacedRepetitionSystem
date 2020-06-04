@@ -124,6 +124,39 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     }
 
     /// <summary>
+    /// Tests that the enabled state of the commands is updated on saving the entity
+    /// </summary>
+    [TestMethod]
+    public async Task CommandEnabledIsUpdatedOnSavingEntityTest()
+    {
+      CardTemplate template = new CardTemplate() { CardTemplateId = 1, Title = "test" };
+      ApiConnectorMock mock = CreateMockForInitialize(false, true, null, new List<CardTemplate>() { template });
+      DeckEditViewModel viewModel = new DeckEditViewModel(navigationManagerMock, mock, new EntityChangeValidator<Deck>());
+      await viewModel.InitializeAsync();
+
+      Assert.IsFalse(viewModel.PracticeDeckCommand.IsEnabled);
+      Assert.IsFalse(viewModel.ShowStatisticsCommand.IsEnabled);
+      Assert.IsFalse(viewModel.DeleteCommand.IsEnabled);
+      Assert.IsFalse(viewModel.EditCardCommand.IsEnabled);
+      Assert.IsFalse(viewModel.DeleteCardCommand.IsEnabled);
+      Assert.IsFalse(viewModel.NewCardCommand.IsEnabled);
+      Assert.IsTrue(viewModel.SaveChangesCommand.IsEnabled);
+      Assert.IsTrue(viewModel.CloseCommand.IsEnabled);
+
+      Deck deck = new Deck();
+      deck.Cards.Add(new Card());
+      viewModel.SaveChangesCommand.OnSavedAction.Invoke(deck);
+      Assert.IsTrue(viewModel.PracticeDeckCommand.IsEnabled);
+      Assert.IsTrue(viewModel.ShowStatisticsCommand.IsEnabled);
+      Assert.IsTrue(viewModel.DeleteCommand.IsEnabled);
+      Assert.IsTrue(viewModel.EditCardCommand.IsEnabled);
+      Assert.IsTrue(viewModel.DeleteCardCommand.IsEnabled);
+      Assert.IsTrue(viewModel.NewCardCommand.IsEnabled);
+      Assert.IsTrue(viewModel.SaveChangesCommand.IsEnabled);
+      Assert.IsTrue(viewModel.CloseCommand.IsEnabled);
+    }
+
+    /// <summary>
     /// Tests the enabled bahavior of the commands
     /// </summary>
     [TestMethod]

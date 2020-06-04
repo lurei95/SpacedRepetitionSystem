@@ -123,6 +123,19 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       Entity.FieldDefinitions.Add(new CardFieldDefinition() { FieldName = "Back", IsRequired = true });
     }
 
+    ///<inheritdoc/>
+    protected override void OnEntitySaved(CardTemplate entity)
+    {
+      base.OnEntitySaved(entity);
+      UpdateCommandEnabled();
+    }
+
+    private void UpdateCommandEnabled()
+    {
+      DeleteCommand.IsEnabled = !IsNewEntity;
+      OnPropertyChanged(null);
+    }
+
     private void RemoveFieldDefiniton(int index)
     {
       Entity.FieldDefinitions.Remove(FieldDefinitions[index]);

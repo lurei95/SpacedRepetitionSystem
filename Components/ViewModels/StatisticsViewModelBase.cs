@@ -62,6 +62,7 @@ namespace SpacedRepetitionSystem.Components.ViewModels
     /// The text of the selected display period
     /// </summary>
     public string SelectedDisplayUnit
+
     {
       get => selectedDisplayUnit;
       set

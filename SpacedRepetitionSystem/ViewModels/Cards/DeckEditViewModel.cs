@@ -161,6 +161,21 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       CardTemplateId = CardTemplate.DefaultCardTemplateId;
     }
 
+    ///<inheritdoc/>
+    protected override void OnEntitySaved(Deck entity)
+    {
+      base.OnEntitySaved(entity);
+      UpdateCommandEnabled();
+    }
+
+    private void UpdateCommandEnabled()
+    {
+      PracticeDeckCommand.IsEnabled = !IsNewEntity && Entity.Cards.Count > 0;
+      EditCardCommand.IsEnabled = NewCardCommand.IsEnabled = ShowStatisticsCommand.IsEnabled
+        = DeleteCardCommand.IsEnabled = DeleteCommand.IsEnabled = !IsNewEntity;
+      OnPropertyChanged(null);
+    }
+
     private void InitializeCommands()
     {
       PracticeDeckCommand = new NavigationCommand(NavigationManager)
@@ -168,7 +183,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         CommandText = Messages.Practice,
         ToolTip = Messages.PracticeCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
         IsRelative = true,
-        IsEnabled = !IsNewEntity && Entity.Cards.Count > 0,
         TargetUri = "/Practice"
       };
       EditCardCommand = new NavigationCommand(NavigationManager)
@@ -176,7 +190,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         CommandText = Components.Messages.Edit,
         ToolTip = Components.Messages.EditCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         IsRelative = true,
-        IsEnabled = !IsNewEntity,
         TargetUriFactory = (param) => $"/Cards/{(param as Card).Id}"
       };
       NewCardCommand = new NavigationCommand(NavigationManager)
@@ -184,7 +197,6 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         CommandText = Components.Messages.New,
         ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         IsRelative = true,
-        IsEnabled = !IsNewEntity,
         TargetUri = "/Cards/New"
       };
       ShowStatisticsCommand = new NavigationCommand(NavigationManager)
@@ -192,13 +204,10 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         CommandText = Messages.PracticeStatistics,
         ToolTip = Messages.ShowStatisticsCommandToolTip.FormatWith(EntityNameHelper.GetName<Deck>()),
         IsRelative = true,
-        IsEnabled = !IsNewEntity,
         TargetUri = "/Statistics"
       };
-
       DeleteCardCommand = new EntityDeleteCommand<Card>(ApiConnector)
       {
-        IsEnabled = !IsNewEntity,
         CommandText = Components.Messages.Delete,
         ToolTip = Components.Messages.DeleteCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
         DeleteDialogTitle = Messages.DeleteCardDialogTitle,
@@ -206,6 +215,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       };
       DeleteCommand.DeleteDialogTitle = Messages.DeleteDeckDialogTitle;
       DeleteCommand.DeleteDialogText = Messages.DeleteDeckDialogText.FormatWith(Entity.Title);
+      UpdateCommandEnabled();
     }
 
     private string ValidateCardTemplateTitle(string value)

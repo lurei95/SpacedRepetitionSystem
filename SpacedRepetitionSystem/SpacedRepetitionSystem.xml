@@ -413,6 +413,9 @@
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateEditViewModel.CreateNewEntity">
             <inheritdoc/>
         </member>
+        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateEditViewModel.OnEntitySaved(SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate)">
+            <inheritdoc/>
+        </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.CardTemplateSearchViewModel">
             <summary>
             SearchViewModel for <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.CardTemplate"/>
@@ -503,6 +506,9 @@
             <inheritdoc/>
         </member>
         <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel.CreateNewEntity">
+            <inheritdoc/>
+        </member>
+        <member name="M:SpacedRepetitionSystem.ViewModels.Cards.DeckEditViewModel.OnEntitySaved(SpacedRepetitionSystem.Entities.Entities.Cards.Deck)">
             <inheritdoc/>
         </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.DeckSearchViewModel">

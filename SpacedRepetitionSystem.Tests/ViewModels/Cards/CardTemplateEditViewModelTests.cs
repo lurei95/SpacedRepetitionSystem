@@ -49,6 +49,22 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     }
 
     /// <summary>
+    /// Tests that the enabled state of the delete command is updated on saving the entity
+    /// </summary>
+    [TestMethod]
+    public async Task DeleteCommandEnabledIsUpdatedOnSavingEntityTest()
+    {
+      ApiConnectorMock mock = CreateMockForInitialize(false, null);
+      CardTemplateEditViewModel viewModel
+        = new CardTemplateEditViewModel(navigationManagerMock, mock, new EntityChangeValidator<CardTemplate>());
+      await viewModel.InitializeAsync();
+
+      Assert.IsFalse(viewModel.DeleteCommand.IsEnabled);
+      viewModel.SaveChangesCommand.OnSavedAction.Invoke(new CardTemplate());
+      Assert.IsTrue(viewModel.DeleteCommand.IsEnabled);
+    }
+
+    /// <summary>
     /// Tests that IsNewEntity is set to false after new entity is saved
     /// </summary>
     [TestMethod]
