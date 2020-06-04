@@ -47,6 +47,13 @@
                   @context.PracticeDate.ToString("dd/MM/yyyy")
                 </DisplayTemplate>
               </DataGridColumn>
+              <DataGridColumn TItem="PracticeHistoryEntry" Width="120"
+                              Field="@nameof(PracticeHistoryEntry.CardId)"
+                              Caption="Card" Sortable="true">
+                <DisplayTemplate>
+                  <a href="@("/Cards/" + @context.CardId)">@context.CardId</a>
+                </DisplayTemplate>
+              </DataGridColumn>
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.PracticeHistoryEntryId)"
                               Caption="Field Name" Sortable="true">
