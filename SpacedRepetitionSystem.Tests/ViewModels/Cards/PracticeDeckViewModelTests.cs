@@ -226,6 +226,29 @@ namespace SpacedRepetitionSystem.Tests.ViewModels.Cards
     }
 
     /// <summary>
+    /// Tests that the practice results are not reported when it's not a active practice
+    /// </summary>
+    [TestMethod]
+    public async Task DoesNotReportResultWhenNotActivePracticeTest()
+    {
+      Deck deck = new Deck() { Title = "test", DeckId = 1 };
+      Card card = new Card() { CardId = 1, DeckId = 1 };
+      deck.Cards.Add(card);
+      card.Fields.Add(new CardField() { FieldId = 1, Value = "test 1", FieldName = "test1", DueDate = DateTime.Today.AddDays(1) });
+      card.Fields.Add(new CardField() { FieldId = 2, Value = "test 2", FieldName = "test2", DueDate = DateTime.Today.AddDays(1) });
+      ApiConnectorMock mock = CreateMockForInitialize(true, deck);
+      PracticeDeckViewModel viewModel = new PracticeDeckViewModel(navigationManagerMock, mock)
+      { IsShowingSolution = true };
+      await viewModel.InitializeAsync();
+      mock.Methods.Clear();
+      mock.Parameters.Clear();
+      viewModel.EasyResultCommand.ExecuteCommand();
+
+      Assert.AreEqual(0, mock.Methods.Count);
+      Assert.AreEqual(0, mock.Parameters.Count);
+    }
+
+    /// <summary>
     /// Tests <see cref="PracticeDeckViewModel.ShowSolutionCommand"/> when input was correct
     /// </summary>
     [TestMethod]

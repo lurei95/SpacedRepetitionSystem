@@ -27,6 +27,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
     private bool? wasInputCorrect;
     private bool isSummary = false;
     private bool isLoading = false;
+    private bool isActivePractice;
 
     /// <summary>
     /// Whether data is being loaded
@@ -263,7 +264,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
       if (!result)
         return false;
 
-      bool isActivePractice = Entity.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue && !string.IsNullOrEmpty(field.Value));
+      isActivePractice = Entity.Cards.SelectMany(card => card.Fields).Any(field => field.IsDue && !string.IsNullOrEmpty(field.Value));
       if (isActivePractice)
         PracticeFields = Entity.Cards.SelectMany(card => card.Fields).Where(field => field.IsDue && !string.IsNullOrEmpty(field.Value)).ToList();
       else
@@ -307,20 +308,23 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         PracticeFields.Insert(i, Current);
       }
 
-      PracticeHistoryEntry entry = new PracticeHistoryEntry()
+      if (isActivePractice)
       {
-        PracticeDate = DateTime.Today,
-        CardId = Current.CardId,
-        DeckId = Entity.DeckId,
-        FieldId = Current.FieldId,
-        CorrectCount = result == PracticeResultKind.Easy ? 1 : 0,
-        HardCount = result == PracticeResultKind.Hard ? 1 : 0,
-        WrongCount = result == PracticeResultKind.Wrong ? 1 : 0
-      };
-     
-      ApiReply reply = await ApiConnector.PostAsync(entry);
-      if (!reply.WasSuccessful)
-        throw new NotifyException(reply.ResultMessage);
+        PracticeHistoryEntry entry = new PracticeHistoryEntry()
+        {
+          PracticeDate = DateTime.Today,
+          CardId = Current.CardId,
+          DeckId = Entity.DeckId,
+          FieldId = Current.FieldId,
+          CorrectCount = result == PracticeResultKind.Easy ? 1 : 0,
+          HardCount = result == PracticeResultKind.Hard ? 1 : 0,
+          WrongCount = result == PracticeResultKind.Wrong ? 1 : 0
+        };
+
+        ApiReply reply = await ApiConnector.PostAsync(entry);
+        if (!reply.WasSuccessful)
+          throw new NotifyException(reply.ResultMessage);
+      }
 
       if (Current.CardFieldDefinition.ShowInputForPractice)
         ShowSolution();
