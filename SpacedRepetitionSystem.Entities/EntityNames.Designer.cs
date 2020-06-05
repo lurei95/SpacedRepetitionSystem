@@ -79,6 +79,24 @@ namespace SpacedRepetitionSystem.Entities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Field.
+        /// </summary>
+        public static string CardField {
+            get {
+                return ResourceManager.GetString("CardField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fields.
+        /// </summary>
+        public static string CardField_Plural {
+            get {
+                return ResourceManager.GetString("CardField_Plural", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Template.
         /// </summary>
         public static string CardTemplate {

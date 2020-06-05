@@ -7,28 +7,29 @@
 @using SpacedRepetitionSystem.Components.Edits;
 @using SpacedRepetitionSystem.Components.ViewModels;
 @using SpacedRepetitionSystem.Components.Containers;
+@using SpacedRepetitionSystem.Entities;
 
 @inherits EditPageBase<SpacedRepetitionSystem.Entities.Entities.Cards.Card, CardEditViewModel>
 
 <ViewModelArea ViewModel="ViewModel">
   <TabCard Title="@ViewModel?.Title" IsLoading="@IsLoading">
     <CardTabs>
-      <CardTab Title="Main">
-        <h5 class="card-title">Main Properties</h5>
-        <DropDownEdit Caption="Template" Property="ViewModel.CardTemplateTitleProperty" SelectableValues="ViewModel.AvailableCardTemplates"></DropDownEdit>
+      <CardTab Title="@UIStrings.MainTabTitle">
+        <h5 class="card-title">@UIStrings.MainProperties</h5>
+        <DropDownEdit Caption="@(EntityNameHelper.GetName<CardTemplate>())" Property="ViewModel.CardTemplateTitleProperty" SelectableValues="ViewModel.AvailableCardTemplates"></DropDownEdit>
 
-        <h5 class="card-title">Fields</h5>
+        <h5 class="card-title">@(EntityNameHelper.GetPluralName<CardField>())</h5>
         @for (int i = 0; i < ViewModel.FieldValueProperties.Count; i++)
         {
           <TextEdit Caption="@ViewModel.Entity.Fields[i].FieldName" Property="ViewModel.FieldValueProperties[i]"></TextEdit>
         }
-        <h5 class="card-title">Tags</h5>
+        <h5 class="card-title">@UIStrings.Tags</h5>
         <TagEdit Tags="ViewModel.Tags"></TagEdit>
       </CardTab>
     </CardTabs>
     <HeaderButtons>
       <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle dropdown-no-text mr-1" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 0px;"/>
+        <button class="btn btn-secondary dropdown-toggle dropdown-no-text mr-1" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-top: 5px; padding-bottom: 0px;" />
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
           <Button Command="@ViewModel?.DeleteCommand" Class="dropdown-item"></Button>
           <Button Command="@ViewModel?.SaveChangesCommand" Class="dropdown-item"></Button>

@@ -17,7 +17,7 @@
       </HeaderButtons>
       <ChildContent>
         <div class="row">
-          <TextEdit Caption="Search" @bind-Value="ViewModel.SearchText" IsFocued="true" EnterAction="async () => await ViewModel.SearchAsync()">
+          <TextEdit Caption="@UIStrings.Search" @bind-Value="ViewModel.SearchText" IsFocued="true" EnterAction="async () => await ViewModel.SearchAsync()">
             <button style="padding-top: 8px; padding-bottom: 4px;" class="btn bg-dark" type="button" id="button-addon2" @onclick="ViewModel.SearchAsync">
               <span class="oi oi-magnifying-glass text-white" aria-hidden="true"></span>
             </button>
@@ -41,10 +41,10 @@
             </DataGridColumn>
             <DataGridColumn TItem="CardTemplate"
                             Field="@nameof(CardTemplate.Title)"
-                            Caption="Title" Sortable="true" />
+                            Caption="@UIStrings.Title" Sortable="true" />
             <DataGridColumn TItem="CardTemplate" Width="120" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(CardTemplate.FieldDefinitions)"
-                            Caption="Field Count" Sortable="false">
+                            Caption="@UIStrings.FieldCount" Sortable="false">
               <DisplayTemplate>
                 @{
                   @($"{(context as CardTemplate)?.FieldDefinitions.Count }")

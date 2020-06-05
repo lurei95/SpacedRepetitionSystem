@@ -650,6 +650,16 @@
               Looks up a localized string similar to Cards.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.CardField">
+            <summary>
+              Looks up a localized string similar to Field.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.Entities.EntityNames.CardField_Plural">
+            <summary>
+              Looks up a localized string similar to Fields.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Entities.EntityNames.CardTemplate">
             <summary>
               Looks up a localized string similar to Template.

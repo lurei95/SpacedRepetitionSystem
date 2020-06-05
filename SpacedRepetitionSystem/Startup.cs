@@ -14,6 +14,8 @@ using SpacedRepetitionSystem.ViewModels.Cards;
 using SpacedRepetitionSystem.ViewModels;
 using SpacedRepetitionSystem.ViewModels.Identity;
 using SpacedRepetitionSystem.ViewModels.Statistics;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace SpacedRepetitionSystem
 {
@@ -47,6 +49,14 @@ namespace SpacedRepetitionSystem
         .AddFontAwesomeIcons();
 
       services.AddSingleton<IApiConnector, ApiConnector>();
+
+      //Localization
+      var supportedCultures = new List<CultureInfo> { new CultureInfo("en") };
+      services.Configure<RequestLocalizationOptions>(options =>
+      {
+        options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en");
+        options.SupportedUICultures = supportedCultures;
+      });
 
       //Authentication
       services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();

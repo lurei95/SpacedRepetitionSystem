@@ -1,68 +1,70 @@
 ﻿@using SpacedRepetitionSystem.Components.Navigation;
 @using SpacedRepetitionSystem.ViewModels.Identity;
+@using SpacedRepetitionSystem.Entities.Entities.Cards;
+@using SpacedRepetitionSystem.Entities;
 
-@inject AuthenticationStateProvider AuthenticationProvider; 
+@inject AuthenticationStateProvider AuthenticationProvider;
 
-  <div class="top-row bg-dark d-flex" style="padding-left: unset !important; border: 0px; z-index: 1;">
+<div class="top-row bg-dark d-flex" style="padding-left: unset !important; border: 0px; z-index: 1;">
+  @if (IsLoggedIn)
+  {
+    <div class="dropdown menu-button">
+      <button class="menu-button btn" style="background: #1d2024!important;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="-10,0">
+        <span class="oi oi-menu menu-button-icon text-white"></span>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <div class="dropdown-header">@UIStrings.MainTabTitle</div>
+        <a class="dropdown-item" href="/">@UIStrings.Home</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-header">@(EntityNameHelper.GetPluralName<Deck>())</div>
+        <a class="dropdown-item" href="/Decks/New">@UIStrings.AddDeck</a>
+        <a class="dropdown-item" href="/Decks">@UIStrings.SearchDecks</a>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-header">@(EntityNameHelper.GetPluralName<Card>())</div>
+        <a class="dropdown-item" href="/Cards">@UIStrings.SearchCards</a>
+        <a class="dropdown-item" href="/Templates/New">@UIStrings.AddTemplate</a>
+        <a class="dropdown-item" href="/Templates">@UIStrings.SearchTemplates</a>
+      </div>
+    </div>
+    <div class="px-3 bg-dark" style="height: 100%; width: 250px; padding: 1rem; background: #1d2024 !important;">
+      <div class="media d-flex align-items-center">
+        <div class="media-body text-white" style="padding-left: 1rem">
+          <h5 class="m-0">Repetition System</h5>
+        </div>
+      </div>
+    </div>
+  }
+  else
+  {
+    <div class="px-3 bg-dark title" style="height: 100%; width: 250px; padding: 1rem;">
+      <div class="media d-flex align-items-center">
+        <div class="media-body text-white" style="padding-left: 1rem">
+          <h5 class="m-0">Repetition System</h5>
+        </div>
+      </div>
+    </div>
+  }
+  <div class="flex-fill pl-2" style="padding-top:15px;">
     @if (IsLoggedIn)
     {
-      <div class="dropdown menu-button">
-        <button class="menu-button btn" style="background: #1d2024!important;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="-10,0">
-          <span class="oi oi-menu menu-button-icon text-white"></span>
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <div class="dropdown-header">Main</div>
-          <a class="dropdown-item" href="/">Home</a>
-          <div class="dropdown-divider"></div>
-          <div class="dropdown-header">Decks</div>
-          <a class="dropdown-item" href="/Decks/New">Add Deck</a>
-          <a class="dropdown-item" href="/Decks">Search Decks</a>
-          <div class="dropdown-divider"></div>
-          <div class="dropdown-header">Cards</div>
-          <a class="dropdown-item" href="/Cards">Search Cards</a>
-          <a class="dropdown-item" href="/Templates/New">Add Template</a>
-          <a class="dropdown-item" href="/Templates">Search Templates</a>
-        </div>
-      </div>
-      <div class="px-3 bg-dark" style="height: 100%; width: 250px; padding: 1rem; background: #1d2024 !important;">
-        <div class="media d-flex align-items-center">
-          <div class="media-body text-white" style="padding-left: 1rem">
-            <h5 class="m-0">Repetition System</h5>
-          </div>
-        </div>
-      </div>
-    }
-    else
-    {
-      <div class="px-3 bg-dark title" style="height: 100%; width: 250px; padding: 1rem;">
-        <div class="media d-flex align-items-center">
-          <div class="media-body text-white" style="padding-left: 1rem">
-            <h5 class="m-0">Repetition System</h5>
-          </div>
-        </div>
-      </div>
-    }
-    <div class="flex-fill pl-2" style="padding-top:15px;">
-      @if (IsLoggedIn)
-      {
       <div class="bread-crumb-container">
         <BreadCrumb></BreadCrumb>
       </div>
-      }
-    </div>
-    <div class="pr-2 row d-flex align-content-center align-items-center">
-      @if (IsLoggedIn)
-      {
-        <button @onclick="async () => await (AuthenticationProvider as CustomAuthenticationStateProvider).MarkUserAsLoggedOut()" class="nav-link btn btn-link text-white ml-2 mr-2">Logout</button>
-      }
-      else
-      {
-        <a href="/Signup" class="text-white ml-2 mr-2">Register</a>
-        <a href="/Login" class="text-white ml-2 mr-2">Login</a>
-      }
-      <a class="text-white ml-2 mr-2" href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-    </div>
+    }
   </div>
+  <div class="pr-2 row d-flex align-content-center align-items-center">
+    @if (IsLoggedIn)
+    {
+      <button @onclick="async () => await (AuthenticationProvider as CustomAuthenticationStateProvider).MarkUserAsLoggedOut()" 
+              class="nav-link btn btn-link text-white ml-2 mr-2">@UIStrings.Logout</button>
+    }
+    else
+    {
+      <a href="/Signup" class="text-white ml-2 mr-2">@UIStrings.Signup</a>
+      <a href="/Login" class="text-white ml-2 mr-2">@UIStrings.Logout</a>
+    }
+  </div>
+</div>
 
 <style>
   .menu-button {
@@ -96,7 +98,7 @@
       display: none !important;
     }
 
-    .bread-crumb-container{
+    .bread-crumb-container {
       display: none;
     }
 

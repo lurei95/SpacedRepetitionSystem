@@ -117,37 +117,121 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card" xml:space="preserve">
-    <value>Card</value>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
   </data>
-  <data name="CardField" xml:space="preserve">
-    <value>Field</value>
+  <data name="AddDeck" xml:space="preserve">
+    <value>Add Deck</value>
   </data>
-  <data name="CardField_Plural" xml:space="preserve">
-    <value>Fields</value>
+  <data name="AddTemplate" xml:space="preserve">
+    <value>Add Template</value>
   </data>
-  <data name="CardTemplate" xml:space="preserve">
-    <value>Template</value>
+  <data name="AlreadyUser" xml:space="preserve">
+    <value>Already an user?</value>
   </data>
-  <data name="CardTemplate_Plural" xml:space="preserve">
-    <value>Templates</value>
+  <data name="Answer" xml:space="preserve">
+    <value>Answer</value>
   </data>
-  <data name="Card_Plural" xml:space="preserve">
-    <value>Cards</value>
+  <data name="Correct" xml:space="preserve">
+    <value>Correct</value>
   </data>
-  <data name="Deck" xml:space="preserve">
-    <value>Deck</value>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
   </data>
-  <data name="Deck_Plural" xml:space="preserve">
-    <value>Decks</value>
+  <data name="DataSource" xml:space="preserve">
+    <value>Data Source</value>
   </data>
-  <data name="EntityDisplayNameFormat" xml:space="preserve">
-    <value>{0} - {1}</value>
+  <data name="DueCards" xml:space="preserve">
+    <value>Due Cards</value>
   </data>
-  <data name="User" xml:space="preserve">
-    <value>User</value>
+  <data name="FieldCount" xml:space="preserve">
+    <value>Field Count</value>
   </data>
-  <data name="User_Plural" xml:space="preserve">
-    <value>Users</value>
+  <data name="FieldName" xml:space="preserve">
+    <value>Field Name</value>
+  </data>
+  <data name="Field_1" xml:space="preserve">
+    <value>Field 1</value>
+  </data>
+  <data name="Field_2" xml:space="preserve">
+    <value>Field 2</value>
+  </data>
+  <data name="Field_3" xml:space="preserve">
+    <value>Field 3</value>
+  </data>
+  <data name="Hard" xml:space="preserve">
+    <value>Hard</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="MainProperties" xml:space="preserve">
+    <value>Main Properties</value>
+  </data>
+  <data name="MainTabTitle" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="PinnedDecks" xml:space="preserve">
+    <value>Pinned Decks</value>
+  </data>
+  <data name="PracticeDate" xml:space="preserve">
+    <value>Practice Date</value>
+  </data>
+  <data name="PracticeHistory" xml:space="preserve">
+    <value>Practice History</value>
+  </data>
+  <data name="PracticeResults" xml:space="preserve">
+    <value>Practice Results</value>
+  </data>
+  <data name="PracticeResultsDetails" xml:space="preserve">
+    <value>Practice Results in Detail</value>
+  </data>
+  <data name="ProblemCards" xml:space="preserve">
+    <value>Problem Cards</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchCards" xml:space="preserve">
+    <value>Search Cards</value>
+  </data>
+  <data name="SearchDecks" xml:space="preserve">
+    <value>Search Decks</value>
+  </data>
+  <data name="SearchTemplates" xml:space="preserve">
+    <value>Search Templates</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Signup" xml:space="preserve">
+    <value>Signup</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Timespan" xml:space="preserve">
+    <value>Timespan</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Wrong" xml:space="preserve">
+    <value>Wrong</value>
   </data>
 </root>

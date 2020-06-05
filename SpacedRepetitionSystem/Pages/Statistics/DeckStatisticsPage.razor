@@ -14,27 +14,31 @@
 <ViewModelArea ViewModel="ViewModel">
   <TabCard Title="@ViewModel?.Title" IsLoading="@IsLoading" BodyClass="d-flex">
     <CardTabs>
-      <CardTab Title="Overview">
+      <CardTab Title="@UIStrings.Overview">
         <div class="d-flex flex-column flex-grow-1" style="max-width: 100%">
-          <h5 class="card-title">Settings</h5>
-          <DropDownEdit CaptionWidth="120" Caption="Data Source" SelectableValues="ViewModel.SelectableDisplayUnits" @bind-Value="ViewModel.SelectedDisplayUnit"></DropDownEdit>
-          <DropDownEdit CaptionWidth="120" Caption="Timespan" SelectableValues="ViewModel.SelectableDisplayPeriods" @bind-Value="ViewModel.SelectedDisplayPeriodText"></DropDownEdit>
-          <h5 class="card-title">Data</h5>
+          <h5 class="card-title">@UIStrings.Settings</h5>
+          <DropDownEdit CaptionWidth="120" Caption="@UIStrings.DataSource" 
+                        SelectableValues="ViewModel.SelectableDisplayUnits" @bind-Value="ViewModel.SelectedDisplayUnit"></DropDownEdit>
+          <DropDownEdit CaptionWidth="120" Caption="@UIStrings.Timespan" 
+                        SelectableValues="ViewModel.SelectableDisplayPeriods" @bind-Value="ViewModel.SelectedDisplayPeriodText"></DropDownEdit>
+          <h5 class="card-title">@UIStrings.Data</h5>
           <div class="d-flex chart-container">
             <div class="d-flex flex-grow-1 summary-element flex-column justify-content-center align-items-center">
-              <h3 class="mb-4">Total</h3>
-              <CustomPieChart @ref="@pieChart" BackgroundColors="backgroundColors" TItem="int" Labels="chartLabels" BorderColors="borderColors" Values="ViewModel.PieChartData"></CustomPieChart>
+              <h3 class="mb-4">@UIStrings.Total</h3>
+              <CustomPieChart @ref="@pieChart" BackgroundColors="backgroundColors" TItem="int" 
+                              Labels="chartLabels" BorderColors="borderColors" Values="ViewModel.PieChartData"></CustomPieChart>
             </div>
             <div class="d-flex flex-grow-1 summary-element flex-column justify-content-center align-items-center">
-              <h3 class="mb-4">Practice History</h3>
-              <CustomLineChart @ref="@lineChart" BackgroundColors="backgroundColors" TItem="int" Labels="ViewModel.LineChartLabels.ToArray()" BorderColors="borderColors" Values="ViewModel.LineChartData"></CustomLineChart>
+              <h3 class="mb-4">@UIStrings.PracticeHistory</h3>
+              <CustomLineChart @ref="@lineChart" BackgroundColors="backgroundColors" TItem="int" 
+                               Labels="ViewModel.LineChartLabels.ToArray()" BorderColors="borderColors" Values="ViewModel.LineChartData"></CustomLineChart>
             </div>
           </div>
         </div>
       </CardTab>
-      <CardTab Title="Practice History">
+      <CardTab Title="@UIStrings.PracticeHistory">
         <div class="d-flex flex-column flex-grow-1">
-          <h5 class="card-title mb-4">Practice History</h5>
+          <h5 class="card-title mb-4">@UIStrings.PracticeHistory</h5>
           <SearchGrid TItem="PracticeHistoryEntry"
                       Items="@ViewModel.PracticeHistoryEntries"
                       PageSize="10" SelectionEnabled="false"
@@ -42,34 +46,34 @@
             <Columns>
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.PracticeDate)"
-                              Caption="Practice Date" Sortable="true">
+                              Caption="@UIStrings.PracticeDate" Sortable="true">
                 <DisplayTemplate>
                   @context.PracticeDate.ToString("dd/MM/yyyy")
                 </DisplayTemplate>
               </DataGridColumn>
               <DataGridColumn TItem="PracticeHistoryEntry" Width="120"
                               Field="@nameof(PracticeHistoryEntry.CardId)"
-                              Caption="Card" Sortable="true">
+                              Caption="@(SpacedRepetitionSystem.Entities.EntityNameHelper.GetName<Card>())" Sortable="true">
                 <DisplayTemplate>
                   <a href="@("/Cards/" + @context.CardId)">@context.CardId</a>
                 </DisplayTemplate>
               </DataGridColumn>
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.PracticeHistoryEntryId)"
-                              Caption="Field Name" Sortable="true">
+                              Caption="@UIStrings.FieldName" Sortable="true">
                 <DisplayTemplate>
                   @context.Field.FieldName
                 </DisplayTemplate>
               </DataGridColumn>
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.CorrectCount)"
-                              Caption="Correct" Sortable="true" CellClass="@((item) => "right")" />
+                              Caption="@UIStrings.Correct" Sortable="true" CellClass="@((item) => "right")" />
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.HardCount)"
-                              Caption="Hard" Sortable="true" CellClass="@((item) => "hard")" />
+                              Caption="@UIStrings.Hard" Sortable="true" CellClass="@((item) => "hard")" />
               <DataGridColumn TItem="PracticeHistoryEntry"
                               Field="@nameof(PracticeHistoryEntry.WrongCount)"
-                              Caption="Wrong" Sortable="true" CellClass="@((item) => "wrong")" />
+                              Caption="@UIStrings.Wrong" Sortable="true" CellClass="@((item) => "wrong")" />
             </Columns>
           </SearchGrid>
         </div>

@@ -12,7 +12,7 @@
       <EditForm Model="@ViewModel.User" OnValidSubmit="@ViewModel.SubmitAsync">
         <div class="login-container">
           <div>
-            <h3 style="font-weight:bold; color:#343a40">Login</h3>
+            <h3 style="font-weight:bold; color:#343a40">@UIStrings.Login</h3>
           </div>
           <div>
             <br/>
@@ -39,8 +39,8 @@
           <hr class="mt-0"/>
           <div class="col-12 row d-flex align-items-center">
             <span class="col-12"></span>
-            <input type="submit" class="form-control col-6 btn btn-primary" value="Login" />
-            <a href="/Signup" class="col">Sign up</a>
+            <input type="submit" class="form-control col-6 btn btn-primary" value="@UIStrings.Login" />
+            <a href="/Signup" class="col">@UIStrings.Signup</a>
           </div>
         </div>
       </EditForm>

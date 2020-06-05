@@ -7,6 +7,7 @@
 @using SpacedRepetitionSystem.Components.ViewModels;
 @using SpacedRepetitionSystem.Components.Containers
 @using SpacedRepetitionSystem.Components.Edits;
+@using SpacedRepetitionSystem.Entities;
 @using Blazorise.DataGrid;
 
 @inherits EditPageBase<Deck, DeckEditViewModel>
@@ -14,13 +15,14 @@
 <ViewModelArea ViewModel="ViewModel">
   <TabCard Title="@ViewModel?.Title" IsLoading="@IsLoading">
     <CardTabs>
-      <CardTab Title="Main">
+      <CardTab Title="@UIStrings.MainTabTitle">
         <h5 class="card-title">Main Properties</h5>
-        <TextEdit Caption="Title" Property="ViewModel.TitleProperty" MaxLength="100"></TextEdit>
-        <DropDownEdit Caption="Template" Property="ViewModel.CardTemplateTitleProperty" SelectableValues="ViewModel.AvailableCardTemplates"></DropDownEdit>
+        <TextEdit Caption="@UIStrings.Title" Property="ViewModel.TitleProperty" MaxLength="100"></TextEdit>
+        <DropDownEdit Caption="@(EntityNameHelper.GetName<CardTemplate>())" Property="ViewModel.CardTemplateTitleProperty" 
+                      SelectableValues="ViewModel.AvailableCardTemplates"></DropDownEdit>
       </CardTab>
-      <CardTab Title="Cards">
-        <h5 class="card-title mb-4">Cards</h5>
+      <CardTab Title="@(EntityNameHelper.GetPluralName<Card>())">
+        <h5 class="card-title mb-4">@(EntityNameHelper.GetPluralName<Card>())</h5>
         <SearchGrid TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                     Items="@ViewModel.Entity?.Cards"
                     EditCommand="ViewModel.EditCardCommand"
@@ -38,14 +40,14 @@
             </DataGridColumn>
             <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                             Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
-                            Caption="Deck" Sortable="true">
+                            Caption="@(EntityNameHelper.GetName<Deck>())" Sortable="true">
               <DisplayTemplate>
                 @ViewModel.Entity?.Title
               </DisplayTemplate>
             </DataGridColumn>
             <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                             Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.Fields)"
-                            Caption="Field 1" Sortable="false">
+                            Caption="@UIStrings.Field_1" Sortable="false">
               <DisplayTemplate>
                 @{
                   string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[0].FieldName;
@@ -56,7 +58,7 @@
             </DataGridColumn>
             <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                             Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.Fields)"
-                            Caption="Field 2" Sortable="false">
+                            Caption="@UIStrings.Field_2" Sortable="false">
               <DisplayTemplate>
                 @{
                   string value = (context as SpacedRepetitionSystem.Entities.Entities.Cards.Card)?.Fields[1].FieldName;
@@ -67,7 +69,7 @@
             </DataGridColumn>
             <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card"
                             Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.Fields)"
-                            Caption="Field 3" Sortable="false">
+                            Caption="@UIStrings.Field_3" Sortable="false">
               <DisplayTemplate>
                 @{
                   SpacedRepetitionSystem.Entities.Entities.Cards.Card card = context as SpacedRepetitionSystem.Entities.Entities.Cards.Card;

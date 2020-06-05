@@ -1,52 +1,55 @@
-﻿<div class="vertical-nav bg-dark pt-3" id="sidebar">
+﻿@using SpacedRepetitionSystem.Entities.Entities.Cards;
+@using SpacedRepetitionSystem.Entities;
 
-  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">Main</p>
+<div class="vertical-nav bg-dark pt-3" id="sidebar">
+
+  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">@UIStrings.MainTabTitle</p>
 
   <ul class="nav flex-column bg-dark" mb-0">
     <li class="nav-item">
       <a href="Home" class="nav-link text-white bg-dark">
         <i class="mr-3 text-primary fa-fw"></i>
-        Home
+        @UIStrings.Home
       </a>
     </li>
   </ul>
 
-  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">Decks</p>
+  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">@(EntityNameHelper.GetPluralName<Deck>())</p>
 
   <ul class="nav flex-column bg-dark" mb-0">
     <li class="nav-item">
       <a href="Decks/New" class="nav-link text-white bg-dark">
         <i class="mr-3 text-primary fa-fw"></i>
-        Add Deck
+        @UIStrings.AddDeck
       </a>
     </li>
     <li class="nav-item">
       <a href="Decks" class="nav-link text-white bg-dark">
         <i class="mr-3 text-primary fa-fw"></i>
-        Search Decks
+        @UIStrings.SearchDecks
       </a>
     </li>
   </ul>
 
-  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">Cards</p>
+  <p class="text-white font-weight-bold text-uppercase px-3 small mb-0">@(EntityNameHelper.GetPluralName<Card>())</p>
 
   <ul class="nav flex-column bg-dark" mb-0">
     <li class="nav-item">
       <a href="Cards" class="nav-link text-white bg-dark">
         <i class="mr-3 text-primary fa-fw"></i>
-        Search Cards
+        @UIStrings.SearchCards
       </a>
     </li>
     <li class="nav-item">
       <a href="/Templates/New" class="nav-link text-white bg-dark">
         <i class="mr-3 text-primary fa-fw"></i>
-        Add Template
+        @UIStrings.AddTemplate
       </a>
     </li>
     <li class="nav-item">
       <a href="/Templates" class="nav-link text-white bg-dark">
         <i class="mr-3 text-primary fa-fw"></i>
-        Search Templates
+        @UIStrings.SearchTemplates
       </a>
     </li>
   </ul>
@@ -60,14 +63,13 @@
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.4s;
   }
-
 </style>
 
-@code 
+@code
 {
-    private bool collapseNavMenu = true;
+  private bool collapseNavMenu = true;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+  private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
+  private void ToggleNavMenu() => collapseNavMenu = !collapseNavMenu;
 }

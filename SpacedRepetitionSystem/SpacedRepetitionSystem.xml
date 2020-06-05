@@ -256,6 +256,37 @@
             <param name="app">app builder</param>
             <param name="env">Host environment</param>
         </member>
+        <member name="T:SpacedRepetitionSystem.UIStrings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.MainProperties">
+            <summary>
+              Looks up a localized string similar to Main Properties.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.MainTabTitle">
+            <summary>
+              Looks up a localized string similar to Main.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Tags">
+            <summary>
+              Looks up a localized string similar to Tags.
+            </summary>
+        </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel">
             <summary>
             EditViewModel for a <see cref="T:SpacedRepetitionSystem.Entities.Entities.Cards.Card"/>

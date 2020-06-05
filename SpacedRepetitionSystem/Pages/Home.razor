@@ -5,19 +5,20 @@
 @using SpacedRepetitionSystem.ViewModels;
 @using SpacedRepetitionSystem.Components.Interaction;
 @using Blazorise.DataGrid;
+@using SpacedRepetitionSystem.Entities;
 @using SpacedRepetitionSystem.Entities.Entities.Cards;
 @using SpacedRepetitionSystem.Components.Containers;
 
 @inherits PageBase<HomeViewModel>
 
 <ViewModelArea ViewModel="@ViewModel">
-  <TabCard Title="Home" IsLoading="@IsLoading" BodyClass="d-flex justify-content-around chart-container">
+  <TabCard Title="@ViewModel.Title" IsLoading="@IsLoading" BodyClass="d-flex justify-content-around chart-container">
     <ChildContent>
       <div class="d-flex flex-column custom-col mt-4">
-        <h5 class="card-title mb-4">Actions</h5>
+        <h5 class="card-title mb-4">@UIStrings.Actions</h5>
         <div class="mb-4 d-flex flex-column">
           <div class="row ml-4 mr-4 mb-3 d-flex justify-content-center align-items-center">
-            <label style="width: 100px; margin: 0px;">Decks:</label>
+            <label style="width: 100px; margin: 0px;">@(EntityNameHelper.GetPluralName<Deck>()):</label>
             <div class="d-flex flex-column flex-fill ml-2">
               <Button Class="grid-edit-button" Command="ViewModel.NewDeckCommand"></Button>
             </div>
@@ -26,13 +27,13 @@
             </div>
           </div>
           <div class="row ml-4 mr-4 mb-3 d-flex justify-content-center align-items-center">
-            <label style="width: 100px; margin: 0px;">Cards:</label>
+            <label style="width: 100px; margin: 0px;">@(EntityNameHelper.GetPluralName<Card>()):</label>
             <div class="d-flex flex-column flex-fill ml-2">
               <Button Class="grid-edit-button" Command="ViewModel.SearchCardsCommand"></Button>
             </div>
           </div>
           <div class="row ml-4 mr-4 mb-3 d-flex justify-content-center align-items-center">
-            <label style="width: 100px; margin: 0px;">Templates:</label>
+            <label style="width: 100px; margin: 0px;">@(EntityNameHelper.GetPluralName<CardTemplate>()):</label>
             <div class="d-flex flex-column flex-fill ml-2">
               <Button Class="grid-edit-button" Command="ViewModel.NewTemplateCommand"></Button>
             </div>
@@ -41,7 +42,7 @@
             </div>
           </div>
         </div>
-        <h5 class="card-title mb-4">Pinned Decks</h5>
+        <h5 class="card-title mb-4">@UIStrings.PinnedDecks</h5>
         <SearchGrid TItem="Deck"
                     Items="@ViewModel.PinnedDecks"
                     WaitSpinnerVisible="false"
@@ -51,13 +52,13 @@
           <Columns>
             <DataGridColumn TItem="Deck"
                             Field="@nameof(Deck.Title)"
-                            Caption="Title" Sortable="true" />
+                            Caption="@UIStrings.Title" Sortable="true" />
             <DataGridColumn TItem="Deck" Width="50" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(Deck.CardCount)"
-                            Caption="Cards" Sortable="false" />
+                            Caption="@(EntityNameHelper.GetPluralName<Card>())" Sortable="false" />
             <DataGridColumn TItem="Deck" Width="110" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(Deck.DueCardCount)"
-                            Caption="Due Cards" Sortable="false" />
+                            Caption="@UIStrings.DueCards" Sortable="false" />
             <DataGridColumn TItem="Deck" Width="100"
                             Field="@nameof(Deck.DeckId)"
                             Caption="" Sortable="false">
@@ -89,7 +90,7 @@
         </SearchGrid>
       </div>
       <div class="d-flex flex-column custom-col mt-4">
-        <h5 class="card-title mb-4">Problem Cards</h5>
+        <h5 class="card-title mb-4">@UIStrings.ProblemCards</h5>
         <SearchGrid TItem="PracticeHistoryEntry"
                     Items="@ViewModel.ProblemWords"
                     WaitSpinnerVisible="false"
@@ -106,23 +107,23 @@
             </DataGridColumn>
             <DataGridColumn TItem="PracticeHistoryEntry"
                             Field="@nameof(PracticeHistoryEntry.DeckId)"
-                            Caption="Deck" Sortable="false">
+                            Caption="@(EntityNameHelper.GetName<Deck>())" Sortable="false">
               <DisplayTemplate>
                 <a href="@("/Decks/" + @context.DeckId)">@ViewModel.ProblemWordDecks[context.DeckId].Title</a>
               </DisplayTemplate>
             </DataGridColumn>
             <DataGridColumn TItem="PracticeHistoryEntry" Width="50" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(PracticeHistoryEntry.CorrectCount)"
-                            Caption="Correct" Sortable="false" CellClass="@((item) => "right")" />
+                            Caption="@UIStrings.Correct" Sortable="false" CellClass="@((item) => "right")" />
             <DataGridColumn TItem="PracticeHistoryEntry" Width="50" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(PracticeHistoryEntry.HardCount)"
-                            Caption="Hard" Sortable="false" CellClass="@((item) => "hard")" />
+                            Caption="@UIStrings.Hard" Sortable="false" CellClass="@((item) => "hard")" />
             <DataGridColumn TItem="PracticeHistoryEntry" Width="50" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(PracticeHistoryEntry.WrongCount)"
-                            Caption="Wrong" Sortable="false" CellClass="@((item) => "wrong")" />
+                            Caption="@UIStrings.Wrong" Sortable="false" CellClass="@((item) => "wrong")" />
             <DataGridColumn TItem="PracticeHistoryEntry" Width="100" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(PracticeHistoryEntry.DeckId)" CellClass="@((item) => GetPercentageClass(item))"
-                            Caption="Rate" Sortable="false">
+                            Caption="@UIStrings.Rate" Sortable="false">
               <DisplayTemplate>
                 @(CalculateRate(context).ToString("P"))
               </DisplayTemplate>

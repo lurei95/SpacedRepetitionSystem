@@ -13,11 +13,11 @@
 <ViewModelArea ViewModel="ViewModel">
   <TabCard Title="@ViewModel?.Title" IsLoading="@IsLoading">
     <CardTabs>
-      <CardTab Title="Main">
-        <h5 class="card-title">Main Properties</h5>
-        <TextEdit Caption="Title" Property="ViewModel.TitleProperty" MaxLength="100"></TextEdit>
+      <CardTab Title="@UIStrings.MainTabTitle">
+        <h5 class="card-title">@UIStrings.MainProperties</h5>
+        <TextEdit Caption="@UIStrings.Title" Property="ViewModel.TitleProperty" MaxLength="100"></TextEdit>
         <div class="row flex-row customRow d-felx" style="margin-right: 10px;">
-          <h5 class="card-title">Fields</h5>
+          <h5 class="card-title">@(SpacedRepetitionSystem.Entities.EntityNameHelper.GetPluralName<CardField>())</h5>
           <div class="d-felx justify-content-end flex-fill">
             <Button IsIconButton="true" Style="font-size: 1.2rem" TextColor="#343a40" Command="ViewModel.AddFieldDefinitionCommand"></Button>
           </div>
