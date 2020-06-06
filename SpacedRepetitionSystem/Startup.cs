@@ -64,6 +64,9 @@ namespace SpacedRepetitionSystem
       //Storage
       services.AddBlazoredLocalStorage();
 
+      //SignalR
+      services.AddSignalR().AddAzureSignalR();
+
       //ViewModels
       services.AddTransient<HomeViewModel>();
       services.AddTransient<CardEditViewModel>();

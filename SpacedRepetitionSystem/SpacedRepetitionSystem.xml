@@ -272,6 +272,96 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Actions">
+            <summary>
+              Looks up a localized string similar to Actions.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.AddDeck">
+            <summary>
+              Looks up a localized string similar to Add Deck.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.AddTemplate">
+            <summary>
+              Looks up a localized string similar to Add Template.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.AlreadyUser">
+            <summary>
+              Looks up a localized string similar to Already an user?.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Answer">
+            <summary>
+              Looks up a localized string similar to Answer.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Correct">
+            <summary>
+              Looks up a localized string similar to Correct.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Data">
+            <summary>
+              Looks up a localized string similar to Data.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.DataSource">
+            <summary>
+              Looks up a localized string similar to Data Source.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.DueCards">
+            <summary>
+              Looks up a localized string similar to Due Cards.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Field_1">
+            <summary>
+              Looks up a localized string similar to Field 1.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Field_2">
+            <summary>
+              Looks up a localized string similar to Field 2.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Field_3">
+            <summary>
+              Looks up a localized string similar to Field 3.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.FieldCount">
+            <summary>
+              Looks up a localized string similar to Field Count.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.FieldName">
+            <summary>
+              Looks up a localized string similar to Field Name.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Hard">
+            <summary>
+              Looks up a localized string similar to Hard.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Home">
+            <summary>
+              Looks up a localized string similar to Home.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Login">
+            <summary>
+              Looks up a localized string similar to Login.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Logout">
+            <summary>
+              Looks up a localized string similar to Logout.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.UIStrings.MainProperties">
             <summary>
               Looks up a localized string similar to Main Properties.
@@ -282,9 +372,99 @@
               Looks up a localized string similar to Main.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Overview">
+            <summary>
+              Looks up a localized string similar to Overview.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.PinnedDecks">
+            <summary>
+              Looks up a localized string similar to Pinned Decks.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.PracticeDate">
+            <summary>
+              Looks up a localized string similar to Practice Date.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.PracticeHistory">
+            <summary>
+              Looks up a localized string similar to Practice History.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.PracticeResults">
+            <summary>
+              Looks up a localized string similar to Practice Results.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.PracticeResultsDetails">
+            <summary>
+              Looks up a localized string similar to Practice Results in Detail.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.ProblemCards">
+            <summary>
+              Looks up a localized string similar to Problem Cards.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Rate">
+            <summary>
+              Looks up a localized string similar to Rate.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Search">
+            <summary>
+              Looks up a localized string similar to Search.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.SearchCards">
+            <summary>
+              Looks up a localized string similar to Search Cards.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.SearchDecks">
+            <summary>
+              Looks up a localized string similar to Search Decks.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.SearchTemplates">
+            <summary>
+              Looks up a localized string similar to Search Templates.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Settings">
+            <summary>
+              Looks up a localized string similar to Settings.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Signup">
+            <summary>
+              Looks up a localized string similar to Signup.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.UIStrings.Tags">
             <summary>
               Looks up a localized string similar to Tags.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Timespan">
+            <summary>
+              Looks up a localized string similar to Timespan.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Title">
+            <summary>
+              Looks up a localized string similar to Title.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Total">
+            <summary>
+              Looks up a localized string similar to Total.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Wrong">
+            <summary>
+              Looks up a localized string similar to Wrong.
             </summary>
         </member>
         <member name="T:SpacedRepetitionSystem.ViewModels.Cards.CardEditViewModel">
