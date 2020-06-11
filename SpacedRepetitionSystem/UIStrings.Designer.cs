@@ -142,6 +142,15 @@ namespace SpacedRepetitionSystem {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Field 1.
         /// </summary>
         internal static string Field_1 {
@@ -255,6 +264,15 @@ namespace SpacedRepetitionSystem {
         internal static string PinnedDecks {
             get {
                 return ResourceManager.GetString("PinnedDecks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Practice.
+        /// </summary>
+        internal static string Practice {
+            get {
+                return ResourceManager.GetString("Practice", resourceCulture);
             }
         }
         

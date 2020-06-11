@@ -317,6 +317,11 @@
               Looks up a localized string similar to Due Cards.
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Edit">
+            <summary>
+              Looks up a localized string similar to Edit.
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.UIStrings.Field_1">
             <summary>
               Looks up a localized string similar to Field 1.
@@ -380,6 +385,11 @@
         <member name="P:SpacedRepetitionSystem.UIStrings.PinnedDecks">
             <summary>
               Looks up a localized string similar to Pinned Decks.
+            </summary>
+        </member>
+        <member name="P:SpacedRepetitionSystem.UIStrings.Practice">
+            <summary>
+              Looks up a localized string similar to Practice.
             </summary>
         </member>
         <member name="P:SpacedRepetitionSystem.UIStrings.PracticeDate">

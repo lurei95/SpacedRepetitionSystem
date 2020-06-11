@@ -58,7 +58,13 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
                 @if (NewCommand != null)
                 {
+                  <div class="dropdown-header">@UIStrings.New</div>
                   <Button Command="@NewCommand" Class="dropdown-item"></Button>
+                  <div class="dropdown-divider"></div>
+                }
+                @if (EditCommand != null || DeleteCommand != null)
+                {
+                  <div class="dropdown-header">@UIStrings.Edit</div>
                 }
                 @if (EditCommand != null)
                 {
