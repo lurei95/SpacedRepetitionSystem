@@ -65,9 +65,9 @@
             <DataGridColumn TItem="Deck" Width="110" TextAlignment="@Blazorise.TextAlignment.Center"
                             Field="@nameof(Deck.DueCardCount)"
                             Caption="@UIStrings.DueCards" Sortable="false" />
-            <DataGridColumn TItem="Deck" Width="100"
+            <DataGridColumn TItem="Deck" Width="100" HeaderCellClass="command-cell"
                             Field="@nameof(Deck.DeckId)"
-                            Caption="" Sortable="false">
+                            Caption="" CellClass="@((item) => "command-cell")" Sortable="false">
               <DisplayTemplate>
                 @{
                   <Button CommandParameter="context" Class="grid-edit-button column-button" Command="ViewModel.PracticeDeckCommand"></Button>
@@ -75,17 +75,17 @@
               </DisplayTemplate>
             </DataGridColumn>
             <DataGridColumn TItem="Deck" Width="130"
-                            Field="@nameof(Deck.DeckId)"
-                            Caption="" Sortable="false">
+                            Field="@nameof(Deck.DeckId)" HeaderCellClass="command-cell"
+                            Caption="" CellClass="@((item) => "command-cell")" Sortable="false">
               <DisplayTemplate>
                 @{
                   <Button CommandParameter="context.DeckId" Class="grid-new-button column-button" Command="ViewModel.AddCardCommand"></Button>
                 }
               </DisplayTemplate>
             </DataGridColumn>
-            <DataGridColumn TItem="Deck" Width="100"
+            <DataGridColumn TItem="Deck" Width="100" HeaderCellClass="command-cell"
                             Field="@nameof(Deck.DeckId)"
-                            Caption="" Sortable="false">
+                            Caption="" CellClass="@((item) => "command-cell")" Sortable="false">
               <DisplayTemplate>
                 @{
                   <Button CommandParameter="context.DeckId" Class="grid-edit-button column-button" Command="ViewModel.ShowStatisticsCommand"></Button>
@@ -93,6 +93,11 @@
               </DisplayTemplate>
             </DataGridColumn>
           </Columns>
+          <ContextActions>
+            <Button Command="@ViewModel.PracticeDeckCommand" CommandParameter="@context" Class="dropdown-item"></Button>
+            <Button Command="@ViewModel.AddCardCommand" CommandParameter="@context.DeckId" Class="dropdown-item"></Button>
+            <Button Command="@ViewModel.ShowStatisticsCommand" CommandParameter="@context.DeckId" Class="dropdown-item"></Button>
+          </ContextActions>
         </SearchGrid>
       </div>
       <div class="d-flex flex-column custom-col mt-4">
@@ -157,7 +162,7 @@
     }
   }
 
-  @@media (max-width: 600px) {
+  @@media (max-width: 700px) {
     .action-container {
       flex-direction: column !important;
       align-items: stretch !important;

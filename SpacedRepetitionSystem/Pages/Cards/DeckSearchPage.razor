@@ -57,27 +57,27 @@
                 }
               </DisplayTemplate>
             </DataGridColumn>
-            <DataGridColumn TItem="Deck" Width="100"
+            <DataGridColumn TItem="Deck" Width="100" HeaderCellClass="command-cell"
                             Field="@nameof(Deck.DeckId)"
-                            Caption="" Sortable="false">
+                            Caption="" Sortable="false" CellClass="@((item) => "command-cell")">
               <DisplayTemplate>
                 @{
                   <Button CommandParameter="context" Class="grid-edit-button column-button" Command="ViewModel.PracticeDeckCommand"></Button>
                 }
               </DisplayTemplate>
             </DataGridColumn>
-            <DataGridColumn TItem="Deck" Width="130"
+            <DataGridColumn TItem="Deck" Width="130" HeaderCellClass="command-cell"
                             Field="@nameof(Deck.DeckId)"
-                            Caption="" Sortable="false">
+                            Caption="" Sortable="false" CellClass="@((item) => "command-cell")">
               <DisplayTemplate>
                 @{
                   <Button CommandParameter="(context as Deck).DeckId" Class="grid-new-button column-button" Command="ViewModel.AddCardCommand"></Button>
                 }
               </DisplayTemplate>
             </DataGridColumn>
-            <DataGridColumn TItem="Deck" Width="100"
+            <DataGridColumn TItem="Deck" Width="100" HeaderCellClass="command-cell"
                             Field="@nameof(Deck.DeckId)"
-                            Caption="" Sortable="false">
+                            Caption="" Sortable="false" CellClass="@((item) => "command-cell")"> 
               <DisplayTemplate>
                 @{
                   <Button CommandParameter="context" Class="grid-edit-button column-button" Command="ViewModel.ShowStatisticsCommand"></Button>
@@ -85,6 +85,11 @@
               </DisplayTemplate>
             </DataGridColumn>
           </Columns>
+          <ContextActions>
+            <Button Command="@ViewModel.PracticeDeckCommand" CommandParameter="@context" Class="dropdown-item"></Button>
+            <Button Command="@ViewModel.AddCardCommand" CommandParameter="@context.DeckId" Class="dropdown-item"></Button>
+            <Button Command="@ViewModel.ShowStatisticsCommand" CommandParameter="@context.DeckId" Class="dropdown-item"></Button>
+          </ContextActions>
         </SearchGrid>
       </ChildContent>
     </TabCard>

@@ -1220,6 +1220,11 @@
             The Columns of the Grid
             </summary>
         </member>
+        <member name="P:SpacedRepetitionSystem.Components.Containers.SearchGrid`1.ContextActions">
+            <summary>
+            The additional context actions for a data item (in mobile resulution)
+            </summary>
+        </member>
         <member name="P:SpacedRepetitionSystem.Components.Containers.SearchGrid`1.SelectedItemChanged">
             <summary>
             Value changed event

@@ -87,9 +87,9 @@
                 }
               </DisplayTemplate>
             </DataGridColumn>
-            <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card" Width="100"
+            <DataGridColumn TItem="SpacedRepetitionSystem.Entities.Entities.Cards.Card" Width="100" HeaderCellClass="command-cell"
                             Field="@nameof(SpacedRepetitionSystem.Entities.Entities.Cards.Card.CardId)"
-                            Caption="" Sortable="false">
+                            Caption="" Sortable="false" CellClass="@((item) => "command-cell")">
               <DisplayTemplate>
                 @{
                   <Button CommandParameter="context" Class="grid-edit-button column-button" Command="ViewModel.ShowStatisticsCommand"></Button>
@@ -97,6 +97,9 @@
               </DisplayTemplate>
             </DataGridColumn>
           </Columns>
+          <ContextActions>
+            <Button Command="@ViewModel.ShowStatisticsCommand" CommandParameter="@context.DeckId" Class="dropdown-item"></Button>
+          </ContextActions>
         </SearchGrid>
       </ChildContent>
     </TabCard>
