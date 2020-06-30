@@ -51,7 +51,7 @@ namespace SpacedRepetitionSystem.ViewModels.Cards
         CommandText = Messages.NewCard,
         IsRelative = true,
         ToolTip = Components.Messages.NewCommandToolTip.FormatWith(EntityNameHelper.GetName<Card>()),
-        TargetUriFactory = (param) => $"/{(long)param}/Cards/New"
+        TargetUriFactory = (param) => $"/{(param as Deck).DeckId}/Cards/New"
       };
       ShowStatisticsCommand = new NavigationCommand(navigationManager)
       {

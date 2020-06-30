@@ -68,11 +68,11 @@
                 }
                 @if (EditCommand != null)
                 {
-                  <Button Command="@EditCommand" Class="dropdown-item"></Button>
+                  <Button Command="@EditCommand" CommandParameter="@context" Class="dropdown-item"></Button>
                 }
                 @if (DeleteCommand != null)
                 {
-                  <Button Command="@DeleteCommand" Class="dropdown-item"></Button>
+                  <Button Command="@DeleteCommand" CommandParameter="@context" Class="dropdown-item"></Button>
                 }
                 @if (ContextActions != null)
                 {
