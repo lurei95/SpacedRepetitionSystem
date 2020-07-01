@@ -2,8 +2,8 @@
 
 @if (Visible)
 {
-  <div class="d-flex justify-content-center align-items-center waitSpinnerContainer @Class" style="@Style" id="@Id">
-    <div class="spinner-border waitSpinner" role="status">
+  <div class="spinner-container @Class" style="@Style" id="@Id">
+    <div class="spinner-border spinner" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
@@ -14,12 +14,12 @@ else
 }
 
 <style>
-  .waitSpinnerContainer {
-    height: 100%;
-    width: 100%;
+  .spinner-container {
+    margin: auto auto;
+
   }
 
-  .waitSpinner {
+  .spinner {
     width: 7rem;
     height: 7rem;
   }
