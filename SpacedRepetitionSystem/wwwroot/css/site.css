@@ -299,7 +299,7 @@ app {
     border-radius: unset !important;
   }
 
-  .fullsizeCard {
+  .card-fullsize {
     min-height: calc(100vh - 60px);
     border: none;
     border-radius: unset;
