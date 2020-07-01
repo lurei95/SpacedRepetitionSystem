@@ -102,11 +102,6 @@
   padding: .5rem!important;
 }
 
-.fullsizeCard {
-  min-height: calc(100vh - 84px);
-  max-height: inherit;
-}
-
 .scrollable {
   overflow-y: auto;
 }
