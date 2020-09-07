@@ -1,5 +1,9 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.btn-search {
+  padding: 8px 12px 4px 12px;
+}
+
 .error-border {
   border-color: #dc3545;
 }
@@ -53,6 +57,10 @@
 .dropdown-no-text {
   background: none;
   border: none
+}
+
+.dropdown-item {
+  padding: .75em 1.5em;
 }
 
 .grid-delete-button {
@@ -245,6 +253,10 @@ app {
 @media (max-width: 768px) {
   html {
     font-size: 12px;
+  }
+
+  .btn-search {
+    padding: 4px 12px 4px 12px;
   }
 
   .main .top-row:not(.auth) {
